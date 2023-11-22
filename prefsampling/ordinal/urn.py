@@ -12,7 +12,9 @@ def urn(
     and votes are generated one after the other, in turns. When generating a vote, the following happens. With
     probability `1/(urn_size + 1)` the vote is simply selected uniformly at random (following an impartial culture).
     With probability `1/urn_size` a vote from the urn is selected uniformly at random. In both cases, the vote is
-    put back in the urn together with `alpha` copies.
+    put back in the urn together with `alpha * m!` copies of the vote (where `m` is the number of alternatives).
+
+    Following the
 
     Parameters
     ----------
@@ -21,7 +23,7 @@ def urn(
     num_candidates: int
         The number of candidates
     alpha: float
-        The coefficient alpha
+        The dispersion coefficient. Must be non-negative.
     seed: int
         The seed for the random number generator.
 
@@ -32,7 +34,7 @@ def urn(
     """
 
     if alpha < 0:
-        raise ValueError("Alpha need to be positive for an urn model.")
+        raise ValueError("Alpha needs to be positive for an urn model.")
 
     rng = np.random.default_rng(seed)
     votes = np.zeros((num_voters, num_candidates), dtype=int)

@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 from prefsampling.decorators import validate_num_agents_candidates
@@ -60,4 +62,4 @@ def impartial_anonymous_culture(
     np.ndarray
         Ordinal votes.
     """
-    return urn(num_voters, num_candidates, alpha=1, seed=seed)
+    return urn(num_voters, num_candidates, alpha=1/math.factorial(num_candidates), seed=seed)
