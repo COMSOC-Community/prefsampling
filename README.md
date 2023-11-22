@@ -1,6 +1,6 @@
 # PrefSampling
 
-[![Build badge](https://github.com/simon-rey/prefsampling/workflows/build/badge.svg?branch=main)](https://github.com/simon-rey/prefsampling/actions/workflows/build.yml)
+[![Build badge](https://github.com/simon-rey/prefsampling/workflows/build/badge.svg)](https://github.com/simon-rey/prefsampling/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/simon-rey/prefsampling/branch/main/graphs/badge.svg)](https://codecov.io/gh/simon-rey/prefsampling/tree/main)
 
 A small package providing all the algorithms to sample preferences
