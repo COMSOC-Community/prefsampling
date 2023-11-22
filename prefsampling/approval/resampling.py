@@ -61,4 +61,3 @@ def generate_approval_resampling_votes(num_voters: int = None,
         votes[v] = vote
 
     return votes
-
