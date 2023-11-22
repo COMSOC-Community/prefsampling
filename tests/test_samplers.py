@@ -1,5 +1,3 @@
-import numpy as np
-
 from unittest import TestCase
 
 from prefsampling.ordinal import urn
