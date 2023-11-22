@@ -44,7 +44,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/approval/index';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Reference" href="../index.html" />
+    <link rel="prev" title="Ordinal" href="../ordinal/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -137,6 +137,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Complete Guide</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Approval</a></li>
 </ul>
 </li>
@@ -315,10 +316,11 @@ document.write(`
                   
   <section id="module-prefsampling.approval">
 <span id="approval"></span><h1>Approval<a class="headerlink" href="#module-prefsampling.approval" title="Permalink to this heading">#</a></h1>
+<p>Module for sampling approval preferences: preferences in which an agent either approves or disapprove each candidate.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.generate_approval_resampling_votes">
-<span class="sig-name descname"><span class="pre">generate_approval_resampling_votes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/resampling.html#generate_approval_resampling_votes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.generate_approval_resampling_votes" title="Permalink to this definition">#</a></dt>
-<dd><p>Generates approval votes from resampling model.</p>
+<span class="sig-name descname"><span class="pre">generate_approval_resampling_votes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/resampling.html#generate_approval_resampling_votes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.generate_approval_resampling_votes" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates approval votes from the resampling model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -356,12 +358,12 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="../ordinal/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Reference</p>
+        <p class="prev-next-title">Ordinal</p>
       </div>
     </a>
 </div>
