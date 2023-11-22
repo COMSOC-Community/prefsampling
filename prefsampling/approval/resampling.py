@@ -1,12 +1,10 @@
-import logging
-
 import numpy as np
 
-from prefsampling.decorators import validate_num_agents_candidates
+from prefsampling.decorators import validate_num_voters_candidates
 
 
-@validate_num_agents_candidates
-def generate_approval_resampling_votes(
+@validate_num_voters_candidates
+def resampling(
     num_voters: int,
     num_candidates: int,
     phi: float = 0.5,

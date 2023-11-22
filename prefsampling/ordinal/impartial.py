@@ -2,11 +2,11 @@ import math
 
 import numpy as np
 
-from prefsampling.decorators import validate_num_agents_candidates
+from prefsampling.decorators import validate_num_voters_candidates
 from prefsampling.ordinal.urn import urn
 
 
-@validate_num_agents_candidates
+@validate_num_voters_candidates
 def impartial_culture(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
@@ -36,7 +36,7 @@ def impartial_culture(
     return votes
 
 
-@validate_num_agents_candidates
+@validate_num_voters_candidates
 def impartial_anonymous_culture(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:

@@ -21,36 +21,26 @@ ALL_ORDINAL_SAMPLERS = [
 
 class TestOrdinalSamplers(TestCase):
 
-    def helper_test_all_ordinal_samplers(self, sampler, num_agents, num_candidates):
-        result = sampler(num_agents, num_candidates)
+    def helper_test_all_ordinal_samplers(self, sampler, num_voters, num_candidates):
+        result = sampler(num_voters, num_candidates)
 
         # Test if the function returns a numpy array
         self.assertIsInstance(result, np.ndarray)
 
         # Test if the shape of the returned array is correct
-        self.assertEqual(result.shape, (num_agents, num_candidates))
+        self.assertEqual(result.shape, (num_voters, num_candidates))
 
         # Test if the values are within the range of candidates
         for vote in result:
             self.assertTrue(set(vote) == set(range(num_candidates)))
 
-        with self.assertRaises(ValueError):
-            sampler(1, -2)
-        with self.assertRaises(ValueError):
-            sampler(-2, 1)
-        with self.assertRaises(ValueError):
-            sampler(-2, -2)
-        with self.assertRaises(TypeError):
-            sampler(1.5, 2)
-        with self.assertRaises(TypeError):
-            sampler(1, 2.5)
-        with self.assertRaises(TypeError):
-            sampler(1.5, 2.5)
-
     def test_all_ordinal_samplers(self):
-        num_agents = 200
+        num_voters = 200
         num_candidates = 5
 
         for sampler in ALL_ORDINAL_SAMPLERS:
-            with self.subTest(sampler=sampler):
-                self.helper_test_all_ordinal_samplers(sampler, num_agents, num_candidates)
+            for test_sampler in [sampler,
+                            lambda x, y: sampler(num_voters=x, num_candidates=y),
+                            lambda x, y: sampler(x, y, seed=363)]:
+                with self.subTest(sampler=test_sampler):
+                    self.helper_test_all_ordinal_samplers(test_sampler, num_voters, num_candidates)

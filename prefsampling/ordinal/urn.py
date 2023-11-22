@@ -1,9 +1,9 @@
 import numpy as np
 
-from prefsampling.decorators import validate_num_agents_candidates
+from prefsampling.decorators import validate_num_voters_candidates
 
 
-@validate_num_agents_candidates
+@validate_num_voters_candidates
 def urn(
     num_voters: int, num_candidates: int, alpha: float = 0.1, seed: int = None
 ) -> np.ndarray:
