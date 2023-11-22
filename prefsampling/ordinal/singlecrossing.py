@@ -2,9 +2,7 @@ import numpy as np
 
 
 def single_crossing(
-        num_voters: int,
-        num_candidates: int,
-        seed: int = None
+    num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes that are single-crossing.

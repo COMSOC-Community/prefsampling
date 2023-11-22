@@ -62,4 +62,6 @@ def impartial_anonymous_culture(
     np.ndarray
         Ordinal votes.
     """
-    return urn(num_voters, num_candidates, alpha=1/math.factorial(num_candidates), seed=seed)
+    return urn(
+        num_voters, num_candidates, alpha=1 / math.factorial(num_candidates), seed=seed
+    )

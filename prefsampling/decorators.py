@@ -11,6 +11,7 @@ def validate_num_voters_candidates(func):
         The decorated function
 
     """
+
     @wraps(func)
     def wrapper(num_voters, num_candidates, *args, **kwargs):
         try:
@@ -26,4 +27,5 @@ def validate_num_voters_candidates(func):
         if num_candidates < 1:
             raise ValueError("The number of candidates needs to be at least 1.")
         return func(num_voters, num_candidates, *args, **kwargs)
+
     return wrapper

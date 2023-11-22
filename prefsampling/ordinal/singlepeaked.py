@@ -2,9 +2,7 @@ import numpy as np
 
 
 def single_peaked_Conitzer(
-        num_voters: int,
-        num_candidates: int,
-        seed: int = None
+    num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes that are single-peaked following the distribution defined by Conitzer (2009). The
@@ -53,9 +51,7 @@ def single_peaked_Conitzer(
 
 
 def single_peaked_circle_Conitzer(
-        num_voters: int,
-        num_candidates: int,
-        seed: int = None
+    num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes that are single-peaked on a circle following a distribution inspired from the one by
@@ -96,9 +92,7 @@ def single_peaked_circle_Conitzer(
 
 
 def single_peaked_Walsh(
-        num_voters: int,
-        num_candidates: int,
-        seed: int = None
+    num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes that are single-peaked following the process described by Walsh (2015).
@@ -121,12 +115,16 @@ def single_peaked_Walsh(
     votes = np.zeros([num_voters, num_candidates], dtype=int)
 
     for j in range(num_voters):
-        _single_peaked_Walsh_recursor(0, num_candidates - 1, votes[j], num_candidates - 1, rng)
+        _single_peaked_Walsh_recursor(
+            0, num_candidates - 1, votes[j], num_candidates - 1, rng
+        )
 
     return votes.astype(int)
 
 
-def _single_peaked_Walsh_recursor(a: int, b: int, vote: np.ndarray, position: int, rng: np.random.Generator) -> None:
+def _single_peaked_Walsh_recursor(
+    a: int, b: int, vote: np.ndarray, position: int, rng: np.random.Generator
+) -> None:
     """
     Function that implements the recursor needed for sampling preferences that are single-peaked following the process
     described by Walsh (2015). Populates the vote by side effect.

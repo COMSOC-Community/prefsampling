@@ -468,13 +468,14 @@ Conitzer (2009) for single-peakedness on a line (see <code class="xref py py-fun
 and votes are generated one after the other, in turns. When generating a vote, the following happens. With
 probability <cite>1/(urn_size + 1)</cite> the vote is simply selected uniformly at random (following an impartial culture).
 With probability <cite>1/urn_size</cite> a vote from the urn is selected uniformly at random. In both cases, the vote is
-put back in the urn together with <cite>alpha</cite> copies.</p>
+put back in the urn together with <cite>alpha * m!</cite> copies of the vote (where <cite>m</cite> is the number of alternatives).</p>
+<p>Following the</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – The number of voters</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – The number of candidates</p></li>
-<li><p><strong>alpha</strong> (<em>float</em>) – The coefficient alpha</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – The dispersion coefficient. Must be non-negative.</p></li>
 <li><p><strong>seed</strong> (<em>int</em>) – The seed for the random number generator.</p></li>
 </ul>
 </dd>

@@ -40,10 +40,14 @@ def resampling(
     """
 
     if phi < 0 or 1 < phi:
-        raise ValueError("Resampling model is not well defined for `phi` not in [0,1] interval")
+        raise ValueError(
+            "Resampling model is not well defined for `phi` not in [0,1] interval"
+        )
 
     if p < 0 or 1 < p:
-        raise ValueError("Resampling model is not well defined for `p` not in [0,1] interval")
+        raise ValueError(
+            "Resampling model is not well defined for `p` not in [0,1] interval"
+        )
 
     rng = np.random.default_rng(seed)
 

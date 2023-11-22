@@ -1,9 +1,16 @@
 from unittest import TestCase
 
-from prefsampling.ordinal import urn
-from prefsampling.ordinal.impartial import impartial_anonymous_culture, impartial_culture
+from prefsampling.ordinal.urn import urn
+from prefsampling.ordinal.impartial import (
+    impartial_anonymous_culture,
+    impartial_culture,
+)
 from prefsampling.ordinal.singlecrossing import single_crossing
-from prefsampling.ordinal.singlepeaked import single_peaked_Walsh, single_peaked_Conitzer, single_peaked_circle_Conitzer
+from prefsampling.ordinal.singlepeaked import (
+    single_peaked_Walsh,
+    single_peaked_Conitzer,
+    single_peaked_circle_Conitzer,
+)
 from prefsampling.approval.resampling import resampling
 
 
@@ -15,12 +22,11 @@ ALL_SAMPLERS = [
     single_peaked_circle_Conitzer,
     single_peaked_Walsh,
     single_crossing,
-    resampling
+    resampling,
 ]
 
 
 class TestSamplers(TestCase):
-
     def helper_test_all_samplers(self, sampler, num_voters, num_candidates):
         # Test that all the arguments are there
         sampler(num_voters, num_candidates)
