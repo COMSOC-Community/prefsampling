@@ -17,7 +17,10 @@ from prefsampling.ordinal.euclidean import euclidean as ordinal_euclidean
 from prefsampling.ordinal.mallows import mallows as ordinal_mallows
 from prefsampling.ordinal.mallows import norm_mallows as ordinal_norm_mallows
 
-from prefsampling.approval.resampling import resampling as approval_resampling
+from prefsampling.approval.resampling import (
+    resampling as approval_resampling,
+    disjoint_resampling as approval_disjoint_resampling
+)
 from prefsampling.approval.impartial import (
     impartial_culture as approval_impartial_culture,
 )
@@ -36,6 +39,7 @@ ALL_SAMPLERS = [
     ordinal_single_crossing,
     ordinal_euclidean,
     approval_resampling,
+    approval_disjoint_resampling,
     approval_impartial_culture,
     approval_euclidean,
     approval_noise,
