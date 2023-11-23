@@ -13,6 +13,10 @@ from prefsampling.ordinal.singlepeaked import (
     single_peaked_Walsh,
 )
 from prefsampling.ordinal.singlecrossing import single_crossing
+from prefsampling.ordinal.mallows import (
+    mallows,
+    norm_mallows,
+)
 
 __all__ = [
     "urn",
@@ -22,4 +26,6 @@ __all__ = [
     "single_peaked_Conitzer",
     "single_peaked_circle_Conitzer",
     "single_crossing",
+    "mallows",
+    "norm_mallows",
 ]
