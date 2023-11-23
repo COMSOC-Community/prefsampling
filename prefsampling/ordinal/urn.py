@@ -8,13 +8,12 @@ def urn(
     num_voters: int, num_candidates: int, alpha: float = 0.1, seed: int = None
 ) -> np.ndarray:
     """
-    Generates votes following the Pólya-Eggenberger urn culture. The process is a follows. The urn is initially empty
-    and votes are generated one after the other, in turns. When generating a vote, the following happens. With
-    probability `1/(urn_size + 1)` the vote is simply selected uniformly at random (following an impartial culture).
-    With probability `1/urn_size` a vote from the urn is selected uniformly at random. In both cases, the vote is
-    put back in the urn together with `alpha * m!` copies of the vote (where `m` is the number of alternatives).
-
-    Following the
+    Generates votes following the Pólya-Eggenberger urn culture. The process is a follows. The urn
+    is initially empty and votes are generated one after the other, in turns. When generating a
+    vote, the following happens. With probability `1/(urn_size + 1)` the vote is simply selected
+    uniformly at random (following an impartial culture). With probability `1/urn_size` a vote
+    from the urn is selected uniformly at random. In both cases, the vote is put back in the urn
+    together with `alpha * m!` copies of the vote (where `m` is the number of alternatives).
 
     Parameters
     ----------

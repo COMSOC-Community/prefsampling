@@ -6,11 +6,10 @@ def mallows(
     num_candidates: int = None,
     phi: float = 0.5,
     weight: float = 0,
-    seed: int = None
+    seed: int = None,
 ):
-
     if phi < 0 or 1 < phi:
-        raise ValueError(f'Incorrect value of phi: {phi}. Value should be in [0,1]')
+        raise ValueError(f"Incorrect value of phi: {phi}. Value should be in [0,1]")
 
     rng = np.random.default_rng(seed)
 
@@ -33,10 +32,12 @@ def norm_mallows(
     num_candidates: int = None,
     normphi: float = 0.5,
     weight: float = 0,
-    seed: int = None
+    seed: int = None,
 ):
     if normphi < 0 or 1 < normphi:
-        raise ValueError(f'Incorrect value of normphi: {normphi}. Value should be in [0,1]')
+        raise ValueError(
+            f"Incorrect value of normphi: {normphi}. Value should be in [0,1]"
+        )
 
     phi = _phi_from_normphi(num_candidates, normphi)
     return mallows(num_voters, num_candidates, phi, weight, seed)
@@ -77,7 +78,7 @@ def _calculate_expected_number_swaps(num_candidates, phi):
     """
     res = phi * num_candidates / (1 - phi)
     for j in range(1, num_candidates + 1):
-        res = res + (j * (phi ** j)) / ((phi ** j) - 1)
+        res = res + (j * (phi**j)) / ((phi**j) - 1)
     return res
 
 
@@ -88,7 +89,7 @@ def _phi_from_normphi(num_candidates=None, normphi=None):
     the expected number of swaps is exp_abs
     """
     if normphi is None:
-        raise ValueError('normphi is not defined')
+        raise ValueError("normphi is not defined")
     if normphi == 1:
         return 1
     if normphi > 2 or normphi < 0:

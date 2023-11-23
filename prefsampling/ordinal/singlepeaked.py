@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def single_peaked_Conitzer(
+def single_peaked_conitzer(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
@@ -50,7 +50,7 @@ def single_peaked_Conitzer(
     return votes
 
 
-def single_peaked_circle_Conitzer(
+def single_peaked_circle_conitzer(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
@@ -91,7 +91,7 @@ def single_peaked_circle_Conitzer(
     return votes
 
 
-def single_peaked_Walsh(
+def single_peaked_walsh(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
@@ -115,19 +115,19 @@ def single_peaked_Walsh(
     votes = np.zeros([num_voters, num_candidates], dtype=int)
 
     for j in range(num_voters):
-        _single_peaked_Walsh_recursor(
+        _single_peaked_walsh_recursor(
             0, num_candidates - 1, votes[j], num_candidates - 1, rng
         )
 
     return votes.astype(int)
 
 
-def _single_peaked_Walsh_recursor(
+def _single_peaked_walsh_recursor(
     a: int, b: int, vote: np.ndarray, position: int, rng: np.random.Generator
 ) -> None:
     """
-    Function that implements the recursor needed for sampling preferences that are single-peaked following the process
-    described by Walsh (2015). Populates the vote by side effect.
+    Function that implements the recursor needed for sampling preferences that are single-peaked
+    following the process described by Walsh (2015). Populates the vote by side effect.
 
     Parameters
     ----------
@@ -146,7 +146,7 @@ def _single_peaked_Walsh_recursor(
         return
     elif rng.random() < 0.5:
         vote[position] = a
-        _single_peaked_Walsh_recursor(a + 1, b, vote, position - 1, rng)
+        _single_peaked_walsh_recursor(a + 1, b, vote, position - 1, rng)
     else:
         vote[position] = b
-        _single_peaked_Walsh_recursor(a, b - 1, vote, position - 1, rng)
+        _single_peaked_walsh_recursor(a, b - 1, vote, position - 1, rng)

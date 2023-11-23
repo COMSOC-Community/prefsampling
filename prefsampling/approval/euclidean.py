@@ -1,4 +1,3 @@
-
 import numpy as np
 
 from prefsampling.decorators import validate_num_voters_candidates
@@ -9,9 +8,9 @@ def euclidean(
     num_voters: int = None,
     num_candidates: int = None,
     dim: int = 2,
-    space: str = 'uniform',
+    space: str = "uniform",
     radius: float = 0,
-    seed: int = None
+    seed: int = None,
 ) -> list[set]:
     """
     Generates approval votes from euclidean model.
@@ -42,24 +41,24 @@ def euclidean(
          ValueError
              When `space` not in {'uniform', 'gaussian', 'sphere'}.
     """
-    if space not in {'uniform', 'gaussian', 'sphere'}:
-        raise ValueError(f'No such type_id as {space}')
+    if space not in {"uniform", "gaussian", "sphere"}:
+        raise ValueError(f"No such type_id as {space}")
 
     rng = np.random.default_rng(seed)
 
     votes = [set() for _ in range(num_voters)]
 
-    if space == 'uniform':
-        voters = rng.random(num_voters, dim)
-        candidates = rng.random(num_candidates, dim)
-    elif space == 'gaussian':
+    if space == "uniform":
+        voters = rng.random((num_voters, dim))
+        candidates = rng.random((num_candidates, dim))
+    elif space == "gaussian":
         voters = rng.normal(loc=0.5, scale=0.15, size=(num_voters, dim))
         candidates = rng.normal(loc=0.5, scale=0.15, size=(num_candidates, dim))
-    elif space == 'sphere':
-        voters = np.array([list(random_sphere(dim, rng)[0])
-                           for _ in range(num_voters)])
-        candidates = np.array([list(random_sphere(dim, rng)[0])
-                               for _ in range(num_candidates)])
+    elif space == "sphere":
+        voters = np.array([list(random_sphere(dim, rng)[0]) for _ in range(num_voters)])
+        candidates = np.array(
+            [list(random_sphere(dim, rng)[0]) for _ in range(num_candidates)]
+        )
 
     for v in range(num_voters):
         for c in range(num_candidates):
@@ -72,5 +71,5 @@ def euclidean(
 def random_sphere(dimension, rng, num_points=1, radius=1):
     random_directions = rng.normal(size=(dimension, num_points))
     random_directions /= np.linalg.norm(random_directions, axis=0)
-    random_radii = 1.
+    random_radii = 1.0
     return radius * (random_directions * random_radii).T

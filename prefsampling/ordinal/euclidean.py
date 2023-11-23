@@ -2,12 +2,13 @@ import numpy as np
 from numpy import linalg
 
 
-def generate_ordinal_euclidean_votes(
+def euclidean(
+    num_voters: int,
+    num_candidates: int,
     model: str = "euclidean",
-    num_voters: int = None,
-    num_candidates: int = None,
     dim: int = 2,
     space: str = "uniform",
+    seed: int = None,
 ) -> np.ndarray:
     voters = np.zeros([num_voters, dim])
     candidates = np.zeros([num_candidates, dim])

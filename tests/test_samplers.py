@@ -1,39 +1,50 @@
 from unittest import TestCase
 
-from prefsampling.ordinal.urn import urn
+from prefsampling.ordinal.urn import urn as ordinal_urn
 from prefsampling.ordinal.impartial import (
-    impartial_anonymous_culture,
-    impartial_culture,
+    impartial_culture as ordinal_impartial_culture,
+    impartial_anonymous_culture as ordinal_impartial_anonymous_culture,
 )
-from prefsampling.ordinal.singlecrossing import single_crossing
+from prefsampling.ordinal.singlecrossing import single_crossing as ordinal_single_crossing
 from prefsampling.ordinal.singlepeaked import (
-    single_peaked_Walsh,
-    single_peaked_Conitzer,
-    single_peaked_circle_Conitzer,
+    single_peaked_conitzer as ordinal_single_peaked_conitzer,
+    single_peaked_circle_conitzer as ordinal_single_peaked_circle_conitzer,
+    single_peaked_walsh as ordinal_single_peaked_walsh,
 )
-from prefsampling.approval.resampling import resampling
+from prefsampling.ordinal.euclidean import euclidean as ordinal_euclidean
+
+from prefsampling.approval.resampling import resampling as approval_resampling
+from prefsampling.approval.impartial import impartial_culture as approval_impartial_culture
+from prefsampling.approval.euclidean import euclidean as approval_euclidean
+from prefsampling.approval.noise import noise as approval_noise
+from prefsampling.approval.identity import identity as approval_identity
 
 
 ALL_SAMPLERS = [
-    impartial_culture,
-    impartial_anonymous_culture,
-    urn,
-    single_peaked_Conitzer,
-    single_peaked_circle_Conitzer,
-    single_peaked_Walsh,
-    single_crossing,
-    resampling,
+    ordinal_impartial_culture,
+    ordinal_impartial_anonymous_culture,
+    ordinal_urn,
+    ordinal_single_peaked_conitzer,
+    ordinal_single_peaked_circle_conitzer,
+    ordinal_single_peaked_walsh,
+    ordinal_single_crossing,
+    ordinal_euclidean,
+    approval_resampling,
+    approval_impartial_culture,
+    approval_euclidean,
+    approval_noise,
+    approval_identity
 ]
 
 
 class TestSamplers(TestCase):
     def helper_test_all_samplers(self, sampler, num_voters, num_candidates):
-        # Test that all the arguments are there
+        # All the necessary arguments are there
         sampler(num_voters, num_candidates)
         sampler(num_voters, num_candidates, seed=23)
         sampler(num_voters=num_voters, num_candidates=num_candidates, seed=23)
 
-        # Test that the samplers are decorated to exclude bad number of voters and/or candidates arguments
+        # The samplers are decorated to exclude bad number of voters and/or candidates arguments
         with self.assertRaises(ValueError):
             sampler(1, -2)
         with self.assertRaises(ValueError):

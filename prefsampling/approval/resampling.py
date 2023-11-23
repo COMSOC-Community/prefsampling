@@ -40,14 +40,10 @@ def resampling(
     """
 
     if phi < 0 or 1 < phi:
-        raise ValueError(
-            f'Incorrect value of phi: {phi}. Value should be in [0,1]'
-        )
+        raise ValueError(f"Incorrect value of phi: {phi}. Value should be in [0,1]")
 
     if p < 0 or 1 < p:
-        raise ValueError(
-            f'Incorrect value of p: {p}. Value should be in [0,1]'
-        )
+        raise ValueError(f"Incorrect value of p: {p}. Value should be in [0,1]")
 
     rng = np.random.default_rng(seed)
 
@@ -76,46 +72,46 @@ def disjoint_resampling(
     phi: float = 0.5,
     p: float = 0.5,
     g: int = 2,
-    seed: int = None
+    seed: int = None,
 ) -> list[set]:
     """
-       Generates approval votes from disjoint resampling model.
+    Generates approval votes from disjoint resampling model.
 
-       Parameters
-       ----------
-           num_voters : int
-               Number of Voters.
-           num_candidates : int
-               Number of Candidates.
-           phi : float, default: 0.5
-               Disjoint resampling model parameter, denoting the noise.
-           p : float, default: 0.5
-               Disjoint resampling model parameter, denoting the length of central vote.
-           g : int, default: 2
-               Disjoint resampling model parameter, denoting the number of groups.
-           seed : int
-               Seed for numpy random number generator.
+    Parameters
+    ----------
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        phi : float, default: 0.5
+            Disjoint resampling model parameter, denoting the noise.
+        p : float, default: 0.5
+            Disjoint resampling model parameter, denoting the length of central vote.
+        g : int, default: 2
+            Disjoint resampling model parameter, denoting the number of groups.
+        seed : int
+            Seed for numpy random number generator.
 
-       Returns
-       -------
-           list[set]
-               Approval votes.
+    Returns
+    -------
+        list[set]
+            Approval votes.
 
-       Raises
-       ------
-           ValueError
-               When `phi` not in [0,1] interval.
-               When `p` not in [0,1] interval.
-       """
+    Raises
+    ------
+        ValueError
+            When `phi` not in [0,1] interval.
+            When `p` not in [0,1] interval.
+    """
 
     if phi < 0 or 1 < phi:
-        raise ValueError(f'Incorrect value of phi: {phi}. Value should be in [0,1]')
+        raise ValueError(f"Incorrect value of phi: {phi}. Value should be in [0,1]")
 
     if p < 0 or 1 < p:
-        raise ValueError(f'Incorrect value of p: {p}. Value should be in [0,1]')
+        raise ValueError(f"Incorrect value of p: {p}. Value should be in [0,1]")
 
-    if p*g > 1:
-        raise ValueError(f'Disjoint model is not well defined when p * g > 1')
+    if p * g > 1:
+        raise ValueError(f"Disjoint model is not well defined when p * g > 1")
 
     rng = np.random.default_rng(seed)
 
@@ -129,7 +125,6 @@ def disjoint_resampling(
         central_votes.append({g * k + i for i in range(k)})
 
     for v in range(num_voters):
-
         central_vote = rng.choice(central_votes)
 
         vote = set()

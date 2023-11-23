@@ -9,18 +9,18 @@ from prefsampling.ordinal.impartial import (
 )
 from prefsampling.ordinal.singlecrossing import single_crossing
 from prefsampling.ordinal.singlepeaked import (
-    single_peaked_Walsh,
-    single_peaked_Conitzer,
-    single_peaked_circle_Conitzer,
+    single_peaked_walsh,
+    single_peaked_conitzer,
+    single_peaked_circle_conitzer,
 )
 
 ALL_ORDINAL_SAMPLERS = [
     impartial_culture,
     impartial_anonymous_culture,
     urn,
-    single_peaked_Conitzer,
-    single_peaked_circle_Conitzer,
-    single_peaked_Walsh,
+    single_peaked_conitzer,
+    single_peaked_circle_conitzer,
+    single_peaked_walsh,
     single_crossing,
 ]
 
