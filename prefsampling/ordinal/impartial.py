@@ -64,5 +64,5 @@ def impartial_anonymous_culture(
         Ordinal votes.
     """
     return urn(
-        num_voters, num_candidates, alpha=1/math.factorial(num_candidates), seed=seed
+        num_voters, num_candidates, alpha=1 / math.factorial(num_candidates), seed=seed
     )

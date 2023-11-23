@@ -7,6 +7,8 @@ def single_crossing(
     """
     Generates ordinal votes that are single-crossing.
 
+    TODO: Fill that up.
+
     Parameters
     ----------
     num_voters : int

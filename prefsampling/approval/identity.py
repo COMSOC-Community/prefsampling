@@ -4,7 +4,7 @@ from prefsampling.decorators import validate_num_voters_candidates
 @validate_num_voters_candidates
 def identity(
     num_voters: int = None, num_candidates: int = None, p: float = 0.5, seed: int = None
-) -> list[set]:
+) -> list[set[int]]:
     """
     Generates approval votes from identity culture.
 
@@ -21,7 +21,7 @@ def identity(
 
     Returns
     -------
-        list[set]
+        list[set[int]]
             Approval votes.
 
     Raises

@@ -2,6 +2,11 @@ import numpy as np
 
 from unittest import TestCase
 
+from prefsampling.core.euclidean import (
+    EUCLIDEAN_SPACE_SPHERE,
+    EUCLIDEAN_SPACE_GAUSSIAN,
+    EUCLIDEAN_SPACE_UNIFORM,
+)
 from prefsampling.ordinal.urn import urn
 from prefsampling.ordinal.impartial import (
     impartial_anonymous_culture,
@@ -13,6 +18,8 @@ from prefsampling.ordinal.singlepeaked import (
     single_peaked_conitzer,
     single_peaked_circle_conitzer,
 )
+from prefsampling.ordinal.mallows import mallows, norm_mallows
+from prefsampling.ordinal.euclidean import euclidean
 
 ALL_ORDINAL_SAMPLERS = [
     impartial_culture,
@@ -22,6 +29,20 @@ ALL_ORDINAL_SAMPLERS = [
     single_peaked_circle_conitzer,
     single_peaked_walsh,
     single_crossing,
+    mallows,
+    norm_mallows,
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, space=EUCLIDEAN_SPACE_UNIFORM, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, space=EUCLIDEAN_SPACE_GAUSSIAN, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, space=EUCLIDEAN_SPACE_SPHERE, seed=seed
+    ),
 ]
 
 
@@ -38,6 +59,11 @@ class TestOrdinalSamplers(TestCase):
         # Test if the values are within the range of candidates
         for vote in result:
             self.assertTrue(set(vote) == set(range(num_candidates)))
+
+        # Test if the value are int
+        for vote in result:
+            for candidate in vote:
+                self.assertTrue(int(candidate) == candidate)
 
     def test_all_ordinal_samplers(self):
         num_voters = 200

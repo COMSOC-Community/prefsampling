@@ -17,6 +17,7 @@ from prefsampling.ordinal.mallows import (
     mallows,
     norm_mallows,
 )
+from prefsampling.ordinal.euclidean import euclidean
 
 __all__ = [
     "urn",
@@ -28,4 +29,5 @@ __all__ = [
     "single_crossing",
     "mallows",
     "norm_mallows",
+    "euclidean",
 ]

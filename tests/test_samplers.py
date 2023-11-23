@@ -5,16 +5,22 @@ from prefsampling.ordinal.impartial import (
     impartial_culture as ordinal_impartial_culture,
     impartial_anonymous_culture as ordinal_impartial_anonymous_culture,
 )
-from prefsampling.ordinal.singlecrossing import single_crossing as ordinal_single_crossing
+from prefsampling.ordinal.singlecrossing import (
+    single_crossing as ordinal_single_crossing,
+)
 from prefsampling.ordinal.singlepeaked import (
     single_peaked_conitzer as ordinal_single_peaked_conitzer,
     single_peaked_circle_conitzer as ordinal_single_peaked_circle_conitzer,
     single_peaked_walsh as ordinal_single_peaked_walsh,
 )
 from prefsampling.ordinal.euclidean import euclidean as ordinal_euclidean
+from prefsampling.ordinal.mallows import mallows as ordinal_mallows
+from prefsampling.ordinal.mallows import norm_mallows as ordinal_norm_mallows
 
 from prefsampling.approval.resampling import resampling as approval_resampling
-from prefsampling.approval.impartial import impartial_culture as approval_impartial_culture
+from prefsampling.approval.impartial import (
+    impartial_culture as approval_impartial_culture,
+)
 from prefsampling.approval.euclidean import euclidean as approval_euclidean
 from prefsampling.approval.noise import noise as approval_noise
 from prefsampling.approval.identity import identity as approval_identity
@@ -33,7 +39,9 @@ ALL_SAMPLERS = [
     approval_impartial_culture,
     approval_euclidean,
     approval_noise,
-    approval_identity
+    approval_identity,
+    ordinal_mallows,
+    ordinal_norm_mallows,
 ]
 
 

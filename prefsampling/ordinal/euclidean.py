@@ -1,56 +1,50 @@
 import numpy as np
 from numpy import linalg
 
+from prefsampling.core.euclidean import EUCLIDEAN_SPACE_UNIFORM, election_positions
+
 
 def euclidean(
     num_voters: int,
     num_candidates: int,
-    model: str = "euclidean",
-    dim: int = 2,
-    space: str = "uniform",
+    space: int = EUCLIDEAN_SPACE_UNIFORM,
+    dimension: int = 2,
     seed: int = None,
 ) -> np.ndarray:
-    voters = np.zeros([num_voters, dim])
-    candidates = np.zeros([num_candidates, dim])
+    """
+    Generates ordinal votes according to the Euclidean model.
+
+    Parameters
+    ----------
+    num_voters : int
+        Number of Voters.
+    num_candidates : int
+        Number of Candidates.
+    space : int
+        Type of space considered. Should be a constant such as
+        :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`.
+    dimension : int
+        Number of dimensions for the sapce considered
+    seed : int
+        Seed for numpy random number generator.
+
+    Returns
+    -------
+    np.ndarray
+        The votes.
+
+    """
+    rng = np.random.default_rng(seed)
     votes = np.zeros([num_voters, num_candidates], dtype=int)
+
+    voters, candidates = election_positions(
+        num_voters, num_candidates, space, dimension, rng
+    )
+
     distances = np.zeros([num_voters, num_candidates], dtype=float)
-
-    if model == "euclidean":
-        if space == "uniform":
-            voters = np.random.rand(num_voters, dim)
-            candidates = np.random.rand(num_candidates, dim)
-        elif space == "gaussian":
-            voters = np.random.normal(loc=0.5, scale=0.15, size=(num_voters, dim))
-            candidates = np.random.normal(
-                loc=0.5, scale=0.15, size=(num_candidates, dim)
-            )
-        elif space == "sphere":
-            voters = np.array([list(random_sphere(dim)[0]) for _ in range(num_voters)])
-            candidates = np.array(
-                [list(random_sphere(dim)[0]) for _ in range(num_candidates)]
-            )
-
-    for v in range(num_voters):
-        for c in range(num_candidates):
-            votes[v][c] = c
-            distances[v][c] = np.linalg.norm(voters[v] - candidates[c], ord=dim)
-
-        votes[v] = [x for _, x in sorted(zip(distances[v], votes[v]))]
+    for i in range(num_voters):
+        for j in range(num_candidates):
+            distances[i][j] = np.linalg.norm(voters[i] - candidates[j], ord=dimension)
+        votes[i] = np.argsort(distances[i])
 
     return votes
-
-
-# AUXILIARY
-def random_ball(dimension, num_points=1, radius=1):
-    random_directions = np.random.normal(size=(dimension, num_points))
-    random_directions /= linalg.norm(random_directions, axis=0)
-    random_radii = np.random.random(num_points) ** (1 / dimension)
-    x = radius * (random_directions * random_radii).T
-    return x
-
-
-def random_sphere(dimension, num_points=1, radius=1):
-    random_directions = np.random.normal(size=(dimension, num_points))
-    random_directions /= linalg.norm(random_directions, axis=0)
-    random_radii = 1.0
-    return radius * (random_directions * random_radii).T

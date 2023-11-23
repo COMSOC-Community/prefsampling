@@ -6,3 +6,4 @@ Reference
 
     ordinal/index
     approval/index
+    core/index

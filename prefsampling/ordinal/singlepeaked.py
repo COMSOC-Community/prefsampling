@@ -5,11 +5,16 @@ def single_peaked_conitzer(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
-    Generates ordinal votes that are single-peaked following the distribution defined by Conitzer (2009). The
-    preferences generated are single-peaked with respect to the axis `0, 1, 2, ...`. Votes are generated uniformly as
-    follows. The most preferred alternative (the peak) is selected uniformly at random. Then, either the alternative on
-    the left, or the one on the right to the peak comes second in the ordering. Each case occurs with probability 0.5.
-    The method is then iterated for the next left and right alternatives (only one of them being different from before).
+    Generates ordinal votes that are single-peaked following the distribution defined by Conitzer
+    (2009). The preferences generated are single-peaked with respect to the axis `0, 1, 2, ...`.
+    Votes are generated uniformly at random as follows. The most preferred alternative (the peak)
+    is selected uniformly at random. Then, either the alternative on the left, or the one on the
+    right of the peak comes second in the ordering. Each case occurs with probability 0.5.
+    The method is then iterated for the next left and right alternatives (only one of them being
+    different from before).
+
+    This method ensures that the probability for a given alternative to be the peak is uniform
+    (as opposed to the method :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_walsh`).
 
     Parameters
     ----------
@@ -54,8 +59,13 @@ def single_peaked_circle_conitzer(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
-    Generates ordinal votes that are single-peaked on a circle following a distribution inspired from the one by
-    Conitzer (2009) for single-peakedness on a line (see :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_Conitzer`).
+    Generates ordinal votes that are single-peaked on a circle following a distribution inspired
+    from the one by Conitzer (2009) for single-peakedness on a line (see
+    :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_conitzer`). This method starts by
+    determining the most preferred candidate (the peak). This is done with uniform probability
+    over the candidates. Then, subsequent positions in the ordering are filled by taking either the
+    next available candidate on the left or on the right, both cases occuring with probability 0.5.
+    Left and right are defined here in terms of the circular axis: 0, 1, ..., m, 1.
 
     Parameters
     ----------
@@ -96,6 +106,10 @@ def single_peaked_walsh(
 ) -> np.ndarray:
     """
     Generates ordinal votes that are single-peaked following the process described by Walsh (2015).
+    The votes are generated from least preferred to most preferred candidates. A given position
+    in the ordering is filled by selecting with uniform probability either the leftmost or the
+    rightmost candidates that have not yet been positioned in the vote (defined by the axis
+    1, 2, ...).
 
     Parameters
     ----------
