@@ -1,6 +1,6 @@
+import math
 
 import numpy as np
-import scipy.special
 
 from prefsampling.decorators import validate_num_voters_candidates
 
@@ -67,9 +67,9 @@ def noise(
 
     # Prepare buckets
     for x in range(len(A) + 1):
-        num_options_in = scipy.special.binom(len(A), x)
+        num_options_in = math.comb(len(A), x)
         for y in range(len(B) + 1):
-            num_options_out = scipy.special.binom(len(B), y)
+            num_options_out = math.comb(len(B), y)
 
             if type_id == 'hamming':
                 factor = phi ** (len(A) - x + y)
