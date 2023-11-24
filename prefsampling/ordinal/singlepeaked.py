@@ -43,7 +43,7 @@ def single_peaked_conitzer(
                 votes[i][j:] = range(right, num_candidates)
                 break
             if right >= num_candidates:
-                votes[i][j:] = range(0, left + 1)
+                votes[i][j:] = range(left, -1, -1)
                 break
             if rng.random() < 0.5:
                 votes[i][j] = right

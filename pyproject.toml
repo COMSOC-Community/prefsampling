@@ -32,7 +32,9 @@ dev = [
     "Sphinx",
     "sphinx-book-theme",
     "sphinxcontrib-napoleon",
-    "unittest2"
+    "unittest2",
+    "scipy",
+    "matplotlib"
 ]
 
 [project.urls]

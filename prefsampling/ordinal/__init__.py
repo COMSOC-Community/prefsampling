@@ -4,8 +4,8 @@ Module for sampling ordinal preferences: preferences in which an agent ranks the
 
 from prefsampling.ordinal.urn import urn
 from prefsampling.ordinal.impartial import (
-    impartial_culture,
-    impartial_anonymous_culture,
+    impartial,
+    impartial_anonymous,
 )
 from prefsampling.ordinal.singlepeaked import (
     single_peaked_conitzer,
@@ -21,8 +21,8 @@ from prefsampling.ordinal.euclidean import euclidean
 
 __all__ = [
     "urn",
-    "impartial_culture",
-    "impartial_anonymous_culture",
+    "impartial",
+    "impartial_anonymous",
     "single_peaked_walsh",
     "single_peaked_conitzer",
     "single_peaked_circle_conitzer",

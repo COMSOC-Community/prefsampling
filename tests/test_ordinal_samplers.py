@@ -9,8 +9,8 @@ from prefsampling.core.euclidean import (
 )
 from prefsampling.ordinal.urn import urn
 from prefsampling.ordinal.impartial import (
-    impartial_anonymous_culture,
-    impartial_culture,
+    impartial_anonymous,
+    impartial,
 )
 from prefsampling.ordinal.singlecrossing import single_crossing
 from prefsampling.ordinal.singlepeaked import (
@@ -22,8 +22,8 @@ from prefsampling.ordinal.mallows import mallows, norm_mallows
 from prefsampling.ordinal.euclidean import euclidean
 
 ALL_ORDINAL_SAMPLERS = [
-    impartial_culture,
-    impartial_anonymous_culture,
+    impartial,
+    impartial_anonymous,
     urn,
     single_peaked_conitzer,
     single_peaked_circle_conitzer,

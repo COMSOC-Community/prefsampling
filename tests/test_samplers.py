@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from prefsampling.ordinal.urn import urn as ordinal_urn
 from prefsampling.ordinal.impartial import (
-    impartial_culture as ordinal_impartial_culture,
-    impartial_anonymous_culture as ordinal_impartial_anonymous_culture,
+    impartial as ordinal_impartial_culture,
+    impartial_anonymous as ordinal_impartial_anonymous_culture,
 )
 from prefsampling.ordinal.singlecrossing import (
     single_crossing as ordinal_single_crossing,
@@ -19,10 +19,10 @@ from prefsampling.ordinal.mallows import norm_mallows as ordinal_norm_mallows
 
 from prefsampling.approval.resampling import (
     resampling as approval_resampling,
-    disjoint_resampling as approval_disjoint_resampling
+    disjoint_resampling as approval_disjoint_resampling,
 )
 from prefsampling.approval.impartial import (
-    impartial_culture as approval_impartial_culture,
+    impartial as approval_impartial_culture,
 )
 from prefsampling.approval.euclidean import euclidean as approval_euclidean
 from prefsampling.approval.noise import noise as approval_noise

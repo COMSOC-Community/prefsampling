@@ -4,7 +4,7 @@ from prefsampling.decorators import validate_num_voters_candidates
 
 
 @validate_num_voters_candidates
-def impartial_culture(
+def impartial(
     num_voters: int = None, num_candidates: int = None, p: float = 0.5, seed: int = None
 ) -> list[set]:
     """
