@@ -18,6 +18,7 @@ from prefsampling.ordinal.mallows import (
     norm_mallows,
 )
 from prefsampling.ordinal.euclidean import euclidean
+from prefsampling.ordinal.plackettluce import plackett_luce
 
 __all__ = [
     "urn",
@@ -30,4 +31,5 @@ __all__ = [
     "mallows",
     "norm_mallows",
     "euclidean",
+    "plackett_luce"
 ]
