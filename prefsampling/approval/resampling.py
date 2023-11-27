@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 
 from prefsampling.decorators import validate_num_voters_candidates
@@ -10,7 +12,7 @@ def resampling(
     phi: float = 0.5,
     p: float = 0.5,
     seed: int = None,
-) -> list[set]:
+) -> list[set[int]]:
     """
     Generates approval votes from the resampling model.
 
@@ -29,7 +31,7 @@ def resampling(
 
     Returns
     -------
-        list[set]
+        list[set[int]]
             Approval votes.
 
     Raises
@@ -73,7 +75,7 @@ def disjoint_resampling(
     p: float = 0.5,
     g: int = 2,
     seed: int = None,
-) -> list[set]:
+) -> list[set[int]]:
     """
     Generates approval votes from disjoint resampling model.
 
@@ -94,7 +96,7 @@ def disjoint_resampling(
 
     Returns
     -------
-        list[set]
+        list[set[int]]
             Approval votes.
 
     Raises
@@ -138,3 +140,72 @@ def disjoint_resampling(
         votes[v] = vote
 
     return votes
+
+
+@validate_num_voters_candidates
+def moving_resampling(
+    num_voters: int = None,
+    num_candidates: int = None,
+    phi: float = 0.5,
+    p: float = 0.5,
+    num_legs: int = 1,
+    seed: int = None,
+) -> list[set[int]]:
+    """
+    Generates approval votes from moving resampling model.
+
+    Parameters
+    ----------
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        phi : float, default: 0.5
+            Moving resampling model parameter, denoting the noise.
+        p : float, default: 0.5
+            Moving resampling model parameter, denoting the length of central vote.
+        num_legs : int, default: 1
+            Moving resampling model parameter, denoting the number of legs.
+        seed : int
+            Seed for numpy random number generator.
+
+    Returns
+    -------
+        list[set[int]]
+            Approval votes.
+
+    Raises
+    ------
+        ValueError
+            When `phi` not in [0,1] interval.
+            When `p` not in [0,1] interval.
+    """
+
+    rng = np.random.default_rng(seed)
+
+    breaks = [int(num_voters/num_legs)*i for i in range(num_legs)]
+
+    k = int(p * num_candidates)
+    central_vote = {i for i in range(k)}
+    ccc = copy.deepcopy(central_vote)
+
+    votes = [set() for _ in range(num_voters)]
+    votes[0] = copy.deepcopy(central_vote)
+
+    for v in range(1, num_voters):
+        vote = set()
+        for c in range(num_candidates):
+            if rng.random() <= phi:
+                if rng.random() <= p:
+                    vote.add(c)
+            else:
+                if c in central_vote:
+                    vote.add(c)
+        votes[v] = vote
+        central_vote = copy.deepcopy(vote)
+
+        if v in breaks:
+            central_vote = copy.deepcopy(ccc)
+
+    return votes
+
