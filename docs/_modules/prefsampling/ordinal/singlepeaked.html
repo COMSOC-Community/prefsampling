@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light">
+<html lang="en" data-content_root="" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -32,9 +32,9 @@
     <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
@@ -115,6 +115,7 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../../../index.html">
@@ -137,6 +138,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 </ul>
 </li>
 </ul>
@@ -212,6 +214,7 @@
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -221,6 +224,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -257,8 +261,11 @@ document.write(`
   <h1>Source code for prefsampling.ordinal.singlepeaked</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">prefsampling.decorators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
-<div class="viewcode-block" id="single_peaked_conitzer"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_conitzer">[docs]</a><span class="k">def</span> <span class="nf">single_peaked_conitzer</span><span class="p">(</span>
+
+<div class="viewcode-block" id="single_peaked_conitzer"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_conitzer">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
+<span class="k">def</span> <span class="nf">single_peaked_conitzer</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -300,7 +307,7 @@ document.write(`
                 <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">:]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="n">right</span> <span class="o">&gt;=</span> <span class="n">num_candidates</span><span class="p">:</span>
-                <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">:]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">:]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
                 <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">right</span>
@@ -312,7 +319,8 @@ document.write(`
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
-<div class="viewcode-block" id="single_peaked_circle_conitzer"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_circle_conitzer">[docs]</a><span class="k">def</span> <span class="nf">single_peaked_circle_conitzer</span><span class="p">(</span>
+<div class="viewcode-block" id="single_peaked_circle"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_circle">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
+<span class="k">def</span> <span class="nf">single_peaked_circle</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -358,7 +366,8 @@ document.write(`
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
-<div class="viewcode-block" id="single_peaked_walsh"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_walsh">[docs]</a><span class="k">def</span> <span class="nf">single_peaked_walsh</span><span class="p">(</span>
+<div class="viewcode-block" id="single_peaked_walsh"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_walsh">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
+<span class="k">def</span> <span class="nf">single_peaked_walsh</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -431,7 +440,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
 </div>
                 </footer>
@@ -456,6 +465,7 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -482,8 +492,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
