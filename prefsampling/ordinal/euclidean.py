@@ -2,8 +2,10 @@ import numpy as np
 from numpy import linalg
 
 from prefsampling.core.euclidean import EUCLIDEAN_SPACE_UNIFORM, election_positions
+from prefsampling.decorators import validate_num_voters_candidates
 
 
+@validate_num_voters_candidates
 def euclidean(
     num_voters: int,
     num_candidates: int,

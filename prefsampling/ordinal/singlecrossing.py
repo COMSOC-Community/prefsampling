@@ -1,6 +1,9 @@
 import numpy as np
 
+from prefsampling.decorators import validate_num_voters_candidates
 
+
+@validate_num_voters_candidates
 def single_crossing(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:

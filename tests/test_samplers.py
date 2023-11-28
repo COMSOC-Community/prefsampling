@@ -10,7 +10,7 @@ from prefsampling.ordinal.singlecrossing import (
 )
 from prefsampling.ordinal.singlepeaked import (
     single_peaked_conitzer as ordinal_single_peaked_conitzer,
-    single_peaked_circle_conitzer as ordinal_single_peaked_circle_conitzer,
+    single_peaked_circle as ordinal_single_peaked_circle,
     single_peaked_walsh as ordinal_single_peaked_walsh,
 )
 from prefsampling.ordinal.euclidean import euclidean as ordinal_euclidean
@@ -34,7 +34,7 @@ ALL_SAMPLERS = [
     ordinal_impartial_anonymous_culture,
     ordinal_urn,
     ordinal_single_peaked_conitzer,
-    ordinal_single_peaked_circle_conitzer,
+    ordinal_single_peaked_circle,
     ordinal_single_peaked_walsh,
     ordinal_single_crossing,
     ordinal_euclidean,

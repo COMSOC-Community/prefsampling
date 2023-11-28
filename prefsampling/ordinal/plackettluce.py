@@ -2,7 +2,10 @@ import copy
 
 import numpy as np
 
+from prefsampling.decorators import validate_num_voters_candidates
 
+
+@validate_num_voters_candidates
 def plackett_luce(
         num_voters: int, num_candidates: int, alphas: list[float], seed: int = None
 ) -> np.ndarray:

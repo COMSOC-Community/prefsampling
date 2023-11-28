@@ -6,9 +6,12 @@ from itertools import chain
 import numpy as np
 from scipy.special import binom
 
+from prefsampling.decorators import validate_num_voters_candidates
 
-def group_separable(num_voters: int = None,
-                    num_candidates: int = None,
+
+@validate_num_voters_candidates
+def group_separable(num_voters: int,
+                    num_candidates: int,
                     tree: str = 'random',
                     seed: int = None):
     """

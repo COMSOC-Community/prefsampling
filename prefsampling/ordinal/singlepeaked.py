@@ -1,6 +1,9 @@
 import numpy as np
 
+from prefsampling.decorators import validate_num_voters_candidates
 
+
+@validate_num_voters_candidates
 def single_peaked_conitzer(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
@@ -55,7 +58,8 @@ def single_peaked_conitzer(
     return votes
 
 
-def single_peaked_circle_conitzer(
+@validate_num_voters_candidates
+def single_peaked_circle(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
@@ -101,6 +105,7 @@ def single_peaked_circle_conitzer(
     return votes
 
 
+@validate_num_voters_candidates
 def single_peaked_walsh(
     num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
