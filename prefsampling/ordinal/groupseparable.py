@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import queue
 from itertools import chain
 

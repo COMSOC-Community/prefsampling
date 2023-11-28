@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 from copy import deepcopy
 
 import numpy as np
@@ -38,14 +39,20 @@ def single_peaked_walsh_observed_frequencies(
     )
 
 
+def single_peaked_conitzer_probability(rank: tuple, num_candidates: int):
+    res = 1/num_candidates
+    for alt in rank:
+        if alt == 0 or alt == num_candidates - 1:
+            break
+        res *= 1/2
+    return res
+
+
 def single_peaked_conitzer_distribution(all_sp_ranks: list[tuple[int]]):
-    # TODO: THIS IS WRONG!!
-    count_per_peak = np.zeros(len(all_sp_ranks[0]))
-    for rank in all_sp_ranks:
-        count_per_peak[rank[0]] += 1
     distribution = np.zeros(len(all_sp_ranks))
+    num_candidates = len(all_sp_ranks[0])
     for i, rank in enumerate(all_sp_ranks):
-        distribution[i] = 1 / (count_per_peak[rank[0]] * len(count_per_peak))
+        distribution[i] = single_peaked_conitzer_probability(rank, num_candidates)
     return distribution
 
 

@@ -19,7 +19,7 @@ def mallowsify_votes(votes: np.ndarray, phi: float) -> np.ndarray:
         The votes.
 
     """
-    return np.array([_mallowsify_vote(votes[i], phi) for i in range(len(votes))])
+    return np.array((_mallowsify_vote(votes[i], phi) for i in range(len(votes))))
 
 
 def _mallowsify_vote(vote, phi: float):
@@ -29,6 +29,3 @@ def _mallowsify_vote(vote, phi: float):
     for i in range(num_candidates):
         new_vote[raw_vote[i]] = vote[i]
     return new_vote
-
-
-
