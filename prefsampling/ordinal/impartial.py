@@ -29,14 +29,14 @@ def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndar
     """
     rng = np.random.default_rng(seed)
     votes = np.zeros([num_voters, num_candidates], dtype=int)
-    for j in range(num_voters):
-        votes[j] = rng.permutation(num_candidates)
+    for i in range(num_voters):
+        votes[i] = rng.permutation(num_candidates)
     return votes
 
 
 @validate_num_voters_candidates
 def impartial_anonymous(
-    num_voters: int, num_candidates: int, seed: int = None
+        num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes from impartial anonymous culture. In an impartial anonymous culture,
@@ -64,3 +64,36 @@ def impartial_anonymous(
     return urn(
         num_voters, num_candidates, alpha=1 / math.factorial(num_candidates), seed=seed
     )
+
+
+@validate_num_voters_candidates
+def stratification(
+        num_voters: int, num_candidates: int, weight: float = 0.5, seed: int = None
+) -> np.ndarray:
+    """
+    Generates ordinal votes from stratification model.
+
+    Parameters
+    ----------
+    num_voters : int
+        Number of Voters.
+    num_candidates : int
+        Number of Candidates.
+    weight : float
+        Size of the upper class.
+    seed : int
+        Seed for numpy random number generator.
+
+    Returns
+    -------
+    np.ndarray
+        Ordinal votes.
+    """
+    rng = np.random.default_rng(seed)
+    votes = np.zeros([num_voters, num_candidates], dtype=int)
+    upper_class_size = int(weight * num_candidates)
+    for i in range(num_voters):
+        votes[i] = list(rng.permutation(upper_class_size)) + \
+                   list(rng.permutation([j for j in range(upper_class_size, num_candidates)]))
+
+    return votes
