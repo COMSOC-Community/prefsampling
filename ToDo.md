@@ -10,3 +10,7 @@ To implement:
 
 - Function that takes as input votes and return them with permuted voters.
 - Function that takes as input votes and return them with permuted candidates.
+- Mixture of Mallows
+- Mixture of Plackett-Luce
+- Extened Euclidean model
+- Add Requirments.txt
