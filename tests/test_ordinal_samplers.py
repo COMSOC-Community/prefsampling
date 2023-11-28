@@ -16,7 +16,7 @@ from prefsampling.ordinal.singlecrossing import single_crossing
 from prefsampling.ordinal.singlepeaked import (
     single_peaked_walsh,
     single_peaked_conitzer,
-    single_peaked_circle_conitzer,
+    single_peaked_circle,
 )
 from prefsampling.ordinal.mallows import mallows, norm_mallows
 from prefsampling.ordinal.euclidean import euclidean
@@ -26,7 +26,7 @@ ALL_ORDINAL_SAMPLERS = [
     impartial_anonymous,
     urn,
     single_peaked_conitzer,
-    single_peaked_circle_conitzer,
+    single_peaked_circle,
     single_peaked_walsh,
     single_crossing,
     mallows,
