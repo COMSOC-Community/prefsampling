@@ -6,8 +6,8 @@ from prefsampling.decorators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def euclidean(
-    num_voters: int = None,
-    num_candidates: int = None,
+    num_voters: int,
+    num_candidates: int,
     space: int = EUCLIDEAN_SPACE_UNIFORM,
     dimension: int = 2,
     radius: float = 0,
@@ -18,19 +18,19 @@ def euclidean(
 
     Parameters
     ----------
-        num_voters : int
-            Number of Voters.
-        num_candidates : int
-            Number of Candidates.
-        space : int
-            Type of space considered. Should be a constant such as
-            :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`.
-        dimension : int
-            Number of Dimensions.
-        radius : float
-            The radius.
-        seed : int
-            Seed for numpy random number generator.
+    num_voters : int
+        Number of Voters.
+    num_candidates : int
+        Number of Candidates.
+    space : int
+        Type of space considered. Should be a constant such as
+        :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`.
+    dimension : int
+        Number of Dimensions.
+    radius : float
+        The radius.
+    seed : int
+        Seed for numpy random number generator.
 
     Returns
     -------

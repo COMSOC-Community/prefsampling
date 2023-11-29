@@ -19,19 +19,19 @@ def noise(
 
     Parameters
     ----------
-        num_voters : int
-            Number of Voters.
-        num_candidates : int
-            Number of Candidates.
-        phi : float, default: 0.5
-            Noise model parameter, denoting the noise.
-        p : float, default: 0.5
-            Noise model parameter, denoting the length of central vote.
-        type_id : str, default: hamming
-            Type of noise.
-            {'hamming', 'jaccard', 'zelinka', 'bunke-shearer'}
-        seed : int
-            Seed for numpy random number generator.
+    num_voters : int
+        Number of Voters.
+    num_candidates : int
+        Number of Candidates.
+    phi : float, default: 0.5
+        Noise model parameter, denoting the noise.
+    p : float, default: 0.5
+        Noise model parameter, denoting the length of central vote.
+    type_id : str, default: hamming
+        Type of noise.
+        {'hamming', 'jaccard', 'zelinka', 'bunke-shearer'}
+    seed : int
+        Seed for numpy random number generator.
 
     Returns
     -------
