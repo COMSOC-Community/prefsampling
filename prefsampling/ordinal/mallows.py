@@ -10,6 +10,7 @@ def mallows(
     phi: float = 0.5,
     weight: float = 0,
     seed: int = None,
+    central_vote: np.ndarray = None,
 ) -> np.ndarray:
     """
     Generates votes according to Mallows' model (Mallows, 1957).
@@ -26,11 +27,13 @@ def mallows(
 
     seed : int
         Seed for numpy random number generator.
+    central_vote : np.ndarray
+        The central vote.
 
     Returns
     -------
     np.ndarray
-        The votes.
+        Ordinal votes.
     """
     if phi < 0 or 1 < phi:
         raise ValueError(f"Incorrect value of phi: {phi}. Value should be in [0, 1]")
@@ -46,6 +49,14 @@ def mallows(
         if weight > 0 and rng.random() <= weight:
             np.flip(vote)
         votes[i] = vote
+
+    if central_vote is not None:
+        for i, vote in enumerate(votes):
+            new_vote = [0] * len(vote)
+            for i in range(num_candidates):
+                new_vote[vote[i]] = central_vote[i]
+            votes[i] = new_vote
+
     return votes
 
 
@@ -56,6 +67,7 @@ def norm_mallows(
     norm_phi: float = 0.5,
     weight: float = 0,
     seed: int = None,
+    central_vote: np.ndarray = None,
 ) -> np.ndarray:
     """
     Generates votes according to Mallows' normalised model (Boehmer, Faliszewski and Kraiczy 23).
@@ -72,6 +84,8 @@ def norm_mallows(
 
     seed : int
         Seed for numpy random number generator.
+    central_vote : np.ndarray
+        The central vote.
 
     Returns
     -------
@@ -84,7 +98,7 @@ def norm_mallows(
         )
 
     phi = phi_from_norm_phi(num_candidates, norm_phi)
-    return mallows(num_voters, num_candidates, phi, weight, seed)
+    return mallows(num_voters, num_candidates, phi, weight, seed, central_vote)
 
 
 def _insert_prob_distr(position: int, phi: float) -> np.ndarray:

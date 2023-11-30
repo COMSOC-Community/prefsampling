@@ -2,7 +2,7 @@ import numpy as np
 from prefsampling.ordinal.mallows import mallows
 
 
-def mallows_filter(votes: np.ndarray, phi: float) -> np.ndarray:
+def mallows_filter(votes: np.ndarray, phi: float, seed: int = None) -> np.ndarray:
     """
     Returns votes with added Mallows filter.
 
@@ -12,20 +12,17 @@ def mallows_filter(votes: np.ndarray, phi: float) -> np.ndarray:
         The votes.
     phi : float
         Noise parameter.
+    seed : int
+        Seed for numpy random number generator.
 
     Returns
     -------
     np.ndarray
-        The votes.
+        Ordinal votes.
 
     """
-    return np.array((_mallowsify_vote(votes[i], phi) for i in range(len(votes))))
+    return np.array((_mallows_filter_vote(votes[i], phi, seed) for i in range(len(votes))))
 
 
-def _mallowsify_vote(vote, phi: float):
-    num_candidates = len(vote)
-    raw_vote = mallows(1, num_candidates, phi)[0]
-    new_vote = [0] * len(vote)
-    for i in range(num_candidates):
-        new_vote[raw_vote[i]] = vote[i]
-    return new_vote
+def _mallows_filter_vote(vote, phi: float, seed: int = None):
+    return mallows(1, len(vote), phi, seed, central_vote=vote)[0]
