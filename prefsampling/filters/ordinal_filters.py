@@ -2,9 +2,9 @@ import numpy as np
 from prefsampling.ordinal.mallows import mallows
 
 
-def mallowsify_votes(votes: np.ndarray, phi: float) -> np.ndarray:
+def mallows_filter(votes: np.ndarray, phi: float) -> np.ndarray:
     """
-    Returns votes with added Mallows noise.
+    Returns votes with added Mallows filter.
 
     Parameters
     ----------
