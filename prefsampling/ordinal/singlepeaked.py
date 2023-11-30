@@ -114,7 +114,7 @@ def single_peaked_walsh(
     The votes are generated from least preferred to most preferred candidates. A given position
     in the ordering is filled by selecting with uniform probability either the leftmost or the
     rightmost candidates that have not yet been positioned in the vote (defined by the axis
-    1, 2, ...).
+    0, 1, 2, ...).
 
     Parameters
     ----------

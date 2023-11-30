@@ -4,6 +4,7 @@ from prefsampling.ordinal.urn import urn as ordinal_urn
 from prefsampling.ordinal.impartial import (
     impartial as ordinal_impartial_culture,
     impartial_anonymous as ordinal_impartial_anonymous_culture,
+    stratification as ordinal_stratification
 )
 from prefsampling.ordinal.singlecrossing import (
     single_crossing as ordinal_single_crossing,
@@ -32,20 +33,21 @@ from prefsampling.approval.identity import identity as approval_identity
 ALL_SAMPLERS = [
     ordinal_impartial_culture,
     ordinal_impartial_anonymous_culture,
+    ordinal_stratification,
     ordinal_urn,
     ordinal_single_peaked_conitzer,
     ordinal_single_peaked_circle,
     ordinal_single_peaked_walsh,
     ordinal_single_crossing,
     ordinal_euclidean,
+    ordinal_mallows,
+    ordinal_norm_mallows,
     approval_resampling,
     approval_disjoint_resampling,
     approval_impartial_culture,
     approval_euclidean,
     approval_noise,
     approval_identity,
-    ordinal_mallows,
-    ordinal_norm_mallows,
 ]
 
 

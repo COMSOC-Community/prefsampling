@@ -1,8 +1,8 @@
+import math
 import queue
 from itertools import chain
 
 import numpy as np
-from scipy.special import binom
 
 from prefsampling.decorators import validate_num_voters_candidates
 
@@ -24,8 +24,8 @@ def group_separable(num_voters: int,
         n = num_voters
 
         if tree == 'random':
-            func = lambda m, r: 1. / (m - 1) * binom(m - 1, r) * \
-                                binom(m - 1 + r, m)
+            func = lambda m, r: 1. / (m - 1) * math.comb(m - 1, r) * \
+                                math.comb(m - 1 + r, m)
             buckets = [func(m, r) for r in range(1, m)]
 
             denominator = sum(buckets)

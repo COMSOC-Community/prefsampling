@@ -37,16 +37,14 @@ def plackett_luce(
 
     alphas = np.array(alphas)
 
-    votes = np.zeros([num_voters, num_candidates])
+    votes = np.zeros((num_voters, num_candidates))
 
     for i in range(num_voters):
-
         items = list(range(num_candidates))
         tmp_alphas = copy.deepcopy(alphas)
 
         for j in range(num_candidates):
             probabilities = tmp_alphas / sum(tmp_alphas)
-            print(items, probabilities)
             chosen = rng.choice(items, p=probabilities)
             votes[i][j] = chosen
 

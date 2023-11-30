@@ -11,6 +11,7 @@ from prefsampling.ordinal.urn import urn
 from prefsampling.ordinal.impartial import (
     impartial_anonymous,
     impartial,
+    stratification
 )
 from prefsampling.ordinal.singlecrossing import single_crossing
 from prefsampling.ordinal.singlepeaked import (
@@ -24,6 +25,7 @@ from prefsampling.ordinal.euclidean import euclidean
 ALL_ORDINAL_SAMPLERS = [
     impartial,
     impartial_anonymous,
+    stratification,
     urn,
     single_peaked_conitzer,
     single_peaked_circle,

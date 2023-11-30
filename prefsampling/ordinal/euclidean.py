@@ -16,6 +16,10 @@ def euclidean(
     """
     Generates ordinal votes according to the Euclidean model.
 
+    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space. A voter then
+    ranks the candidates in increasing order of distance: their most preferred candidate is the closest one to them,
+    etc.
+
     Parameters
     ----------
     num_voters : int

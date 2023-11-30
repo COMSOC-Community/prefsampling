@@ -48,6 +48,6 @@ def single_crossing(
 
     for j in range(num_voters):
         r = rng.integers(0, domain_size)
-        votes[j] = list(domain[r])
+        votes[j] = np.array(domain[r])
 
     return votes
