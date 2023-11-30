@@ -54,7 +54,7 @@ def resampling(
 
     k = int(p * num_candidates)
     if central_vote is None:
-        central_vote = {i for i in range(k)}
+        central_vote = set(range(k))
 
     votes = [set() for _ in range(num_voters)]
     for v in range(num_voters):
@@ -187,7 +187,7 @@ def moving_resampling(
 
     rng = np.random.default_rng(seed)
 
-    breaks = [int(num_voters/num_legs)*i for i in range(num_legs)]
+    breaks = [int(num_voters / num_legs) * i for i in range(num_legs)]
 
     k = int(p * num_candidates)
     central_vote = {i for i in range(k)}
@@ -212,4 +212,3 @@ def moving_resampling(
             central_vote = copy.deepcopy(ccc)
 
     return votes
-

@@ -21,7 +21,9 @@ def mallows_filter(votes: np.ndarray, phi: float, seed: int = None) -> np.ndarra
         Ordinal votes.
 
     """
-    return np.array((_mallows_filter_vote(votes[i], phi, seed) for i in range(len(votes))))
+    return np.array(
+        (_mallows_filter_vote(votes[i], phi, seed) for i in range(len(votes)))
+    )
 
 
 def _mallows_filter_vote(vote, phi: float, seed: int = None):

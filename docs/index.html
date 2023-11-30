@@ -3,13 +3,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>PrefSampling: Sample Preferences Faster than you Form Them &#8212; PrefSampling</title>
+    <title>PrefSampling &#8212; PrefSampling</title>
   
   
   
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -33,9 +33,9 @@
     <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/doctools.js"></script>
@@ -117,7 +117,6 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-
   
 
 <a class="navbar-brand logo" href="#">
@@ -136,7 +135,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Complete Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
@@ -264,7 +263,6 @@
 </button>
 
 
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -274,7 +272,6 @@ document.write(`
   </button>
 `);
 </script>
-
 
 <script>
 document.write(`
@@ -294,7 +291,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>PrefSampling: Sample Preferences Faster than you Form Them</h1>
+    <h1>PrefSampling</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -308,8 +305,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="prefsampling-sample-preferences-faster-than-you-form-them">
-<h1>PrefSampling: Sample Preferences Faster than you Form Them<a class="headerlink" href="#prefsampling-sample-preferences-faster-than-you-form-them" title="Permalink to this heading">#</a></h1>
+  <section id="prefsampling">
+<h1>PrefSampling<a class="headerlink" href="#prefsampling" title="Permalink to this heading">#</a></h1>
+<p>PrefSampling is a light Python library that provides preference samplers.
+These are algorithms that generate random preferences based on precisely
+defined statistical cultures. We consider different type of preferences:</p>
+<ul class="simple">
+<li><p>Ordinal: preferences are expressed as rankings of the alternatives;</p></li>
+<li><p>Approval: preferences are expressed by indicating a set of approved alternatives.</p></li>
+</ul>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -323,7 +327,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="right-next"
        href="installation.html"
@@ -357,7 +361,6 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
-
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -384,8 +387,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>

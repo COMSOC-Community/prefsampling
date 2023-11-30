@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -32,9 +32,9 @@
     <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
@@ -115,7 +115,6 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-
   
 
 <a class="navbar-brand logo" href="../../../index.html">
@@ -134,7 +133,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Complete Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
@@ -214,7 +213,6 @@
 </button>
 
 
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -224,7 +222,6 @@ document.write(`
   </button>
 `);
 </script>
-
 
 <script>
 document.write(`
@@ -269,8 +266,8 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">central_vote</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates votes according to Mallows&#39; model (Mallows, 1957).</span>
@@ -283,15 +280,15 @@ document.write(`
 <span class="sd">        Number of Candidates.</span>
 <span class="sd">    phi : float</span>
 <span class="sd">        The dispersion coefficient.</span>
-<span class="sd">    weight : float</span>
-
 <span class="sd">    seed : int</span>
 <span class="sd">        Seed for numpy random number generator.</span>
+<span class="sd">    central_vote : np.ndarray</span>
+<span class="sd">        The central vote.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    np.ndarray</span>
-<span class="sd">        The votes.</span>
+<span class="sd">        Ordinal votes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">phi</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of phi: </span><span class="si">{</span><span class="n">phi</span><span class="si">}</span><span class="s2">. Value should be in [0, 1]&quot;</span><span class="p">)</span>
@@ -301,12 +298,12 @@ document.write(`
     <span class="n">insert_distributions</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">_insert_prob_distr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
     <span class="p">]</span>
-    <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">))</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
         <span class="n">vote</span> <span class="o">=</span> <span class="n">_mallows_vote</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">insert_distributions</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">weight</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">weight</span><span class="p">:</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
-        <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vote</span>
+        <span class="k">if</span> <span class="n">central_vote</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vote</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">central_vote</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">)</span>
+        <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">vote</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
@@ -315,8 +312,8 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">norm_phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">central_vote</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates votes according to Mallows&#39; normalised model (Boehmer, Faliszewski and Kraiczy 23).</span>
@@ -329,10 +326,10 @@ document.write(`
 <span class="sd">        Number of Candidates.</span>
 <span class="sd">    norm_phi : float</span>
 <span class="sd">        The normalised dispersion coefficient.</span>
-<span class="sd">    weight : float</span>
-
 <span class="sd">    seed : int</span>
 <span class="sd">        Seed for numpy random number generator.</span>
+<span class="sd">    central_vote : np.ndarray</span>
+<span class="sd">        The central vote.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -345,7 +342,7 @@ document.write(`
         <span class="p">)</span>
 
     <span class="n">phi</span> <span class="o">=</span> <span class="n">phi_from_norm_phi</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">norm_phi</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">mallows</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">mallows</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">central_vote</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">_insert_prob_distr</span><span class="p">(</span><span class="n">position</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -395,7 +392,7 @@ document.write(`
 <span class="sd">        The vote.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">vote</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">vote</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">):</span>
         <span class="n">insert_distribution</span> <span class="o">=</span> <span class="n">insert_distributions</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">index</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">insert_distribution</span><span class="p">)),</span> <span class="n">p</span><span class="o">=</span><span class="n">insert_distribution</span><span class="p">)</span>
@@ -480,7 +477,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
 </div>
                 </footer>
@@ -505,7 +502,6 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
-
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -532,8 +528,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>

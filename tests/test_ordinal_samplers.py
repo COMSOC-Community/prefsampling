@@ -11,7 +11,7 @@ from prefsampling.ordinal.urn import urn
 from prefsampling.ordinal.impartial import (
     impartial_anonymous,
     impartial,
-    stratification
+    stratification,
 )
 from prefsampling.ordinal.singlecrossing import single_crossing
 from prefsampling.ordinal.singlepeaked import (

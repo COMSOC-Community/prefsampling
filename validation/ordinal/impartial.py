@@ -1,16 +1,23 @@
 import numpy as np
 
 from prefsampling.ordinal import impartial
-from validation.utils import observed_frequencies
+from validation.utils import get_all_ranks
+from validation.validator import Validator
 
 
-def impartial_distribution(all_ranks: list[tuple[int]]) -> np.ndarray:
-    return np.full(len(all_ranks), 1 / len(all_ranks))
+class OrdinalImpartialValidator(Validator):
+    def __init__(self, num_candidates, all_outcomes=None):
+        super(OrdinalImpartialValidator, self).__init__(
+            num_candidates, sampler_func=impartial, all_outcomes=all_outcomes
+        )
 
+    def set_all_outcomes(self):
+        self.all_outcomes = get_all_ranks(self.num_candidates)
 
-def impartial_observed_frequencies(num_observations: int, all_ranks: list[tuple[int]]):
-    return observed_frequencies(
-        num_observations,
-        all_ranks,
-        lambda: impartial(num_observations, len(all_ranks[0])),
-    )
+    def set_theoretical_distribution(self):
+        self.theoretical_distribution = np.full(
+            len(self.all_outcomes), 1 / len(self.all_outcomes)
+        )
+
+    def sample_cast(self, sample):
+        return tuple(sample)

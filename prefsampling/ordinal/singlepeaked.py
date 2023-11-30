@@ -17,7 +17,7 @@ def single_peaked_conitzer(
     different from before).
 
     This method ensures that the probability for a given alternative to be the peak is uniform
-    (as opposed to the method :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_walsh`).
+    (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`).
 
     Parameters
     ----------
@@ -65,7 +65,7 @@ def single_peaked_circle(
     """
     Generates ordinal votes that are single-peaked on a circle following a distribution inspired
     from the one by Conitzer (2009) for single-peakedness on a line (see
-    :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_conitzer`). This method starts by
+    :py:func:`~prefsampling.ordinal.single_peaked_conitzer`). This method starts by
     determining the most preferred candidate (the peak). This is done with uniform probability
     over the candidates. Then, subsequent positions in the ordering are filled by taking either the
     next available candidate on the left or on the right, both cases occuring with probability 0.5.

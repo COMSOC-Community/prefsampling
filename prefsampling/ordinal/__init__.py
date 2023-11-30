@@ -1,6 +1,6 @@
 """
-Module for sampling ordinal preferences:
-    preferences in which an agent ranks the candidates by order of preference.
+Module for sampling ordinal preferences: preferences in which an agent ranks the candidates by
+order of preference.
 """
 
 from prefsampling.ordinal.urn import urn
@@ -34,5 +34,5 @@ __all__ = [
     "mallows",
     "norm_mallows",
     "euclidean",
-    "plackett_luce"
+    "plackett_luce",
 ]

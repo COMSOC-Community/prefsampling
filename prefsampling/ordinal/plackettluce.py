@@ -7,7 +7,7 @@ from prefsampling.decorators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def plackett_luce(
-        num_voters: int, num_candidates: int, alphas: list[float], seed: int = None
+    num_voters: int, num_candidates: int, alphas: list[float], seed: int = None
 ) -> np.ndarray:
     """
     Generates votes according to Plackett-Luce model.
@@ -31,7 +31,7 @@ def plackett_luce(
     """
 
     if len(alphas) != num_candidates:
-        raise ValueError(f'Length of alphas should be equal to num_candidates')
+        raise ValueError(f"Length of alphas should be equal to num_candidates")
 
     rng = np.random.default_rng(seed)
 

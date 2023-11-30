@@ -7,8 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python Module Index &#8212; PrefSampling</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Validation &#8212; PrefSampling</title>
   
   
   
@@ -40,14 +41,13 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'py-modindex';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'validation';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-
+    <link rel="next" title="Reference" href="reference/index.html" />
+    <link rel="prev" title="Quick Start" href="quickstart.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-
-
   </head>
   
   
@@ -132,11 +132,11 @@
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Validation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
@@ -202,6 +202,54 @@
 
 
 
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/validation.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
   title="Fullscreen mode"
@@ -233,7 +281,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -244,11 +294,27 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1></h1>
+    <h1>Validation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure">Procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impartial">Impartial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impartial-anonymous">Impartial Anonymous</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratification">Stratification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mallows">Mallows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peaked">Single-Peaked</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -258,39 +324,42 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-p"><strong>p</strong></a>
-   </div>
-
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-p"><td></td><td>
-       <strong>p</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <code class="xref">prefsampling</code></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="reference/approval/index.html#module-prefsampling.approval"><code class="xref">prefsampling.approval</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="reference/core/index.html#module-prefsampling.core.euclidean"><code class="xref">prefsampling.core.euclidean</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="reference/ordinal/index.html#module-prefsampling.ordinal"><code class="xref">prefsampling.ordinal</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <section id="validation">
+<span id="id1"></span><h1>Validation<a class="headerlink" href="#validation" title="Permalink to this heading">#</a></h1>
+<p>In order to ensure the correctness of the samplers we provide in this package,
+we implemented different tests. First we implemented typical Python tests to make sure
+that the developed features are correct from a programming perspective. But more
+importantly, we also implemented statistical tests to ensure that the samplers
+actually sample what we want. We present these validations below.</p>
+<section id="procedure">
+<h2>Procedure<a class="headerlink" href="#procedure" title="Permalink to this heading">#</a></h2>
+<p>To validate each sampler, we ran chi-squared tests to compare the distribution of the
+samples it is generating to the theoretical distribution of these samples. We also
+display this information in a graph to assess (non-scientifically) the adequation.</p>
+</section>
+<section id="ordinal-samplers">
+<h2>Ordinal Samplers<a class="headerlink" href="#ordinal-samplers" title="Permalink to this heading">#</a></h2>
+<section id="impartial">
+<h3>Impartial<a class="headerlink" href="#impartial" title="Permalink to this heading">#</a></h3>
+<a class="reference internal image-reference" href="_images/Frequencies_Impartial.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/Frequencies_Impartial.png" style="width: 500px;" /></a>
+</section>
+<section id="impartial-anonymous">
+<h3>Impartial Anonymous<a class="headerlink" href="#impartial-anonymous" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="stratification">
+<h3>Stratification<a class="headerlink" href="#stratification" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="mallows">
+<h3>Mallows<a class="headerlink" href="#mallows" title="Permalink to this heading">#</a></h3>
+<a class="reference internal image-reference" href="_images/Frequencies_Mallows_0.5.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/Frequencies_Mallows_0.5.png" style="width: 500px;" /></a>
+</section>
+<section id="single-peaked">
+<h3>Single-Peaked<a class="headerlink" href="#single-peaked" title="Permalink to this heading">#</a></h3>
+<a class="reference internal image-reference" href="_images/Frequencies_SP_Walsh.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/Frequencies_SP_Walsh.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/Frequencies_SP_Conitzer.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/Frequencies_SP_Conitzer.png" style="width: 500px;" /></a>
+</section>
+</section>
+</section>
 
 
                 </article>
@@ -303,12 +372,52 @@ document.write(`
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="quickstart.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quick Start</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="reference/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure">Procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impartial">Impartial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impartial-anonymous">Impartial Anonymous</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratification">Stratification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mallows">Mallows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peaked">Single-Peaked</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -1,66 +1,51 @@
-from collections.abc import Iterable
-from copy import deepcopy
-
 import numpy as np
 
 from prefsampling.ordinal import single_peaked_walsh, single_peaked_conitzer
-from validation.utils import observed_frequencies
+from validation.utils import get_all_single_peaked_ranks
+from validation.validator import Validator
 
 
-def get_all_single_peaked_ranks(num_candidates: int):
-    def recursor(a, b, all_sp_ranks, rank, position):
-        if a == b:
-            rank[position] = a
-            all_sp_ranks.append(tuple(rank))
-            return
-        rank[position] = a
-        recursor(a + 1, b, all_sp_ranks, rank, position - 1)
+class SPWalshValidator(Validator):
+    def __init__(self, num_candidates, all_outcomes=None):
+        super(SPWalshValidator, self).__init__(
+            num_candidates,
+            sampler_func=single_peaked_walsh,
+            all_outcomes=all_outcomes,
+        )
 
-        rank = deepcopy(rank)
-        rank[position] = b
-        recursor(a, b - 1, all_sp_ranks, rank, position - 1)
+    def set_all_outcomes(self):
+        self.all_outcomes = get_all_single_peaked_ranks(self.num_candidates)
 
-    res = []
-    recursor(0, num_candidates - 1, res, [0] * num_candidates, num_candidates - 1)
-    return res
+    def set_theoretical_distribution(self):
+        self.theoretical_distribution = np.full(
+            len(self.all_outcomes), 1 / len(self.all_outcomes)
+        )
 
-
-def single_peaked_walsh_distribution(all_sp_ranks: list[tuple[int]]):
-    return np.full(len(all_sp_ranks), 1 / len(all_sp_ranks))
+    def sample_cast(self, sample):
+        return tuple(sample)
 
 
-def single_peaked_walsh_observed_frequencies(
-    num_observations: int, all_ranks: list[tuple[int]]
-):
-    return observed_frequencies(
-        num_observations,
-        all_ranks,
-        lambda: single_peaked_walsh(num_observations, len(all_ranks[0])),
-    )
+class SPConitzerValidator(Validator):
+    def __init__(self, num_candidates, all_outcomes=None):
+        super(SPConitzerValidator, self).__init__(
+            num_candidates,
+            sampler_func=single_peaked_conitzer,
+            all_outcomes=all_outcomes,
+        )
 
+    def set_all_outcomes(self):
+        self.all_outcomes = get_all_single_peaked_ranks(self.num_candidates)
 
-def single_peaked_conitzer_probability(rank: tuple, num_candidates: int):
-    res = 1/num_candidates
-    for alt in rank:
-        if alt == 0 or alt == num_candidates - 1:
-            break
-        res *= 1/2
-    return res
+    def set_theoretical_distribution(self):
+        distribution = np.zeros(len(self.all_outcomes))
+        for i, rank in enumerate(self.all_outcomes):
+            probability = 1 / self.num_candidates
+            for alt in rank:
+                if alt == 0 or alt == self.num_candidates - 1:
+                    break
+                probability *= 1 / 2
+            distribution[i] = probability
+        self.theoretical_distribution = distribution
 
-
-def single_peaked_conitzer_distribution(all_sp_ranks: list[tuple[int]]):
-    distribution = np.zeros(len(all_sp_ranks))
-    num_candidates = len(all_sp_ranks[0])
-    for i, rank in enumerate(all_sp_ranks):
-        distribution[i] = single_peaked_conitzer_probability(rank, num_candidates)
-    return distribution
-
-
-def single_peaked_contizer_observed_frequencies(
-    num_observations: int, all_ranks: list[tuple[int]]
-):
-    return observed_frequencies(
-        num_observations,
-        all_ranks,
-        lambda: single_peaked_conitzer(num_observations, len(all_ranks[0])),
-    )
+    def sample_cast(self, sample):
+        return tuple(sample)

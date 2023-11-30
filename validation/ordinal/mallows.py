@@ -2,8 +2,45 @@ import math
 
 import numpy as np
 
-from prefsampling.ordinal import mallows
-from validation.utils import observed_frequencies
+from prefsampling.ordinal import mallows, norm_mallows
+from validation.utils import get_all_ranks
+from validation.validator import Validator
+
+
+class OrdinalMallowsValidator(Validator):
+    def __init__(
+        self,
+        num_candidates,
+        phi,
+        central_vote,
+        use_norm_mallows=False,
+        all_outcomes=None,
+    ):
+        params = {"phi": phi, "central_vote": central_vote}
+        if use_norm_mallows:
+            sampler = norm_mallows
+        else:
+            sampler = mallows
+        super(OrdinalMallowsValidator, self).__init__(
+            num_candidates,
+            sampler_func=sampler,
+            sampler_parameters=params,
+            all_outcomes=all_outcomes,
+        )
+
+    def set_all_outcomes(self):
+        self.all_outcomes = get_all_ranks(self.num_candidates)
+
+    def set_theoretical_distribution(self):
+        distribution = np.zeros(len(self.all_outcomes))
+        for i, rank in enumerate(self.all_outcomes):
+            distribution[i] = self.sampler_parameters["phi"] ** kendall_tau_distance(
+                self.sampler_parameters["central_vote"], rank
+            )
+        self.theoretical_distribution = distribution / sum(distribution)
+
+    def sample_cast(self, sample):
+        return tuple(sample)
 
 
 def kendall_tau_distance(rank1: tuple, rank2: tuple):
@@ -13,31 +50,6 @@ def kendall_tau_distance(rank1: tuple, rank2: tuple):
             if rank2.index(alt2) < rank2.index(alt1):
                 distance += 1
     return distance
-
-
-# assert kendall_tau_distance([0, 1, 2, 3], [3, 2, 1, 0]) == math.comb(4, 2)
-# assert kendall_tau_distance([0, 1, 2, 3], [1, 2, 3, 0]) == 3
-
-
-def mallows_probability(central_rank: tuple, rank: tuple, phi: float):
-    return phi ** kendall_tau_distance(central_rank, rank)
-
-
-def mallows_distribution(central_rank: tuple, phi: float, all_ranks: list[tuple[int]]):
-    distribution = np.zeros(len(all_ranks))
-    for i, rank in enumerate(all_ranks):
-        distribution[i] = mallows_probability(central_rank, rank, phi)
-    return distribution / sum(distribution)
-
-
-def mallows_observed_frequencies(
-    central_rank: tuple, phi: float, num_observations: int, all_ranks: list[tuple[int]]
-):
-    return observed_frequencies(
-        num_observations,
-        all_ranks,
-        lambda: mallows(num_observations, len(central_rank), phi=phi),
-    )
 
 
 def frequencies_by_distance(

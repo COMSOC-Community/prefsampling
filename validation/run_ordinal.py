@@ -1,24 +1,10 @@
 import logging
 import os
 
-from validation.ordinal.impartial import (
-    impartial_observed_frequencies,
-    impartial_distribution,
-)
-from validation.ordinal.mallows import (
-    mallows_observed_frequencies,
-    mallows_distribution,
-    frequencies_by_distance,
-)
-from validation.ordinal.singlepeaked import (
-    single_peaked_walsh_distribution,
-    get_all_single_peaked_ranks,
-    single_peaked_walsh_observed_frequencies,
-    single_peaked_contizer_observed_frequencies,
-    single_peaked_conitzer_distribution,
-)
-from validation.utils import get_all_ranks
-from validation.validators import run_chi_square_test, plot_frequencies
+from validation.ordinal.impartial import OrdinalImpartialValidator
+from validation.ordinal.mallows import OrdinalMallowsValidator
+from validation.ordinal.singlepeaked import SPWalshValidator, SPConitzerValidator
+from validation.utils import get_all_ranks, get_all_single_peaked_ranks
 
 
 def run_mallows_validator(num_observations, num_candidates, all_ranks, plot_dir=None):
@@ -126,12 +112,12 @@ def run_single_peaked_validator(num_observations, num_candidates, plot_dir=None)
         f"(#sample = {num_observations}, p-value={test_result.pvalue})",
         file_path=plot_file_path,
         xlabel="Single-peaked rank identifier (ordered by theoretical frequency)",
-        x_tick_labels=[" < ".join([str(j) for j in rank]) for rank in all_sp_ranks]
+        x_tick_labels=[" < ".join([str(j) for j in rank]) for rank in all_sp_ranks],
     )
 
 
 def run_all_validators():
-    num_candidates = 4
+    num_candidates = 5
     num_observations = 100000
 
     all_ranks = get_all_ranks(num_candidates)
@@ -143,18 +129,55 @@ def run_all_validators():
 
     mallows_dir = os.path.join(plot_dir_root, "mallows")
     os.makedirs(mallows_dir, exist_ok=True)
-    run_mallows_validator(
-        num_observations, num_candidates, all_ranks, plot_dir=mallows_dir
+    phi = 0.5
+    logging.info("==================")
+    logging.info("Mallow's validator")
+    logging.info("==================")
+    mallows_validator = OrdinalMallowsValidator(
+        num_candidates, phi, tuple(range(num_candidates)), all_outcomes=all_ranks
+    )
+    mallows_validator.run(
+        num_observations,
+        model_name="Mallows' model",
+        graph_file_path=os.path.join(mallows_dir, f"Frequencies_Mallows_{phi}.png"),
     )
 
     impartial_dir = os.path.join(plot_dir_root, "impartial")
     os.makedirs(impartial_dir, exist_ok=True)
-    run_impartial_ordinal_validator(num_observations, all_ranks, plot_dir=impartial_dir)
+    logging.info("===================")
+    logging.info("Impartial validator")
+    logging.info("===================")
+    impartial_validator = OrdinalImpartialValidator(
+        num_candidates, all_outcomes=all_ranks
+    )
+    impartial_validator.run(
+        num_observations,
+        model_name="impartial culture",
+        graph_file_path=os.path.join(impartial_dir, f"Frequencies_Impartial.png"),
+    )
 
     single_peaked_dir = os.path.join(plot_dir_root, "single_peaked")
     os.makedirs(single_peaked_dir, exist_ok=True)
-    run_single_peaked_validator(
-        num_observations, num_candidates, plot_dir=single_peaked_dir
+    all_sp_ranks = get_all_single_peaked_ranks(num_candidates)
+    logging.info("=============================")
+    logging.info("Single-peaked Walsh validator")
+    logging.info("=============================")
+    sp_walsh_validator = SPWalshValidator(num_candidates, all_outcomes=all_sp_ranks)
+    sp_walsh_validator.run(
+        num_observations,
+        model_name="single peaked Walsh' model",
+        graph_file_path=os.path.join(single_peaked_dir, f"Frequencies_SP_Walsh.png"),
+    )
+    logging.info("================================")
+    logging.info("Single-peaked Conitzer validator")
+    logging.info("================================")
+    sp_conitzer_validator = SPConitzerValidator(
+        num_candidates, all_outcomes=all_sp_ranks
+    )
+    sp_conitzer_validator.run(
+        num_observations,
+        model_name="single peaked Walsh' model",
+        graph_file_path=os.path.join(single_peaked_dir, f"Frequencies_SP_Conitzer.png"),
     )
 
 

@@ -8,10 +8,9 @@ from prefsampling.decorators import validate_num_voters_candidates
 
 
 @validate_num_voters_candidates
-def group_separable(num_voters: int,
-                    num_candidates: int,
-                    tree: str = 'random',
-                    seed: int = None):
+def group_separable(
+    num_voters: int, num_candidates: int, tree: str = "random", seed: int = None
+):
     """
     Algorithm from
     'The Complexity of Election Problems with Group-Separable Preferences' paper.
@@ -23,9 +22,13 @@ def group_separable(num_voters: int,
         m = num_candidates
         n = num_voters
 
-        if tree == 'random':
-            func = lambda m, r: 1. / (m - 1) * math.comb(m - 1, r) * \
-                                math.comb(m - 1 + r, m)
+        if tree == "random":
+            func = (
+                lambda m, r: 1.0
+                / (m - 1)
+                * math.comb(m - 1, r)
+                * math.comb(m - 1 + r, m)
+            )
             buckets = [func(m, r) for r in range(1, m)]
 
             denominator = sum(buckets)
@@ -33,31 +36,32 @@ def group_separable(num_voters: int,
 
             num_internal_nodes = rng.choice(len(buckets), 1, p=buckets)[0] + 1
 
-            decomposition_tree = \
-                _decompose_tree(num_candidates, num_internal_nodes, rng)
+            decomposition_tree = _decompose_tree(
+                num_candidates, num_internal_nodes, rng
+            )
 
-        elif tree == 'caterpillar':
+        elif tree == "caterpillar":
             decomposition_tree = _caterpillar(m)
 
-        elif tree == 'balanced':
+        elif tree == "balanced":
             decomposition_tree = _balanced(m)
         else:
-            raise ValueError(f'Incorrect tree type. No such tree type as {tree}.'
-                             f'The available tree types are: random, caterpillar, balanced.')
+            raise ValueError(
+                f"Incorrect tree type. No such tree type as {tree}."
+                f"The available tree types are: random, caterpillar, balanced."
+            )
 
         all_inner_nodes = _get_all_inner_nodes(decomposition_tree)
 
         votes = []
         for _ in range(n):
-
-            signature = [rng.choice([0, 1])
-                         for _ in range(len(all_inner_nodes))]
+            signature = [rng.choice([0, 1]) for _ in range(len(all_inner_nodes))]
 
             for i, node in enumerate(all_inner_nodes):
                 node.reverse = signature[i]
 
             raw_vote = _sample_a_vote(decomposition_tree)
-            vote = [int(candidate.replace('x', '')) for candidate in raw_vote]
+            vote = [int(candidate.replace("x", "")) for candidate in raw_vote]
             votes.append(vote)
 
             for i, node in enumerate(all_inner_nodes):
@@ -105,8 +109,9 @@ def _sample_a_vote(node, reverse=False):
             output.append(_sample_a_vote(node.children[i]))
     else:
         for i in range(len(node.children)):
-            output.append(_sample_a_vote(node.children[len(node.children) - 1 - i],
-                                         reverse=True))
+            output.append(
+                _sample_a_vote(node.children[len(node.children) - 1 - i], reverse=True)
+            )
 
     return list(chain.from_iterable(output))
 
@@ -140,22 +145,20 @@ class Node:
         self.leaf = False
 
 
-def _generate_patterns(num_nodes: int = None,
-                       num_internal_nodes: int = None,
-                       rng=None):
+def _generate_patterns(num_nodes: int = None, num_internal_nodes: int = None, rng=None):
     """
     Generates a random patter.
     """
-    patterns = ['M0' for _ in range(num_nodes - num_internal_nodes)] + \
-               ['M1' for _ in range(num_internal_nodes)]
+    patterns = ["M0" for _ in range(num_nodes - num_internal_nodes)] + [
+        "M1" for _ in range(num_internal_nodes)
+    ]
     rng.shuffle(patterns)
     return patterns
 
 
-def _generate_tree(num_nodes: int = None,
-                   num_internal_nodes: int = None,
-                   patterns=None,
-                   rng=None):
+def _generate_tree(
+    num_nodes: int = None, num_internal_nodes: int = None, patterns=None, rng=None
+):
     """
     Algorithm from
     'A linear-time embedding_id for the generation of trees' paper.
@@ -167,15 +170,15 @@ def _generate_tree(num_nodes: int = None,
     ctr = 0
     inner_ctr = 0
     for i, pattern in enumerate(patterns):
-        if pattern == 'M0':
-            sequence.append('x' + str(ctr))
+        if pattern == "M0":
+            sequence.append("x" + str(ctr))
             sizes.append(1)
             ctr += 1
-        elif pattern == 'M1':
-            sequence.append('v' + str(inner_ctr))
-            sequence.append('()1')  # instead of 'o'
-            sequence.append('f1')
-            sequence.append('f1')
+        elif pattern == "M1":
+            sequence.append("v" + str(inner_ctr))
+            sequence.append("()1")  # instead of 'o'
+            sequence.append("f1")
+            sequence.append("f1")
             sizes.append(4)
             larges.append(i)
             inner_ctr += 1
@@ -189,19 +192,20 @@ def _generate_tree(num_nodes: int = None,
 
     pos_to_insert = []
     for i, elem in enumerate(sequence):
-        if elem == '()1':
+        if elem == "()1":
             pos_to_insert.append(i)
 
-    choices = list(rng.choice([i for i in range(len(pos_to_insert))],
-                              size=num_edges, replace=True))
+    choices = list(
+        rng.choice([i for i in range(len(pos_to_insert))], size=num_edges, replace=True)
+    )
     choices.sort(reverse=True)
 
     for choice in choices:
         sizes[larges[choice]] += 1
-        sequence.insert(pos_to_insert[choice], 'f1')
+        sequence.insert(pos_to_insert[choice], "f1")
 
     for i in range(len(pos_to_insert)):
-        sequence.remove('()1')
+        sequence.remove("()1")
 
     return sequence, sizes
 
@@ -212,9 +216,9 @@ def _turn_pattern_into_tree(pattern) -> Node:
     """
     stack = []
     for i, element in enumerate(pattern):
-        if 'x' in element or 'v' in element:
+        if "x" in element or "v" in element:
             stack.append(Node(element))
-        if 'f' in element:
+        if "f" in element:
             parent = stack.pop()
             child = stack.pop()
             parent.add_child(child)
@@ -228,12 +232,12 @@ def _cycle_lemma(sequence):
     min = 0
     pos_min = 0
     for element in sequence:
-        if 'x' in element or 'v' in element:
+        if "x" in element or "v" in element:
             if height <= min:
                 pos_min = pos
                 min = height
             height += 1
-        if 'f' in element:
+        if "f" in element:
             height -= 1
         pos += 1
 
@@ -246,7 +250,7 @@ def _cycle_lemma(sequence):
 
 
 def _add_num_leaf_descendants(node):
-    """ add total number of descendants to each internal node """
+    """add total number of descendants to each internal node"""
 
     if node.leaf:
         node.num_leaf_descendants = 1
@@ -260,7 +264,6 @@ def _add_num_leaf_descendants(node):
 
 def _add_scheme(node):
     for starting_pos in node.scheme_1:
-
         pos = starting_pos
         for child in node.children:
             if pos in child.scheme_1:
@@ -290,7 +293,7 @@ def _construct_vector_from_scheme(node):
     y = node.scheme_2
     node.scheme = {k: x.get(k, 0) + y.get(k, 0) for k in set(x) | set(y)}
 
-    weight = 1. / sum(node.scheme.values())
+    weight = 1.0 / sum(node.scheme.values())
 
     node.vector = [0 for _ in range(Node.total_num_leaf_descendants)]
     for key in node.scheme:
@@ -301,21 +304,21 @@ def _caterpillar(num_leaves) -> Node:
     """
     Generates a caterpillar tree.
     """
-    root = Node('root')
+    root = Node("root")
     tmp_root = root
     ctr = 0
 
     while num_leaves > 2:
-        leaf = Node('x' + str(ctr))
-        inner_node = Node('v' + str(ctr))
+        leaf = Node("x" + str(ctr))
+        inner_node = Node("v" + str(ctr))
         tmp_root.add_child(leaf)
         tmp_root.add_child(inner_node)
         tmp_root = inner_node
         num_leaves -= 1
         ctr += 1
 
-    leaf_1 = Node('x' + str(ctr))
-    leaf_2 = Node('x' + str(ctr + 1))
+    leaf_1 = Node("x" + str(ctr))
+    leaf_2 = Node("x" + str(ctr + 1))
     tmp_root.add_child(leaf_1)
     tmp_root.add_child(leaf_2)
 
@@ -326,7 +329,7 @@ def _balanced(num_leaves) -> Node:
     """
     Generates a balanced tree.
     """
-    root = Node('root')
+    root = Node("root")
     ctr = 0
 
     q = queue.Queue()
@@ -336,7 +339,7 @@ def _balanced(num_leaves) -> Node:
     while q.qsize() * 2 < num_leaves:
         tmp_root = q.get()
         for _ in range(2):
-            inner_node = Node('v' + str(ctr))
+            inner_node = Node("v" + str(ctr))
             tmp_root.add_child(inner_node)
             q.put(inner_node)
             ctr += 1
@@ -345,7 +348,7 @@ def _balanced(num_leaves) -> Node:
     while ctr < num_leaves:
         tmp_root = q.get()
         for _ in range(2):
-            node = Node('x' + str(ctr))
+            node = Node("x" + str(ctr))
             tmp_root.add_child(node)
             ctr += 1
 

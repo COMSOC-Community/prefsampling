@@ -37,7 +37,7 @@ def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndar
 
 @validate_num_voters_candidates
 def impartial_anonymous(
-        num_voters: int, num_candidates: int, seed: int = None
+    num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes from impartial anonymous culture.
@@ -70,7 +70,7 @@ def impartial_anonymous(
 
 @validate_num_voters_candidates
 def stratification(
-        num_voters: int, num_candidates: int, weight: float = 0.5, seed: int = None
+    num_voters: int, num_candidates: int, weight: float = 0.5, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes from stratification model.

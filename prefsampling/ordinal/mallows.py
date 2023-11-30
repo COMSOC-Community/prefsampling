@@ -8,7 +8,6 @@ def mallows(
     num_voters: int,
     num_candidates: int,
     phi: float = 0.5,
-    weight: float = 0,
     seed: int = None,
     central_vote: np.ndarray = None,
 ) -> np.ndarray:
@@ -23,8 +22,6 @@ def mallows(
         Number of Candidates.
     phi : float
         The dispersion coefficient.
-    weight : float
-
     seed : int
         Seed for numpy random number generator.
     central_vote : np.ndarray
@@ -43,20 +40,12 @@ def mallows(
     insert_distributions = [
         _insert_prob_distr(i, phi) for i in range(1, num_candidates)
     ]
-    votes = np.zeros((num_voters, num_candidates))
+    votes = np.zeros((num_voters, num_candidates), dtype=int)
     for i in range(num_voters):
         vote = _mallows_vote(num_candidates, insert_distributions, rng=rng)
-        if weight > 0 and rng.random() <= weight:
-            np.flip(vote)
-        votes[i] = vote
-
-    if central_vote is not None:
-        for i, vote in enumerate(votes):
-            new_vote = [0] * len(vote)
-            for i in range(num_candidates):
-                new_vote[vote[i]] = central_vote[i]
-            votes[i] = new_vote
-
+        if central_vote is not None:
+            vote = tuple(central_vote[i] for i in vote)
+        votes[i, :] = vote
     return votes
 
 
@@ -65,7 +54,6 @@ def norm_mallows(
     num_voters: int,
     num_candidates: int,
     norm_phi: float = 0.5,
-    weight: float = 0,
     seed: int = None,
     central_vote: np.ndarray = None,
 ) -> np.ndarray:
@@ -80,8 +68,6 @@ def norm_mallows(
         Number of Candidates.
     norm_phi : float
         The normalised dispersion coefficient.
-    weight : float
-
     seed : int
         Seed for numpy random number generator.
     central_vote : np.ndarray
@@ -98,7 +84,7 @@ def norm_mallows(
         )
 
     phi = phi_from_norm_phi(num_candidates, norm_phi)
-    return mallows(num_voters, num_candidates, phi, weight, seed, central_vote)
+    return mallows(num_voters, num_candidates, phi, seed, central_vote)
 
 
 def _insert_prob_distr(position: int, phi: float) -> np.ndarray:
@@ -148,7 +134,7 @@ def _mallows_vote(
         The vote.
 
     """
-    vote = np.zeros(1)
+    vote = np.zeros(1, dtype=int)
     for j in range(1, num_candidates):
         insert_distribution = insert_distributions[j - 1]
         index = rng.choice(range(len(insert_distribution)), p=insert_distribution)

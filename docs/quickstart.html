@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -33,9 +33,9 @@
     <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/doctools.js"></script>
@@ -44,7 +44,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'quickstart';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Complete Guide" href="usage.html" />
+    <link rel="next" title="Validation" href="validation.html" />
     <link rel="prev" title="Installation" href="installation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -118,7 +118,6 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -137,7 +136,7 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Complete Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
@@ -265,7 +264,6 @@
 </button>
 
 
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -276,7 +274,6 @@ document.write(`
 `);
 </script>
 
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -284,7 +281,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -300,6 +299,21 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organisation-of-the-package">Organisation of the package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-types">Sample Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-syntax">General Syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#samplers">Samplers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -311,7 +325,187 @@ document.write(`
                   
   <section id="quick-start">
 <span id="quickstart"></span><h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading">#</a></h1>
-<p>lalala</p>
+<section id="organisation-of-the-package">
+<h2>Organisation of the package<a class="headerlink" href="#organisation-of-the-package" title="Permalink to this heading">#</a></h2>
+<p>The samplers are organised in the package based on the format of sample they produce.
+The module <a class="reference internal" href="reference/ordinal/index.html#module-prefsampling.ordinal" title="prefsampling.ordinal"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.ordinal</span></code></a> contains the ordinal samplers that
+generate rankings of the alternative.
+The module <a class="reference internal" href="reference/approval/index.html#module-prefsampling.approval" title="prefsampling.approval"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.approval</span></code></a> contains the samplers for approval preferences,
+the ones that generate sets of alternatives.</p>
+</section>
+<section id="sample-types">
+<h2>Sample Types<a class="headerlink" href="#sample-types" title="Permalink to this heading">#</a></h2>
+<p>To make it easy to embed the package in all kinds of tools, we use basic Python types:</p>
+<ul class="simple">
+<li><p>Ordinal samplers return collections of <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code>, that is, <a class="reference external" href="https://numpy.org/">Numpy</a> arrays where the most preferred alternative is at position 0, the next one at position 1 and so forth;</p></li>
+<li><p>Approval samplers return collections of <code class="code docutils literal notranslate"><span class="pre">set</span></code>, where each set contains the approved alternatives.</p></li>
+</ul>
+</section>
+<section id="general-syntax">
+<h2>General Syntax<a class="headerlink" href="#general-syntax" title="Permalink to this heading">#</a></h2>
+<p>All the sampler we provide have the same signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The parameter <code class="code docutils literal notranslate"><span class="pre">num_voters</span></code> represents the number of samples that will be generated and
+the parameter <code class="code docutils literal notranslate"><span class="pre">num_candidates</span></code> the number of alternatives to consider.
+The <code class="code docutils literal notranslate"><span class="pre">seed</span></code> parameter can be used to pass the seed used to defined the numpy
+random number generator to give you more control if needed (for replication for instance).
+Other parameters are specific to the samplers.</p>
+</section>
+<section id="samplers">
+<h2>Samplers<a class="headerlink" href="#samplers" title="Permalink to this heading">#</a></h2>
+<p>In the following table, we present all the samplers provided by the package, they all follow
+the syntax described above.</p>
+<section id="ordinal-samplers">
+<h3>Ordinal Samplers<a class="headerlink" href="#ordinal-samplers" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Sampler</p></th>
+<th class="head"><p>**args</p></th>
+<th class="head"><p>**kwargs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.impartial" title="prefsampling.ordinal.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.impartial_anonymous" title="prefsampling.ordinal.impartial_anonymous"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_anonymous()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.mallows" title="prefsampling.ordinal.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code> (defaults to 0.5)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">central_vote</span></code> (defaults to [0, 1, 2, …])</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.norm_mallows" title="prefsampling.ordinal.norm_mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">norm_mallows()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">norm_phi</span></code> (defaults to 0.5)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">central_vote</span></code> (defaults to [0, 1, 2, …])</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.euclidean" title="prefsampling.ordinal.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">space</span></code> (defaults to <a class="reference internal" href="reference/core/index.html#prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM" title="prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM"><code class="xref py py-const docutils literal notranslate"><span class="pre">EUCLIDEAN_SPACE_UNIFORM</span></code></a>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">dimension</span></code> (defaults to 2)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.plackett_luce" title="prefsampling.ordinal.plackett_luce"><code class="xref py py-func docutils literal notranslate"><span class="pre">plackett_luce()</span></code></a></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">alphas</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.urn" title="prefsampling.ordinal.urn"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">alpha</span></code> (defaults to 0.1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.stratification" title="prefsampling.ordinal.stratification"><code class="xref py py-func docutils literal notranslate"><span class="pre">stratification()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">weight</span></code> (defaults to 0.5)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_conitzer" title="prefsampling.ordinal.single_peaked_conitzer"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_peaked_conitzer()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_walsh" title="prefsampling.ordinal.single_peaked_walsh"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_peaked_walsh()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_circle" title="prefsampling.ordinal.single_peaked_circle"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_peaked_circle()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.single_crossing" title="prefsampling.ordinal.single_crossing"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_crossing()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="approval-samplers">
+<h3>Approval Samplers<a class="headerlink" href="#approval-samplers" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Sampler</p></th>
+<th class="head"><p>**args</p></th>
+<th class="head"><p>**kwargs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">p</span></code> (defaults to 0.5)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.identity" title="prefsampling.approval.identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">identity()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">p</span></code> (defaults to 0.5)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.resampling" title="prefsampling.approval.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code> (defaults to 0.5)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code> (defaults to 0.5)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">central_vote</span></code> (defaults to {0, 1, 2, …})</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.disjoint_resampling" title="prefsampling.approval.disjoint_resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">disjoint_resampling()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code> (defaults to 0.5)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code> (defaults to 0.5)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">g</span></code> (defaults to 2)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.moving_resampling" title="prefsampling.approval.moving_resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code> (defaults to 0.5)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code> (defaults to 0.5)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">num_legs</span></code> (defaults to 2)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.euclidean" title="prefsampling.approval.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">space</span></code> (defaults to <a class="reference internal" href="reference/core/index.html#prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM" title="prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM"><code class="xref py py-const docutils literal notranslate"><span class="pre">EUCLIDEAN_SPACE_UNIFORM</span></code></a>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">dimension</span></code> (defaults to 2)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">radius</span></code> (defaults to 0.0)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.noise" title="prefsampling.approval.noise"><code class="xref py py-func docutils literal notranslate"><span class="pre">noise()</span></code></a></p></td>
+<td><p>—</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code> (defaults to 0.1)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code> (defaults to 0.5)</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
 </section>
 
 
@@ -323,7 +517,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="installation.html"
@@ -335,11 +529,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="usage.html"
+       href="validation.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Complete Guide</p>
+        <p class="prev-next-title">Validation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -349,6 +543,27 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organisation-of-the-package">Organisation of the package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-types">Sample Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-syntax">General Syntax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#samplers">Samplers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -366,7 +581,6 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
-
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -393,8 +607,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>

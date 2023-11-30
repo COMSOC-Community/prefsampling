@@ -2,7 +2,9 @@ import numpy as np
 from prefsampling.approval.resampling import resampling
 
 
-def resampling_filter(votes: np.ndarray, phi: float, seed: int = None) -> list[set[int]]:
+def resampling_filter(
+    votes: np.ndarray, phi: float, seed: int = None
+) -> list[set[int]]:
     """
     Returns votes with added Resampling filter.
 

@@ -4,7 +4,7 @@ from prefsampling.ordinal.urn import urn as ordinal_urn
 from prefsampling.ordinal.impartial import (
     impartial as ordinal_impartial_culture,
     impartial_anonymous as ordinal_impartial_anonymous_culture,
-    stratification as ordinal_stratification
+    stratification as ordinal_stratification,
 )
 from prefsampling.ordinal.singlecrossing import (
     single_crossing as ordinal_single_crossing,

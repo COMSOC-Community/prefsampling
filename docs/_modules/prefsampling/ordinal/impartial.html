@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -32,9 +32,9 @@
     <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
@@ -115,7 +115,6 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-
   
 
 <a class="navbar-brand logo" href="../../../index.html">
@@ -134,7 +133,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Complete Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
@@ -214,7 +213,6 @@
 </button>
 
 
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -224,7 +222,6 @@ document.write(`
   </button>
 `);
 </script>
-
 
 <script>
 document.write(`
@@ -270,9 +267,10 @@ document.write(`
 <div class="viewcode-block" id="impartial"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.impartial">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">impartial</span><span class="p">(</span><span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates ordinal votes from impartial culture. In an impartial culture, all votes are equally</span>
-<span class="sd">    likely to occur. In this function, each vote is generated by getting a random permutation of</span>
-<span class="sd">    the candidates from the random number generator.</span>
+<span class="sd">    Generates ordinal votes from impartial culture.</span>
+
+<span class="sd">    In an impartial culture, all votes are equally likely to occur. In this function, each vote is generated by</span>
+<span class="sd">    getting a random permutation of the candidates from the random number generator.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -290,8 +288,8 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
-        <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
+        <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
@@ -300,9 +298,10 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates ordinal votes from impartial anonymous culture. In an impartial anonymous culture,</span>
-<span class="sd">    every multi-set of votes is equally likely to occur. For instance with 3 agents and 2</span>
-<span class="sd">    alternatives, the probability of observing `a &gt; b, a &gt; b, a &gt; b` is 1/4. This probability was</span>
+<span class="sd">    Generates ordinal votes from impartial anonymous culture.</span>
+
+<span class="sd">    In an impartial anonymous culture, every multi-set of votes is equally likely to occur. For instance with 3 voters</span>
+<span class="sd">    and 2 alternatives, the probability of observing `a &gt; b, a &gt; b, a &gt; b` is 1/4. This probability was</span>
 <span class="sd">    1/8 according to the impartial (but not-anonymous) culture.</span>
 
 <span class="sd">    Votes are generated by sampling from an urn model (using :py:func:`~prefsampling.ordinal.urn`)</span>
@@ -325,6 +324,39 @@ document.write(`
     <span class="k">return</span> <span class="n">urn</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">),</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
     <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="stratification"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.stratification">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
+<span class="k">def</span> <span class="nf">stratification</span><span class="p">(</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates ordinal votes from stratification model.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    num_voters : int</span>
+<span class="sd">        Number of Voters.</span>
+<span class="sd">    num_candidates : int</span>
+<span class="sd">        Number of Candidates.</span>
+<span class="sd">    weight : float</span>
+<span class="sd">        Size of the upper class.</span>
+<span class="sd">    seed : int</span>
+<span class="sd">        Seed for numpy random number generator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        Ordinal votes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">upper_class_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">weight</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
+    <span class="n">upper_class_candidates</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">upper_class_size</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
+        <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="n">upper_class_size</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">upper_class_size</span><span class="p">)</span>
+        <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">upper_class_size</span><span class="p">:]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">upper_class_candidates</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">votes</span></div>
 </pre></div>
 
                 </article>
@@ -335,7 +367,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
 </div>
                 </footer>
@@ -360,7 +392,6 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
-
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -387,8 +418,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>
