@@ -10,13 +10,13 @@ def single_peaked_conitzer(
     """
     Generates ordinal votes that are single-peaked following the distribution defined by Conitzer
     (2009). The preferences generated are single-peaked with respect to the axis `0, 1, 2, ...`.
-    Votes are generated uniformly at random as follows. The most preferred alternative (the peak)
-    is selected uniformly at random. Then, either the alternative on the left, or the one on the
+    Votes are generated uniformly at random as follows. The most preferred candidate (the peak)
+    is selected uniformly at random. Then, either the candidate on the left, or the one on the
     right of the peak comes second in the ordering. Each case occurs with probability 0.5.
-    The method is then iterated for the next left and right alternatives (only one of them being
+    The method is then iterated for the next left and right candidates (only one of them being
     different from before).
 
-    This method ensures that the probability for a given alternative to be the peak is uniform
+    This method ensures that the probability for a given candidate to be the peak is uniform
     (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`).
 
     Parameters

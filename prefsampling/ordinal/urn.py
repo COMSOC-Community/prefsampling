@@ -13,7 +13,7 @@ def urn(
     vote, the following happens. With probability `1/(urn_size + 1)` the vote is simply selected
     uniformly at random (following an impartial culture). With probability `1/urn_size` a vote
     from the urn is selected uniformly at random. In both cases, the vote is put back in the urn
-    together with `alpha * m!` copies of the vote (where `m` is the number of alternatives).
+    together with `alpha * m!` copies of the vote (where `m` is the number of candidates).
 
     Parameters
     ----------

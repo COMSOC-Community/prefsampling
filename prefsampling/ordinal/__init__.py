@@ -1,5 +1,5 @@
 """
-Module for sampling ordinal preferences: preferences in which an agent ranks the candidates by
+Module for sampling ordinal preferences: preferences in which a voter ranks the candidates by
 order of preference.
 """
 

@@ -1,5 +1,5 @@
 """
-Module for sampling approval preferences: preferences in which an agent either approves or
+Module for sampling approval preferences: preferences in which a voter either approves or
 disapprove each candidate.
 """
 
