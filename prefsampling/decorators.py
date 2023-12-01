@@ -17,9 +17,9 @@ def validate_num_voters_candidates(func):
         try:
             assert int(num_voters) == num_voters
         except (ValueError, AssertionError):
-            raise TypeError("The number of agents needs to be an integer.")
+            raise TypeError("The number of voters needs to be an integer.")
         if num_voters < 1:
-            raise ValueError("The number of agents needs to be at least 1.")
+            raise ValueError("The number of voters needs to be at least 1.")
         try:
             assert int(num_candidates) == num_candidates
         except (ValueError, AssertionError):

@@ -271,13 +271,13 @@ document.write(`
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates ordinal votes that are single-peaked following the distribution defined by Conitzer</span>
 <span class="sd">    (2009). The preferences generated are single-peaked with respect to the axis `0, 1, 2, ...`.</span>
-<span class="sd">    Votes are generated uniformly at random as follows. The most preferred alternative (the peak)</span>
-<span class="sd">    is selected uniformly at random. Then, either the alternative on the left, or the one on the</span>
+<span class="sd">    Votes are generated uniformly at random as follows. The most preferred candidate (the peak)</span>
+<span class="sd">    is selected uniformly at random. Then, either the candidate on the left, or the one on the</span>
 <span class="sd">    right of the peak comes second in the ordering. Each case occurs with probability 0.5.</span>
-<span class="sd">    The method is then iterated for the next left and right alternatives (only one of them being</span>
+<span class="sd">    The method is then iterated for the next left and right candidates (only one of them being</span>
 <span class="sd">    different from before).</span>
 
-<span class="sd">    This method ensures that the probability for a given alternative to be the peak is uniform</span>
+<span class="sd">    This method ensures that the probability for a given candidate to be the peak is uniform</span>
 <span class="sd">    (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`).</span>
 
 <span class="sd">    Parameters</span>

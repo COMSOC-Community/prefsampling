@@ -8,17 +8,17 @@ Organisation of the package
 
 The samplers are organised in the package based on the format of sample they produce.
 The module :py:mod:`prefsampling.ordinal` contains the ordinal samplers that
-generate rankings of the alternative.
+generate rankings of the candidates.
 The module :py:mod:`prefsampling.approval` contains the samplers for approval preferences,
-the ones that generate sets of alternatives.
+the ones that generate sets of candidates.
 
 Sample Types
 ------------
 
 To make it easy to embed the package in all kinds of tools, we use basic Python types:
 
-* Ordinal samplers return collections of :code:`np.ndarray`, that is, `Numpy <https://numpy.org/>`_ arrays where the most preferred alternative is at position 0, the next one at position 1 and so forth;
-* Approval samplers return collections of :code:`set`, where each set contains the approved alternatives.
+* Ordinal samplers return collections of :code:`np.ndarray`, that is, `Numpy <https://numpy.org/>`_ arrays where the most preferred candidate is at position 0, the next one at position 1 and so forth;
+* Approval samplers return collections of :code:`set`, where each set contains the approved candidates.
 
 General Syntax
 --------------
@@ -30,7 +30,7 @@ All the sampler we provide have the same signature:
     sampler(num_voters, num_candidates, **args, seed=None, **kwargs)
 
 The parameter :code:`num_voters` represents the number of samples that will be generated and
-the parameter :code:`num_candidates` the number of alternatives to consider.
+the parameter :code:`num_candidates` the number of candidates to consider.
 The :code:`seed` parameter can be used to pass the seed used to defined the numpy
 random number generator to give you more control if needed (for replication for instance).
 Other parameters are specific to the samplers.

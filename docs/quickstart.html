@@ -332,16 +332,16 @@ document.write(`
 <h2>Organisation of the package<a class="headerlink" href="#organisation-of-the-package" title="Permalink to this heading">#</a></h2>
 <p>The samplers are organised in the package based on the format of sample they produce.
 The module <a class="reference internal" href="reference/ordinal/index.html#module-prefsampling.ordinal" title="prefsampling.ordinal"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.ordinal</span></code></a> contains the ordinal samplers that
-generate rankings of the alternative.
+generate rankings of the candidates.
 The module <a class="reference internal" href="reference/approval/index.html#module-prefsampling.approval" title="prefsampling.approval"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.approval</span></code></a> contains the samplers for approval preferences,
-the ones that generate sets of alternatives.</p>
+the ones that generate sets of candidates.</p>
 </section>
 <section id="sample-types">
 <h2>Sample Types<a class="headerlink" href="#sample-types" title="Permalink to this heading">#</a></h2>
 <p>To make it easy to embed the package in all kinds of tools, we use basic Python types:</p>
 <ul class="simple">
-<li><p>Ordinal samplers return collections of <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code>, that is, <a class="reference external" href="https://numpy.org/">Numpy</a> arrays where the most preferred alternative is at position 0, the next one at position 1 and so forth;</p></li>
-<li><p>Approval samplers return collections of <code class="code docutils literal notranslate"><span class="pre">set</span></code>, where each set contains the approved alternatives.</p></li>
+<li><p>Ordinal samplers return collections of <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code>, that is, <a class="reference external" href="https://numpy.org/">Numpy</a> arrays where the most preferred candidate is at position 0, the next one at position 1 and so forth;</p></li>
+<li><p>Approval samplers return collections of <code class="code docutils literal notranslate"><span class="pre">set</span></code>, where each set contains the approved candidates.</p></li>
 </ul>
 </section>
 <section id="general-syntax">
@@ -351,7 +351,7 @@ the ones that generate sets of alternatives.</p>
 </pre></div>
 </div>
 <p>The parameter <code class="code docutils literal notranslate"><span class="pre">num_voters</span></code> represents the number of samples that will be generated and
-the parameter <code class="code docutils literal notranslate"><span class="pre">num_candidates</span></code> the number of alternatives to consider.
+the parameter <code class="code docutils literal notranslate"><span class="pre">num_candidates</span></code> the number of candidates to consider.
 The <code class="code docutils literal notranslate"><span class="pre">seed</span></code> parameter can be used to pass the seed used to defined the numpy
 random number generator to give you more control if needed (for replication for instance).
 Other parameters are specific to the samplers.</p>

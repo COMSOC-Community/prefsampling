@@ -10,7 +10,7 @@ Development
 
 We try to enforce uniformity within the package. Here are some general guidelines.
 
-- All samplers have `num_agents` and `num_candidates` as their first positional arguments
+- All samplers have `num_voters` and `num_candidates` as their two first positional arguments
 - All samplers accept a `seed` parameter to set the seed of the random number generator
 
 The tests are run with unittest. This is the procedure when adding a new sampler.
