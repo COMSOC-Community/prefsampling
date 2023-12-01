@@ -20,6 +20,8 @@ def single_crossing(
     generated, no valid swap exists (the final vote being `m > m - 1 > ...`). Once the domain is
     set, we select for each voter one vote from the domain uniformly at random.
 
+    TODO: This is wrong
+
     This procedure ensures that every set of single-crossing votes for `num_voters` and
     `num_candidates` is equally likely to occur.
 

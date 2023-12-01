@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -33,9 +33,9 @@
     <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/doctools.js"></script>
@@ -118,7 +118,6 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -265,7 +264,6 @@
 </button>
 
 
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -275,7 +273,6 @@ document.write(`
   </button>
 `);
 </script>
-
 
 <script>
 document.write(`
@@ -313,6 +310,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impartial-anonymous">Impartial Anonymous</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratification">Stratification</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mallows">Mallows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plackett-luce">Plackett-Luce</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peaked">Single-Peaked</a></li>
 </ul>
 </li>
@@ -356,6 +354,11 @@ display this information in a graph to assess (non-scientifically) the adequatio
 <h3>Mallows<a class="headerlink" href="#mallows" title="Permalink to this heading">#</a></h3>
 <a class="reference internal image-reference" href="_images/Frequencies_Mallows_0.5.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/Frequencies_Mallows_0.5.png" style="width: 500px;" /></a>
 </section>
+<section id="plackett-luce">
+<h3>Plackett-Luce<a class="headerlink" href="#plackett-luce" title="Permalink to this heading">#</a></h3>
+<a class="reference internal image-reference" href="_images/Frequencies_Plackett_Luce_1s.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/Frequencies_Plackett_Luce_1s.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/Frequencies_Plackett_Luce_rnd.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/Frequencies_Plackett_Luce_rnd.png" style="width: 500px;" /></a>
+</section>
 <section id="single-peaked">
 <h3>Single-Peaked<a class="headerlink" href="#single-peaked" title="Permalink to this heading">#</a></h3>
 <a class="reference internal image-reference" href="_images/Frequencies_SP_Walsh.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/Frequencies_SP_Walsh.png" style="width: 500px;" /></a>
@@ -373,7 +376,7 @@ display this information in a graph to assess (non-scientifically) the adequatio
               
               
                 <footer class="prev-next-footer">
-                  
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="quickstart.html"
@@ -414,6 +417,7 @@ display this information in a graph to assess (non-scientifically) the adequatio
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impartial-anonymous">Impartial Anonymous</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratification">Stratification</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mallows">Mallows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plackett-luce">Plackett-Luce</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peaked">Single-Peaked</a></li>
 </ul>
 </li>
@@ -438,7 +442,6 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
-
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -465,8 +468,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>

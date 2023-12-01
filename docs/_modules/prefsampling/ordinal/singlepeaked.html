@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -32,9 +32,9 @@
     <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
@@ -115,7 +115,6 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-
   
 
 <a class="navbar-brand logo" href="../../../index.html">
@@ -214,7 +213,6 @@
 </button>
 
 
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -224,7 +222,6 @@ document.write(`
   </button>
 `);
 </script>
-
 
 <script>
 document.write(`
@@ -269,30 +266,30 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates ordinal votes that are single-peaked following the distribution defined by Conitzer</span>
-<span class="sd">    (2009). The preferences generated are single-peaked with respect to the axis `0, 1, 2, ...`.</span>
-<span class="sd">    Votes are generated uniformly at random as follows. The most preferred candidate (the peak)</span>
-<span class="sd">    is selected uniformly at random. Then, either the candidate on the left, or the one on the</span>
-<span class="sd">    right of the peak comes second in the ordering. Each case occurs with probability 0.5.</span>
-<span class="sd">    The method is then iterated for the next left and right candidates (only one of them being</span>
-<span class="sd">    different from before).</span>
+<span class="sd">    Generates ordinal votes that are single-peaked following the distribution defined by</span>
+<span class="sd">    `Conitzer (2009) &lt;https://arxiv.org/abs/1401.3449&gt;`_. The preferences generated are</span>
+<span class="sd">    single-peaked with respect to the axis `0, 1, 2, ...`. Votes are generated uniformly at random</span>
+<span class="sd">    as follows. The most preferred candidate (the peak) is selected uniformly at random. Then,</span>
+<span class="sd">    either the candidate on the left, or the one on the right of the peak comes second in the</span>
+<span class="sd">    ordering. Each case occurs with probability 0.5. The method is then iterated for the next left</span>
+<span class="sd">    and right candidates (only one of them being different from before).</span>
 
 <span class="sd">    This method ensures that the probability for a given candidate to be the peak is uniform</span>
 <span class="sd">    (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters : int</span>
-<span class="sd">        Number of Voters.</span>
-<span class="sd">    num_candidates : int</span>
-<span class="sd">        Number of Candidates.</span>
-<span class="sd">    seed : int</span>
-<span class="sd">        Seed for numpy random number generator.</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    np.ndarray</span>
-<span class="sd">        Ordinal votes.</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Ordinal votes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -304,10 +301,10 @@ document.write(`
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">):</span>
             <span class="c1"># If we are stuck on the left or on the right, we fill in the vote</span>
             <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">:]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
+                <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="n">right</span> <span class="o">&gt;=</span> <span class="n">num_candidates</span><span class="p">:</span>
-                <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">:]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
                 <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">right</span>
@@ -330,39 +327,39 @@ document.write(`
 <span class="sd">    determining the most preferred candidate (the peak). This is done with uniform probability</span>
 <span class="sd">    over the candidates. Then, subsequent positions in the ordering are filled by taking either the</span>
 <span class="sd">    next available candidate on the left or on the right, both cases occuring with probability 0.5.</span>
-<span class="sd">    Left and right are defined here in terms of the circular axis: 0, 1, ..., m, 1.</span>
+<span class="sd">    Left and right are defined here in terms of the circular axis: `0, 1, ..., m, 1`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters : int</span>
-<span class="sd">        Number of Voters.</span>
-<span class="sd">    num_candidates : int</span>
-<span class="sd">        Number of Candidates.</span>
-<span class="sd">    seed : int</span>
-<span class="sd">        Seed for numpy random number generator.</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    np.ndarray</span>
-<span class="sd">        Ordinal votes.</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Ordinal votes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
         <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))</span>
         <span class="n">left</span> <span class="o">=</span> <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="n">left</span> <span class="o">%=</span> <span class="n">num_candidates</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
         <span class="n">right</span> <span class="o">=</span> <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">right</span> <span class="o">%=</span> <span class="n">num_candidates</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
                 <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">left</span>
                 <span class="n">left</span> <span class="o">-=</span> <span class="mi">1</span>
-                <span class="n">left</span> <span class="o">%=</span> <span class="n">num_candidates</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">right</span>
                 <span class="n">right</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">right</span> <span class="o">%=</span> <span class="n">num_candidates</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
@@ -371,65 +368,43 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates ordinal votes that are single-peaked following the process described by Walsh (2015).</span>
-<span class="sd">    The votes are generated from least preferred to most preferred candidates. A given position</span>
-<span class="sd">    in the ordering is filled by selecting with uniform probability either the leftmost or the</span>
-<span class="sd">    rightmost candidates that have not yet been positioned in the vote (defined by the axis</span>
-<span class="sd">    0, 1, 2, ...).</span>
+<span class="sd">    Generates ordinal votes that are single-peaked following the process described by</span>
+<span class="sd">    `Walsh (2015) &lt;https://arxiv.org/abs/1503.02766&gt;`_. The votes are generated from least preferred</span>
+<span class="sd">    to most preferred candidates. A given position in the ordering is filled by selecting, with</span>
+<span class="sd">    uniform probability, either the leftmost or the rightmost candidates that have not yet been</span>
+<span class="sd">    positioned in the vote (left and right being defined by the axis `0, 1, 2, ...`).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters : int</span>
-<span class="sd">        Number of Voters.</span>
-<span class="sd">    num_candidates : int</span>
-<span class="sd">        Number of Candidates.</span>
-<span class="sd">    seed : int</span>
-<span class="sd">        Seed for numpy random number generator.</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    np.ndarray</span>
-<span class="sd">        Ordinal votes.</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Ordinal votes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
-        <span class="n">_single_peaked_walsh_recursor</span><span class="p">(</span>
-            <span class="mi">0</span><span class="p">,</span> <span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rng</span>
-        <span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">left_most</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">right_most</span> <span class="o">=</span> <span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">position</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">left_most</span>
+                <span class="n">left_most</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">right_most</span>
+                <span class="n">right_most</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">position</span> <span class="o">-=</span> <span class="mi">1</span>
 
-    <span class="k">return</span> <span class="n">votes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span></div>
-
-
-<span class="k">def</span> <span class="nf">_single_peaked_walsh_recursor</span><span class="p">(</span>
-    <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">vote</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function that implements the recursor needed for sampling preferences that are single-peaked</span>
-<span class="sd">    following the process described by Walsh (2015). Populates the vote by side effect.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    a: int</span>
-<span class="sd">        The leftmost candidate</span>
-<span class="sd">    b: int</span>
-<span class="sd">        The rightmost candidate</span>
-<span class="sd">    vote: np.ndarray</span>
-<span class="sd">        The ballot that will be filled up by side effect.</span>
-<span class="sd">    position: int</span>
-<span class="sd">        The position to place the candidate in the ballot.</span>
-<span class="sd">    rng: np.random.Generator</span>
-<span class="sd">        The random number generator used to perform random operations.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">position</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span>
-    <span class="k">elif</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
-        <span class="n">vote</span><span class="p">[</span><span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
-        <span class="n">_single_peaked_walsh_recursor</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">vote</span><span class="p">,</span> <span class="n">position</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">vote</span><span class="p">[</span><span class="n">position</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
-        <span class="n">_single_peaked_walsh_recursor</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">vote</span><span class="p">,</span> <span class="n">position</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">votes</span></div>
 </pre></div>
 
                 </article>
@@ -440,7 +415,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
 </div>
                 </footer>
@@ -465,7 +440,6 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
-
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -492,8 +466,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>

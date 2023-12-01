@@ -266,47 +266,59 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates ordinal votes that are single-crossing.</span>
+<span class="sd">    Generates ordinal votes that are single-crossing. See `Elkind, Lackner, Peters (2022)</span>
+<span class="sd">    &lt;https://arxiv.org/abs/2205.09092&gt;`_ for the definition.</span>
 
-<span class="sd">    TODO: Fill that up.</span>
+<span class="sd">    This sampler works as follows. We generate a random domain of single-crossing, and then randomly</span>
+<span class="sd">    selects the votes from the domain. The votes in the domain are generated one by one. The first</span>
+<span class="sd">    vote is always `0 &gt; 1 &gt; 2 &gt; ...`. For vote number `k`, all valid swaps of consecutive candidates</span>
+<span class="sd">    are considered where a swap is only valid if in vote number `k - 1` the two candidates had not</span>
+<span class="sd">    already been swapped in previous iterations. One valid swap is selected uniformly at random</span>
+<span class="sd">    and performed on vote number `k`. One can check that after `m * (m-1) / 2 + 1` votes have been</span>
+<span class="sd">    generated, no valid swap exists (the final vote being `m &gt; m - 1 &gt; ...`). Once the domain is</span>
+<span class="sd">    set, we select for each voter one vote from the domain uniformly at random.</span>
+
+<span class="sd">    TODO: This is wrong</span>
+
+<span class="sd">    This procedure ensures that every set of single-crossing votes for `num_voters` and</span>
+<span class="sd">    `num_candidates` is equally likely to occur.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters : int</span>
-<span class="sd">        Number of Voters.</span>
-<span class="sd">    num_candidates : int</span>
-<span class="sd">        Number of Candidates.</span>
-<span class="sd">    seed : int</span>
-<span class="sd">        Seed for numpy random number generator.</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    np.ndarray</span>
-<span class="sd">        Ordinal votes.</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Ordinal votes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">])</span>
 
     <span class="n">domain_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_candidates</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">domain_size</span><span class="p">)]</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))]</span>
 
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">domain_size</span><span class="p">):</span>
-        <span class="n">swap_candidates</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">all_swap_indices</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
         <span class="p">]</span>
-        <span class="n">swap_indices</span> <span class="o">=</span> <span class="n">swap_candidates</span><span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">swap_candidates</span><span class="p">))]</span>
+        <span class="n">swap_indices</span> <span class="o">=</span> <span class="n">all_swap_indices</span><span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_swap_indices</span><span class="p">))]</span>
 
-        <span class="n">domain</span><span class="p">[</span><span class="n">line</span><span class="p">]</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">domain</span><span class="p">[</span><span class="n">line</span><span class="p">][</span><span class="n">swap_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span><span class="p">][</span><span class="n">swap_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">domain</span><span class="p">[</span><span class="n">line</span><span class="p">][</span><span class="n">swap_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
-            <span class="n">domain</span><span class="p">[</span><span class="n">line</span><span class="p">][</span><span class="n">swap_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
-        <span class="p">)</span>
+        <span class="n">new_line</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_line</span><span class="p">[</span><span class="n">swap_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">swap_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">new_line</span><span class="p">[</span><span class="n">swap_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="n">line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">swap_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">domain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_line</span><span class="p">)</span>
 
+    <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">domain_size</span><span class="p">)</span>
-        <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">domain</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
+        <span class="n">votes</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">votes</span></div>
 </pre></div>

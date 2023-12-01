@@ -60,8 +60,8 @@ python -m unittest
 Several tests are automatised. When a new sampler is added to the package, it needs
 to be added in several places for the tests. The following list provides the details:
 
-- Add the sampler to the list `ALL_SAMPLERS` in `test_samplers.py`. Follow the convention for the import statements (that you can guess from the ones already there) to avoid duplicated names. The basic requirements (parameters, validation, etc.) that any sampler need to satisfy will then be checked.
-- Add the sampler to corresponding test file for its ballot format (e.g., `test_ordinal_samplers.py` if it is an ordinal sampler).
+- Add the sampler to the list `ALL_SAMPLERS` in `test_all_samplers.py`. Follow the convention for the import statements (that you can guess from the ones already there) to avoid duplicated names. The basic requirements (parameters, validation, etc.) that any sampler need to satisfy will then be checked.
+- Add the sampler to corresponding test file for its ballot format: `test_all_ballotformat_samplers.py`.
 - If needed, add a file `test_ballotformat_samplername.py` for tests that are specific to the sampler.
 
 ### Validation

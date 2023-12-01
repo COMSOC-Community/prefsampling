@@ -266,23 +266,24 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates votes following the Pólya-Eggenberger urn culture. The process is a follows. The urn</span>
+<span class="sd">    Generates votes following the Pólya-Eggenberger urn culture. The process is as follows. The urn</span>
 <span class="sd">    is initially empty and votes are generated one after the other, in turns. When generating a</span>
-<span class="sd">    vote, the following happens. With probability `1/(urn_size + 1)` the vote is simply selected</span>
+<span class="sd">    vote, the following happens. With a probability of 1/(urn_size + 1), the vote is selected</span>
 <span class="sd">    uniformly at random (following an impartial culture). With probability `1/urn_size` a vote</span>
 <span class="sd">    from the urn is selected uniformly at random. In both cases, the vote is put back in the urn</span>
 <span class="sd">    together with `alpha * m!` copies of the vote (where `m` is the number of candidates).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters: int</span>
-<span class="sd">        The number of voters</span>
-<span class="sd">    num_candidates: int</span>
-<span class="sd">        The number of candidates</span>
-<span class="sd">    alpha: float</span>
-<span class="sd">        The dispersion coefficient. Must be non-negative.</span>
-<span class="sd">    seed: int</span>
-<span class="sd">        The seed for the random number generator.</span>
+<span class="sd">        num_voters: int</span>
+<span class="sd">            Number of voters</span>
+<span class="sd">        num_candidates: int</span>
+<span class="sd">            Number of candidates</span>
+<span class="sd">        alpha: float</span>
+<span class="sd">            The dispersion coefficient (`alpha * m!` copies of a vote are put back in the urn after</span>
+<span class="sd">            a draw). Must be non-negative.</span>
+<span class="sd">        seed: int</span>
+<span class="sd">            The seed for the random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
