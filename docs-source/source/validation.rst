@@ -39,9 +39,19 @@ Mallows
   :width: 500
   :alt: Observed versus theoretical frequencies for the impartial culture
 
-Single-Peaked
+Plackett-Luce
 ~~~~~~~~~~~~~
 
+.. image:: validation_plots/ordinal/plackettluce/Frequencies_Plackett_Luce_1s.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the impartial culture
+
+.. image:: validation_plots/ordinal/plackettluce/Frequencies_Plackett_Luce_rnd.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the impartial culture
+
+Single-Peaked
+~~~~~~~~~~~~~
 
 .. image:: validation_plots/ordinal/single_peaked/Frequencies_SP_Walsh.png
   :width: 500

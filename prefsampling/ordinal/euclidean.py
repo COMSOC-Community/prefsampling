@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import linalg
 
-from prefsampling.core.euclidean import EUCLIDEAN_SPACE_UNIFORM, election_positions
+from prefsampling.core.euclidean import election_positions, EuclideanSpace
 from prefsampling.decorators import validate_num_voters_candidates
 
 
@@ -9,7 +9,7 @@ from prefsampling.decorators import validate_num_voters_candidates
 def euclidean(
     num_voters: int,
     num_candidates: int,
-    space: int = EUCLIDEAN_SPACE_UNIFORM,
+    space: EuclideanSpace = EuclideanSpace.UNIFORM,
     dimension: int = 2,
     seed: int = None,
 ) -> np.ndarray:
@@ -26,9 +26,9 @@ def euclidean(
         Number of Voters.
     num_candidates : int
         Number of Candidates.
-    space : int
-        Type of space considered. Should be a constant such as
-        :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`.
+    space : EuclideanSpace
+        Type of space considered. Should be a constant defined in the
+        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
     dimension : int
         Number of dimensions for the sapce considered
     seed : int

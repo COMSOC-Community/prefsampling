@@ -15,8 +15,11 @@ from prefsampling.ordinal.singlepeaked import (
     single_peaked_walsh as ordinal_single_peaked_walsh,
 )
 from prefsampling.ordinal.euclidean import euclidean as ordinal_euclidean
-from prefsampling.ordinal.mallows import mallows as ordinal_mallows
-from prefsampling.ordinal.mallows import norm_mallows as ordinal_norm_mallows
+from prefsampling.ordinal.mallows import (
+    mallows as ordinal_mallows,
+    norm_mallows as ordinal_norm_mallows
+)
+from prefsampling.ordinal.plackettluce import plackett_luce as ordinal_plackett_luce
 
 from prefsampling.approval.resampling import (
     resampling as approval_resampling,
@@ -28,7 +31,6 @@ from prefsampling.approval.impartial import (
 from prefsampling.approval.euclidean import euclidean as approval_euclidean
 from prefsampling.approval.noise import noise as approval_noise
 from prefsampling.approval.identity import identity as approval_identity
-
 
 ALL_SAMPLERS = [
     ordinal_impartial_culture,
@@ -42,6 +44,9 @@ ALL_SAMPLERS = [
     ordinal_euclidean,
     ordinal_mallows,
     ordinal_norm_mallows,
+    lambda num_voters, num_candidates, seed=None: ordinal_plackett_luce(
+        num_voters, num_candidates, [1] * num_candidates, seed
+    ),
     approval_resampling,
     approval_disjoint_resampling,
     approval_impartial_culture,

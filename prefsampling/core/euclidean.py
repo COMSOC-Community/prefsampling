@@ -1,22 +1,34 @@
+from enum import Enum
+
 import numpy as np
 
 from prefsampling.decorators import validate_num_voters_candidates
 
-EUCLIDEAN_SPACE_UNIFORM = 1
-"""Constant representing uniform spaces for Euclidean models"""
 
-EUCLIDEAN_SPACE_GAUSSIAN = 2
-"""Constant representing Gaussian spaces for Euclidean models"""
+class EuclideanSpace(Enum):
+    """
+    Constants used to represent Euclidean spaces
+    """
 
-EUCLIDEAN_SPACE_SPHERE = 3
-"""Constant representing spherical spaces for Euclidean models"""
+    UNIFORM = 1
+    """
+    Uniform space
+    """
+    GAUSSIAN = 2
+    """
+    Gaussian space
+    """
+    SPHERE = 3
+    """
+    Spheric space
+    """
 
 
 @validate_num_voters_candidates
 def election_positions(
     num_voters: int,
     num_candidates: int,
-    space: int,
+    space: EuclideanSpace,
     dimension: int,
     rng: np.random.Generator,
 ) -> (np.ndarray, np.ndarray):
@@ -29,9 +41,9 @@ def election_positions(
         The number of voters.
     num_candidates: int
         The number of candidates.
-    space : int
-        Type of space considered. Should be a constant such as
-        :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`
+    space : :py:class:`~prefsampling.core.euclidean.EuclideanSpace`
+        Type of space considered. Should be a constant defined in the
+        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
     dimension : int
         Number of dimensions for the space considered.
     rng : np.random.Generator
@@ -42,13 +54,13 @@ def election_positions(
     (np.ndarray, np.ndarray)
         The position of the voters and of the candidates respectively.
     """
-    if space == EUCLIDEAN_SPACE_UNIFORM:
+    if space == EuclideanSpace.UNIFORM:
         voters = rng.random((num_voters, dimension))
         candidates = rng.random((num_candidates, dimension))
-    elif space == EUCLIDEAN_SPACE_GAUSSIAN:
+    elif space == EuclideanSpace.GAUSSIAN:
         voters = rng.normal(loc=0.5, scale=0.15, size=(num_voters, dimension))
         candidates = rng.normal(loc=0.5, scale=0.15, size=(num_candidates, dimension))
-    elif space == EUCLIDEAN_SPACE_SPHERE:
+    elif space == EuclideanSpace.SPHERE:
         voters = np.array(
             [list(random_sphere(dimension, rng)[0]) for _ in range(num_voters)]
         )
@@ -58,13 +70,13 @@ def election_positions(
     else:
         raise ValueError(
             "The `space` argument needs to be one of the constant defined in the "
-            "core.euclidean model (e.g., EUCLIDEAN_SPACE_UNIFORM or "
-            "EUCLIDEAN_SPACE_GAUSSIAN)."
+            "core.euclidean.EuclideanSpace enumeration. Choices are: " +
+            ", ".join(str(s) for s in EuclideanSpace)
         )
     return voters, candidates
 
 
-def random_ball(dimension: int, num_points: int = 1, radius: float = 1) -> float:
+def random_ball(dimension: int, num_points: int = 1, radius: float = 1) -> np.ndarray:
     random_directions = np.random.normal(size=(dimension, num_points))
     random_directions /= np.linalg.norm(random_directions, axis=0)
     random_radii = np.random.random(num_points) ** (1 / dimension)
@@ -74,7 +86,7 @@ def random_ball(dimension: int, num_points: int = 1, radius: float = 1) -> float
 
 def random_sphere(
     dimension: int, rng: np.random.Generator, num_points: int = 1, radius: float = 1
-) -> float:
+) -> np.ndarray:
     random_directions = rng.normal(size=(dimension, num_points))
     random_directions /= np.linalg.norm(random_directions, axis=0)
     random_radii = 1.0

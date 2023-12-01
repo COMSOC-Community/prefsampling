@@ -259,7 +259,7 @@ document.write(`
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">EUCLIDEAN_SPACE_UNIFORM</span><span class="p">,</span> <span class="n">election_positions</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">election_positions</span><span class="p">,</span> <span class="n">EuclideanSpace</span>
 <span class="kn">from</span> <span class="nn">prefsampling.decorators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
 
@@ -267,7 +267,7 @@ document.write(`
 <span class="k">def</span> <span class="nf">euclidean</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">space</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">EUCLIDEAN_SPACE_UNIFORM</span><span class="p">,</span>
+    <span class="n">space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM</span><span class="p">,</span>
     <span class="n">dimension</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -284,9 +284,9 @@ document.write(`
 <span class="sd">        Number of Voters.</span>
 <span class="sd">    num_candidates : int</span>
 <span class="sd">        Number of Candidates.</span>
-<span class="sd">    space : int</span>
-<span class="sd">        Type of space considered. Should be a constant such as</span>
-<span class="sd">        :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`.</span>
+<span class="sd">    space : EuclideanSpace</span>
+<span class="sd">        Type of space considered. Should be a constant defined in the</span>
+<span class="sd">        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.</span>
 <span class="sd">    dimension : int</span>
 <span class="sd">        Number of dimensions for the sapce considered</span>
 <span class="sd">    seed : int</span>

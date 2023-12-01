@@ -97,3 +97,10 @@ make github
 
 After having pushed, the documentation will automatically be updated. Note that the
 `github` directive may not work on Windows.
+
+### Publishing on PyPI
+
+The pipeline between GitHub and PyPI is automatised. To push a new version do the following:
+- Update the `pyproject.toml` with the new version number.
+- On GitHub, create a new release tagged with the bew version number.
+- You're done, the new version of the package is automatically pushed to PyPI after the creation of a GitHub release.

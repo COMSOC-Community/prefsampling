@@ -87,13 +87,15 @@ class Validator(abc.ABC):
             if not model_name:
                 model_name = self.__name__.replace("Validator", "")
             graph_title = f"Observed versus theoretical frequencies for {model_name}"
+            graph_title += f"\n(#num_candidates = {self.num_candidates}"
             if self.sampler_parameters:
-                graph_title += "\n("
+                graph_title += ', '
                 for key, value in self.sampler_parameters.items():
                     graph_title += f"{key} = {value}, "
-                graph_title = graph_title[:-2] + ")"
+                graph_title = graph_title[:-2]
+
             graph_title += (
-                f"\n#samples = {num_samples}, chi² p-value = {self.chi_square_result.pvalue}"
+                f")\n#samples = {num_samples}, chi² p-value = {self.chi_square_result.pvalue}"
             )
 
         self.plot_frequencies(

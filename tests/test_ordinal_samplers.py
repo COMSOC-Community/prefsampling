@@ -2,11 +2,8 @@ import numpy as np
 
 from unittest import TestCase
 
-from prefsampling.core.euclidean import (
-    EUCLIDEAN_SPACE_SPHERE,
-    EUCLIDEAN_SPACE_GAUSSIAN,
-    EUCLIDEAN_SPACE_UNIFORM,
-)
+from prefsampling.core.euclidean import EuclideanSpace
+from prefsampling.ordinal import plackett_luce
 from prefsampling.ordinal.urn import urn
 from prefsampling.ordinal.impartial import (
     impartial_anonymous,
@@ -37,13 +34,16 @@ ALL_ORDINAL_SAMPLERS = [
         num_voters, num_candidates, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, space=EUCLIDEAN_SPACE_UNIFORM, seed=seed
+        num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, space=EUCLIDEAN_SPACE_GAUSSIAN, seed=seed
+        num_voters, num_candidates, space=EuclideanSpace.GAUSSIAN, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, space=EUCLIDEAN_SPACE_SPHERE, seed=seed
+        num_voters, num_candidates, space=EuclideanSpace.SPHERE, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: plackett_luce(
+        num_voters, num_candidates, [1] * num_candidates, seed
     ),
 ]
 
