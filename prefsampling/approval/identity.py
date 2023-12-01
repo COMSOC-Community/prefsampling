@@ -36,3 +36,54 @@ def identity(
     k = int(p * num_candidates)
     vote = {i for i in range(k)}
     return [vote for _ in range(num_voters)]
+
+
+@validate_num_voters_candidates
+def full(
+    num_voters: int, num_candidates: int, seed: int = None
+) -> list[set[int]]:
+    """
+    Generates approval votes where each voter approves all the candidates.
+
+    Parameters
+    ----------
+    num_voters : int
+        Number of Voters.
+    num_candidates : int
+        Number of Candidates.
+    seed : int
+        Seed for numpy random number generator.
+
+    Returns
+    -------
+        list[set[int]]
+            Approval votes.
+    """
+
+    vote = {i for i in range(num_candidates)}
+    return [vote for _ in range(num_voters)]
+
+
+@validate_num_voters_candidates
+def empty(
+    num_voters: int, num_candidates: int, seed: int = None
+) -> list[set[int]]:
+    """
+    Generates approval votes where each vote is empty.
+
+    Parameters
+    ----------
+    num_voters : int
+        Number of Voters.
+    num_candidates : int
+        Number of Candidates.
+    seed : int
+        Seed for numpy random number generator.
+
+    Returns
+    -------
+        list[set[int]]
+            Approval votes.
+    """
+    return [set() for _ in range(num_voters)]
+
