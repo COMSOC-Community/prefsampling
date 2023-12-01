@@ -1,7 +1,7 @@
 PrefSampling
 ============
 
-PrefSampling is a light Python library that provides preference samplers.
+PrefSampling is a lightweight Python library that provides preference samplers.
 These are algorithms that generate random preferences based on precisely
 defined statistical cultures. We consider different type of preferences:
 

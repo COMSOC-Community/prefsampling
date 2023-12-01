@@ -4,11 +4,12 @@ pushd %~dp0
 
 REM Command file for Sphinx documentation
 
-if "%SPHINXBUILD%" == "" (
-	set SPHINXBUILD=sphinx-build
-)
-set SOURCEDIR=source
-set BUILDDIR=build
+REM You can set these variables from the command line, and also
+REM from the environment for the first two.
+SET SPHINXOPTS=
+SET SOURCEDIR=source
+SET LOCALBUILDDIR=build
+SET GITHUBBUILDDIR=..\docs
 
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
@@ -23,13 +24,21 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
-if "%1" == "" goto help
-
-%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
-goto end
-
+REM Put it first so that "make" without argument is like "make help".
 :help
-%SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+    %SPHINXBUILD% -M help "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
 
-:end
-popd
+:github
+    echo. > "%GITHUBBUILDDIR%\.nojekyll"
+    %SPHINXBUILD% -b html "%SOURCEDIR%" "%GITHUBBUILDDIR%" %SPHINXOPTS% %O%
+:githubclean
+    %SPHINXBUILD% -M clean "%SOURCEDIR%" "%GITHUBBUILDDIR%" %SPHINXOPTS% %O%
+
+:html
+    %SPHINXBUILD% -b html "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
+
+REM Catch-all target: route all unknown targets to Sphinx using the new
+REM "make mode" option.  %O% is meant as a shortcut for %SPHINXOPTS%.
+:all
+    %SPHINXBUILD% -M %1 "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
+

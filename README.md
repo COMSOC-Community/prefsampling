@@ -1,24 +1,83 @@
 # PrefSampling
 
+[![PyPI Status](https://img.shields.io/pypi/v/prefsampling.svg)](https://pypi.python.org/pypi/prefsampling)
 [![Build badge](https://github.com/simon-rey/prefsampling/workflows/build/badge.svg)](https://github.com/simon-rey/prefsampling/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/simon-rey/prefsampling/branch/main/graphs/badge.svg)](https://codecov.io/gh/simon-rey/prefsampling/tree/main)
 
-A small package providing all the algorithms to sample preferences
+## Overview
 
-Development
-===========
+PrefSampling is a lightweight Python library that provides preference samplers.
+These are algorithms that generate random preferences based on precisely
+defined statistical cultures. We consider different type of preferences:
+
+- Ordinal: preferences are expressed as rankings of the candidates;
+- Approval: preferences are expressed by indicating a set of approved candidates.
+
+## Installation
+
+The package can be installed [from PyPI](https://pypi.org/project/prefsampling/) using:
+```shell
+pip3 install prefsampling
+```
+
+## Documentation
+
+The complete documentation is available [here](https://simon-rey.github.io/prefsampling/).
+
+## Development
+
+### Setting up the development mode
+
+We are more than happy to receive help with the development of the package.
+If you want to contribute, here are some elements to take into account.
+
+First, install the development dependencies by running the following command:
+```shell
+pip install -e ".[dev]"
+```
+
+### Conventions
 
 We try to enforce uniformity within the package. Here are some general guidelines.
 
 - All samplers have `num_voters` and `num_candidates` as their two first positional arguments
 - All samplers accept a `seed` parameter to set the seed of the random number generator
 
-The tests are run with unittest. This is the procedure when adding a new sampler.
+Within the package, the samplers are organised in modules based on the ballot format they
+generate. The `prefsampling.core` module is used for features used across samplers.
+Within the submodule corresponding to the ballot format, there is a Python file 
+for each family of samplers. All the samplers are imported and appear in the `__all__`
+variable of the `__init__.py` file of the corresponding module (defined byt the ballot
+format).
 
-- Add the sampler to the list `ALL_SAMPLERS` in `test_samplers.py`. The basic requirements (parameters, validation, etc.) that any sampler need to satisfy will then be checked.
-- Add the sampler to corresponding test file for its ballot format (e.g., `test_ordinal_samplers.py`).
+### Tests
+
+The tests are run with unittest. Simply run the following command to launch the tests:
+```shell
+python -m unittest
+```
+
+Several tests are automatised. When a new sampler is added to the package, it needs
+to be added in several places for the tests. The following list provides the details:
+
+- Add the sampler to the list `ALL_SAMPLERS` in `test_samplers.py`. Follow the convention for the import statements (that you can guess from the ones already there) to avoid duplicated names. The basic requirements (parameters, validation, etc.) that any sampler need to satisfy will then be checked.
+- Add the sampler to corresponding test file for its ballot format (e.g., `test_ordinal_samplers.py` if it is an ordinal sampler).
 - If needed, add a file `test_ballotformat_samplername.py` for tests that are specific to the sampler.
 
+### Validation
+
+We aim at statistically validating the samplers we provide. All the code necessary to 
+run the validation is gathered in the `validation` folder of the repository.
+
+When a new sampler is added to the package, proceed as follows:
+- Create the corresponding file in the `validation/ballotformat/` folder.
+- In this file, define a class that inherit from the `validation.validator.Validator`. This requires you to define a set of methods used to compute the theoretical probabilities of the outcomes of the samplers.
+- Add the validator in the `run.py` file.
+- Run the `run.py` file (you may want to comment out some parts).
+- Copy the generated graphs in the correct place of the `doc-source/source/validation_plots` folder.
+- Update the `doc-source/source/validation.rst` file accordingly.
+
+### Documentation
 
 The doc is generated using sphinx. We use the [numpy style guide](https://numpydoc.readthedocs.io/en/latest/format.html).
 The [napoleon](https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html) extension for Sphinx is used
@@ -36,4 +95,5 @@ to also be updated when pushing, run:
 make github
 ```
 
-After having pushed, the documentation will automatically be updated.
+After having pushed, the documentation will automatically be updated. Note that the
+`github` directive may not work on Windows.

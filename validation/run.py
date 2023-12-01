@@ -7,7 +7,7 @@ from validation.ordinal.singlepeaked import SPWalshValidator, SPConitzerValidato
 from validation.utils import get_all_ranks, get_all_single_peaked_ranks
 
 
-def run_all_validators():
+def run_ordinal_validators():
     num_candidates = 5
     num_observations = 100000
 
@@ -73,4 +73,4 @@ def run_all_validators():
 
 
 if __name__ == "__main__":
-    run_all_validators()
+    run_ordinal_validators()

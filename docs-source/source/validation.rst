@@ -22,7 +22,7 @@ Ordinal Samplers
 Impartial
 ~~~~~~~~~
 
-.. image:: ../../validation/plots/ordinal/impartial/Frequencies_Impartial.png
+.. image:: validation_plots/ordinal/impartial/Frequencies_Impartial.png
   :width: 500
   :alt: Observed versus theoretical frequencies for the impartial culture
 
@@ -35,7 +35,7 @@ Stratification
 Mallows
 ~~~~~~~
 
-.. image:: ../../validation/plots/ordinal/mallows/Frequencies_Mallows_0.5.png
+.. image:: validation_plots/ordinal/mallows/Frequencies_Mallows_0.5.png
   :width: 500
   :alt: Observed versus theoretical frequencies for the impartial culture
 
@@ -43,10 +43,10 @@ Single-Peaked
 ~~~~~~~~~~~~~
 
 
-.. image:: ../../validation/plots/ordinal/single_peaked/Frequencies_SP_Walsh.png
+.. image:: validation_plots/ordinal/single_peaked/Frequencies_SP_Walsh.png
   :width: 500
   :alt: Observed versus theoretical frequencies for the impartial culture
 
-.. image:: ../../validation/plots/ordinal/single_peaked/Frequencies_SP_Conitzer.png
+.. image:: validation_plots/ordinal/single_peaked/Frequencies_SP_Conitzer.png
   :width: 500
   :alt: Observed versus theoretical frequencies for the impartial culture
