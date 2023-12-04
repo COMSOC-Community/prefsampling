@@ -6,10 +6,12 @@ import numpy as np
 from validation.ordinal.impartial import OrdinalImpartialValidator
 from validation.ordinal.mallows import OrdinalMallowsValidator
 from validation.ordinal.plackettluce import PlackettLuceValidator
-from validation.ordinal.single_crossing import SingleCrossingValidator
+from validation.ordinal.singlecrossing import SingleCrossingValidator, \
+    SingleCrossingUniformValidator
 from validation.ordinal.singlepeaked import SPWalshValidator, SPConitzerValidator
 from validation.utils import get_all_ranks, get_all_single_peaked_ranks, \
-    get_all_single_crossing_profiles, get_all_profiles
+    get_all_single_crossing_profiles, get_all_profiles, get_all_non_isomorphic_profilles, \
+    get_all_anonymous_profiles
 
 
 def run_ordinal_iid_validators(num_observations):
@@ -100,7 +102,7 @@ def run_ordinal_iid_validators(num_observations):
 
 def run_ordinal_non_iid_validators(num_observations):
     num_candidates = 3
-    num_voters = 1
+    num_voters = 3
 
     all_profiles = get_all_profiles(num_voters, num_candidates)
 
@@ -109,14 +111,19 @@ def run_ordinal_non_iid_validators(num_observations):
     plot_dir_root = os.path.join("plots", "ordinal")
     os.makedirs(plot_dir_root, exist_ok=True)
 
-    all_sc_profiles = get_all_single_crossing_profiles(num_voters,
-                                                       num_candidates,
-                                                       all_profiles=all_profiles)
     singlecrossing_dir = os.path.join(plot_dir_root, "singlecrossing")
     os.makedirs(singlecrossing_dir, exist_ok=True)
     logging.info("=========================")
     logging.info("Single Crossing validator")
     logging.info("=========================")
+    all_non_iso = get_all_non_isomorphic_profilles(num_voters,
+                                                   num_candidates,
+                                                   all_profiles=get_all_anonymous_profiles(
+                                                       num_voters, num_candidates))
+    all_sc_profiles = get_all_single_crossing_profiles(num_voters,
+                                                       num_candidates,
+                                                       all_profiles=all_non_iso,
+                                                       fix_order=True)
     singlecrossing_validator = SingleCrossingValidator(
         num_voters,
         num_candidates,
@@ -130,9 +137,22 @@ def run_ordinal_non_iid_validators(num_observations):
         graph_x_tick_labels=all_sc_profiles
     )
 
+    singlecrossing_uniform_validator = SingleCrossingUniformValidator(
+        num_voters,
+        num_candidates,
+        all_outcomes=all_sc_profiles
+    )
+    singlecrossing_uniform_validator.run(
+        num_observations,
+        model_name="Single Crossing Uniform",
+        graph_file_path=os.path.join(singlecrossing_dir, f"Frequencies_single_crosssing_uniform.png"),
+        graph_xlabel="Profile identifier (ordered by theoretical frequency)",
+        graph_x_tick_labels=all_sc_profiles
+    )
+
 
 if __name__ == "__main__":
-    num_observations = 1000000
+    num_observations = 10000
 
     # run_ordinal_iid_validators(num_observations)
     run_ordinal_non_iid_validators(num_observations)

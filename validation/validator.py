@@ -146,7 +146,8 @@ class Validator(abc.ABC):
             )
         plt.close("all")
 
-        sort_permutation = np.flip(self.theoretical_distribution.argsort())
+        # sort_permutation = np.flip(self.theoretical_distribution.argsort())
+        sort_permutation = np.array([str(x) for x in x_tick_labels]).argsort()
         frequencies = self.observed_distribution[sort_permutation]
         distribution = self.theoretical_distribution[sort_permutation]
         if x_tick_labels:

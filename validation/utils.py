@@ -18,6 +18,20 @@ def get_all_profiles(num_voters: int, num_candidates: int) -> list[tuple[tuple[i
     return list(res)
 
 
+def get_all_non_isomorphic_profilles(
+        num_voters: int,
+        num_candidates: int,
+        all_profiles=None
+) -> list[tuple[tuple[int]]]:
+    res = set()
+    if all_profiles is None:
+        all_profiles = get_all_profiles(num_voters, num_candidates)
+    for profile in all_profiles:
+        perm = tuple(profile[0])
+        res.add(tuple(tuple(perm.index(c) for c in r) for r in profile))
+    return list(res)
+
+
 def get_all_single_peaked_ranks(num_candidates: int):
     def recursor(a, b, all_sp_ranks, rank, position):
         if a == b:
@@ -48,13 +62,22 @@ def is_single_crossing(profile):
     return True
 
 
-def get_all_single_crossing_profiles(num_voters: int, num_candidates: int, all_profiles=None):
+def get_all_single_crossing_profiles(
+        num_voters: int,
+        num_candidates: int,
+        all_profiles=None,
+        fix_order=False,
+):
     if all_profiles is None:
         all_profiles = get_all_profiles(num_voters, num_candidates)
     res = []
     for profile in all_profiles:
-        for perm in permutations(profile):
-            if is_single_crossing(perm):
+        if fix_order:
+            if is_single_crossing(profile):
                 res.append(profile)
-                break
+        else:
+            for perm in permutations(profile):
+                if is_single_crossing(perm):
+                    res.append(profile)
+                    break
     return res

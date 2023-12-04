@@ -5,7 +5,7 @@ from prefsampling.decorators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def single_crossing(
-    num_voters: int, num_candidates: int, seed: int = None
+        num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes that are single-crossing. See `Elkind, Lackner, Peters (2022)
@@ -42,7 +42,7 @@ def single_crossing(
     rng = np.random.default_rng(seed)
 
     domain_size = int(num_candidates * (num_candidates - 1) / 2 + 1)
-    domain = [list(range(num_candidates))]
+    domain = [np.arange(num_candidates)]
 
     for line in range(1, domain_size):
         all_swap_indices = [
@@ -58,8 +58,85 @@ def single_crossing(
         domain.append(new_line)
 
     votes = np.zeros([num_voters, num_candidates], dtype=int)
-    for j in range(num_voters):
-        r = rng.integers(0, domain_size)
-        votes[j, :] = domain[r]
+    vote_indices = np.sort(rng.choice(np.arange(domain_size), size=num_voters))
+    perm = list(domain[vote_indices[0]])
+    for i, index in enumerate(vote_indices):
+        votes[i, :] = [perm.index(c) for c in domain[index]]
+    return votes
 
+
+class SingleCrossingNode:
+    """
+    Node in the graph of all the single-crossing set of votes.
+    """
+
+    def __init__(self, vote, seed=None):
+        self.vote = tuple(vote)
+        self.next = []  # all next nodes reachable via single swap
+        self.all_next = set()  # all next nodes reachable via any number of swaps
+        self.domains = -1  # number of different domains that can be
+        self.election_count = {}
+        self.rng = np.random.default_rng(seed)
+
+    def generate_all_next(self):
+        if self.all_next:
+            return
+        for node in self.next:
+            node.generate_all_next()
+            self.all_next |= node.all_next
+        self.all_next.add(self.vote)
+
+    def count_elections(self, n, nodes):
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+        count = self.election_count.get(n, None)
+        if count is None:
+            count = sum(nodes[vote].count_elections(n - 1, nodes) for vote in self.all_next)
+            self.election_count[n] = count
+        return count
+
+    def sample_election(self, n, nodes):
+        election = [self.vote]
+        if n == 1:
+            return election
+        nodes_distribution = []
+        next_nodes = []
+        for vote in self.all_next:
+            node = nodes[vote]
+            next_nodes.append(node)
+            nodes_distribution.append(node.count_elections(n - 1, nodes))
+        nodes_distribution = np.array(nodes_distribution, dtype=np.float64)
+        nodes_distribution /= nodes_distribution.sum()
+        random_node = self.rng.choice(next_nodes, p=nodes_distribution)
+        return election + random_node.sample_election(n - 1, nodes)
+
+
+def single_crossing_uniform(num_voters, num_candidates):
+    nodes = {}
+    top_vote = np.arange(num_candidates)
+    top_node = SingleCrossingNode(top_vote)
+    nodes[tuple(top_vote)] = top_node
+
+    def graph_builder(node):
+        vote = np.array(node.vote)
+        for i in range(num_candidates - 1):
+            if vote[i] < vote[i + 1]:
+                new_vote = vote.copy()
+                new_vote[i], new_vote[i + 1] = new_vote[i + 1], new_vote[i]
+                tuple_vote = tuple(new_vote)
+                if not (tuple_vote in nodes):
+                    new_node = SingleCrossingNode(new_vote)
+                    nodes[tuple_vote] = new_node
+                    graph_builder(new_node)
+                new_node = nodes[tuple_vote]
+                node.next.append(new_node)
+
+    graph_builder(top_node)
+
+    top_node.generate_all_next()
+    top_node.count_elections(num_voters, nodes)
+
+    votes = top_node.sample_election(num_voters, nodes)
     return votes
