@@ -184,6 +184,8 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
 
     Note that for a given number of voters, votes are not sampled independently.
 
+    This sampler was developed by Piotr Faliszewski.
+
     Parameters
     ----------
         num_voters : int
