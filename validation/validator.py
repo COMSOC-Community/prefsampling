@@ -78,25 +78,30 @@ class Validator(abc.ABC):
         graph_ylabel="",
         graph_x_tick_labels=None,
         graph_file_path=None,
+        graph_ordering=None,
     ):
         self.set_theoretical_distribution()
         self.set_observed_distribution(num_samples)
-        self.run_chi_square_test()
+        if self.theoretical_distribution is not None:
+            self.run_chi_square_test()
 
         if not graph_title:
             if not model_name:
                 model_name = self.__name__.replace("Validator", "")
-            graph_title = f"Observed versus theoretical frequencies for {model_name}"
-            graph_title += f"\n(#num_candidates = {self.num_candidates}"
+            if self.theoretical_distribution is not None:
+                graph_title = f"Observed versus theoretical frequencies for {model_name}"
+            else:
+                graph_title = f"Observed frequencies for {model_name}"
+            graph_title += f"\n(num_candidates = {self.num_candidates}"
             if self.sampler_parameters:
-                graph_title += ', '
+                graph_title += ", "
                 for key, value in self.sampler_parameters.items():
                     graph_title += f"{key} = {value}, "
                 graph_title = graph_title[:-2]
 
-            graph_title += (
-                f")\n#samples = {num_samples}, chi² p-value = {self.chi_square_result.pvalue}"
-            )
+            graph_title += f")\n#samples = {num_samples}"
+            if self.chi_square_result:
+                graph_title += f", chi² p - value = {self.chi_square_result.pvalue}"
 
         self.plot_frequencies(
             graph_title=graph_title,
@@ -104,6 +109,7 @@ class Validator(abc.ABC):
             ylabel=graph_ylabel,
             x_tick_labels=graph_x_tick_labels,
             file_path=graph_file_path,
+            ordering=graph_ordering,
         )
 
     def run_chi_square_test(self):
@@ -137,32 +143,65 @@ class Validator(abc.ABC):
         ylabel="",
         x_tick_labels=None,
         file_path=None,
+        ordering=None,
     ):
-        if self.theoretical_distribution is None or self.observed_distribution is None:
+        if self.observed_distribution is None:
             raise ValueError(
-                "Before ploting the frequency graph you need to populate the "
-                "`theoretical_distribution` and the `observed_distribution` "
-                "members of the validator"
+                "Before plotting the frequency graph you need to populate the "
+                "`observed_distribution` member of the validator"
             )
         plt.close("all")
 
-        # sort_permutation = np.flip(self.theoretical_distribution.argsort())
-        sort_permutation = np.array([str(x) for x in x_tick_labels]).argsort()
-        frequencies = self.observed_distribution[sort_permutation]
-        distribution = self.theoretical_distribution[sort_permutation]
+        sort_permutation = None
+        xlabel_suffix = ""
+        if ordering:
+            if ordering == "theoretical" and self.theoretical_distribution is not None:
+                sort_permutation = np.flip(self.theoretical_distribution.argsort())
+                xlabel_suffix = "(ordered by theoretical frequency)"
+            elif ordering == "observed":
+                sort_permutation = np.flip(self.observed_distribution.argsort())
+                xlabel_suffix = "(ordered by observed frequency)"
+            elif (
+                ordering == "theoretical-observed"
+                and self.theoretical_distribution is not None
+            ):
+                tmp = np.rec.fromarrays(
+                    [self.theoretical_distribution, self.observed_distribution]
+                )
+                sort_permutation = np.flip(tmp.argsort())
+            elif (
+                ordering == "observed-theoretical"
+                and self.theoretical_distribution is not None
+            ):
+                tmp = np.rec.fromarrays(
+                    [self.observed_distribution, self.theoretical_distribution]
+                )
+                sort_permutation = np.flip(tmp.argsort())
+
+        if sort_permutation is not None:
+            frequencies = self.observed_distribution[sort_permutation]
+        else:
+            frequencies = self.observed_distribution
         if x_tick_labels:
-            new_x_tick_labels = [x_tick_labels[k] for k in sort_permutation]
-            x_tick_labels = new_x_tick_labels
+            if sort_permutation is not None:
+                x_tick_labels = [x_tick_labels[k] for k in sort_permutation]
 
         fig, ax = plt.subplots()
-        ax.bar(np.arange(len(frequencies)) - 0.2, frequencies, width=0.4)
-        ax.bar(np.arange(len(distribution)) + 0.2, distribution, width=0.4)
+        delta_bars = 0.2 * int(self.theoretical_distribution is not None)
+        ax.bar(np.arange(len(frequencies)) - delta_bars, frequencies, width=0.4)
+        if self.theoretical_distribution is not None:
+            if sort_permutation is not None:
+                distribution = self.theoretical_distribution[sort_permutation]
+            else:
+                distribution = self.theoretical_distribution
+            ax.bar(np.arange(len(distribution)) + delta_bars, distribution, width=0.4)
         if not graph_title:
             graph_title = "Observed versus theoretical frequencies"
         ax.set_title(graph_title)
         ax.legend(["Observations", "Theoretical"])
         if not xlabel:
-            xlabel = "Rank identifier (ordered by theoretical frequency)"
+            xlabel = "Rank identifier"
+        xlabel += " " + xlabel_suffix
         ax.set_xlabel(xlabel)
         if not ylabel:
             ylabel = "Frequency"

@@ -277,6 +277,9 @@ document.write(`
 <span class="sd">    This method ensures that the probability for a given candidate to be the peak is uniform</span>
 <span class="sd">    (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`).</span>
 
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">        num_voters : int</span>
@@ -329,6 +332,9 @@ document.write(`
 <span class="sd">    next available candidate on the left or on the right, both cases occuring with probability 0.5.</span>
 <span class="sd">    Left and right are defined here in terms of the circular axis: `0, 1, ..., m, 1`.</span>
 
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">        num_voters : int</span>
@@ -373,6 +379,9 @@ document.write(`
 <span class="sd">    to most preferred candidates. A given position in the ordering is filled by selecting, with</span>
 <span class="sd">    uniform probability, either the leftmost or the rightmost candidates that have not yet been</span>
 <span class="sd">    positioned in the vote (left and right being defined by the axis `0, 1, 2, ...`).</span>
+
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

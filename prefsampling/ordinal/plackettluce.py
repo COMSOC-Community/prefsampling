@@ -18,8 +18,8 @@ def plackett_luce(
     probability of selecting a candidate is equal to its quality (normalised). Then, this candidate
     is removed and the quality are re-normalised.
 
-    A set of `num_voters` vote is generated independently and identically following the process
-    described above.
+    A collection of `num_voters` vote is generated independently and identically following the
+    process described above.
 
     Parameters
     ----------
@@ -29,7 +29,7 @@ def plackett_luce(
             Number of Candidates.
         alphas : list[float]
             List of model parameters (quality of the candidates).
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns

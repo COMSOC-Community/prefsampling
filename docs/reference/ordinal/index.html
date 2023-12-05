@@ -311,6 +311,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.norm_mallows"><code class="docutils literal notranslate"><span class="pre">norm_mallows()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.plackett_luce"><code class="docutils literal notranslate"><span class="pre">plackett_luce()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_crossing"><code class="docutils literal notranslate"><span class="pre">single_crossing()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_crossing_impartial"><code class="docutils literal notranslate"><span class="pre">single_crossing_impartial()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_peaked_circle"><code class="docutils literal notranslate"><span class="pre">single_peaked_circle()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_peaked_conitzer"><code class="docutils literal notranslate"><span class="pre">single_peaked_conitzer()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_peaked_walsh"><code class="docutils literal notranslate"><span class="pre">single_peaked_walsh()</span></code></a></li>
@@ -335,22 +336,25 @@ order of preference.</p>
 <dt class="sig sig-object py" id="prefsampling.ordinal.euclidean">
 <span class="sig-name descname"><span class="pre">euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><span class="pre">EuclideanSpace</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">EuclideanSpace.UNIFORM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/euclidean.html#euclidean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.euclidean" title="Permalink to this definition">#</a></dt>
 <dd><p>Generates ordinal votes according to the Euclidean model.</p>
-<p>In the Euclidean model voters and candidates are assigned random positions in a Euclidean space. A voter then
-ranks the candidates in increasing order of distance: their most preferred candidate is the closest one to them,
-etc.</p>
+<p>In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.
+A voter then ranks the candidates in increasing order of distance: their most preferred
+candidate is the closest one to them, etc.</p>
+<p>Several Euclidean spaces can be considered. The possibilities are defined in the
+<a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a> enumeration. You can also change the
+dimension with the parameter <code class="code docutils literal notranslate"><span class="pre">dimension</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>space</strong> (<a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><em>EuclideanSpace</em></a>) – Type of space considered. Should be a constant defined in the
+<li><p><strong>space</strong> (EuclideanSpace, default: <a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace.UNIFORM" title="prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="xref py py-class docutils literal notranslate"><span class="pre">UNIFORM</span></code></a>) – Type of space considered. Should be a constant defined in the
 <a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a>.</p></li>
-<li><p><strong>dimension</strong> (<em>int</em>) – Number of dimensions for the sapce considered</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>dimension</strong> (int, default: <cite>2</cite>) – Number of dimensions for the sapce considered</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The votes.</p>
+<dd class="field-even"><p>Ordinal votes.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -369,7 +373,7 @@ generated by getting a random permutation of the candidates from the random numb
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -395,7 +399,7 @@ with parameter <cite>alpha = 1</cite> (see Lepelley, Valognes 2003).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -409,16 +413,30 @@ with parameter <cite>alpha = 1</cite> (see Lepelley, Valognes 2003).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.mallows">
-<span class="sig-name descname"><span class="pre">mallows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/mallows.html#mallows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.mallows" title="Permalink to this definition">#</a></dt>
-<dd><p>Generates votes according to Mallows’ model (Mallows, 1957).</p>
+<span class="sig-name descname"><span class="pre">mallows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalise_phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/mallows.html#mallows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.mallows" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates votes according to Mallows’ model (<a class="reference external" href="https://www.jstor.org/stable/2333244">Mallows, 1957</a>). This model is parameterised by a central vote. The
+probability of generating a given decreases exponentially with the distance between the vote
+and the central vote.</p>
+<p>Specifically, the probability of generating a vote is proportional to <cite>phi ** distance</cite> where
+<cite>phi</cite> is a dispersion coefficient (in [0, 1]) and <cite>distance</cite> is the Kendall-Tau distance between
+the central vote and the vote under consideration. A set of <cite>num_voters</cite> vote is generated
+independently and identically following this process.</p>
+<p>The <cite>phi</cite> coefficient controls the dispersion of the votes: values close to 0 render votes that
+are far away from the central vote unlikely to be generated; and the opposite for values close
+to 1. Depending on the application, it can be advised to normalise the value of <cite>phi</cite>
+(especially when comparing different values for <cite>phi</cite>), see <a class="reference external" href="https://proceedings.mlr.press/v202/boehmer23b.html">Boehmer, Faliszewski and Kraiczy
+(2023)</a> for more details. Use
+<code class="code docutils literal notranslate"><span class="pre">normalise_phi</span> <span class="pre">=</span> <span class="pre">True</span></code> to do so.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
 <li><p><strong>phi</strong> (<em>float</em>) – The dispersion coefficient.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
-<li><p><strong>central_vote</strong> (<em>np.ndarray</em>) – The central vote.</p></li>
+<li><p><strong>normalise_phi</strong> (<em>bool</em><em>, </em><em>optional</em>) – <p>Indicates whether phi should be normalised (see <a class="reference external" href="https://proceedings.mlr.press/v202/boehmer23b.html">Boehmer, Faliszewski and Kraiczy (2023)</a>)</p>
+</p></li>
+<li><p><strong>central_vote</strong> (np.ndarray, default: <code class="code docutils literal notranslate"><span class="pre">np.arrange(num_candidates)</span></code>) – The central vote.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -433,24 +451,8 @@ with parameter <cite>alpha = 1</cite> (see Lepelley, Valognes 2003).</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.norm_mallows">
 <span class="sig-name descname"><span class="pre">norm_mallows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm_phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/mallows.html#norm_mallows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.norm_mallows" title="Permalink to this definition">#</a></dt>
-<dd><p>Generates votes according to Mallows’ normalised model (Boehmer, Faliszewski and Kraiczy 23).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>norm_phi</strong> (<em>float</em>) – The normalised dispersion coefficient.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
-<li><p><strong>central_vote</strong> (<em>np.ndarray</em>) – The central vote.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-</dl>
+<dd><p>Shortcut for the function <a class="reference internal" href="#prefsampling.ordinal.mallows" title="prefsampling.ordinal.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a> with
+<code class="code docutils literal notranslate"><span class="pre">normalise_phi</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -462,15 +464,15 @@ candidate. A vote is generated in <cite>m</cite> steps (<cite>m</cite> being the
 filled up from most preferred to least preferred candidate. For the initial draw, the
 probability of selecting a candidate is equal to its quality (normalised). Then, this candidate
 is removed and the quality are re-normalised.</p>
-<p>A set of <cite>num_voters</cite> vote is generated independently and identically following the process
-described above.</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
 <li><p><strong>alphas</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – List of model parameters (quality of the candidates).</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -486,23 +488,74 @@ described above.</p>
 <dt class="sig sig-object py" id="prefsampling.ordinal.single_crossing">
 <span class="sig-name descname"><span class="pre">single_crossing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlecrossing.html#single_crossing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.single_crossing" title="Permalink to this definition">#</a></dt>
 <dd><p>Generates ordinal votes that are single-crossing. See <a class="reference external" href="https://arxiv.org/abs/2205.09092">Elkind, Lackner, Peters (2022)</a> for the definition.</p>
-<p>This sampler works as follows. We generate a random domain of single-crossing, and then randomly
-selects the votes from the domain. The votes in the domain are generated one by one. The first
-vote is always <cite>0 &gt; 1 &gt; 2 &gt; …</cite>. For vote number <cite>k</cite>, all valid swaps of consecutive candidates
-are considered where a swap is only valid if in vote number <cite>k - 1</cite> the two candidates had not
-already been swapped in previous iterations. One valid swap is selected uniformly at random
-and performed on vote number <cite>k</cite>. One can check that after <cite>m * (m-1) / 2 + 1</cite> votes have been
-generated, no valid swap exists (the final vote being <cite>m &gt; m - 1 &gt; …</cite>). Once the domain is
-set, we select for each voter one vote from the domain uniformly at random.</p>
-<p>TODO: This is wrong</p>
-<p>This procedure ensures that every set of single-crossing votes for <cite>num_voters</cite> and
-<cite>num_candidates</cite> is equally likely to occur.</p>
+<p>This sampler works as follows: a random single-crossing domain is generated, and votes are then
+randomly selected from this domain.</p>
+<p>The votes in the domain are generated one by one. The first vote is always
+<cite>0 &gt; 1 &gt; 2 &gt; …</cite>. For vote number <cite>k</cite>, all valid swaps of consecutive candidates
+are considered. A swap is valid if in vote number <cite>k - 1</cite> the two candidates had not
+already been swapped in any previous iterations. One valid swap is selected uniformly at random
+and vote number <cite>k</cite> correspond to vote number <cite>k - 1</cite> with the selected swap performed. After
+<cite>m * (m-1) / 2 + 1</cite> swaps, the final vote admit no valid swap (the final vote being
+<cite>m &gt; m - 1 &gt; …</cite>). Importantly, the domain is ordered by number of swaps applied to the initial
+vote.</p>
+<p>To sample the votes, we consider the ordered domain. The first sampled vote is always
+<cite>0 &gt; 1 &gt; 2 &gt; …</cite>. Then, every successive vote is selected uniformly at random from all the
+votes further down in the domain than the previously selected vote (including the latter).</p>
+<p>This sampler only generates non-isomorphic and anonymous collection of votes. This means that
+the first vote is always <cite>0 &gt; 1 &gt; 2 &gt; …</cite> and that the votes are ordered lexicographically.
+To obtain a distribution over all single-crossing collections of votes, apply a random
+permutation of the candidate names and a random permutation of the position of the voters in the
+collection of votes.</p>
+<p>The sampler is inspired by the one used by <a class="reference external" href="https://www.ifaamas.org/Proceedings/aamas2020/pdfs/p1341.pdf">Szufa, Faliszewski, Skowron, Slinko, Talmon (2020)</a>.</p>
+<p>Note that the probability distribution over single-crossing profiles yielded by this procedure
+is unknown. For a uniform distribution over outcomes, see the
+<a class="reference internal" href="#prefsampling.ordinal.single_crossing_impartial" title="prefsampling.ordinal.single_crossing_impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_crossing_impartial()</span></code></a> function. The uniform sampler can
+become very slow as the number of candidates increases. The difficulty lies in computing the
+probability distribution with which to select votes further down in the domain (instead of a
+uniform distribution as we use here).</p>
+<p>Note that for a given number of voters, votes are not sampled independently.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Ordinal votes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.ordinal.single_crossing_impartial">
+<span class="sig-name descname"><span class="pre">single_crossing_impartial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlecrossing.html#single_crossing_impartial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.single_crossing_impartial" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates ordinal votes that satisfy the single-crossing property. See <a class="reference external" href="https://arxiv.org/abs/2205.09092">Elkind, Lackner,
+Peters (2022)</a> for the definition. This sampler ensures
+that all single-crossing profiles are equally likely to be generated. Note that its running time
+is exponential in the number of candidates.</p>
+<p>This sampler initially generates all single-crossing domains. The collection of vote is then
+sampled from a domain. Since all domains have been generated, via some counting we can ensure
+that all profile are equally likely to be generated.</p>
+<p>This sampler only generates non-isomorphic and anonymous collection of votes. This means that
+the first vote is always <cite>0 &gt; 1 &gt; 2 &gt; …</cite> and that the votes are ordered lexicographically.
+To obtain a distribution over all single-crossing collections of votes, apply a random
+permutation of the candidate names and a random permutation of the position of the voters in the
+collection of votes.</p>
+<p>This sampler can be very slow for large number of candidates. For efficient sampling—but
+without theoretical guarantees on the distribution of outcomes—consider using
+<a class="reference internal" href="#prefsampling.ordinal.single_crossing" title="prefsampling.ordinal.single_crossing"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_crossing()</span></code></a>.</p>
+<p>Note that for a given number of voters, votes are not sampled independently.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
+<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -524,6 +577,8 @@ determining the most preferred candidate (the peak). This is done with uniform p
 over the candidates. Then, subsequent positions in the ordering are filled by taking either the
 next available candidate on the left or on the right, both cases occuring with probability 0.5.
 Left and right are defined here in terms of the circular axis: <cite>0, 1, …, m, 1</cite>.</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -553,6 +608,8 @@ ordering. Each case occurs with probability 0.5. The method is then iterated for
 and right candidates (only one of them being different from before).</p>
 <p>This method ensures that the probability for a given candidate to be the peak is uniform
 (as opposed to the method <a class="reference internal" href="#prefsampling.ordinal.single_peaked_walsh" title="prefsampling.ordinal.single_peaked_walsh"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_peaked_walsh()</span></code></a>).</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -578,6 +635,8 @@ and right candidates (only one of them being different from before).</p>
 to most preferred candidates. A given position in the ordering is filled by selecting, with
 uniform probability, either the leftmost or the rightmost candidates that have not yet been
 positioned in the vote (left and right being defined by the axis <cite>0, 1, 2, …</cite>).</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -598,14 +657,17 @@ positioned in the vote (left and right being defined by the axis <cite>0, 1, 2, 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.stratification">
 <span class="sig-name descname"><span class="pre">stratification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/impartial.html#stratification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.stratification" title="Permalink to this definition">#</a></dt>
-<dd><p>Generates ordinal votes from stratification model.</p>
+<dd><p>Generates ordinal votes from stratification model. In the stratification model, candidates are
+split into two classes. Every voters ranks the candidates of the first class above the
+candidates of the second class. Within a class, the ranking is selected uniformly at random.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">weight</span></code> parameter is used to define the relative size of the first class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>weight</strong> (<em>float</em>) – Size of the upper class.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>weight</strong> (float, default: <cite>0.5</cite>) – Size of the upper class.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -626,14 +688,15 @@ vote, the following happens. With a probability of 1/(urn_size + 1), the vote is
 uniformly at random (following an impartial culture). With probability <cite>1/urn_size</cite> a vote
 from the urn is selected uniformly at random. In both cases, the vote is put back in the urn
 together with <cite>alpha * m!</cite> copies of the vote (where <cite>m</cite> is the number of candidates).</p>
+<p>Note that for a given number of voters, votes are not sampled independently.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of voters</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of candidates</p></li>
-<li><p><strong>alpha</strong> (<em>float</em>) – The dispersion coefficient (<cite>alpha * m!</cite> copies of a vote are put back in the urn after
+<li><p><strong>alpha</strong> (float, default: <code class="code docutils literal notranslate"><span class="pre">0.1</span></code>) – The dispersion coefficient (<cite>alpha * m!</cite> copies of a vote are put back in the urn after
 a draw). Must be non-negative.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – The seed for the random number generator.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The seed for the random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -698,6 +761,7 @@ a draw). Must be non-negative.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.norm_mallows"><code class="docutils literal notranslate"><span class="pre">norm_mallows()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.plackett_luce"><code class="docutils literal notranslate"><span class="pre">plackett_luce()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_crossing"><code class="docutils literal notranslate"><span class="pre">single_crossing()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_crossing_impartial"><code class="docutils literal notranslate"><span class="pre">single_crossing_impartial()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_peaked_circle"><code class="docutils literal notranslate"><span class="pre">single_peaked_circle()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_peaked_conitzer"><code class="docutils literal notranslate"><span class="pre">single_peaked_conitzer()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.single_peaked_walsh"><code class="docutils literal notranslate"><span class="pre">single_peaked_walsh()</span></code></a></li>

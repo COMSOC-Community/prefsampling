@@ -15,16 +15,18 @@ def urn(
     from the urn is selected uniformly at random. In both cases, the vote is put back in the urn
     together with `alpha * m!` copies of the vote (where `m` is the number of candidates).
 
+    Note that for a given number of voters, votes are not sampled independently.
+
     Parameters
     ----------
         num_voters: int
             Number of voters
         num_candidates: int
             Number of candidates
-        alpha: float
+        alpha: float, default: :code:`0.1`
             The dispersion coefficient (`alpha * m!` copies of a vote are put back in the urn after
             a draw). Must be non-negative.
-        seed: int
+        seed: int, default: :code:`None`
             The seed for the random number generator.
 
     Returns
@@ -34,14 +36,13 @@ def urn(
     """
 
     if alpha < 0:
-        raise ValueError("Alpha needs to be positive for an urn model.")
+        raise ValueError("Alpha needs to be non-negative for an urn model.")
 
     rng = np.random.default_rng(seed)
     votes = np.zeros((num_voters, num_candidates), dtype=int)
     urn_size = 1.0
     for i in range(num_voters):
-        rho = rng.uniform(0, urn_size)
-        if rho <= 1.0:
+        if rng.uniform(0, urn_size) <= 1.0:
             votes[i] = rng.permutation(num_candidates)
         else:
             votes[i] = votes[rng.integers(0, i)]

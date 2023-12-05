@@ -274,28 +274,32 @@ document.write(`
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates ordinal votes according to the Euclidean model.</span>
 
-<span class="sd">    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space. A voter then</span>
-<span class="sd">    ranks the candidates in increasing order of distance: their most preferred candidate is the closest one to them,</span>
-<span class="sd">    etc.</span>
+<span class="sd">    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.</span>
+<span class="sd">    A voter then ranks the candidates in increasing order of distance: their most preferred</span>
+<span class="sd">    candidate is the closest one to them, etc.</span>
+
+<span class="sd">    Several Euclidean spaces can be considered. The possibilities are defined in the</span>
+<span class="sd">    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the</span>
+<span class="sd">    dimension with the parameter :code:`dimension`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters : int</span>
-<span class="sd">        Number of Voters.</span>
-<span class="sd">    num_candidates : int</span>
-<span class="sd">        Number of Candidates.</span>
-<span class="sd">    space : EuclideanSpace</span>
-<span class="sd">        Type of space considered. Should be a constant defined in the</span>
-<span class="sd">        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.</span>
-<span class="sd">    dimension : int</span>
-<span class="sd">        Number of dimensions for the sapce considered</span>
-<span class="sd">    seed : int</span>
-<span class="sd">        Seed for numpy random number generator.</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        space : EuclideanSpace, default: :py:class:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`</span>
+<span class="sd">            Type of space considered. Should be a constant defined in the</span>
+<span class="sd">            :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.</span>
+<span class="sd">        dimension : int, default: `2`</span>
+<span class="sd">            Number of dimensions for the sapce considered</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    np.ndarray</span>
-<span class="sd">        The votes.</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Ordinal votes.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>

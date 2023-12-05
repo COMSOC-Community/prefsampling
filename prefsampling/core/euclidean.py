@@ -70,8 +70,8 @@ def election_positions(
     else:
         raise ValueError(
             "The `space` argument needs to be one of the constant defined in the "
-            "core.euclidean.EuclideanSpace enumeration. Choices are: " +
-            ", ".join(str(s) for s in EuclideanSpace)
+            "core.euclidean.EuclideanSpace enumeration. Choices are: "
+            + ", ".join(str(s) for s in EuclideanSpace)
         )
     return voters, candidates
 

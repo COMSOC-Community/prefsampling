@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" data-theme="light">
+<html lang="en" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -32,9 +32,9 @@
     <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
@@ -115,7 +115,6 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
-
   
 
 <a class="navbar-brand logo" href="../../../index.html">
@@ -214,7 +213,6 @@
 </button>
 
 
-
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -224,7 +222,6 @@ document.write(`
   </button>
 `);
 </script>
-
 
 <script>
 document.write(`
@@ -269,32 +266,53 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">normalise_phi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">central_vote</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates votes according to Mallows&#39; model (Mallows, 1957).</span>
+<span class="sd">    Generates votes according to Mallows&#39; model (`Mallows, 1957</span>
+<span class="sd">    &lt;https://www.jstor.org/stable/2333244&gt;`_). This model is parameterised by a central vote. The</span>
+<span class="sd">    probability of generating a given decreases exponentially with the distance between the vote</span>
+<span class="sd">    and the central vote.</span>
+
+<span class="sd">    Specifically, the probability of generating a vote is proportional to `phi ** distance` where</span>
+<span class="sd">    `phi` is a dispersion coefficient (in [0, 1]) and `distance` is the Kendall-Tau distance between</span>
+<span class="sd">    the central vote and the vote under consideration. A set of `num_voters` vote is generated</span>
+<span class="sd">    independently and identically following this process.</span>
+
+<span class="sd">    The `phi` coefficient controls the dispersion of the votes: values close to 0 render votes that</span>
+<span class="sd">    are far away from the central vote unlikely to be generated; and the opposite for values close</span>
+<span class="sd">    to 1. Depending on the application, it can be advised to normalise the value of `phi`</span>
+<span class="sd">    (especially when comparing different values for `phi`), see `Boehmer, Faliszewski and Kraiczy</span>
+<span class="sd">    (2023) &lt;https://proceedings.mlr.press/v202/boehmer23b.html&gt;`_ for more details. Use</span>
+<span class="sd">    :code:`normalise_phi = True` to do so.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters : int</span>
-<span class="sd">        Number of Voters.</span>
-<span class="sd">    num_candidates : int</span>
-<span class="sd">        Number of Candidates.</span>
-<span class="sd">    phi : float</span>
-<span class="sd">        The dispersion coefficient.</span>
-<span class="sd">    seed : int</span>
-<span class="sd">        Seed for numpy random number generator.</span>
-<span class="sd">    central_vote : np.ndarray</span>
-<span class="sd">        The central vote.</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            The dispersion coefficient.</span>
+<span class="sd">        normalise_phi : bool, optional</span>
+<span class="sd">            Indicates whether phi should be normalised (see `Boehmer, Faliszewski and Kraiczy (2023)</span>
+<span class="sd">            &lt;https://proceedings.mlr.press/v202/boehmer23b.html&gt;`_)</span>
+<span class="sd">        central_vote : np.ndarray, default: :code:`np.arrange(num_candidates)`</span>
+<span class="sd">            The central vote.</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    np.ndarray</span>
-<span class="sd">        Ordinal votes.</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Ordinal votes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">phi</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of phi: </span><span class="si">{</span><span class="n">phi</span><span class="si">}</span><span class="s2">. Value should be in [0, 1]&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">normalise_phi</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">phi_from_norm_phi</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
@@ -319,33 +337,21 @@ document.write(`
     <span class="n">central_vote</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates votes according to Mallows&#39; normalised model (Boehmer, Faliszewski and Kraiczy 23).</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    num_voters : int</span>
-<span class="sd">        Number of Voters.</span>
-<span class="sd">    num_candidates : int</span>
-<span class="sd">        Number of Candidates.</span>
-<span class="sd">    norm_phi : float</span>
-<span class="sd">        The normalised dispersion coefficient.</span>
-<span class="sd">    seed : int</span>
-<span class="sd">        Seed for numpy random number generator.</span>
-<span class="sd">    central_vote : np.ndarray</span>
-<span class="sd">        The central vote.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    np.ndarray</span>
-<span class="sd">        The votes.</span>
+<span class="sd">    Shortcut for the function :py:func:`~prefsampling.ordinal.mallows` with</span>
+<span class="sd">    :code:`normalise_phi = True`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">norm_phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">norm_phi</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Incorrect value of normphi: </span><span class="si">{</span><span class="n">norm_phi</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span>
         <span class="p">)</span>
 
-    <span class="n">phi</span> <span class="o">=</span> <span class="n">phi_from_norm_phi</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">norm_phi</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">mallows</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">central_vote</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">mallows</span><span class="p">(</span>
+        <span class="n">num_voters</span><span class="p">,</span>
+        <span class="n">num_candidates</span><span class="p">,</span>
+        <span class="n">norm_phi</span><span class="p">,</span>
+        <span class="n">normalise_phi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+        <span class="n">central_vote</span><span class="o">=</span><span class="n">central_vote</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">_insert_prob_distr</span><span class="p">(</span><span class="n">position</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -480,7 +486,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
 </div>
                 </footer>
@@ -505,7 +511,6 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
-
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -532,8 +537,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -8,6 +8,7 @@ from prefsampling.ordinal.impartial import (
 )
 from prefsampling.ordinal.singlecrossing import (
     single_crossing as ordinal_single_crossing,
+    single_crossing_impartial as ordinal_single_crossing_impartial,
 )
 from prefsampling.ordinal.singlepeaked import (
     single_peaked_conitzer as ordinal_single_peaked_conitzer,
@@ -17,7 +18,7 @@ from prefsampling.ordinal.singlepeaked import (
 from prefsampling.ordinal.euclidean import euclidean as ordinal_euclidean
 from prefsampling.ordinal.mallows import (
     mallows as ordinal_mallows,
-    norm_mallows as ordinal_norm_mallows
+    norm_mallows as ordinal_norm_mallows,
 )
 from prefsampling.ordinal.plackettluce import plackett_luce as ordinal_plackett_luce
 
@@ -41,6 +42,7 @@ ALL_SAMPLERS = [
     ordinal_single_peaked_circle,
     ordinal_single_peaked_walsh,
     ordinal_single_crossing,
+    ordinal_single_crossing_impartial,
     ordinal_euclidean,
     ordinal_mallows,
     ordinal_norm_mallows,

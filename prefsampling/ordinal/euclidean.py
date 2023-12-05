@@ -16,28 +16,32 @@ def euclidean(
     """
     Generates ordinal votes according to the Euclidean model.
 
-    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space. A voter then
-    ranks the candidates in increasing order of distance: their most preferred candidate is the closest one to them,
-    etc.
+    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.
+    A voter then ranks the candidates in increasing order of distance: their most preferred
+    candidate is the closest one to them, etc.
+
+    Several Euclidean spaces can be considered. The possibilities are defined in the
+    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the
+    dimension with the parameter :code:`dimension`.
 
     Parameters
     ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    space : EuclideanSpace
-        Type of space considered. Should be a constant defined in the
-        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
-    dimension : int
-        Number of dimensions for the sapce considered
-    seed : int
-        Seed for numpy random number generator.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        space : EuclideanSpace, default: :py:class:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`
+            Type of space considered. Should be a constant defined in the
+            :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
+        dimension : int, default: `2`
+            Number of dimensions for the sapce considered
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator.
 
     Returns
     -------
-    np.ndarray
-        The votes.
+        np.ndarray
+            Ordinal votes.
 
     """
     rng = np.random.default_rng(seed)

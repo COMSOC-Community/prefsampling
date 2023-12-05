@@ -8,32 +8,53 @@ def mallows(
     num_voters: int,
     num_candidates: int,
     phi: float = 0.5,
-    seed: int = None,
+    normalise_phi: bool = False,
     central_vote: np.ndarray = None,
+    seed: int = None,
 ) -> np.ndarray:
     """
-    Generates votes according to Mallows' model (Mallows, 1957).
+    Generates votes according to Mallows' model (`Mallows, 1957
+    <https://www.jstor.org/stable/2333244>`_). This model is parameterised by a central vote. The
+    probability of generating a given decreases exponentially with the distance between the vote
+    and the central vote.
+
+    Specifically, the probability of generating a vote is proportional to `phi ** distance` where
+    `phi` is a dispersion coefficient (in [0, 1]) and `distance` is the Kendall-Tau distance between
+    the central vote and the vote under consideration. A set of `num_voters` vote is generated
+    independently and identically following this process.
+
+    The `phi` coefficient controls the dispersion of the votes: values close to 0 render votes that
+    are far away from the central vote unlikely to be generated; and the opposite for values close
+    to 1. Depending on the application, it can be advised to normalise the value of `phi`
+    (especially when comparing different values for `phi`), see `Boehmer, Faliszewski and Kraiczy
+    (2023) <https://proceedings.mlr.press/v202/boehmer23b.html>`_ for more details. Use
+    :code:`normalise_phi = True` to do so.
 
     Parameters
     ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    phi : float
-        The dispersion coefficient.
-    seed : int
-        Seed for numpy random number generator.
-    central_vote : np.ndarray
-        The central vote.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        phi : float
+            The dispersion coefficient.
+        normalise_phi : bool, optional
+            Indicates whether phi should be normalised (see `Boehmer, Faliszewski and Kraiczy (2023)
+            <https://proceedings.mlr.press/v202/boehmer23b.html>`_)
+        central_vote : np.ndarray, default: :code:`np.arrange(num_candidates)`
+            The central vote.
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator.
 
     Returns
     -------
-    np.ndarray
-        Ordinal votes.
+        np.ndarray
+            Ordinal votes.
     """
     if phi < 0 or 1 < phi:
         raise ValueError(f"Incorrect value of phi: {phi}. Value should be in [0, 1]")
+    if normalise_phi:
+        phi = phi_from_norm_phi(num_candidates, phi)
 
     rng = np.random.default_rng(seed)
 
@@ -58,33 +79,21 @@ def norm_mallows(
     central_vote: np.ndarray = None,
 ) -> np.ndarray:
     """
-    Generates votes according to Mallows' normalised model (Boehmer, Faliszewski and Kraiczy 23).
-
-    Parameters
-    ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    norm_phi : float
-        The normalised dispersion coefficient.
-    seed : int
-        Seed for numpy random number generator.
-    central_vote : np.ndarray
-        The central vote.
-
-    Returns
-    -------
-    np.ndarray
-        The votes.
+    Shortcut for the function :py:func:`~prefsampling.ordinal.mallows` with
+    :code:`normalise_phi = True`.
     """
     if norm_phi < 0 or 1 < norm_phi:
         raise ValueError(
             f"Incorrect value of normphi: {norm_phi}. Value should be in [0,1]"
         )
 
-    phi = phi_from_norm_phi(num_candidates, norm_phi)
-    return mallows(num_voters, num_candidates, phi, seed, central_vote)
+    return mallows(
+        num_voters,
+        num_candidates,
+        norm_phi,
+        normalise_phi=True,
+        seed=seed,
+        central_vote=central_vote)
 
 
 def _insert_prob_distr(position: int, phi: float) -> np.ndarray:

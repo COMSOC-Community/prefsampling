@@ -10,7 +10,10 @@ from prefsampling.ordinal.impartial import (
     impartial,
     stratification,
 )
-from prefsampling.ordinal.singlecrossing import single_crossing
+from prefsampling.ordinal.singlecrossing import (
+    single_crossing,
+    single_crossing_impartial,
+)
 from prefsampling.ordinal.singlepeaked import (
     single_peaked_walsh,
     single_peaked_conitzer,
@@ -28,6 +31,7 @@ ALL_ORDINAL_SAMPLERS = [
     single_peaked_circle,
     single_peaked_walsh,
     single_crossing,
+    single_crossing_impartial,
     mallows,
     norm_mallows,
     lambda num_voters, num_candidates, seed=None: euclidean(

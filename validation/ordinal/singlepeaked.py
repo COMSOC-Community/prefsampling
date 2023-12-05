@@ -1,7 +1,14 @@
 import numpy as np
 
-from prefsampling.ordinal import single_peaked_walsh, single_peaked_conitzer
-from validation.utils import get_all_single_peaked_ranks
+from prefsampling.ordinal import (
+    single_peaked_walsh,
+    single_peaked_conitzer,
+    single_peaked_circle,
+)
+from validation.utils import (
+    get_all_single_peaked_ranks,
+    get_all_single_peaked_circle_ranks,
+)
 from validation.validator import Validator
 
 
@@ -46,6 +53,26 @@ class SPConitzerValidator(Validator):
                 probability *= 1 / 2
             distribution[i] = probability
         self.theoretical_distribution = distribution
+
+    def sample_cast(self, sample):
+        return tuple(sample)
+
+
+class SPCircleValidator(Validator):
+    def __init__(self, num_candidates, all_outcomes=None):
+        super(SPCircleValidator, self).__init__(
+            num_candidates,
+            sampler_func=single_peaked_circle,
+            all_outcomes=all_outcomes,
+        )
+
+    def set_all_outcomes(self):
+        self.all_outcomes = get_all_single_peaked_circle_ranks(self.num_candidates)
+
+    def set_theoretical_distribution(self):
+        self.theoretical_distribution = np.full(
+            len(self.all_outcomes), 1 / len(self.all_outcomes)
+        )
 
     def sample_cast(self, sample):
         return tuple(sample)

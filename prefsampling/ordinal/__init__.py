@@ -14,7 +14,10 @@ from prefsampling.ordinal.singlepeaked import (
     single_peaked_circle,
     single_peaked_walsh,
 )
-from prefsampling.ordinal.singlecrossing import single_crossing
+from prefsampling.ordinal.singlecrossing import (
+    single_crossing,
+    single_crossing_impartial,
+)
 from prefsampling.ordinal.mallows import (
     mallows,
     norm_mallows,
@@ -31,6 +34,7 @@ __all__ = [
     "single_peaked_conitzer",
     "single_peaked_circle",
     "single_crossing",
+    "single_crossing_impartial",
     "mallows",
     "norm_mallows",
     "euclidean",

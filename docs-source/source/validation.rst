@@ -22,41 +22,114 @@ Ordinal Samplers
 Impartial
 ~~~~~~~~~
 
-.. image:: validation_plots/ordinal/impartial/Frequencies_Impartial.png
+.. image:: validation_plots/ordinal/ordinal_impartial.png
   :width: 500
   :alt: Observed versus theoretical frequencies for the impartial culture
 
 Impartial Anonymous
 ~~~~~~~~~~~~~~~~~~~
 
+.. image:: validation_plots/ordinal/ordinal_impartial_anonymous.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the impartial anonymous culture
+
 Stratification
 ~~~~~~~~~~~~~~
+
+.. image:: validation_plots/ordinal/stratification_0.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the stratification culture with weight=0
+
+.. image:: validation_plots/ordinal/stratification_0.2.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the stratification culture with weight=0.2
+
+.. image:: validation_plots/ordinal/stratification_0.6.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the stratification culture with weight=0.6
+
+.. image:: validation_plots/ordinal/stratification_1.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the stratification culture with weight=1
+
+Urn
+~~~
+
+.. image:: validation_plots/ordinal/urn_0.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for Mallow's model with alpha=0
+
+.. image:: validation_plots/ordinal/urn_0.041666666666666664.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for Mallow's model with alpha=0
+
+.. image:: validation_plots/ordinal/urn_0.5.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for Mallow's model with alpha=0
+
+.. image:: validation_plots/ordinal/urn_1.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for Mallow's model with alpha=0
+
 
 Mallows
 ~~~~~~~
 
-.. image:: validation_plots/ordinal/mallows/Frequencies_Mallows_0.5.png
+.. image:: validation_plots/ordinal/mallows_0.1.png
   :width: 500
-  :alt: Observed versus theoretical frequencies for the impartial culture
+  :alt: Observed versus theoretical frequencies for Mallow's model with phi=0.1
+
+.. image:: validation_plots/ordinal/mallows_0.5.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for Mallow's model with phi=0.5
+
+.. image:: validation_plots/ordinal/mallows_0.8.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for Mallow's model with phi=0.8
+
+.. image:: validation_plots/ordinal/mallows_1.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for Mallow's model with phi=1
 
 Plackett-Luce
 ~~~~~~~~~~~~~
 
-.. image:: validation_plots/ordinal/plackettluce/Frequencies_Plackett_Luce_1s.png
+.. image:: validation_plots/ordinal/plackett_luce_0.png
   :width: 500
-  :alt: Observed versus theoretical frequencies for the impartial culture
+  :alt: Observed versus theoretical frequencies for the Plackette-Luce model
 
-.. image:: validation_plots/ordinal/plackettluce/Frequencies_Plackett_Luce_rnd.png
+.. image:: validation_plots/ordinal/plackett_luce_1.png
   :width: 500
-  :alt: Observed versus theoretical frequencies for the impartial culture
+  :alt: Observed versus theoretical frequencies for the Plackette-Luce model
+
+.. image:: validation_plots/ordinal/plackett_luce_2.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the Plackette-Luce model
 
 Single-Peaked
 ~~~~~~~~~~~~~
 
-.. image:: validation_plots/ordinal/single_peaked/Frequencies_SP_Walsh.png
+.. image:: validation_plots/ordinal/sp_walsh.png
   :width: 500
-  :alt: Observed versus theoretical frequencies for the impartial culture
+  :alt: Observed versus theoretical frequencies for the Walsh single-peaked culture
 
-.. image:: validation_plots/ordinal/single_peaked/Frequencies_SP_Conitzer.png
+.. image:: validation_plots/ordinal/sp_conitzer.png
   :width: 500
-  :alt: Observed versus theoretical frequencies for the impartial culture
+  :alt: Observed versus theoretical frequencies for the Conitzer single-peaked culture
+
+.. image:: validation_plots/ordinal/sp_circle.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the single-peaked on a circle culture
+
+Single-Crossing
+~~~~~~~~~~~~~~~
+
+.. image:: validation_plots/ordinal/single_crossing_impartial.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the single-crossing culture
+
+
+.. image:: validation_plots/ordinal/single_crossing.png
+  :width: 500
+  :alt: Observed versus theoretical frequencies for the impartial single-crossing culture
+

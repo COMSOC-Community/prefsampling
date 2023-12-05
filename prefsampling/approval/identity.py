@@ -39,9 +39,7 @@ def identity(
 
 
 @validate_num_voters_candidates
-def full(
-    num_voters: int, num_candidates: int, seed: int = None
-) -> list[set[int]]:
+def full(num_voters: int, num_candidates: int, seed: int = None) -> list[set[int]]:
     """
     Generates approval votes where each voter approves all the candidates.
 
@@ -65,9 +63,7 @@ def full(
 
 
 @validate_num_voters_candidates
-def empty(
-    num_voters: int, num_candidates: int, seed: int = None
-) -> list[set[int]]:
+def empty(num_voters: int, num_candidates: int, seed: int = None) -> list[set[int]]:
     """
     Generates approval votes where each vote is empty.
 
@@ -86,4 +82,3 @@ def empty(
             Approval votes.
     """
     return [set() for _ in range(num_voters)]
-

@@ -276,8 +276,8 @@ document.write(`
 <span class="sd">    probability of selecting a candidate is equal to its quality (normalised). Then, this candidate</span>
 <span class="sd">    is removed and the quality are re-normalised.</span>
 
-<span class="sd">    A set of `num_voters` vote is generated independently and identically following the process</span>
-<span class="sd">    described above.</span>
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -287,7 +287,7 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        alphas : list[float]</span>
 <span class="sd">            List of model parameters (quality of the candidates).</span>
-<span class="sd">        seed : int</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>

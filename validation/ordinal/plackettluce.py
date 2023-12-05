@@ -26,7 +26,9 @@ class PlackettLuceValidator(Validator):
 
     def set_theoretical_distribution(self):
         distribution = np.zeros(len(self.all_outcomes))
-        norm_alphas = np.array(self.sampler_parameters["alphas"]) / sum(self.sampler_parameters["alphas"])
+        norm_alphas = np.array(self.sampler_parameters["alphas"]) / sum(
+            self.sampler_parameters["alphas"]
+        )
         for i, rank in enumerate(self.all_outcomes):
             probability = 1
             for j, alt in enumerate(rank):
@@ -36,4 +38,3 @@ class PlackettLuceValidator(Validator):
 
     def sample_cast(self, sample):
         return tuple(sample)
-

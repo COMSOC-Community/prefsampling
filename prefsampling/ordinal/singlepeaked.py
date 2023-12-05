@@ -19,6 +19,9 @@ def single_peaked_conitzer(
     This method ensures that the probability for a given candidate to be the peak is uniform
     (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`).
 
+    A collection of `num_voters` vote is generated independently and identically following the
+    process described above.
+
     Parameters
     ----------
         num_voters : int
@@ -71,6 +74,9 @@ def single_peaked_circle(
     next available candidate on the left or on the right, both cases occuring with probability 0.5.
     Left and right are defined here in terms of the circular axis: `0, 1, ..., m, 1`.
 
+    A collection of `num_voters` vote is generated independently and identically following the
+    process described above.
+
     Parameters
     ----------
         num_voters : int
@@ -115,6 +121,9 @@ def single_peaked_walsh(
     to most preferred candidates. A given position in the ordering is filled by selecting, with
     uniform probability, either the leftmost or the rightmost candidates that have not yet been
     positioned in the vote (left and right being defined by the axis `0, 1, 2, ...`).
+
+    A collection of `num_voters` vote is generated independently and identically following the
+    process described above.
 
     Parameters
     ----------

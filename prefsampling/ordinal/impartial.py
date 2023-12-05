@@ -20,7 +20,7 @@ def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndar
         Number of Voters.
     num_candidates : int
         Number of Candidates.
-    seed : int
+    seed : int, default: :code:`None`
         Seed for numpy random number generator.
 
     Returns
@@ -55,7 +55,7 @@ def impartial_anonymous(
         Number of Voters.
     num_candidates : int
         Number of Candidates.
-    seed : int
+    seed : int, default: :code:`None`
         Seed for numpy random number generator.
 
     Returns
@@ -73,24 +73,30 @@ def stratification(
     num_voters: int, num_candidates: int, weight: float = 0.5, seed: int = None
 ) -> np.ndarray:
     """
-    Generates ordinal votes from stratification model.
+    Generates ordinal votes from stratification model. In the stratification model, candidates are
+    split into two classes. Every voters ranks the candidates of the first class above the
+    candidates of the second class. Within a class, the ranking is selected uniformly at random.
+
+    The :code:`weight` parameter is used to define the relative size of the first class.
 
     Parameters
     ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    weight : float
-        Size of the upper class.
-    seed : int
-        Seed for numpy random number generator.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        weight : float, default: `0.5`
+            Size of the upper class.
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator.
 
     Returns
     -------
-    np.ndarray
-        Ordinal votes.
+        np.ndarray
+            Ordinal votes.
     """
+    if weight < 0 or 1 < weight:
+        raise ValueError(f"Incorrect value of weight: {weight}. Value should be in [0, 1]")
     rng = np.random.default_rng(seed)
     votes = np.zeros((num_voters, num_candidates), dtype=int)
     upper_class_size = int(weight * num_candidates)
