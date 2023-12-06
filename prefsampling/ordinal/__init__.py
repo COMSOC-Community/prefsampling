@@ -24,6 +24,7 @@ from prefsampling.ordinal.mallows import (
 )
 from prefsampling.ordinal.euclidean import euclidean
 from prefsampling.ordinal.plackettluce import plackett_luce
+from prefsampling.ordinal.groupseparable import group_separable, DecompositionTree
 
 __all__ = [
     "urn",
@@ -39,4 +40,6 @@ __all__ = [
     "norm_mallows",
     "euclidean",
     "plackett_luce",
+    "group_separable",
+    "DecompositionTree"
 ]

@@ -6,7 +6,9 @@ from collections.abc import Iterable
 import numpy as np
 
 from prefsampling.core.euclidean import EuclideanSpace
+from prefsampling.ordinal import DecompositionTree
 from validation.ordinal.euclidean import OrdinalEuclideanValidator
+from validation.ordinal.groupseparable import GroupSeparableValidator
 from validation.ordinal.impartial import (
     OrdinalImpartialValidator,
     OrdinalImpartialAnonymousValidator,
@@ -29,7 +31,8 @@ from validation.utils import (
     get_all_single_peaked_ranks,
     get_all_anonymous_profiles,
     get_all_single_peaked_circle_ranks,
-    get_all_sc_profiles_non_iso,
+    get_all_sc_profiles_non_iso, get_all_group_separable_profiles, gs_structure,
+    get_all_gs_structure,
 )
 
 
@@ -232,6 +235,24 @@ def run_ordinal_urn_validator(num_obs, alpha, all_anonymous_profiles, plot_dir_r
         )
 
 
+def run_group_separable_validator(num_obs, num_voters, num_candidates, all_gs_structures, plot_dir_root):
+    validator = GroupSeparableValidator(
+        num_voters,
+        num_candidates,
+        tree=DecompositionTree.RANDOM,
+        all_outcomes=all_gs_structures,
+    )
+    run_validator(
+        "Group separable model",
+        "groupseparable_RANDOM",
+        validator,
+        num_obs,
+        plot_dir_root,
+        graph_xlabel="Group separable profile identifiers",
+        graph_x_tick_labels=all_gs_structures
+    )
+
+
 def run_ordinal_euclidean_validator(num_obs, space_dimension, all_ranks, plot_dir_root):
     if not isinstance(space_dimension[0], Iterable):
         space_dimension = [space_dimension]
@@ -252,7 +273,7 @@ def run_ordinal_euclidean_validator(num_obs, space_dimension, all_ranks, plot_di
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-    num_observations = 1000000
+    num_observations = 10000
 
     # -------------------
     # Ordinal Validators
@@ -268,6 +289,8 @@ if __name__ == "__main__":
     all_sc_profiles_non_iso = get_all_sc_profiles_non_iso(
         num_voters=3, num_candidates=4
     )
+    all_gs_profiles = get_all_group_separable_profiles(num_voters=4, num_candidates=4)
+    all_gs_structures = get_all_gs_structure(all_gs_profiles=all_gs_profiles)
 
     # # Mallow's
     # all_phis = [0.1, 0.5, 0.8, 1]
@@ -292,16 +315,16 @@ if __name__ == "__main__":
     #     num_observations, all_alphas, all_ranks, ordinal_plot_dir_root
     # )
     #
-    # Single-Peaked
-    run_single_peaked_walsh_validator(
-        num_observations, all_sp_ranks, ordinal_plot_dir_root
-    )
-    run_single_peaked_conitzer_validator(
-        num_observations, all_sp_ranks, ordinal_plot_dir_root
-    )
-    run_single_peaked_circle_validator(
-        num_observations, all_sp_circle_ranks, ordinal_plot_dir_root
-    )
+    # # Single-Peaked
+    # run_single_peaked_walsh_validator(
+    #     num_observations, all_sp_ranks, ordinal_plot_dir_root
+    # )
+    # run_single_peaked_conitzer_validator(
+    #     num_observations, all_sp_ranks, ordinal_plot_dir_root
+    # )
+    # run_single_peaked_circle_validator(
+    #     num_observations, all_sp_circle_ranks, ordinal_plot_dir_root
+    # )
     #
     # # Single-Crossing
     # run_impartial_single_crossing_validator(
@@ -332,3 +355,12 @@ if __name__ == "__main__":
     #     all_ranks,
     #     ordinal_plot_dir_root
     # )
+
+    # Group Separable
+    run_group_separable_validator(
+        num_observations,
+        len(all_gs_profiles[0]),
+        len(all_gs_profiles[0][0]),
+        all_gs_structures,
+        ordinal_plot_dir_root
+    )
