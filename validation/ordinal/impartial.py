@@ -61,7 +61,7 @@ class StratificationValidator(Validator):
             num_candidates,
             sampler_func=stratification,
             all_outcomes=all_outcomes,
-            sampler_parameters={'weight': weight}
+            sampler_parameters={"weight": weight},
         )
 
     def set_all_outcomes(self):

@@ -5,9 +5,12 @@ from collections.abc import Iterable
 
 import numpy as np
 
+from prefsampling.core.euclidean import EuclideanSpace
+from validation.ordinal.euclidean import OrdinalEuclideanValidator
 from validation.ordinal.impartial import (
     OrdinalImpartialValidator,
-    OrdinalImpartialAnonymousValidator, StratificationValidator,
+    OrdinalImpartialAnonymousValidator,
+    StratificationValidator,
 )
 from validation.ordinal.mallows import OrdinalMallowsValidator
 from validation.ordinal.plackettluce import PlackettLuceValidator
@@ -91,7 +94,9 @@ def run_stratification_validator(num_obs, weight, all_ranks, plot_dir_root):
     if not isinstance(weight, Iterable):
         weight = [weight]
     for w in weight:
-        validator = StratificationValidator(len(all_ranks[0]), weight=w, all_outcomes=all_ranks)
+        validator = StratificationValidator(
+            len(all_ranks[0]), weight=w, all_outcomes=all_ranks
+        )
         run_validator(
             "Stratification model",
             f"stratification_{w}",
@@ -127,7 +132,7 @@ def run_single_peaked_walsh_validator(num_obs, all_sp_ranks, plot_dir_root):
         validator,
         num_obs,
         plot_dir_root,
-        graph_xlabel="Single-peaked rank identifier (ordered by observed frequency)",
+        graph_xlabel="Single-peaked rank identifier",
     )
 
 
@@ -139,7 +144,7 @@ def run_single_peaked_conitzer_validator(num_obs, all_sp_ranks, plot_dir_root):
         validator,
         num_obs,
         plot_dir_root,
-        graph_xlabel="Single-peaked rank identifier (ordered by observed frequency)",
+        graph_xlabel="Single-peaked rank identifier",
     )
 
 
@@ -153,7 +158,7 @@ def run_single_peaked_circle_validator(num_obs, all_sp_circle_ranks, plot_dir_ro
         validator,
         num_obs,
         plot_dir_root,
-        graph_xlabel="Circular single-peaked rank identifier (ordered by observed frequency)",
+        graph_xlabel="Circular single-peaked rank identifier",
     )
 
 
@@ -227,6 +232,23 @@ def run_ordinal_urn_validator(num_obs, alpha, all_anonymous_profiles, plot_dir_r
         )
 
 
+def run_ordinal_euclidean_validator(num_obs, space_dimension, all_ranks, plot_dir_root):
+    if not isinstance(space_dimension[0], Iterable):
+        space_dimension = [space_dimension]
+    for space, dimension in space_dimension:
+        validator = OrdinalEuclideanValidator(
+            len(all_ranks[0]), space, dimension, all_outcomes=all_ranks
+        )
+        run_validator(
+            "Ordinal Euclidean model",
+            f"ordinal_euclidean_{space}_{dimension}",
+            validator,
+            num_obs,
+            plot_dir_root,
+            graph_ordering="observed",
+        )
+
+
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
@@ -247,7 +269,7 @@ if __name__ == "__main__":
         num_voters=3, num_candidates=4
     )
 
-    # Mallow's
+    # # Mallow's
     # all_phis = [0.1, 0.5, 0.8, 1]
     # run_ordinal_mallows_validator(
     #     num_observations, all_phis, all_ranks, ordinal_plot_dir_root
@@ -258,7 +280,7 @@ if __name__ == "__main__":
     # run_ordinal_impartial_anonymous_validator(
     #     num_observations, all_anonymous_profiles, ordinal_plot_dir_root
     # )
-    run_stratification_validator(num_observations, [0, 1/len(all_ranks[0]), 3/len(all_ranks[0]), 1], all_ranks, ordinal_plot_dir_root)
+    # run_stratification_validator(num_observations, [0, 1/len(all_ranks[0]), 3/len(all_ranks[0]), 1], all_ranks, ordinal_plot_dir_root)
     #
     # # Plackett Luce
     # all_alphas = [
@@ -270,26 +292,26 @@ if __name__ == "__main__":
     #     num_observations, all_alphas, all_ranks, ordinal_plot_dir_root
     # )
     #
-    # # Single-Peaked
-    # run_single_peaked_walsh_validator(
-    #     num_observations, all_sp_ranks, ordinal_plot_dir_root
-    # )
-    # run_single_peaked_conitzer_validator(
-    #     num_observations, all_sp_ranks, ordinal_plot_dir_root
-    # )
-    # run_single_peaked_circle_validator(
-    #     num_observations, all_sp_circle_ranks, ordinal_plot_dir_root
-    # )
+    # Single-Peaked
+    run_single_peaked_walsh_validator(
+        num_observations, all_sp_ranks, ordinal_plot_dir_root
+    )
+    run_single_peaked_conitzer_validator(
+        num_observations, all_sp_ranks, ordinal_plot_dir_root
+    )
+    run_single_peaked_circle_validator(
+        num_observations, all_sp_circle_ranks, ordinal_plot_dir_root
+    )
     #
     # # Single-Crossing
     # run_impartial_single_crossing_validator(
     #     num_observations, all_sc_profiles_non_iso, ordinal_plot_dir_root
     # )
-    run_single_crossing_validator(
-        num_observations,
-        get_all_sc_profiles_non_iso(num_voters=2, num_candidates=4),
-        ordinal_plot_dir_root
-    )
+    # run_single_crossing_validator(
+    #     num_observations,
+    #     get_all_sc_profiles_non_iso(num_voters=2, num_candidates=4),
+    #     ordinal_plot_dir_root
+    # )
     #
     # # Urn
     # run_ordinal_urn_validator(
@@ -297,4 +319,16 @@ if __name__ == "__main__":
     #     [0, 1 / math.factorial(len(all_anonymous_profiles[0][0])), 0.5, 1],
     #     all_anonymous_profiles,
     #     ordinal_plot_dir_root,
+    # )
+    #
+    # # Euclidean Ordinal
+    # run_ordinal_euclidean_validator(
+    #     num_observations,
+    #     [
+    #         (EuclideanSpace.UNIFORM, 2),
+    #         (EuclideanSpace.SPHERE, 2),
+    #         (EuclideanSpace.GAUSSIAN, 2),
+    #     ],
+    #     all_ranks,
+    #     ordinal_plot_dir_root
     # )

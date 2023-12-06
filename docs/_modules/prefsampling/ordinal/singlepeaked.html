@@ -275,7 +275,10 @@ document.write(`
 <span class="sd">    and right candidates (only one of them being different from before).</span>
 
 <span class="sd">    This method ensures that the probability for a given candidate to be the peak is uniform</span>
-<span class="sd">    (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`).</span>
+<span class="sd">    (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`). The</span>
+<span class="sd">    probability for a single-peaked rank to be generated is equal to</span>
+<span class="sd">    `1/m * (1/2)**dist_peak_to_end` where `m` is the number of candidates and `dist_peak_to_end`</span>
+<span class="sd">    is the minimum distance from to peak to an end of the axis (i.e., candidates `0` or `m - 1`).</span>
 
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>

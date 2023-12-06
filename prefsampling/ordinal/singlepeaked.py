@@ -17,7 +17,10 @@ def single_peaked_conitzer(
     and right candidates (only one of them being different from before).
 
     This method ensures that the probability for a given candidate to be the peak is uniform
-    (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`).
+    (as opposed to the method :py:func:`~prefsampling.ordinal.single_peaked_walsh`). The
+    probability for a single-peaked rank to be generated is equal to
+    `1/m * (1/2)**dist_peak_to_end` where `m` is the number of candidates and `dist_peak_to_end`
+    is the minimum distance from to peak to an end of the axis (i.e., candidates `0` or `m - 1`).
 
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.

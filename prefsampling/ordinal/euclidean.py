@@ -24,6 +24,9 @@ def euclidean(
     :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the
     dimension with the parameter :code:`dimension`.
 
+    A collection of `num_voters` vote is generated independently and identically following the
+    process described above.
+
     Parameters
     ----------
         num_voters : int

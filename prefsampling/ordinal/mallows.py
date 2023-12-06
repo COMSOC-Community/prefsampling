@@ -93,7 +93,8 @@ def norm_mallows(
         norm_phi,
         normalise_phi=True,
         seed=seed,
-        central_vote=central_vote)
+        central_vote=central_vote,
+    )
 
 
 def _insert_prob_distr(position: int, phi: float) -> np.ndarray:

@@ -61,6 +61,7 @@ Ordinal Samplers
      - ---
      - | :code:`phi` (defaults to 0.5)
        | :code:`central_vote` (defaults to [0, 1, 2, ...])
+       | :code:`normalise_phi` (defaults to :code:`False`)
    * - :py:func:`~prefsampling.ordinal.norm_mallows`
      - ---
      - | :code:`norm_phi` (defaults to 0.5)

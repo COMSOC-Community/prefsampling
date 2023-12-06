@@ -89,7 +89,9 @@ class Validator(abc.ABC):
             if not model_name:
                 model_name = self.__name__.replace("Validator", "")
             if self.theoretical_distribution is not None:
-                graph_title = f"Observed versus theoretical frequencies for {model_name}"
+                graph_title = (
+                    f"Observed versus theoretical frequencies for {model_name}"
+                )
             else:
                 graph_title = f"Observed frequencies for {model_name}"
             graph_title += f"\n(num_candidates = {self.num_candidates}"
@@ -169,6 +171,7 @@ class Validator(abc.ABC):
                     [self.theoretical_distribution, self.observed_distribution]
                 )
                 sort_permutation = np.flip(tmp.argsort())
+                xlabel_suffix = "(ordered by theoretical then observed frequency)"
             elif (
                 ordering == "observed-theoretical"
                 and self.theoretical_distribution is not None
@@ -177,6 +180,7 @@ class Validator(abc.ABC):
                     [self.observed_distribution, self.theoretical_distribution]
                 )
                 sort_permutation = np.flip(tmp.argsort())
+                xlabel_suffix = "(ordered by observed then theoretical frequency)"
 
         if sort_permutation is not None:
             frequencies = self.observed_distribution[sort_permutation]
@@ -201,7 +205,7 @@ class Validator(abc.ABC):
         ax.legend(["Observations", "Theoretical"])
         if not xlabel:
             xlabel = "Rank identifier"
-        xlabel += " " + xlabel_suffix
+        xlabel += "\n" + xlabel_suffix
         ax.set_xlabel(xlabel)
         if not ylabel:
             ylabel = "Frequency"

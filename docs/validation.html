@@ -312,6 +312,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#urn">Urn</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mallows">Mallows</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plackett-luce">Plackett-Luce</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean">Euclidean</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peaked">Single-Peaked</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-crossing">Single-Crossing</a></li>
 </ul>
@@ -329,8 +330,8 @@ document.write(`
                   
   <section id="validation">
 <span id="id1"></span><h1>Validation<a class="headerlink" href="#validation" title="Permalink to this heading">#</a></h1>
-<p>In order to ensure the correctness of the samplers we provide in this package,
-we implemented different tests. First we implemented typical Python tests to make sure
+<p>To ensure the correctness of the samplers provided in this package, we implemented
+various tests. First we implemented typical Python tests to make sure
 that the developed features are correct from a programming perspective. But more
 importantly, we also implemented statistical tests to ensure that the samplers
 actually sample what we want. We present these validations below.</p>
@@ -344,48 +345,92 @@ display this information in a graph to assess (non-scientifically) the adequatio
 <h2>Ordinal Samplers<a class="headerlink" href="#ordinal-samplers" title="Permalink to this heading">#</a></h2>
 <section id="impartial">
 <h3>Impartial<a class="headerlink" href="#impartial" title="Permalink to this heading">#</a></h3>
+<p>Under the impartial model, all ranks are equally likely to be generated.</p>
 <a class="reference internal image-reference" href="_images/ordinal_impartial.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="_images/ordinal_impartial.png" style="width: 500px;" /></a>
 </section>
 <section id="impartial-anonymous">
 <h3>Impartial Anonymous<a class="headerlink" href="#impartial-anonymous" title="Permalink to this heading">#</a></h3>
+<p>With the impartial anonymous culture, every multisets of votes–an anonymous profile—are
+equally likely to be generated. Note here that we are discussing anonymous profiles and
+not ranks.</p>
 <a class="reference internal image-reference" href="_images/ordinal_impartial_anonymous.png"><img alt="Observed versus theoretical frequencies for the impartial anonymous culture" src="_images/ordinal_impartial_anonymous.png" style="width: 500px;" /></a>
 </section>
 <section id="stratification">
 <h3>Stratification<a class="headerlink" href="#stratification" title="Permalink to this heading">#</a></h3>
+<p>Under the stratification model, only the ranks that are ‘’stratified’’ can occur.</p>
+<p>When the weight is 0 or 1, there is a single class, and thus, we fall back to the
+impartial culture.</p>
 <a class="reference internal image-reference" href="_images/stratification_0.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=0" src="_images/stratification_0.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/stratification_1.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=1" src="_images/stratification_1.png" style="width: 500px;" /></a>
+<p>We the weight is different from 0 and 1, we obtain more interesting distributions over
+the ranks.</p>
 <a class="reference internal image-reference" href="_images/stratification_0.2.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=0.2" src="_images/stratification_0.2.png" style="width: 500px;" /></a>
 <a class="reference internal image-reference" href="_images/stratification_0.6.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=0.6" src="_images/stratification_0.6.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="_images/stratification_1.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=1" src="_images/stratification_1.png" style="width: 500px;" /></a>
 </section>
 <section id="urn">
 <h3>Urn<a class="headerlink" href="#urn" title="Permalink to this heading">#</a></h3>
-<a class="reference internal image-reference" href="_images/urn_0.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="_images/urn_0.png" style="width: 500px;" /></a>
+<p>The probability distribution governing an urn model is well documented.
+See <a class="reference external" href="https://www.jstor.org/stable/30024551">https://www.jstor.org/stable/30024551</a> for instance.</p>
+<p>Once again, we are here discussing anonymous profiles and not ranks.</p>
+<p>When <cite>alpha</cite> is equal to <cite>1 / m!</cite>, we fall back to the case of the impartial anonymous
+culture.</p>
 <a class="reference internal image-reference" href="_images/urn_0.041666666666666664.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="_images/urn_0.041666666666666664.png" style="width: 500px;" /></a>
+<p>For other values of <cite>alpha</cite>, different probability distributions are obtained.</p>
+<a class="reference internal image-reference" href="_images/urn_0.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="_images/urn_0.png" style="width: 500px;" /></a>
 <a class="reference internal image-reference" href="_images/urn_0.5.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="_images/urn_0.5.png" style="width: 500px;" /></a>
 <a class="reference internal image-reference" href="_images/urn_1.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="_images/urn_1.png" style="width: 500px;" /></a>
 </section>
 <section id="mallows">
 <h3>Mallows<a class="headerlink" href="#mallows" title="Permalink to this heading">#</a></h3>
+<p>The probability distribution generated by a Mallows’ model is also well known.
+See <a class="reference external" href="https://jmlr.org/papers/v15/lu14a.html">https://jmlr.org/papers/v15/lu14a.html</a> for instance.</p>
 <a class="reference internal image-reference" href="_images/mallows_0.1.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=0.1" src="_images/mallows_0.1.png" style="width: 500px;" /></a>
 <a class="reference internal image-reference" href="_images/mallows_0.5.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=0.5" src="_images/mallows_0.5.png" style="width: 500px;" /></a>
 <a class="reference internal image-reference" href="_images/mallows_0.8.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=0.8" src="_images/mallows_0.8.png" style="width: 500px;" /></a>
+<p>When <cite>phi</cite> is one,  we fall back to the impartial culture.</p>
 <a class="reference internal image-reference" href="_images/mallows_1.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=1" src="_images/mallows_1.png" style="width: 500px;" /></a>
 </section>
 <section id="plackett-luce">
 <h3>Plackett-Luce<a class="headerlink" href="#plackett-luce" title="Permalink to this heading">#</a></h3>
-<a class="reference internal image-reference" href="_images/plackett_luce_0.png"><img alt="Observed versus theoretical frequencies for the Plackette-Luce model" src="_images/plackett_luce_0.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="_images/plackett_luce_1.png"><img alt="Observed versus theoretical frequencies for the Plackette-Luce model" src="_images/plackett_luce_1.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="_images/plackett_luce_2.png"><img alt="Observed versus theoretical frequencies for the Plackette-Luce model" src="_images/plackett_luce_2.png" style="width: 500px;" /></a>
+<p>The properties of the Plackett-Luce model have also been described at length.
+See <a class="reference external" href="https://proceedings.mlr.press/v48/zhaob16.html">https://proceedings.mlr.press/v48/zhaob16.html</a> for example.</p>
+<p>When all candidates have the same quality (i.e., all <cite>alpha</cite> values are equal),
+we fall back to the impartial culture case.</p>
+<a class="reference internal image-reference" href="_images/plackett_luce_0.png"><img alt="Observed versus theoretical frequencies for the Plackett-Luce model" src="_images/plackett_luce_0.png" style="width: 500px;" /></a>
+<p>Otherwise, different distribution can be observed.</p>
+<a class="reference internal image-reference" href="_images/plackett_luce_1.png"><img alt="Observed versus theoretical frequencies for the Plackett-Luce model" src="_images/plackett_luce_1.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/plackett_luce_2.png"><img alt="Observed versus theoretical frequencies for the Plackett-Luce model" src="_images/plackett_luce_2.png" style="width: 500px;" /></a>
+</section>
+<section id="euclidean">
+<h3>Euclidean<a class="headerlink" href="#euclidean" title="Permalink to this heading">#</a></h3>
+<p>In the case of the Euclidean model, nothing is known about the distribution over
+ranks that they generate.</p>
+<a class="reference internal image-reference" href="_images/ordinal_euclidean_EuclideanSpace.UNIFORM_2.png"><img alt="Observed versus theoretical frequencies for the Euclidean model with uniform space" src="_images/ordinal_euclidean_EuclideanSpace.UNIFORM_2.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/ordinal_euclidean_EuclideanSpace.SPHERE_2.png"><img alt="Observed versus theoretical frequencies for the Euclidean model with spheric space" src="_images/ordinal_euclidean_EuclideanSpace.SPHERE_2.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/ordinal_euclidean_EuclideanSpace.GAUSSIAN_2.png"><img alt="Observed versus theoretical frequencies for the Euclidean model with Gaussian space" src="_images/ordinal_euclidean_EuclideanSpace.GAUSSIAN_2.png" style="width: 500px;" /></a>
 </section>
 <section id="single-peaked">
 <h3>Single-Peaked<a class="headerlink" href="#single-peaked" title="Permalink to this heading">#</a></h3>
+<p>For single-peaked samplers, the one proposed by
+<a class="reference external" href="https://arxiv.org/abs/1503.02766">Walsh (2015)</a> ensures that all single-peaked
+rank are equally likely to be generated.</p>
 <a class="reference internal image-reference" href="_images/sp_walsh.png"><img alt="Observed versus theoretical frequencies for the Walsh single-peaked culture" src="_images/sp_walsh.png" style="width: 500px;" /></a>
+<p>The model proposed by <a class="reference external" href="https://arxiv.org/abs/1401.3449">Conitzer (2009)</a> yields
+a different probability distribution.In this distribution, the probability of observing
+a given single-peaked rank is equal to  <cite>1/m * (1/2)**dist_peak_to_end</cite> where <cite>m</cite> is the
+number of candidates and <cite>dist_peak_to_end</cite> is the minimum distance from to peak
+to an end of the axis (i.e., candidates <cite>0</cite> or <cite>m - 1</cite>).</p>
 <a class="reference internal image-reference" href="_images/sp_conitzer.png"><img alt="Observed versus theoretical frequencies for the Conitzer single-peaked culture" src="_images/sp_conitzer.png" style="width: 500px;" /></a>
+<p>For the single-peaked on a circle model, all single-peaked on a circle rank are
+equally likely to be generated.</p>
 <a class="reference internal image-reference" href="_images/sp_circle.png"><img alt="Observed versus theoretical frequencies for the single-peaked on a circle culture" src="_images/sp_circle.png" style="width: 500px;" /></a>
 </section>
 <section id="single-crossing">
 <h3>Single-Crossing<a class="headerlink" href="#single-crossing" title="Permalink to this heading">#</a></h3>
+<p>For the single-crossing samplers, the impartial is designed to yield a uniform probability
+distribution over all non-isomorphic single-crossing profiles.</p>
 <a class="reference internal image-reference" href="_images/single_crossing_impartial.png"><img alt="Observed versus theoretical frequencies for the single-crossing culture" src="_images/single_crossing_impartial.png" style="width: 500px;" /></a>
+<p>The efficient sampler has unknown probability distribution.</p>
 <a class="reference internal image-reference" href="_images/single_crossing.png"><img alt="Observed versus theoretical frequencies for the impartial single-crossing culture" src="_images/single_crossing.png" style="width: 500px;" /></a>
 </section>
 </section>
@@ -443,6 +488,7 @@ display this information in a graph to assess (non-scientifically) the adequatio
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#urn">Urn</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mallows">Mallows</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plackett-luce">Plackett-Luce</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean">Euclidean</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peaked">Single-Peaked</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-crossing">Single-Crossing</a></li>
 </ul>

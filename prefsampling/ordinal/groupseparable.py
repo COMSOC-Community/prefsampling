@@ -116,7 +116,7 @@ def _sample_a_vote(node, reverse=False):
     return list(chain.from_iterable(output))
 
 
-class Node:
+class GroupSeparableNode:
     total_num_leaf_descendants = 0
 
     def __init__(self, election_id):
@@ -210,14 +210,14 @@ def _generate_tree(
     return sequence, sizes
 
 
-def _turn_pattern_into_tree(pattern) -> Node:
+def _turn_pattern_into_tree(pattern) -> GroupSeparableNode:
     """
     Converts a pattern into a tree.
     """
     stack = []
     for i, element in enumerate(pattern):
         if "x" in element or "v" in element:
-            stack.append(Node(element))
+            stack.append(GroupSeparableNode(element))
         if "f" in element:
             parent = stack.pop()
             child = stack.pop()
@@ -295,41 +295,41 @@ def _construct_vector_from_scheme(node):
 
     weight = 1.0 / sum(node.scheme.values())
 
-    node.vector = [0 for _ in range(Node.total_num_leaf_descendants)]
+    node.vector = [0 for _ in range(GroupSeparableNode.total_num_leaf_descendants)]
     for key in node.scheme:
         node.vector[int(key)] += node.scheme[key] * weight
 
 
-def _caterpillar(num_leaves) -> Node:
+def _caterpillar(num_leaves) -> GroupSeparableNode:
     """
     Generates a caterpillar tree.
     """
-    root = Node("root")
+    root = GroupSeparableNode("root")
     tmp_root = root
     ctr = 0
 
     while num_leaves > 2:
-        leaf = Node("x" + str(ctr))
-        inner_node = Node("v" + str(ctr))
+        leaf = GroupSeparableNode("x" + str(ctr))
+        inner_node = GroupSeparableNode("v" + str(ctr))
         tmp_root.add_child(leaf)
         tmp_root.add_child(inner_node)
         tmp_root = inner_node
         num_leaves -= 1
         ctr += 1
 
-    leaf_1 = Node("x" + str(ctr))
-    leaf_2 = Node("x" + str(ctr + 1))
+    leaf_1 = GroupSeparableNode("x" + str(ctr))
+    leaf_2 = GroupSeparableNode("x" + str(ctr + 1))
     tmp_root.add_child(leaf_1)
     tmp_root.add_child(leaf_2)
 
     return root
 
 
-def _balanced(num_leaves) -> Node:
+def _balanced(num_leaves) -> GroupSeparableNode:
     """
     Generates a balanced tree.
     """
-    root = Node("root")
+    root = GroupSeparableNode("root")
     ctr = 0
 
     q = queue.Queue()
@@ -339,7 +339,7 @@ def _balanced(num_leaves) -> Node:
     while q.qsize() * 2 < num_leaves:
         tmp_root = q.get()
         for _ in range(2):
-            inner_node = Node("v" + str(ctr))
+            inner_node = GroupSeparableNode("v" + str(ctr))
             tmp_root.add_child(inner_node)
             q.put(inner_node)
             ctr += 1
@@ -348,7 +348,7 @@ def _balanced(num_leaves) -> Node:
     while ctr < num_leaves:
         tmp_root = q.get()
         for _ in range(2):
-            node = Node("x" + str(ctr))
+            node = GroupSeparableNode("x" + str(ctr))
             tmp_root.add_child(node)
             ctr += 1
 
