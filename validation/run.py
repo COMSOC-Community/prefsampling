@@ -1,6 +1,7 @@
 import logging
 import math
 import os
+from collections import Counter
 from collections.abc import Iterable
 
 import numpy as np
@@ -26,13 +27,14 @@ from validation.ordinal.singlepeaked import (
     SPCircleValidator,
 )
 from validation.ordinal.urn import UrnValidator
+from validation.tree.schroeder import schroeder_fixed_k, schroeder_multiple_k
 from validation.utils import (
     get_all_ranks,
     get_all_single_peaked_ranks,
     get_all_anonymous_profiles,
     get_all_single_peaked_circle_ranks,
     get_all_sc_profiles_non_iso, get_all_group_separable_profiles, gs_structure,
-    get_all_gs_structure,
+    get_all_gs_structure, get_all_non_isomorphic_profilles,
 )
 
 
@@ -235,12 +237,12 @@ def run_ordinal_urn_validator(num_obs, alpha, all_anonymous_profiles, plot_dir_r
         )
 
 
-def run_group_separable_validator(num_obs, num_voters, num_candidates, all_gs_structures, plot_dir_root):
+def run_group_separable_validator(num_obs, num_voters, num_candidates, all_gs_profiles, plot_dir_root):
     validator = GroupSeparableValidator(
         num_voters,
         num_candidates,
         tree=DecompositionTree.RANDOM,
-        all_outcomes=all_gs_structures,
+        all_outcomes=all_gs_profiles,
     )
     run_validator(
         "Group separable model",
@@ -249,8 +251,9 @@ def run_group_separable_validator(num_obs, num_voters, num_candidates, all_gs_st
         num_obs,
         plot_dir_root,
         graph_xlabel="Group separable profile identifiers",
-        graph_x_tick_labels=all_gs_structures
+        graph_x_tick_labels=all_gs_profiles
     )
+
 
 
 def run_ordinal_euclidean_validator(num_obs, space_dimension, all_ranks, plot_dir_root):
@@ -273,7 +276,7 @@ def run_ordinal_euclidean_validator(num_obs, space_dimension, all_ranks, plot_di
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-    num_observations = 10000
+    num_observations = 1000000
 
     # -------------------
     # Ordinal Validators
@@ -289,7 +292,7 @@ if __name__ == "__main__":
     all_sc_profiles_non_iso = get_all_sc_profiles_non_iso(
         num_voters=3, num_candidates=4
     )
-    all_gs_profiles = get_all_group_separable_profiles(num_voters=4, num_candidates=4)
+    all_gs_profiles = get_all_group_separable_profiles(num_voters=3, num_candidates=3, all_profiles=get_all_non_isomorphic_profilles(3, 3))
     all_gs_structures = get_all_gs_structure(all_gs_profiles=all_gs_profiles)
 
     # # Mallow's
@@ -356,11 +359,21 @@ if __name__ == "__main__":
     #     ordinal_plot_dir_root
     # )
 
-    # Group Separable
-    run_group_separable_validator(
-        num_observations,
-        len(all_gs_profiles[0]),
-        len(all_gs_profiles[0][0]),
-        all_gs_structures,
-        ordinal_plot_dir_root
-    )
+    # # Group Separable
+    # run_group_separable_validator(
+    #     num_observations,
+    #     len(all_gs_profiles[0]),
+    #     len(all_gs_profiles[0][0]),
+    #     all_gs_profiles,
+    #     ordinal_plot_dir_root
+    # )
+
+    # ---------------
+    # Tree Validators
+    # ---------------
+
+    tree_plot_dir_root = os.path.join("plots", "tree")
+    os.makedirs(tree_plot_dir_root, exist_ok=True)
+
+    for n in range(2, 6):
+        schroeder_multiple_k(num_observations, n, plot_dir_root=tree_plot_dir_root)

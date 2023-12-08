@@ -2,7 +2,7 @@ import numpy as np
 from numpy import linalg
 
 from prefsampling.core.euclidean import election_positions, EuclideanSpace
-from prefsampling.decorators import validate_num_voters_candidates
+from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
 @validate_num_voters_candidates

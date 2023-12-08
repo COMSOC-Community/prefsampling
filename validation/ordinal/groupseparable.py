@@ -35,4 +35,4 @@ class GroupSeparableValidator(Validator):
         )
 
     def sample_cast(self, sample):
-        return gs_structure(tuple(tuple(s) for s in sample))
+        return tuple(tuple(s) for s in sample)

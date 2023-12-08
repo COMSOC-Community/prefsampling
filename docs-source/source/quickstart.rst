@@ -68,7 +68,7 @@ Ordinal Samplers
        | :code:`central_vote` (defaults to [0, 1, 2, ...])
    * - :py:func:`~prefsampling.ordinal.euclidean`
      - ---
-     - | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`)
+     - | :code:`space` (defaults to :py:const:`~prefsampling.core.EUCLIDEAN_SPACE_UNIFORM`)
        | :code:`dimension` (defaults to 2)
    * - :py:func:`~prefsampling.ordinal.plackett_luce`
      - :code:`alphas`

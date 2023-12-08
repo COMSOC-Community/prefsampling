@@ -2,7 +2,7 @@ from enum import Enum
 
 import numpy as np
 
-from prefsampling.decorators import validate_num_voters_candidates
+from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
 class EuclideanSpace(Enum):

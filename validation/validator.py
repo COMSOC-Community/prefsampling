@@ -9,11 +9,11 @@ from scipy.stats import chisquare
 
 class Validator(abc.ABC):
     def __init__(
-        self,
-        num_candidates,
-        all_outcomes=None,
-        sampler_func=None,
-        sampler_parameters=None,
+            self,
+            num_candidates,
+            all_outcomes=None,
+            sampler_func=None,
+            sampler_parameters=None,
     ):
         self.num_candidates = num_candidates
         if all_outcomes:
@@ -70,15 +70,15 @@ class Validator(abc.ABC):
         self.observed_distribution = samples / num_samples
 
     def run(
-        self,
-        num_samples,
-        model_name="",
-        graph_title="",
-        graph_xlabel="",
-        graph_ylabel="",
-        graph_x_tick_labels=None,
-        graph_file_path=None,
-        graph_ordering=None,
+            self,
+            num_samples,
+            model_name="",
+            graph_title="",
+            graph_xlabel="",
+            graph_ylabel="",
+            graph_x_tick_labels=None,
+            graph_file_path=None,
+            graph_ordering=None,
     ):
         self.set_theoretical_distribution()
         self.set_observed_distribution(num_samples)
@@ -139,13 +139,13 @@ class Validator(abc.ABC):
         self.chi_square_result = test_result
 
     def plot_frequencies(
-        self,
-        graph_title="",
-        xlabel="",
-        ylabel="",
-        x_tick_labels=None,
-        file_path=None,
-        ordering=None,
+            self,
+            graph_title="",
+            xlabel="",
+            ylabel="",
+            x_tick_labels=None,
+            file_path=None,
+            ordering=None,
     ):
         if self.observed_distribution is None:
             raise ValueError(
@@ -164,8 +164,8 @@ class Validator(abc.ABC):
                 sort_permutation = np.flip(self.observed_distribution.argsort())
                 xlabel_suffix = "(ordered by observed frequency)"
             elif (
-                ordering == "theoretical-observed"
-                and self.theoretical_distribution is not None
+                    ordering == "theoretical-observed"
+                    and self.theoretical_distribution is not None
             ):
                 tmp = np.rec.fromarrays(
                     [self.theoretical_distribution, self.observed_distribution]
@@ -173,8 +173,8 @@ class Validator(abc.ABC):
                 sort_permutation = np.flip(tmp.argsort())
                 xlabel_suffix = "(ordered by theoretical then observed frequency)"
             elif (
-                ordering == "observed-theoretical"
-                and self.theoretical_distribution is not None
+                    ordering == "observed-theoretical"
+                    and self.theoretical_distribution is not None
             ):
                 tmp = np.rec.fromarrays(
                     [self.observed_distribution, self.theoretical_distribution]
@@ -218,3 +218,14 @@ class Validator(abc.ABC):
             plt.savefig(file_path, bbox_inches="tight", dpi=300)
         else:
             plt.show()
+
+
+class EmptyValidator(Validator):
+    def set_theoretical_distribution(self):
+        pass
+
+    def set_all_outcomes(self):
+        pass
+
+    def sample_cast(self, sample):
+        pass

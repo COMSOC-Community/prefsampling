@@ -29,3 +29,14 @@ def validate_num_voters_candidates(func):
         return func(num_voters, num_candidates, *args, **kwargs)
 
     return wrapper
+
+
+def validate_positive_int(value, value_descr=""):
+    try:
+        int(value)
+    except TypeError:
+        raise TypeError(f"The {value_descr} needs to be an integer.")
+    if int(value) != value:
+        raise ValueError(f"The {value_descr} should be an integer.")
+    if value <= 0:
+        raise ValueError(f"The {value_descr} needs to be 1 or more.")
