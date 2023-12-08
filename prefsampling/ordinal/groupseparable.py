@@ -76,7 +76,7 @@ def group_separable(
         buckets /= buckets.sum()
         num_internal_nodes = rng.choice(len(buckets), p=buckets) + 1
 
-        tree_root = generate_schroder_tree(
+        tree_root = schroeder_tree(
             num_candidates, num_internal_nodes, seed
         )
     elif tree == DecompositionTree.CATERPILLAR:
