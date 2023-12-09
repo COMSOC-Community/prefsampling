@@ -37,7 +37,7 @@ def euclidean(
             Type of space considered. Should be a constant defined in the
             :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration.
         dimension : int, default: `2`
-            Number of dimensions for the sapce considered
+            Number of dimensions for the space considered
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
