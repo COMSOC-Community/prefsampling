@@ -49,12 +49,12 @@ ALL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: ordinal_plackett_luce(
         num_voters, num_candidates, [1] * num_candidates, seed
     ),
-    approval_resampling,
-    approval_disjoint_resampling,
-    approval_impartial_culture,
-    approval_euclidean,
-    approval_noise,
-    approval_identity,
+    # approval_resampling,
+    # approval_disjoint_resampling,
+    # approval_impartial_culture,
+    # approval_euclidean,
+    # approval_noise,
+    # approval_identity,
 ]
 
 
