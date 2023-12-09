@@ -4,7 +4,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
 @validate_num_voters_candidates
-def generate_didi_votes(
+def didi(
         num_voters: int, num_candidates: int, alphas: list[float] = None, seed: int = None
 ) -> np.ndarray:
     """
