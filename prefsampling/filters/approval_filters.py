@@ -10,18 +10,17 @@ def resampling_filter(
 
     Parameters
     ----------
-    votes : np.ndarray
-        The votes.
-    phi : float
-        Noise parameter.
-    seed : int
-        Seed for numpy random number generator.
+        votes : list[set[int]]
+            The votes.
+        phi : float
+            Noise parameter.
+        seed : int
+            Seed for numpy random number generator.
 
     Returns
     -------
-    list[set[int]]
-        Approval votes.
-
+        list[set[int]]
+            Approval votes.
     """
 
     return [_resampling_filter_vote(votes[i], phi, seed) for i in range(len(votes))]
