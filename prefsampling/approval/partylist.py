@@ -48,7 +48,7 @@ def generate_approval_urn_partylist_votes(
         rho = np.random.uniform(0, urn_size)
         if rho <= 1.:
             # party_votes[j] = rng.randint(0, num_parties)
-            party_votes[j] = np.random.randint(0, num_parties)
+            party_votes[j] = rng.integers(0, num_parties)
         else:
             party_votes[j] = party_votes[np.random.randint(0, j)]
         urn_size += alpha
