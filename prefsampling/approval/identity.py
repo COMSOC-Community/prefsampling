@@ -3,21 +3,21 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def identity(
-    num_voters: int, num_candidates: int, p: float = 0.5, seed: int = None
+    num_voters: int, num_candidates: int, p: float, seed: int = None
 ) -> list[set[int]]:
     """
     Generates approval votes from identity culture.
 
     Parameters
     ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    p : float, default: 0.5
-        Resampling model parameter, denoting the average vote length.
-    seed : int
-        Seed for numpy random number generator.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        p : float
+            Resampling model parameter, denoting the average vote length.
+        seed : int
+            Seed for numpy random number generator.
 
     Returns
     -------
@@ -54,8 +54,8 @@ def full(num_voters: int, num_candidates: int, seed: int = None) -> list[set[int
 
     Returns
     -------
-        list[set[int]]
-            Approval votes.
+    list[set[int]]
+        Approval votes.
     """
 
     vote = {i for i in range(num_candidates)}
@@ -78,7 +78,7 @@ def empty(num_voters: int, num_candidates: int, seed: int = None) -> list[set[in
 
     Returns
     -------
-        list[set[int]]
-            Approval votes.
+    list[set[int]]
+        Approval votes.
     """
     return [set() for _ in range(num_voters)]

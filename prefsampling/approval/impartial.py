@@ -5,7 +5,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def impartial(
-    num_voters: int, num_candidates: int, p: float = 0.5, seed: int = None
+    num_voters: int, num_candidates: int, p: float, seed: int = None
 ) -> list[set]:
     """
     Generates approval votes from impartial culture.
@@ -16,7 +16,7 @@ def impartial(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        p : float, default: 0.5
+        p : float
             Resampling model parameter, denoting the average vote length.
         seed : int
             Seed for numpy random number generator.

@@ -9,8 +9,8 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 def resampling(
     num_voters: int,
     num_candidates: int,
-    phi: float = 0.5,
-    p: float = 0.5,
+    phi: float,
+    p: float,
     seed: int = None,
     central_vote: set = None,
 ) -> list[set[int]]:
@@ -19,29 +19,29 @@ def resampling(
 
     Parameters
     ----------
-    num_voters : int
-        Number of voters.
-    num_candidates : int
-        Number of candidates.
-    phi : float, default: 0.5
-        Resampling model parameter, denoting the noise.
-    p : float, default: 0.5
-        Resampling model parameter, denoting the average vote length.
-    seed : int
-        Seed for numpy random number generator.
-    central_vote : set
-        The central vote.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        phi : float
+            Resampling model parameter, denoting the noise.
+        p : float
+            Resampling model parameter, denoting the average vote length.
+        seed : int
+            Seed for numpy random number generator.
+        central_vote : set
+            The central vote.
 
     Returns
     -------
-    list[set[int]]
-        Approval votes.
+        list[set[int]]
+            Approval votes.
 
     Raises
     ------
-    ValueError
-        When `phi` not in [0,1] interval.
-        When `p` not in [0,1] interval.
+        ValueError
+            When `phi` not in [0,1] interval.
+            When `p` not in [0,1] interval.
     """
 
     if phi < 0 or 1 < phi:
@@ -75,8 +75,8 @@ def resampling(
 def disjoint_resampling(
     num_voters: int,
     num_candidates: int,
-    phi: float = 0.5,
-    p: float = 0.5,
+    phi: float,
+    p: float,
     g: int = 2,
     seed: int = None,
 ) -> list[set[int]]:
@@ -85,29 +85,29 @@ def disjoint_resampling(
 
     Parameters
     ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    phi : float, default: 0.5
-        Disjoint resampling model parameter, denoting the noise.
-    p : float, default: 0.5
-        Disjoint resampling model parameter, denoting the length of central vote.
-    g : int, default: 2
-        Disjoint resampling model parameter, denoting the number of groups.
-    seed : int
-        Seed for numpy random number generator.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        phi : float
+            Disjoint resampling model parameter, denoting the noise.
+        p : float
+            Disjoint resampling model parameter, denoting the length of central vote.
+        g : int, default: 2
+            Disjoint resampling model parameter, denoting the number of groups.
+        seed : int
+            Seed for numpy random number generator.
 
     Returns
     -------
-    list[set[int]]
-        Approval votes.
+        list[set[int]]
+            Approval votes.
 
     Raises
     ------
-    ValueError
-        When `phi` not in [0,1] interval.
-        When `p` not in [0,1] interval.
+        ValueError
+            When `phi` not in [0,1] interval.
+            When `p` not in [0,1] interval.
     """
 
     if phi < 0 or 1 < phi:
@@ -150,8 +150,8 @@ def disjoint_resampling(
 def moving_resampling(
     num_voters: int,
     num_candidates: int,
-    phi: float = 0.5,
-    p: float = 0.5,
+    phi: float,
+    p: float,
     num_legs: int = 1,
     seed: int = None,
 ) -> list[set[int]]:
@@ -160,29 +160,29 @@ def moving_resampling(
 
     Parameters
     ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    phi : float, default: 0.5
-        Moving resampling model parameter, denoting the noise.
-    p : float, default: 0.5
-        Moving resampling model parameter, denoting the length of central vote.
-    num_legs : int, default: 1
-        Moving resampling model parameter, denoting the number of legs.
-    seed : int
-        Seed for numpy random number generator.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        phi : float
+            Moving resampling model parameter, denoting the noise.
+        p : float
+            Moving resampling model parameter, denoting the length of central vote.
+        num_legs : int, default: 1
+            Moving resampling model parameter, denoting the number of legs.
+        seed : int
+            Seed for numpy random number generator.
 
     Returns
     -------
-    list[set[int]]
-        Approval votes.
+        list[set[int]]
+            Approval votes.
 
     Raises
     ------
-    ValueError
-        When `phi` not in [0,1] interval.
-        When `p` not in [0,1] interval.
+        ValueError
+            When `phi` not in [0,1] interval.
+            When `p` not in [0,1] interval.
     """
 
     rng = np.random.default_rng(seed)
