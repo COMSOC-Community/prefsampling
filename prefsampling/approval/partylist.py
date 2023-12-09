@@ -4,7 +4,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
 @validate_num_voters_candidates
-def generate_approval_urn_partylist_votes(
+def urn_partylist(
         num_voters: int,
         num_candidates: int,
         alpha: float = None,

@@ -12,6 +12,7 @@ from prefsampling.approval.resampling import (
 )
 from prefsampling.approval.noise import noise
 from prefsampling.approval.euclidean import euclidean
+from prefsampling.approval.partylist import urn_partylist
 
 
 __all__ = [
@@ -24,4 +25,5 @@ __all__ = [
     "moving_resampling",
     "noise",
     "euclidean",
+    "urn_partylist",
 ]
