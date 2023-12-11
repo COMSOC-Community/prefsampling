@@ -25,11 +25,13 @@ class GroupSeparableValidator(Validator):
         self.num_voters = num_voters
 
     def set_all_outcomes(self):
+        return
         self.all_outcomes = get_all_group_separable_profiles(
             self.num_voters, self.num_candidates
         )
 
     def set_theoretical_distribution(self):
+        return
         self.theoretical_distribution = np.ones(len(self.all_outcomes)) / len(
             self.all_outcomes
         )

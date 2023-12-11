@@ -1,5 +1,6 @@
 import abc
 import logging
+from collections import Counter
 
 import numpy as np
 
@@ -64,10 +65,17 @@ class Validator(abc.ABC):
         """
         Populates the `self.observed_distribution` member of the class.
         """
-        samples = np.zeros(len(self.all_outcomes))
-        for obs in self.sampler(num_samples):
-            samples[self.all_outcomes.index(obs)] += 1
+        if self.all_outcomes:
+            samples = np.zeros(len(self.all_outcomes))
+            for obs in self.sampler(num_samples):
+                samples[self.all_outcomes.index(obs)] += 1
+        else:
+            counter = Counter()
+            for obs in self.sampler(num_samples):
+                counter[obs] += 1
+            samples = np.fromiter(counter.values(), dtype=int)
         self.observed_distribution = samples / num_samples
+        return counter.keys()
 
     def run(
             self,
@@ -81,7 +89,7 @@ class Validator(abc.ABC):
             graph_ordering=None,
     ):
         self.set_theoretical_distribution()
-        self.set_observed_distribution(num_samples)
+        graph_x_tick_labels = self.set_observed_distribution(num_samples)
         if self.theoretical_distribution is not None:
             self.run_chi_square_test()
 

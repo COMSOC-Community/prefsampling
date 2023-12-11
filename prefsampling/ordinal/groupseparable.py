@@ -4,7 +4,7 @@ from itertools import chain
 
 import numpy as np
 
-from prefsampling.tree.schroeder import schroeder_tree
+from prefsampling.tree.schroeder import schroeder_tree, schroeder_tree_brute_force
 from prefsampling.tree.caterpillar import generate_caterpillar_tree
 from prefsampling.tree.balanced import generate_balanced_tree
 from prefsampling.inputvalidators import validate_num_voters_candidates
@@ -79,6 +79,8 @@ def group_separable(
         tree_root = schroeder_tree(
             num_candidates, num_internal_nodes, seed
         )
+        tree_root = schroeder_tree_brute_force(num_candidates, num_internal_nodes, seed)
+        tree_root.rename_frontier()
     elif tree == DecompositionTree.CATERPILLAR:
         tree_root = generate_caterpillar_tree(num_candidates)
 
@@ -95,7 +97,7 @@ def group_separable(
 
     votes = np.zeros((num_voters, num_candidates), dtype=int)
     frontier = _sample_a_vote(tree_root)
-    vote_map = {i: j for i, j in enumerate(frontier)}
+    vote_map = {j: j for i, j in enumerate(frontier)}
     votes[0] = [vote_map[candidate] for candidate in frontier]
     for i in range(1, num_voters):
         signature = rng.choice((True, False), size=len(all_inner_nodes))
@@ -112,7 +114,7 @@ def group_separable(
     return votes
 
 
-def _number_decomposition_tree(m: int, r: int, n=1) -> float:
+def _number_decomposition_tree(m: int, r: int, n: int) -> float:
     """
     Returns the number of decomposition trees given the number of candidates `m` and the number
     of internal nodes `r` based on the formula from `Karpov (2019)
@@ -126,7 +128,7 @@ def _sample_a_vote(node, reverse=False):
     Recursively samples a single vote.
     """
     if node.leaf:
-        return [node.element_id]
+        return [node.identifier]
     output = []
     if reverse == node.reverse:
         for c in node.children:

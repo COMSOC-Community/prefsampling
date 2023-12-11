@@ -1,6 +1,6 @@
 import math
 from copy import deepcopy
-from itertools import permutations
+from itertools import permutations, combinations_with_replacement, product
 
 import numpy as np
 
@@ -134,52 +134,76 @@ def schroeder_tree(num_leaves: int, num_internal_nodes: int = None,
     return nodes[0]
 
 
-def partition_n(n, num_parts):
-    # Generate all partitions of n into num_parts parts
-    if num_parts < 2:
-        yield (n,)
-        return
-
-    for i in range(1, n):
-        for p in partition_n(n - i, num_parts - 1):
-            yield (i,) + p
+def schroeder_tree_brute_force(num_leaves: int, num_internal_nodes: int = None, seed: int = None) -> Node:
+    all_trees = all_schroeder_tree(num_leaves, num_internal_nodes=num_internal_nodes)
+    rng = np.random.default_rng(seed)
+    return rng.choice(all_trees)
 
 
-def all_schroeder_tree(num_leaves: int):
-    def aux(node, tree, all_roots, leaves_to_place, counter):
-        print(f"Called on {node} with l={leaves_to_place}")
+def partition_schroeder_nodes(num_nodes: int, num_leaves: int) -> list[list[int]]:
+    res = []
+    num_leaves -= 2 * num_nodes
+    for c in combinations_with_replacement(range(num_nodes), num_leaves):
+        tmp_res = [2 for _ in range(num_nodes)]
+        for i in c:
+            tmp_res[i] += 1
+        res.append(tmp_res)
+    return res
+
+
+def all_schroeder_tree(num_leaves: int, num_internal_nodes: int = None):
+    def aux(leaves_to_place, counter):
+        # print(f"{counter}: {leaves_to_place}")
         if leaves_to_place == 0:
+            # print(f"{counter}: fast-tracked yielding leaf")
+            leaf = Node(counter)
+            leaf.leaf = True
+            yield leaf
             return
+        if leaves_to_place == 2:
+            subtree = Node(counter)
+            leaf1 = Node(counter + 1)
+            leaf1.leaf = True
+            leaf2 = Node(counter + 2)
+            leaf2.leaf = True
+            subtree.add_child(leaf1)
+            subtree.add_child(leaf2)
+            # print(f"{counter}: fast-tracked yielding tree")
+            yield subtree
+            return
+
         for leaves in range(leaves_to_place + 1):
-            print(f"{node}\tleaves={leaves}, range({max(2 - leaves, 0)}, {leaves_to_place // 2 })")
             for internal in range(max(2 - leaves, 0), leaves_to_place // 2 + 1):
-                print(f"{node}\t\tinternal={internal}")
-                if leaves_to_place - leaves == internal * 2:
-                    print(f"{node}\t\tpartitions={list(partition_n(leaves_to_place - leaves, internal))}")
-                    for children_part in partition_n(leaves_to_place - leaves, internal):
-                        print(f"{node}\t\t\tchildren_part={children_part}")
-                        for perm in set(permutations([0 for _ in range(leaves)] + [size for size in children_part if internal > 0])):
+                if leaves_to_place - leaves >= internal * 2:
+                    # print(f"{counter}\tleaves = {leaves}, internal = {internal}")
+                    # print(f"{counter}\tpartitions = {partition_schroeder_nodes(internal, leaves_to_place - leaves)}")
+                    for children_part in partition_schroeder_nodes(internal, leaves_to_place - leaves):
+                        # print(f"{counter}\t\tchildren_part={children_part}")
+                        for children_perm in set(permutations([0 for _ in range(leaves)] + children_part)):
+                            # print(f"{counter}\t\t\tchildren_perm={children_perm}")
                             current_counter = counter
-                            current_tree = deepcopy(tree)
-                            print(f"{node}\t\t\t\tperm={perm}")
-                            for num_child in perm:
-                                print(f"{node}\t\t\t\t\tnum_child={num_child}")
-                                child = Node(current_counter)
-                                node.add_child(child)
-                                current_counter += 1
-                                current_tree.append(child)
-                                print(current_tree)
-                                if num_child > 0:
-                                    new_tree = deepcopy(current_tree)
-                                    all_roots.append(new_tree[0])
-                                    aux(new_tree[-1], new_tree, all_roots, num_child, current_counter)
 
-    root = Node(0)
+                            child_generators = []
+                            for num_child in children_perm:
+                                child_generators.append(aux(num_child, current_counter))
+                                current_counter += max(num_child, 1)
+
+                            for combination in product(*child_generators):
+                                current_node = Node(current_counter)
+                                if not combination:
+                                    current_node.leaf = True
+                                for child in combination:
+                                    current_node.add_child(child)
+
+                                # print(f"{counter}\t\t\t({leaves}, {internal}) yielding: "
+                                #       f"{current_node.anonymous_tree_representation()}")
+                                yield current_node
+
     outcome = []
-    aux(root, [root], outcome, num_leaves, 1)
+    tree_repr = set()
+    for root in aux(num_leaves, 0):
+        if num_internal_nodes is None or num_internal_nodes == root.num_internal_nodes():
+            if root.anonymous_tree_representation() not in tree_repr:
+                outcome.append(root)
+                tree_repr.add(root.anonymous_tree_representation())
     return outcome
-
-
-if __name__ == "__main__":
-    for r in all_schroeder_tree(3):
-        print(r.tree_representation())
