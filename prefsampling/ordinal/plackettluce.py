@@ -21,6 +21,8 @@ def plackett_luce(
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
 
+    For a similar model, see the :py:func:`~prefsampling.ordinal.didi` model.
+
     Parameters
     ----------
         num_voters : int

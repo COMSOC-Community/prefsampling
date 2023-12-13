@@ -1,5 +1,4 @@
 import math
-from copy import deepcopy
 from itertools import permutations, combinations_with_replacement, product
 
 import numpy as np
@@ -7,7 +6,24 @@ import numpy as np
 from prefsampling.tree.node import Node
 
 
-def _random_num_internal_nodes(num_leaves, rng):
+def _random_num_internal_nodes(num_leaves: int, rng: np.random.Generator) -> int:
+    """
+    Samples a number of internal nodes for a Schröder tree at random. Each number of internal nodes is sampled with
+    probability proportional to the number of Schroöder trees with the corresponding number of internal nodes.
+
+    Parameters
+    ----------
+        num_leaves: int
+            The number of leaves of the tree
+        rng: np.random.Generator
+            The numpy random number generator.
+
+    Returns
+    -------
+        int
+            The number of internal nodes
+
+    """
     distribution = np.zeros(num_leaves - 1)
     for i in range(num_leaves - 1):
         distribution[i] = _num_schroeder_tree(num_leaves + i + 1, i + 1)

@@ -27,7 +27,7 @@ def single_crossing(
     `0 > 1 > 2 > ...`. Then, every successive vote is selected uniformly at random from all the
     votes further down in the domain than the previously selected vote (including the latter).
 
-    This sampler only generates non-isomorphic and anonymous collection of votes. This means that
+    This sampler only generates anonymous and neutral collections of votes. This means that
     the first vote is always `0 > 1 > 2 > ...` and that the votes are ordered lexicographically.
     To obtain a distribution over all single-crossing collections of votes, apply a random
     permutation of the candidate names and a random permutation of the position of the voters in the

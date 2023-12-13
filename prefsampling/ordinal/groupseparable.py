@@ -43,11 +43,22 @@ def group_separable(
     Samplers for group separable votes. For the definition of group-seprable preferences, see
     `Elkind, Lackner, Peters (2022) <https://arxiv.org/abs/2205.09092>`_.
 
-    This sampler yields a uniform distribution over group separable collections of votes. It
-    implements the algorithm presented by `Faliszewski, Karpov, Obraztsova (2022)
-    <https://link.springer.com/article/10.1007/s10458-022-09549-7>`_
+    This sampler implements the algorithm presented by `Faliszewski, Karpov, Obraztsova (2022)
+    <https://link.springer.com/article/10.1007/s10458-022-09549-7>`_. The implementation follows
+    these general steps. First, a decomposition tree is sampled at random. Then, for each internal
+    node of the tree the order of its children is reversed with probability 0.5. The vote then
+    corresponds to the label of the leaves of the tree read from left to right.
 
-    Note that for a given number of voters, votes are not sampled independently.
+    This sampler only generates neutral collections of votes. This means that the first vote is
+    always `0 > 1 > 2 > ...`.
+
+    When used with a uniform sampler over all decomposition trees it is meant to yield a uniform
+    distribution over neutral group separable collections of votes. However, our analysis indicates
+    that it is not the case: collections of vote containing only `0 < 1 < 2 < ... ` or
+    `m-1 < m-2 < m-3 < ...` are over-represented.
+
+    Note that for a given number of voters, votes are sampled independently but the number of voters
+    can impact the sampling of the decomposition tree.
 
     Parameters
     ----------

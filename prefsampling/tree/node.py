@@ -1,8 +1,33 @@
-class Node:
+from __future__ import annotations
 
-    def __init__(self, identifier):
-        self.identifier = identifier
-        self.parent: Node = None
+
+class Node:
+    """
+    Class used to represent nodes in a tree.
+
+    Parameters
+    ----------
+        identifier : str | int
+            The identifier of the node.
+
+    Attributes
+    ----------
+        identifier : str | int
+            The identifier of the node.
+        parent : Node | None
+            The parent of the node.
+        children : list[Node]
+            The children list of the node. The order is important.
+        leaf : bool
+            A boolean indicating whether the node is a leaf or not. Should always be equivalent
+            to :code:`len(self.children) == 0`.
+        reverse : bool
+            A boolean used when sampling group separable preferences.
+    """
+
+    def __init__(self, identifier: str | int):
+        self.identifier: str | int = identifier
+        self.parent: Node | None = None
         self.children: list[Node] = []
         self.leaf: bool = True
         self.reverse: bool = False
@@ -13,12 +38,34 @@ class Node:
     def __repr__(self) -> str:
         return f"Node: {self.identifier}"
 
-    def add_child(self, child):
+    def add_child(self, child: Node):
+        """
+        Add a child to the node and update the `leaf` attribute accordingly.
+
+        Parameters
+        ----------
+            child: Node
+                The child to add.
+        """
         child.parent = self
         self.children.append(child)
         self.leaf = False
 
-    def get_child(self, identifier):
+    def get_child(self, identifier: str | int) -> Node | None:
+        """
+        Traverses the tree rooted in the node looking for a node with the given identifier. The node itself can be
+        returned. If no suitable node is found, :code:`None` is returned.
+
+        Parameters
+        ----------
+            identifier: str | int
+                The identifier of the looked for node.
+
+        Returns
+        -------
+            Node | None
+                A node with the identifier, or None if no such node is found.
+        """
         if self.identifier == identifier:
             return self
         for c in self.children:
@@ -27,7 +74,16 @@ class Node:
                 return result
         return None
 
-    def num_leaves(self):
+    def num_leaves(self) -> int:
+        """
+        Counts the number of leaves of the tree rooted in the node.
+
+        Returns
+        -------
+            int
+                Number of leaves.
+
+        """
         if self.leaf:
             return 1
         res = 0
@@ -35,7 +91,16 @@ class Node:
             res += c.num_leaves()
         return res
 
-    def num_internal_nodes(self):
+    def num_internal_nodes(self) -> int:
+        """
+        Counts the number of internal nodes of the tree rooted in the node.
+
+        Returns
+        -------
+            int
+                Number of internal nodes.
+
+        """
         if self.leaf:
             return 0
         res = 1
@@ -43,13 +108,31 @@ class Node:
             res += c.num_internal_nodes()
         return res
 
-    def shallow_copy_node(self):
+    def shallow_copy_node(self) -> Node:
+        """
+        Copies the node without copying its children.
+
+        Returns
+        -------
+            Node
+                The copy of the node.
+
+        """
         res = Node(self.identifier)
         res.leaf = self.leaf
         res.reverse = self.reverse
         return res
 
     def copy_tree(self, tree: dict = None):
+        """
+        Copies the tree rooted in the node. All nodes are copied and the children are attached where they should be.
+
+        Returns
+        -------
+            Node
+                The copy of the root node.
+
+        """
         if tree is None:
             tree = {}
         node_copy = tree.get(self.identifier, None)
@@ -64,7 +147,20 @@ class Node:
             node_copy.add_child(child_copy)
         return node_copy
 
-    def rename_frontier(self, new_names=None):
+    def rename_frontier(self, new_names: list = None):
+        """
+        Renames the frontier of the tree rooted in the node. Leaves are renamed from the left-most leaf to the
+        right-most one. If :code:`new_names == None`, leaves are renamed `0, 1, 2...`.
+
+        Parameters
+        ----------
+            new_names: list, optional
+                The new names for the leaves, the list should be as long as the number of leaves.
+
+        Returns
+        -------
+
+        """
         stack = [self]
         leaf_counter = 0
 
@@ -75,12 +171,24 @@ class Node:
                 if new_names is None:
                     current_node.identifier = leaf_counter
                 else:
-                    current_node.identifier = new_names[leaf_counter]
+                    if leaf_counter < len(new_names):
+                        current_node.identifier = new_names[leaf_counter]
+                    else:
+                        raise ValueError(f"The list of new names is not long enough, there are at least {leaf_counter}"
+                                         f" leaves.")
                 leaf_counter += 1
 
             stack.extend(reversed(current_node.children))
 
-    def tree_representation(self):
+    def tree_representation(self) -> str:
+        """
+        Returns a string representation of the tree rooted in the node. The nodes are represented by their identifier.
+
+        Returns
+        -------
+            str
+                The representation of the tree.
+        """
         if len(self.children) == 1:
             return self.children[0].tree_representation()
         s = f"{self.identifier}("
@@ -89,17 +197,18 @@ class Node:
         return s
 
     def anonymous_tree_representation(self):
+        """
+        Returns a string representation of the tree rooted in the node. Nodes are represented by their number of
+        children and leaves by the underscore character `_`.
+
+        Returns
+        -------
+            str
+                The representation of the tree.
+        """
         if len(self.children) == 0:
             return "_"
         s = f"{len(self.children)}("
         s += ', '.join(n.anonymous_tree_representation() for n in self.children)
         s += ")"
         return s
-
-    def get_all_inner_nodes(self):
-        if self.leaf:
-            return []
-        output = [[self]]
-        for c in self.children:
-            output.append(c.get_all_inner_nodes())
-        return [n for sublist in output for n in sublist]

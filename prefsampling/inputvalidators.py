@@ -31,12 +31,29 @@ def validate_num_voters_candidates(func):
     return wrapper
 
 
-def validate_positive_int(value, value_descr=""):
+def validate_positive_int(value, value_descr: str = ""):
+    """
+    Validates that the input value is an int greater or equal to 1.
+
+    Parameters
+    ----------
+        value:
+            The value to validate
+        value_descr: str, default: ""
+            A description of the value used in the message of the exceptions raised when the value is not a valid input.
+
+    Raises
+    ------
+        TypeError
+            When the value is not an int.
+        ValueError
+            When the value is 0 or less.
+    """
     try:
         int(value)
     except TypeError:
         raise TypeError(f"The {value_descr} needs to be an integer.")
     if int(value) != value:
-        raise ValueError(f"The {value_descr} should be an integer.")
+        raise TypeError(f"The {value_descr} needs to be an integer.")
     if value <= 0:
         raise ValueError(f"The {value_descr} needs to be 1 or more.")
