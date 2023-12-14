@@ -31,23 +31,32 @@ def validate_num_voters_candidates(func):
     return wrapper
 
 
-def validate_positive_int(value, value_descr: str = ""):
+def validate_int(
+    value, value_descr: str = "value", lower_bound: int = None, upper_bound: int = None
+):
     """
-    Validates that the input value is an int greater or equal to 1.
+    Validates that the input value is an int. Lower and upper bounds on the value of the int can be
+    provided.
 
     Parameters
     ----------
         value:
             The value to validate
-        value_descr: str, default: ""
-            A description of the value used in the message of the exceptions raised when the value is not a valid input.
+        value_descr: str, default: :code:`"value"`
+            A description of the value used in the message of the exceptions raised when the value
+            is not a valid input.
+        lower_bound: int, default: :code:`None`
+            A lower bound on the value.
+        upper_bound: int, default: :code:`None`
+            An upper bound on the value.
 
     Raises
     ------
         TypeError
-            When the value is not an int.
+            When the value is not an int or cannot be cast as an int.
         ValueError
-            When the value is 0 or less.
+            When the value is either strictly smaller than the lower bound or strictly greater than
+            the upper bound.
     """
     try:
         int(value)
@@ -55,5 +64,7 @@ def validate_positive_int(value, value_descr: str = ""):
         raise TypeError(f"The {value_descr} needs to be an integer.")
     if int(value) != value:
         raise TypeError(f"The {value_descr} needs to be an integer.")
-    if value <= 0:
-        raise ValueError(f"The {value_descr} needs to be 1 or more.")
+    if lower_bound is not None and value < lower_bound:
+        raise ValueError(f"The {value_descr} needs to be {lower_bound} or more.")
+    if upper_bound is not None and value > upper_bound:
+        raise ValueError(f"The {value_descr} needs to be {upper_bound} or less.")

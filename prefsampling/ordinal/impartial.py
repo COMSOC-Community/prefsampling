@@ -75,7 +75,7 @@ def impartial_anonymous(
 
 @validate_num_voters_candidates
 def stratification(
-    num_voters: int, num_candidates: int, weight: float = 0.5, seed: int = None
+    num_voters: int, num_candidates: int, weight: float, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes from stratification model. In the stratification model, candidates are
@@ -93,7 +93,7 @@ def stratification(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        weight : float, default: `0.5`
+        weight : float
             Size of the upper class.
         seed : int, default: :code:`None`
             Seed for numpy random number generator.

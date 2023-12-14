@@ -20,6 +20,8 @@ To make it easy to embed the package in all kinds of tools, we use basic Python 
 * Ordinal samplers return collections of :code:`np.ndarray`, that is, `Numpy <https://numpy.org/>`_ arrays where the most preferred candidate is at position 0, the next one at position 1 and so forth;
 * Approval samplers return collections of :code:`set`, where each set contains the approved candidates.
 
+In all cases, the candidates are named `0, 1, 2, ...`.
+
 General Syntax
 --------------
 
@@ -51,6 +53,9 @@ Ordinal Samplers
    * - Sampler
      - \*\*args
      - \*\*kwargs
+   * - :py:func:`~prefsampling.ordinal.identity`
+     - ---
+     - ---
    * - :py:func:`~prefsampling.ordinal.impartial`
      - ---
      - ---
@@ -58,27 +63,25 @@ Ordinal Samplers
      - ---
      - ---
    * - :py:func:`~prefsampling.ordinal.mallows`
-     - ---
-     - | :code:`phi` (defaults to 0.5)
-       | :code:`central_vote` (defaults to [0, 1, 2, ...])
+     - :code:`phi`
+     - | :code:`central_vote` (defaults to `0, 1, 2, ...`)
        | :code:`normalise_phi` (defaults to :code:`False`)
    * - :py:func:`~prefsampling.ordinal.norm_mallows`
-     - ---
-     - | :code:`norm_phi` (defaults to 0.5)
-       | :code:`central_vote` (defaults to [0, 1, 2, ...])
+     - :code:`norm_phi`
+     - | :code:`central_vote` (defaults to `0, 1, 2, ...`)
    * - :py:func:`~prefsampling.ordinal.euclidean`
      - ---
-     - | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`)
+     - | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`)
        | :code:`dimension` (defaults to 2)
    * - :py:func:`~prefsampling.ordinal.plackett_luce`
      - :code:`alphas`
      - ---
    * - :py:func:`~prefsampling.ordinal.urn`
+     - :code:`alpha`
      - ---
-     - :code:`alpha` (defaults to 0.1)
    * - :py:func:`~prefsampling.ordinal.stratification`
+     - :code:`weight`
      - ---
-     - :code:`weight` (defaults to 0.5)
    * - :py:func:`~prefsampling.ordinal.single_peaked_conitzer`
      - ---
      - ---
@@ -91,6 +94,10 @@ Ordinal Samplers
    * - :py:func:`~prefsampling.ordinal.single_crossing`
      - ---
      - ---
+   * - :py:func:`~prefsampling.ordinal.group_separable`
+     - ---
+     - :code:`tree_sampler` (defaults to :py:const:`~prefsampling.ordinal.TreeSampler.SCHROEDER`)
+
 
 Approval Samplers
 ~~~~~~~~~~~~~~~~~
@@ -102,33 +109,36 @@ Approval Samplers
    * - Sampler
      - \*\*args
      - \*\*kwargs
-   * - :py:func:`~prefsampling.approval.impartial`
-     - ---
-     - :code:`p` (defaults to 0.5)
    * - :py:func:`~prefsampling.approval.identity`
+     - :code:`p`
      - ---
-     - :code:`p` (defaults to 0.5)
+   * - :py:func:`~prefsampling.approval.empty`
+     - ---
+     - ---
+   * - :py:func:`~prefsampling.approval.full`
+     - ---
+     - ---
+   * - :py:func:`~prefsampling.approval.impartial`
+     - :code:`p`
+     - ---
    * - :py:func:`~prefsampling.approval.resampling`
-     - ---
-     - | :code:`phi` (defaults to 0.5)
-       | :code:`p` (defaults to 0.5)
-       | :code:`central_vote` (defaults to {0, 1, 2, ...})
+     - | :code:`p`
+       | :code:`phi`
+     - :code:`central_vote` (defaults to `{0, 1, 2, ...}`)
    * - :py:func:`~prefsampling.approval.disjoint_resampling`
-     - ---
-     - | :code:`phi` (defaults to 0.5)
-       | :code:`p` (defaults to 0.5)
-       | :code:`g` (defaults to 2)
+     - | :code:`p`
+       | :code:`phi`
+     - :code:`g` (defaults to 2)
    * - :py:func:`~prefsampling.approval.moving_resampling`
-     - ---
-     - | :code:`phi` (defaults to 0.5)
-       | :code:`p` (defaults to 0.5)
-       | :code:`num_legs` (defaults to 2)
+     - | :code:`p`
+       | :code:`phi`
+     - :code:`num_legs` (defaults to 1)
    * - :py:func:`~prefsampling.approval.euclidean`
      - ---
-     - | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EUCLIDEAN_SPACE_UNIFORM`)
+     - | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`)
        | :code:`dimension` (defaults to 2)
        | :code:`radius` (defaults to 0.0)
    * - :py:func:`~prefsampling.approval.noise`
-     - ---
-     - | :code:`p` (defaults to 0.1)
-       | :code:`phi` (defaults to 0.5)
+     - | :code:`p`
+       | :code:`phi`
+     - :code:`type_id`

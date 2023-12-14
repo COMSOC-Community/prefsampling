@@ -10,16 +10,16 @@ class GroupSeparableValidator(Validator):
         self,
         num_voters,
         num_candidates,
-        tree,
+        tree_sampler,
         all_outcomes=None,
     ):
         super(GroupSeparableValidator, self).__init__(
             num_candidates,
-            sampler_func=lambda num_samples, num_candidates, tree=None, num_voters=None: [
-                group_separable(num_voters, num_candidates, tree=tree)
+            sampler_func=lambda num_samples, num_candidates, tree_sampler=None, num_voters=None: [
+                group_separable(num_voters, num_candidates, tree_sampler=tree_sampler)
                 for _ in range(num_samples)
             ],
-            sampler_parameters={"num_voters": num_voters, "tree": tree},
+            sampler_parameters={"num_voters": num_voters, "tree_sampler": tree_sampler},
             all_outcomes=all_outcomes,
         )
         self.num_voters = num_voters

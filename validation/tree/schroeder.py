@@ -1,92 +1,77 @@
-import os
-from collections import Counter
-
 import numpy as np
 
-from prefsampling.ordinal.groupseparable import _number_decomposition_tree
-from prefsampling.tree.schroeder import schroeder_tree, schroeder_tree_brute_force
-from validation.validator import EmptyValidator
+from prefsampling.tree.schroeder import (
+    schroeder_tree,
+    all_schroeder_tree,
+    _num_schroeder_tree,
+)
+from validation.validator import Validator
 
 
-def schroeder_fixed_k(num_obs: int, num_leaves: int, k: int, plot_dir_root=None):
-    if k > num_leaves - 1:
-        raise ValueError("The number of internal nodes k cannot exceed the number of leaves - 1")
-    c = Counter()
-    for _ in range(num_obs):
-        tree = schroeder_tree(num_leaves, num_internal_nodes=k)
-        c[tree.anonymous_tree_representation()] += 1
+class SchroederValidator(Validator):
+    def __init__(
+        self,
+        num_leaves,
+        num_internal_nodes,
+        sampler=schroeder_tree,
+        all_outcomes=None,
+    ):
+        super(SchroederValidator, self).__init__(
+            num_leaves,
+            sampler_func=lambda num_samples, num_candidates, num_internal_nodes=None: [
+                sampler(num_candidates, num_internal_nodes) for _ in range(num_samples)
+            ],
+            sampler_parameters={"num_internal_nodes": num_internal_nodes},
+            all_outcomes=all_outcomes,
+        )
 
-    v = EmptyValidator(num_leaves)
-    v.observed_distribution = np.fromiter(c.values(), dtype=float)
-    v.observed_distribution /= v.observed_distribution.sum()
-    if plot_dir_root is None:
-        file_path = None
-    else:
-        file_path = os.path.join(plot_dir_root, f"schroder_tree_{num_leaves}_{k}.png")
-    return v.plot_frequencies(
-        f"Distribution of Schröder trees\n#leaves={num_leaves}, #internal nodes={k}\n#observation={num_obs}",
-        xlabel="Tree identifier",
-        ordering="observed",
-        file_path=file_path,
-        x_tick_labels=list(c)
-    )
+    def set_all_outcomes(self):
+        self.all_outcomes = [
+            r.anonymous_tree_representation()
+            for r in all_schroeder_tree(
+                self.num_candidates, self.sampler_parameters["num_internal_nodes"]
+            )
+        ]
 
+    def set_theoretical_distribution(self):
+        self.theoretical_distribution = np.full(
+            len(self.all_outcomes), 1 / len(self.all_outcomes)
+        )
 
-def schroeder_multiple_k(num_obs: int, num_leaves: int, all_k: list[int] = None, plot_dir_root=None):
-    if all_k is None:
-        all_k = list(range(1, num_leaves))
-    if all(k > num_leaves - 1 for k in all_k):
-        raise ValueError(
-            "The number of internal nodes k cannot exceed the number of leaves - 1")
-    for k in all_k:
-        schroeder_fixed_k(num_obs, num_leaves, k, plot_dir_root)
-
-
-def schroeder_brute_force(num_obs: int, num_leaves: int, plot_dir_root=None):
-    c = Counter()
-    for _ in range(num_obs):
-        tree = schroeder_tree_brute_force(num_leaves)
-        c[tree.anonymous_tree_representation()] += 1
-
-    v = EmptyValidator(num_leaves)
-    v.observed_distribution = np.fromiter(c.values(), dtype=float)
-    v.observed_distribution /= v.observed_distribution.sum()
-    if plot_dir_root is None:
-        file_path = None
-    else:
-        file_path = os.path.join(plot_dir_root, f"schroder_tree_brute_{num_leaves}.png")
-    return v.plot_frequencies(
-        f"Distribution of Schröder trees\n#leaves={num_leaves}",
-        xlabel="Tree identifier",
-        ordering="observed",
-        file_path=file_path,
-        x_tick_labels=list(c)
-    )
+    def sample_cast(self, sample):
+        return sample.anonymous_tree_representation()
 
 
-def schroeder_brute_force_with_buckets(num_obs: int, num_leaves: int, plot_dir_root=None):
-    buckets = np.zeros(num_leaves - 1)
-    for r in range(1, num_leaves):
-        buckets[r - 1] = _number_decomposition_tree(num_leaves, r, 2)
-    buckets /= buckets.sum()
-    print(num_leaves, buckets)
-    c = Counter()
-    for _ in range(num_obs):
-        num_internal_nodes = np.random.choice(len(buckets), p=buckets) + 1
-        tree = schroeder_tree_brute_force(num_leaves, num_internal_nodes)
-        c[tree.anonymous_tree_representation()] += 1
+class SchroederNumInternalValidator(Validator):
+    def __init__(
+        self,
+        num_leaves,
+        num_internal_nodes,
+        sampler=schroeder_tree,
+        all_outcomes=None,
+    ):
+        super(SchroederNumInternalValidator, self).__init__(
+            num_leaves,
+            sampler_func=lambda num_samples, num_candidates, num_internal_nodes=None: [
+                sampler(num_candidates, num_internal_nodes) for _ in range(num_samples)
+            ],
+            sampler_parameters={"num_internal_nodes": num_internal_nodes},
+            all_outcomes=all_outcomes,
+        )
 
-    v = EmptyValidator(num_leaves)
-    v.observed_distribution = np.fromiter(c.values(), dtype=float)
-    v.observed_distribution /= v.observed_distribution.sum()
-    if plot_dir_root is None:
-        file_path = None
-    else:
-        file_path = os.path.join(plot_dir_root, f"schroder_tree_brute_buckets_{num_leaves}.png")
-    return v.plot_frequencies(
-        f"Distribution of Schröder trees\n#leaves={num_leaves}",
-        xlabel="Tree identifier",
-        ordering="observed",
-        file_path=file_path,
-        x_tick_labels=list(c)
-    )
+    def set_all_outcomes(self):
+        self.all_outcomes = [
+            r.anonymous_tree_representation()
+            for r in all_schroeder_tree(
+                self.num_candidates, self.sampler_parameters["num_internal_nodes"]
+            )
+        ]
+
+    def set_theoretical_distribution(self):
+        distribution = np.zeros(len(self.all_outcomes))
+        for i, num_internal in enumerate(self.all_outcomes):
+            distribution[i] = _num_schroeder_tree(num_internal, self.num_candidates)
+        self.theoretical_distribution = distribution / distribution.sum()
+
+    def sample_cast(self, sample):
+        return sample.num_internal_nodes()

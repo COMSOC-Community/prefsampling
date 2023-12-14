@@ -4,7 +4,7 @@ from itertools import permutations, combinations_with_replacement, combinations,
 
 def powerset(iterable):
     s = list(iterable)
-    return chain.from_iterable(combinations(s, r) for r in range(1, len(s)+1))
+    return chain.from_iterable(combinations(s, r) for r in range(1, len(s) + 1))
 
 
 def proper_powerset(iterable):
@@ -140,11 +140,11 @@ class GSNode:
         self.children = []
 
     def __repr__(self):
-        return f'N{self.cand_set}'
+        return f"N{self.cand_set}"
 
     def tree_representation(self):
         s = f"{len(self.cand_set)}("
-        s += ', '.join(sorted(n.tree_representation() for n in self.children))
+        s += ", ".join(sorted(n.tree_representation() for n in self.children))
         s += ")"
         return s
 
@@ -202,7 +202,9 @@ def gs_structure(profile, verbose=False):
             if all_voters_separate:
                 if verbose:
                     print("\t\tAll votes separate")
-                if j == len(cands) - 1 and (all_voters_separate_below or all_voters_separate_above):
+                if j == len(cands) - 1 and (
+                    all_voters_separate_below or all_voters_separate_above
+                ):
                     new_node = GSNode(tuple(cands))
                     node.children.append(new_node)
                     return
@@ -219,6 +221,7 @@ def gs_structure(profile, verbose=False):
             if verbose:
                 print(f"\tFor cands={cands} it fails")
             raise ValueError(f"Profile {prof} is not GS")
+
     if verbose:
         print(profile)
     root = GSNode(tuple(profile[0]))
@@ -227,9 +230,8 @@ def gs_structure(profile, verbose=False):
 
 
 def get_all_group_separable_profiles(
-    num_voters: int,
-    num_candidates: int,
-    all_profiles=None):
+    num_voters: int, num_candidates: int, all_profiles=None
+):
     if all_profiles is None:
         all_profiles = get_all_profiles(num_voters, num_candidates)
 
@@ -285,7 +287,9 @@ def get_all_group_separable_profiles(
 def get_all_gs_structure(num_voters=None, num_candidates=None, all_gs_profiles=None):
     if all_gs_profiles is None:
         if num_voters is None and num_candidates is None:
-            raise ValueError("You need to provide either number of voters and candidates or a "
-                             "collection of profiles")
+            raise ValueError(
+                "You need to provide either number of voters and candidates or a "
+                "collection of profiles"
+            )
         all_gs_profiles = get_all_group_separable_profiles(num_voters, num_candidates)
     return list(set(gs_structure(p) for p in all_gs_profiles))

@@ -22,12 +22,12 @@ def euclidean(
         Number of Voters.
     num_candidates : int
         Number of Candidates.
-    space : EuclideanSpace
+    space : EuclideanSpace, default: :py:const:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`
         Type of space considered. Should be a constant defined in the
         :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
-    dimension : int
+    dimension : int, default: 2
         Number of Dimensions.
-    radius : float
+    radius : float, default: 0
         The radius.
     seed : int
         Seed for numpy random number generator.

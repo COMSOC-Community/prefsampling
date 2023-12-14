@@ -133,10 +133,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/ordinal.html">Ordinal Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/approval.html">Approval Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/tree.html">Tree Samplers</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 </ul>
 </li>
@@ -263,7 +269,7 @@ document.write(`
 
 <div class="viewcode-block" id="impartial"><a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.impartial">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">impartial</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates approval votes from impartial culture.</span>
@@ -274,7 +280,7 @@ document.write(`
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
-<span class="sd">        p : float, default: 0.5</span>
+<span class="sd">        p : float</span>
 <span class="sd">            Resampling model parameter, denoting the average vote length.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>

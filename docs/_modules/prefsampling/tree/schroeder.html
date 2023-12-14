@@ -1,0 +1,773 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>prefsampling.tree.schroeder &#8212; PrefSampling</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/prefsampling/tree/schroeder';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">PrefSampling</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">PrefSampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/ordinal.html">Ordinal Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/approval.html">Approval Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/tree.html">Tree Samplers</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/Simon-Rey/prefsampling" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for prefsampling.tree.schroeder</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">permutations</span><span class="p">,</span> <span class="n">combinations_with_replacement</span><span class="p">,</span> <span class="n">product</span>
+
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_int</span>
+<span class="kn">from</span> <span class="nn">prefsampling.tree.node</span> <span class="kn">import</span> <span class="n">Node</span>
+
+
+<span class="k">def</span> <span class="nf">validate_num_leaves_nodes</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">,</span> <span class="s2">&quot;number of leaves&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num_internal_nodes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_internal_nodes</span><span class="p">,</span> <span class="s2">&quot;number of internal nodes&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_internal_nodes</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">num_leaves</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If the number of internal nodes is 0, there can only be one leaf.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_internal_nodes</span> <span class="o">&gt;</span> <span class="n">num_leaves</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The number of internal nodes cannot exceed the number of leaves &quot;</span>
+                <span class="s2">&quot;minus 1.&quot;</span>
+            <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_random_num_internal_nodes</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Samples a number of internal nodes for a Schröder tree at random. Each number of internal nodes</span>
+<span class="sd">    is sampled with probability proportional to the number of Schroöder trees with the corresponding</span>
+<span class="sd">    number of internal nodes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        num_leaves: int</span>
+<span class="sd">            The number of leaves of the tree</span>
+<span class="sd">        rng: np.random.Generator</span>
+<span class="sd">            The numpy random number generator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        int</span>
+<span class="sd">            The number of internal nodes</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_leaves</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_leaves</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_num_schroeder_tree</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_leaves</span><span class="p">)</span>
+    <span class="n">distribution</span> <span class="o">/=</span> <span class="n">distribution</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_leaves</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">distribution</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+
+<span class="k">def</span> <span class="nf">_num_schroeder_tree</span><span class="p">(</span><span class="n">num_internal_nodes</span><span class="p">,</span> <span class="n">num_leaves</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">math</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="n">num_leaves</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">)</span>
+        <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="n">num_leaves</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">num_internal_nodes</span><span class="p">,</span> <span class="n">num_leaves</span><span class="p">)</span>
+        <span class="o">/</span> <span class="p">(</span><span class="n">num_leaves</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="schroeder_tree"><a class="viewcode-back" href="../../../reference/tree/index.html#prefsampling.tree.schroeder_tree">[docs]</a><span class="k">def</span> <span class="nf">schroeder_tree</span><span class="p">(</span>
+    <span class="n">num_leaves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a random Schöder tree with suitable number of leaves and internal nodes.</span>
+<span class="sd">    The algorithm was presented by `Alonso, Rémy, Schott (1997a)</span>
+<span class="sd">    &lt;https://www.sciencedirect.com/science/article/pii/S0020019097001749&gt;`_ building on `Alonso,</span>
+<span class="sd">    Rémy, Schott (1997b) &lt;https://link.springer.com/article/10.1007/BF02522824&gt;`_.</span>
+
+<span class="sd">    If the number of internal node is not give, it is selected at random such that each number of</span>
+<span class="sd">    internal nodes is sampled with probability proportional to the number of Schroöder trees with</span>
+<span class="sd">    the corresponding number of internal nodes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        num_leaves: int</span>
+<span class="sd">            The number of leaves of the tree</span>
+<span class="sd">        num_internal_nodes: int | None</span>
+<span class="sd">            The number of internal nodes of the tree</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        Node</span>
+<span class="sd">            The root of the tree</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">validate_num_leaves_nodes</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">num_internal_nodes</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">num_leaves</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">num_internal_nodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">num_internal_nodes</span> <span class="o">=</span> <span class="n">_random_num_internal_nodes</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
+
+    <span class="c1"># Mix the patterns, the patterns are defined in &quot;Uniform generation of a Schröder tree&quot;</span>
+    <span class="c1"># where bold edges seem to indicate multi-edges (and not semi-ones as in the paper)</span>
+    <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;M0&quot;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">&quot;M1&quot;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_internal_nodes</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">patterns</span><span class="p">)</span>
+
+    <span class="c1"># Replace the patterns by their representation as words</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">leaf_ctr</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">internal_ctr</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">possible_insert_pos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">patterns</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;M0&quot;</span><span class="p">:</span>
+            <span class="n">sequence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">leaf_ctr</span><span class="p">))</span>
+            <span class="n">leaf_ctr</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;M1&quot;</span><span class="p">:</span>
+            <span class="n">sequence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;v&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">internal_ctr</span><span class="p">))</span>
+            <span class="n">possible_insert_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span>
+            <span class="n">sequence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;()1&quot;</span><span class="p">)</span>  <span class="c1"># multi_edge using &#39;()&#39; instead of &#39;o&#39;</span>
+            <span class="n">sequence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;f1&quot;</span><span class="p">)</span>  <span class="c1"># semi_edge</span>
+            <span class="n">sequence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;f1&quot;</span><span class="p">)</span>  <span class="c1"># semi_edge</span>
+            <span class="n">internal_ctr</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Add missing edges (p = 1 tree, e = 0 classical edges)</span>
+    <span class="n">edges_to_position</span> <span class="o">=</span> <span class="n">num_leaves</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">num_internal_nodes</span>
+    <span class="n">insert_pos_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+            <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">possible_insert_pos</span><span class="p">)),</span> <span class="n">size</span><span class="o">=</span><span class="n">edges_to_position</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">insert_pos_indices</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Last to first to maintain positions</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">insert_pos_indices</span><span class="p">:</span>
+        <span class="n">sequence</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">possible_insert_pos</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="s2">&quot;f1&quot;</span><span class="p">)</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sequence</span> <span class="k">if</span> <span class="n">s</span> <span class="o">!=</span> <span class="s2">&quot;()1&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Apply the cycle lemma, since p = 1 (a single tree), there is only one permutation</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">min_height</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pos_min</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;x&quot;</span> <span class="ow">in</span> <span class="n">element</span> <span class="ow">or</span> <span class="s2">&quot;v&quot;</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">height</span> <span class="o">&lt;=</span> <span class="n">min_height</span><span class="p">:</span>
+                <span class="n">pos_min</span> <span class="o">=</span> <span class="n">pos</span>
+                <span class="n">min_height</span> <span class="o">=</span> <span class="n">height</span>
+            <span class="n">height</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="s2">&quot;f&quot;</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+            <span class="n">height</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;There should not be an element </span><span class="si">{</span><span class="n">element</span><span class="si">}</span><span class="s2"> at this point...&quot;</span>
+            <span class="p">)</span>
+        <span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1"># Apply rotation, pos_min indicates the position of the last node with minimum height</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="n">pos_min</span><span class="p">:]</span> <span class="o">+</span> <span class="n">sequence</span><span class="p">[:</span><span class="n">pos_min</span><span class="p">]</span>
+
+    <span class="c1"># Transform the sequence into a tree</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;x&quot;</span> <span class="ow">in</span> <span class="n">element</span> <span class="ow">or</span> <span class="s2">&quot;v&quot;</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Node</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))))</span>
+        <span class="k">if</span> <span class="s2">&quot;f&quot;</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+            <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="schroeder_tree_lescanne"><a class="viewcode-back" href="../../../reference/tree/index.html#prefsampling.tree.schroeder_tree_lescanne">[docs]</a><span class="k">def</span> <span class="nf">schroeder_tree_lescanne</span><span class="p">(</span>
+    <span class="n">num_leaves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Samples a random Schröder tree following the algorithm provided by `Lescanne (2022)</span>
+<span class="sd">    &lt;https://arxiv.org/abs/2205.11982&gt;`_. The sampler is directcly taken from the `corresponding</span>
+<span class="sd">    GitHub repository &lt;https://github.com/PierreLescanne/Motzkin&gt;`_ (no licence available).</span>
+
+<span class="sd">    If a specific number of internal nodes is given, trees are sampled at random until the required</span>
+<span class="sd">    number of internal nodes is achieved (rejection sampling).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        num_leaves: int</span>
+<span class="sd">            The number of leaves of the tree</span>
+<span class="sd">        num_internal_nodes: int | None</span>
+<span class="sd">            The number of internal nodes of the tree</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        Node</span>
+<span class="sd">            The root of the tree</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">build_tree</span><span class="p">(</span>
+        <span class="n">current_node</span><span class="p">,</span> <span class="n">left_child_pos</span><span class="p">,</span> <span class="n">right_child_pos</span><span class="p">,</span> <span class="n">current_white</span><span class="p">,</span> <span class="n">to_merge</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Auxiliary function that converts the result of the algorithm of Lescanne (2022) into</span>
+<span class="sd">        our class for Nodes and trees.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">current_white</span><span class="p">:</span>
+            <span class="n">to_merge</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">left_child_pos</span><span class="p">,</span> <span class="n">right_child_pos</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">position</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_data</span><span class="p">):</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">tree_data</span><span class="p">[</span><span class="n">position</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">current_node</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">identifier</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">build_tree</span><span class="p">(</span>
+                        <span class="n">child</span><span class="p">,</span>
+                        <span class="n">child</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
+                        <span class="n">child</span><span class="o">.</span><span class="n">identifier</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">tree_data</span><span class="p">[</span><span class="n">position</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="n">to_merge</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+    <span class="n">validate_num_leaves_nodes</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">num_internal_nodes</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">num_leaves</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="c1"># Run the algorithm of Lescanne (2022) to obtain a tree</span>
+    <span class="n">tree_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">tree_data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_leaves</span><span class="p">):</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">rand</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rand</span> <span class="o">*</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">4</span><span class="p">))</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">xmod3</span> <span class="o">=</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">3</span>
+                <span class="k">if</span> <span class="n">xmod3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># L1</span>
+                    <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+                    <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+                    <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">xmod3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># L2</span>
+                    <span class="k">if</span> <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># fst (v[k]) is odd</span>
+                        <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+                        <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="kc">True</span><span class="p">))</span>
+                        <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                        <span class="k">break</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">k</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># k is odd</span>
+                            <span class="k">if</span> <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># the other leaf is white</span>
+                                <span class="k">pass</span>
+                            <span class="k">else</span><span class="p">:</span>  <span class="c1"># the other leaf is black</span>
+                                <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+                                <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+                                <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                                <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                                <span class="k">break</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+                            <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+                            <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                            <span class="k">break</span>
+                <span class="k">elif</span> <span class="n">xmod3</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># L3</span>
+                    <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+                    <span class="n">tree_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+                    <span class="n">tree_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="n">num_legal_white_edges</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">tree_data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="n">num_internal_nodes</span>
+            <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree_data</span><span class="p">)</span> <span class="o">-</span> <span class="n">num_legal_white_edges</span> <span class="o">==</span> <span class="n">num_internal_nodes</span> <span class="o">+</span> <span class="n">num_leaves</span>
+        <span class="p">):</span>
+            <span class="k">break</span>
+
+    <span class="c1"># Build the tree with our Node class based on the tree data</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">tree_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">nodes_to_merge</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">build_tree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">identifier</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">nodes_to_merge</span><span class="p">)</span>
+
+    <span class="c1"># Merge the nodes that need to be merged (the &quot;white edges&quot;)</span>
+    <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">nodes_to_merge</span><span class="p">:</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">merge_with_parent</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">root</span></div>
+
+
+<div class="viewcode-block" id="schroeder_tree_brute_force"><a class="viewcode-back" href="../../../reference/tree/index.html#prefsampling.tree.schroeder_tree_brute_force">[docs]</a><span class="k">def</span> <span class="nf">schroeder_tree_brute_force</span><span class="p">(</span>
+    <span class="n">num_leaves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample a Schröder tree uniformly at random by enumerating all possible Schröder tree and</span>
+<span class="sd">    selecting one of them uniformly at random. This procedure is particularly inefficient but</span>
+<span class="sd">    ensures uniformity.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        num_leaves: int</span>
+<span class="sd">            The number of leaves of the tree</span>
+<span class="sd">        num_internal_nodes: int | None</span>
+<span class="sd">            The number of internal nodes of the tree</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        Node</span>
+<span class="sd">            The root of the tree</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">all_trees</span> <span class="o">=</span> <span class="n">all_schroeder_tree</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="o">=</span><span class="n">num_internal_nodes</span><span class="p">)</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">all_trees</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_partition_schroeder_nodes</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_leaves</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns all partitions of the number of leaves across the number of internal nodes such that</span>
+<span class="sd">    all internal nodes receive at least two leaves.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        num_nodes: int</span>
+<span class="sd">            Number of internal nodes</span>
+<span class="sd">        num_leaves: int</span>
+<span class="sd">            Number of leaves</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        list[list[int]]</span>
+<span class="sd">            List of lists representing the number of leaves per nodes</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">num_leaves</span> <span class="o">-=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">num_nodes</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combinations_with_replacement</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">),</span> <span class="n">num_leaves</span><span class="p">):</span>
+        <span class="n">tmp_res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_nodes</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">tmp_res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_res</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+
+<div class="viewcode-block" id="all_schroeder_tree"><a class="viewcode-back" href="../../../reference/tree/index.html#prefsampling.tree.all_schroeder_tree">[docs]</a><span class="k">def</span> <span class="nf">all_schroeder_tree</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Node</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reruns all Schröder trees with given numbers of leaves and internal nodes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        num_leaves: int</span>
+<span class="sd">            Number of leaves</span>
+<span class="sd">        num_internal_nodes: int</span>
+<span class="sd">            Number of internal nodes</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        list[Node]</span>
+<span class="sd">            List of the tree roots</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">aux</span><span class="p">(</span><span class="n">leaves_to_place</span><span class="p">,</span> <span class="n">internal_to_place</span><span class="p">,</span> <span class="n">counter</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursive generator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># print(f&quot;{counter}: {leaves_to_place}, {internal_to_place}&quot;)</span>
+        <span class="k">if</span> <span class="n">leaves_to_place</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># print(f&quot;{counter}: fast-tracked yielding leaf&quot;)</span>
+            <span class="n">leaf</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">leaf</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">yield</span> <span class="n">leaf</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">leaves_to_place</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">subtree</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+            <span class="n">leaf1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">leaf1</span><span class="o">.</span><span class="n">leaf</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">leaf2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">counter</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">leaf2</span><span class="o">.</span><span class="n">leaf</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">subtree</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">leaf1</span><span class="p">)</span>
+            <span class="n">subtree</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">leaf2</span><span class="p">)</span>
+            <span class="c1"># print(f&quot;{counter}: fast-tracked yielding tree&quot;)</span>
+            <span class="k">yield</span> <span class="n">subtree</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">leaves</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">leaves_to_place</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">internal</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="nb">max</span><span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">leaves</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">leaves_to_place</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">internal_to_place</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">leaves_to_place</span> <span class="o">-</span> <span class="n">leaves</span> <span class="o">&gt;=</span> <span class="n">internal</span> <span class="o">*</span> <span class="mi">2</span>
+                <span class="p">):</span>  <span class="c1"># At least 2 leaves per node</span>
+                    <span class="c1"># print(f&quot;{counter}\tleaves = {leaves}, internal = {internal}&quot;)</span>
+                    <span class="c1"># print(f&quot;{counter}\tpartitions = &quot;</span>
+                    <span class="c1">#       f&quot;{partition_schroeder_nodes(internal, leaves_to_place - leaves)}&quot;)</span>
+                    <span class="k">for</span> <span class="n">children_part</span> <span class="ow">in</span> <span class="n">_partition_schroeder_nodes</span><span class="p">(</span>
+                        <span class="n">internal</span><span class="p">,</span> <span class="n">leaves_to_place</span> <span class="o">-</span> <span class="n">leaves</span>
+                    <span class="p">):</span>
+                        <span class="c1"># print(f&quot;{counter}\t\tchildren_part={children_part}&quot;)</span>
+                        <span class="k">for</span> <span class="n">children_perm</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span>
+                            <span class="n">permutations</span><span class="p">([</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">leaves</span><span class="p">)]</span> <span class="o">+</span> <span class="n">children_part</span><span class="p">)</span>
+                        <span class="p">):</span>
+                            <span class="c1"># print(f&quot;{counter}\t\t\tchildren_perm={children_perm}&quot;)</span>
+                            <span class="n">current_counter</span> <span class="o">=</span> <span class="n">counter</span>
+
+                            <span class="n">child_generators</span> <span class="o">=</span> <span class="p">[]</span>
+                            <span class="k">for</span> <span class="n">num_child</span> <span class="ow">in</span> <span class="n">children_perm</span><span class="p">:</span>
+                                <span class="n">child_generators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                    <span class="n">aux</span><span class="p">(</span>
+                                        <span class="n">num_child</span><span class="p">,</span>
+                                        <span class="n">internal_to_place</span> <span class="o">-</span> <span class="n">internal</span><span class="p">,</span>
+                                        <span class="n">current_counter</span><span class="p">,</span>
+                                    <span class="p">)</span>
+                                <span class="p">)</span>
+                                <span class="n">current_counter</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="n">num_child</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                            <span class="k">for</span> <span class="n">combination</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">child_generators</span><span class="p">):</span>
+                                <span class="n">current_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">current_counter</span><span class="p">)</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">combination</span><span class="p">:</span>
+                                    <span class="n">current_node</span><span class="o">.</span><span class="n">leaf</span> <span class="o">=</span> <span class="kc">True</span>
+                                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">combination</span><span class="p">:</span>
+                                    <span class="n">current_node</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+                                <span class="c1"># print(f&quot;{counter}\t\t\t({leaves}, {internal}) yielding: &quot;</span>
+                                <span class="c1">#       f&quot;{current_node.anonymous_tree_representation()}&quot;)</span>
+                                <span class="k">yield</span> <span class="n">current_node</span>
+
+    <span class="n">validate_num_leaves_nodes</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">num_internal_nodes</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">num_leaves</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Node</span><span class="p">(</span><span class="mi">0</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="n">num_internal_nodes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">num_internal_nodes</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_leaves</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num_internal_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">num_internal_nodes</span><span class="p">]</span>
+    <span class="n">outcome</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tree_repr</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">num_internal_nodes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">root</span> <span class="ow">in</span> <span class="n">aux</span><span class="p">(</span><span class="n">num_leaves</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">anonymous_tree_representation</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tree_repr</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">num_internal_nodes</span><span class="p">()</span> <span class="o">==</span> <span class="n">k</span><span class="p">:</span>
+                    <span class="n">outcome</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+                    <span class="n">tree_repr</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">anonymous_tree_representation</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">outcome</span></div>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Simon Rey and Stanisław Szufa
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023, Simon Rey and Stanisław Szufa.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

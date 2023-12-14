@@ -5,7 +5,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def didi(
-        num_voters: int, num_candidates: int, alphas: list[float], seed: int = None
+    num_voters: int, num_candidates: int, alphas: list[float], seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes from the DiDi (Dirichlet Distribution) model.
@@ -44,7 +44,9 @@ def didi(
             When len(`alphas`) not equal num_candidates.
     """
     if len(alphas) != num_candidates:
-        raise ValueError("Incorrect length of alphas vector. Should be equal to num_candidates.")
+        raise ValueError(
+            "Incorrect length of alphas vector. Should be equal to num_candidates."
+        )
 
     if not all(a >= 0 for a in alphas):
         raise ValueError("The values of the alpha vector should all be positive.")

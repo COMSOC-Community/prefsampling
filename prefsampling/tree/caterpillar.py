@@ -1,8 +1,8 @@
-from prefsampling.inputvalidators import validate_positive_int
+from prefsampling.inputvalidators import validate_int
 from prefsampling.tree.node import Node
 
 
-def generate_caterpillar_tree(num_leaves: int, seed: int = None) -> Node:
+def caterpillar_tree(num_leaves: int, seed: int = None) -> Node:
     """
     Generates a caterpillar tree.
 
@@ -11,7 +11,7 @@ def generate_caterpillar_tree(num_leaves: int, seed: int = None) -> Node:
         Node
             The root of the tree
     """
-    validate_positive_int(num_leaves, "number of leaves")
+    validate_int(num_leaves, "number of leaves", lower_bound=1)
     num_leaves = int(num_leaves)
     root = Node("root")
     tmp_root = root

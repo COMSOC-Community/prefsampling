@@ -133,10 +133,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/ordinal.html">Ordinal Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/approval.html">Approval Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/tree.html">Tree Samplers</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 </ul>
 </li>
@@ -267,8 +273,8 @@ document.write(`
 <span class="k">def</span> <span class="nf">noise</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
-    <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">type_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hamming&quot;</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
@@ -277,19 +283,19 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters : int</span>
-<span class="sd">        Number of Voters.</span>
-<span class="sd">    num_candidates : int</span>
-<span class="sd">        Number of Candidates.</span>
-<span class="sd">    phi : float, default: 0.5</span>
-<span class="sd">        Noise model parameter, denoting the noise.</span>
-<span class="sd">    p : float, default: 0.5</span>
-<span class="sd">        Noise model parameter, denoting the length of central vote.</span>
-<span class="sd">    type_id : str, default: hamming</span>
-<span class="sd">        Type of noise.</span>
-<span class="sd">        {&#39;hamming&#39;, &#39;jaccard&#39;, &#39;zelinka&#39;, &#39;bunke-shearer&#39;}</span>
-<span class="sd">    seed : int</span>
-<span class="sd">        Seed for numpy random number generator.</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            Noise model parameter, denoting the noise.</span>
+<span class="sd">        p : float</span>
+<span class="sd">            Noise model parameter, denoting the length of central vote.</span>
+<span class="sd">        type_id : str, default: hamming</span>
+<span class="sd">            Type of noise.</span>
+<span class="sd">            {&#39;hamming&#39;, &#39;jaccard&#39;, &#39;zelinka&#39;, &#39;bunke-shearer&#39;}</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>

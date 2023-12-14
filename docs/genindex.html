@@ -133,10 +133,16 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="validation/ordinal.html">Ordinal Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation/approval.html">Approval Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validation/tree.html">Tree Samplers</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/core/index.html">Core</a></li>
 </ul>
 </li>
@@ -259,7 +265,10 @@ document.write(`
 <h1 id="index">Index</h1>
 
 <div class="genindex-jumpbox">
- <a href="#D"><strong>D</strong></a>
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
@@ -269,11 +278,40 @@ document.write(`
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  
 </div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/tree/index.html#prefsampling.tree.all_schroeder_tree">all_schroeder_tree() (in module prefsampling.tree)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.BALANCED">BALANCED (TreeSampler attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.CATERPILLAR">CATERPILLAR (TreeSampler attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.didi">didi() (in module prefsampling.ordinal)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/approval/index.html#prefsampling.approval.disjoint_resampling">disjoint_resampling() (in module prefsampling.approval)</a>
 </li>
@@ -314,21 +352,29 @@ document.write(`
       <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN">GAUSSIAN (EuclideanSpace attribute)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.group_separable">group_separable() (in module prefsampling.ordinal)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/approval/index.html#prefsampling.approval.identity">identity() (in module prefsampling.approval)</a>
+
+      <ul>
+        <li><a href="reference/ordinal/index.html#prefsampling.ordinal.identity">(in module prefsampling.ordinal)</a>
 </li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/approval/index.html#prefsampling.approval.impartial">impartial() (in module prefsampling.approval)</a>
 
       <ul>
         <li><a href="reference/ordinal/index.html#prefsampling.ordinal.impartial">(in module prefsampling.ordinal)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.impartial_anonymous">impartial_anonymous() (in module prefsampling.ordinal)</a>
 </li>
   </ul></td>
@@ -348,6 +394,8 @@ document.write(`
         <li><a href="reference/core/index.html#module-prefsampling.core.euclidean">prefsampling.core.euclidean</a>
 </li>
         <li><a href="reference/ordinal/index.html#module-prefsampling.ordinal">prefsampling.ordinal</a>
+</li>
+        <li><a href="reference/tree/index.html#module-prefsampling.tree">prefsampling.tree</a>
 </li>
       </ul></li>
   </ul></td>
@@ -381,8 +429,6 @@ document.write(`
         <li><a href="reference/approval/index.html#module-prefsampling.approval">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prefsampling.core.euclidean
 
@@ -390,11 +436,20 @@ document.write(`
         <li><a href="reference/core/index.html#module-prefsampling.core.euclidean">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prefsampling.ordinal
 
       <ul>
         <li><a href="reference/ordinal/index.html#module-prefsampling.ordinal">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.tree
+
+      <ul>
+        <li><a href="reference/tree/index.html#module-prefsampling.tree">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -411,14 +466,26 @@ document.write(`
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER">SCHROEDER (TreeSampler attribute)</a>
+</li>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER_LESCANNE">SCHROEDER_LESCANNE (TreeSampler attribute)</a>
+</li>
+      <li><a href="reference/tree/index.html#prefsampling.tree.schroeder_tree">schroeder_tree() (in module prefsampling.tree)</a>
+</li>
+      <li><a href="reference/tree/index.html#prefsampling.tree.schroeder_tree_brute_force">schroeder_tree_brute_force() (in module prefsampling.tree)</a>
+</li>
+      <li><a href="reference/tree/index.html#prefsampling.tree.schroeder_tree_lescanne">schroeder_tree_lescanne() (in module prefsampling.tree)</a>
+</li>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER_UNIFORM">SCHROEDER_UNIFORM (TreeSampler attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_crossing">single_crossing() (in module prefsampling.ordinal)</a>
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_crossing_impartial">single_crossing_impartial() (in module prefsampling.ordinal)</a>
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_circle">single_peaked_circle() (in module prefsampling.ordinal)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_conitzer">single_peaked_conitzer() (in module prefsampling.ordinal)</a>
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_walsh">single_peaked_walsh() (in module prefsampling.ordinal)</a>
@@ -426,6 +493,14 @@ document.write(`
       <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace.SPHERE">SPHERE (EuclideanSpace attribute)</a>
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.stratification">stratification() (in module prefsampling.ordinal)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler">TreeSampler (class in prefsampling.ordinal)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -438,6 +513,8 @@ document.write(`
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.urn">urn() (in module prefsampling.ordinal)</a>
+</li>
+      <li><a href="reference/approval/index.html#prefsampling.approval.urn_partylist">urn_partylist() (in module prefsampling.approval)</a>
 </li>
   </ul></td>
 </tr></table>

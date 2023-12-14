@@ -5,7 +5,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def urn(
-    num_voters: int, num_candidates: int, alpha: float = 0.1, seed: int = None
+    num_voters: int, num_candidates: int, alpha: float, seed: int = None
 ) -> np.ndarray:
     """
     Generates votes following the Pólya-Eggenberger urn culture. The process is as follows. The urn
@@ -23,7 +23,7 @@ def urn(
             Number of voters
         num_candidates: int
             Number of candidates
-        alpha: float, default: :code:`0.1`
+        alpha: float
             The dispersion coefficient (`alpha * m!` copies of a vote are put back in the urn after
             a draw). Must be non-negative.
         seed: int, default: :code:`None`

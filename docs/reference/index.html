@@ -45,7 +45,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Ordinal" href="ordinal/index.html" />
-    <link rel="prev" title="Validation" href="../validation.html" />
+    <link rel="prev" title="Tree Samplers" href="../validation/tree.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -136,10 +136,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../validation.html">Validation</a></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../validation/ordinal.html">Ordinal Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../validation/approval.html">Approval Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../validation/tree.html">Tree Samplers</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core/index.html">Core</a></li>
 </ul>
 </li>
@@ -311,7 +317,11 @@ document.write(`
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ordinal/index.html">Ordinal</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ordinal/index.html#prefsampling.ordinal.TreeSampler"><code class="docutils literal notranslate"><span class="pre">TreeSampler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ordinal/index.html#prefsampling.ordinal.didi"><code class="docutils literal notranslate"><span class="pre">didi()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/index.html#prefsampling.ordinal.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ordinal/index.html#prefsampling.ordinal.group_separable"><code class="docutils literal notranslate"><span class="pre">group_separable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ordinal/index.html#prefsampling.ordinal.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/index.html#prefsampling.ordinal.impartial"><code class="docutils literal notranslate"><span class="pre">impartial()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/index.html#prefsampling.ordinal.impartial_anonymous"><code class="docutils literal notranslate"><span class="pre">impartial_anonymous()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/index.html#prefsampling.ordinal.mallows"><code class="docutils literal notranslate"><span class="pre">mallows()</span></code></a></li>
@@ -336,6 +346,14 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.moving_resampling"><code class="docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.noise"><code class="docutils literal notranslate"><span class="pre">noise()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.resampling"><code class="docutils literal notranslate"><span class="pre">resampling()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.urn_partylist"><code class="docutils literal notranslate"><span class="pre">urn_partylist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tree/index.html">Tree</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tree/index.html#prefsampling.tree.all_schroeder_tree"><code class="docutils literal notranslate"><span class="pre">all_schroeder_tree()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tree/index.html#prefsampling.tree.schroeder_tree"><code class="docutils literal notranslate"><span class="pre">schroeder_tree()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tree/index.html#prefsampling.tree.schroeder_tree_brute_force"><code class="docutils literal notranslate"><span class="pre">schroeder_tree_brute_force()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tree/index.html#prefsampling.tree.schroeder_tree_lescanne"><code class="docutils literal notranslate"><span class="pre">schroeder_tree_lescanne()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="core/index.html">Core</a><ul>
@@ -359,12 +377,12 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../validation.html"
+       href="../validation/tree.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Validation</p>
+        <p class="prev-next-title">Tree Samplers</p>
       </div>
     </a>
     <a class="right-next"

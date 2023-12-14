@@ -14,5 +14,5 @@ defined statistical cultures. We consider different type of preferences:
     PrefSampling <self>
     installation
     quickstart
-    validation
+    validation/index
     reference/index

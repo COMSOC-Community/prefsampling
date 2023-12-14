@@ -1,10 +1,10 @@
 import queue
 
-from prefsampling.inputvalidators import validate_positive_int
+from prefsampling.inputvalidators import validate_int
 from prefsampling.tree.node import Node
 
 
-def generate_balanced_tree(num_leaves: int) -> Node:
+def balanced_tree(num_leaves: int) -> Node:
     """
     Generates a balanced tree.
 
@@ -13,7 +13,7 @@ def generate_balanced_tree(num_leaves: int) -> Node:
         Node
             The root of the tree
     """
-    validate_positive_int(num_leaves, "number of leaves")
+    validate_int(num_leaves, "number of leaves", lower_bound=1)
     num_leaves = int(num_leaves)
     root = Node("root")
     ctr = 0
@@ -38,4 +38,3 @@ def generate_balanced_tree(num_leaves: int) -> Node:
             ctr += 1
 
     return root
-

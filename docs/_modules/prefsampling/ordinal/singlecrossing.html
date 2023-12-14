@@ -133,10 +133,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/ordinal.html">Ordinal Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/approval.html">Approval Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../validation/tree.html">Tree Samplers</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 </ul>
 </li>
@@ -285,7 +291,7 @@ document.write(`
 <span class="sd">    `0 &gt; 1 &gt; 2 &gt; ...`. Then, every successive vote is selected uniformly at random from all the</span>
 <span class="sd">    votes further down in the domain than the previously selected vote (including the latter).</span>
 
-<span class="sd">    This sampler only generates non-isomorphic and anonymous collection of votes. This means that</span>
+<span class="sd">    This sampler only generates anonymous and neutral collections of votes. This means that</span>
 <span class="sd">    the first vote is always `0 &gt; 1 &gt; 2 &gt; ...` and that the votes are ordered lexicographically.</span>
 <span class="sd">    To obtain a distribution over all single-crossing collections of votes, apply a random</span>
 <span class="sd">    permutation of the candidate names and a random permutation of the position of the voters in the</span>

@@ -91,6 +91,15 @@ class Node:
             res += c.num_leaves()
         return res
 
+    def internal_nodes(self, current_list=None):
+        if current_list is None:
+            current_list = []
+        if not self.leaf:
+            current_list.append(self)
+        for child in self.children:
+            child.internal_nodes(current_list)
+        return current_list
+
     def num_internal_nodes(self) -> int:
         """
         Counts the number of internal nodes of the tree rooted in the node.
@@ -103,10 +112,24 @@ class Node:
         """
         if self.leaf:
             return 0
-        res = 1
-        for c in self.children:
-            res += c.num_internal_nodes()
-        return res
+        return 1 + sum(c.num_internal_nodes() for c in self.children)
+
+    def merge_with_parent(self, identifier):
+        if self.identifier == identifier:
+            self.parent.children.remove(self)
+            for c in self.children:
+                self.parent.add_child(c)
+            self.children = []
+        else:
+            for c in self.children:
+                c.merge_with_parent(identifier)
+
+    def is_schroeder(self):
+        if self.leaf:
+            return True
+        if len(self.children) == 1:
+            return False
+        return all(c.is_schroeder() for c in self.children)
 
     def shallow_copy_node(self) -> Node:
         """
@@ -174,8 +197,10 @@ class Node:
                     if leaf_counter < len(new_names):
                         current_node.identifier = new_names[leaf_counter]
                     else:
-                        raise ValueError(f"The list of new names is not long enough, there are at least {leaf_counter}"
-                                         f" leaves.")
+                        raise ValueError(
+                            f"The list of new names is not long enough, there are at least {leaf_counter}"
+                            f" leaves."
+                        )
                 leaf_counter += 1
 
             stack.extend(reversed(current_node.children))
@@ -192,7 +217,7 @@ class Node:
         if len(self.children) == 1:
             return self.children[0].tree_representation()
         s = f"{self.identifier}("
-        s += ', '.join(n.tree_representation() for n in self.children)
+        s += ", ".join(n.tree_representation() for n in self.children)
         s += ")"
         return s
 
@@ -209,6 +234,6 @@ class Node:
         if len(self.children) == 0:
             return "_"
         s = f"{len(self.children)}("
-        s += ', '.join(n.anonymous_tree_representation() for n in self.children)
+        s += ", ".join(n.anonymous_tree_representation() for n in self.children)
         s += ")"
         return s

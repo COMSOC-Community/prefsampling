@@ -24,7 +24,7 @@ from prefsampling.ordinal.mallows import (
 )
 from prefsampling.ordinal.euclidean import euclidean
 from prefsampling.ordinal.plackettluce import plackett_luce
-from prefsampling.ordinal.groupseparable import group_separable, DecompositionTree
+from prefsampling.ordinal.groupseparable import group_separable, TreeSampler
 from prefsampling.ordinal.identity import identity
 from prefsampling.ordinal.didi import didi
 from prefsampling.ordinal.identity import identity
@@ -44,7 +44,7 @@ __all__ = [
     "euclidean",
     "plackett_luce",
     "group_separable",
-    "DecompositionTree",
+    "TreeSampler",
     "identity",
     "didi",
 ]

@@ -7,7 +7,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 def mallows(
     num_voters: int,
     num_candidates: int,
-    phi: float = 0.5,
+    phi: float,
     normalise_phi: bool = False,
     central_vote: np.ndarray = None,
     seed: int = None,
@@ -74,9 +74,9 @@ def mallows(
 def norm_mallows(
     num_voters: int,
     num_candidates: int,
-    norm_phi: float = 0.5,
-    seed: int = None,
+    norm_phi: float,
     central_vote: np.ndarray = None,
+    seed: int = None,
 ) -> np.ndarray:
     """
     Shortcut for the function :py:func:`~prefsampling.ordinal.mallows` with

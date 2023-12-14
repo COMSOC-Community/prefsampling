@@ -1,4 +1,0 @@
-Complete Guide
-==============
-
-lalala

@@ -7,13 +7,12 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def urn_partylist(
-        num_voters: int,
-        num_candidates: int,
-        alpha: float = None,
-        parties: int | list[float] = None,
-        seed: int = None
+    num_voters: int,
+    num_candidates: int,
+    alpha: float,
+    parties: int | list[float],
+    seed: int = None,
 ) -> list[set[int]]:
-
     """
     Generates approval votes partylist model.
 
@@ -23,7 +22,7 @@ def urn_partylist(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        alpha
+        alpha: float
             Parameter for Urn model.
         parties : int | list[float]
             Fractional sizes of the parties.
@@ -39,16 +38,16 @@ def urn_partylist(
 
     if type(parties) is int:
         # If not specified, parties are of equal size
-        parties = [1/parties for _ in range(parties)]
+        parties = [1 / parties for _ in range(parties)]
 
     num_parties = len(parties)
 
     # Generate votes for parties
     party_votes = np.zeros([num_voters])
-    urn_size = 1.
+    urn_size = 1.0
     for j in range(num_voters):
         rho = np.random.uniform(0, urn_size)
-        if rho <= 1.:
+        if rho <= 1.0:
             # party_votes[j] = rng.randint(0, num_parties)
             party_votes[j] = rng.integers(0, num_parties)
         else:
@@ -62,8 +61,10 @@ def urn_partylist(
 
     for i in range(num_voters):
         party_id = int(party_votes[i])
-        shift = cumv[party_id]*num_candidates
-        vote = set([int(c+shift) for c in range(int(parties[party_id]*num_candidates))])
+        shift = cumv[party_id] * num_candidates
+        vote = set(
+            [int(c + shift) for c in range(int(parties[party_id] * num_candidates))]
+        )
 
         votes.append(vote)
 
