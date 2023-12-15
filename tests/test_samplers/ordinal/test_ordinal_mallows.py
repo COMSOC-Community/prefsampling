@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from prefsampling.ordinal.mallows import mallows, norm_mallows
+from prefsampling.ordinal.mallows import mallows, norm_mallows, phi_from_norm_phi
 
 
 class TestOrdinalMawllos(TestCase):
@@ -13,3 +13,12 @@ class TestOrdinalMawllos(TestCase):
             norm_mallows(4, 5, norm_phi=-0.4)
         with self.assertRaises(ValueError):
             norm_mallows(4, 5, norm_phi=1.4)
+
+    def test_phi_from_norm_phi(self):
+        assert phi_from_norm_phi(5, 1) == 1
+        assert phi_from_norm_phi(5, 1.5) == 0.5
+        with self.assertRaises(ValueError):
+            phi_from_norm_phi(5, -0.5)
+        with self.assertRaises(ValueError):
+            phi_from_norm_phi(5, 2.1)
+

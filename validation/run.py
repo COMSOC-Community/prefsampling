@@ -290,7 +290,7 @@ def run_schroeder_validator(
         num_leaves, num_internal_nodes, sampler, all_schroeder_trees
     )
     run_validator(
-        f"Schröder tree {sampler.__name__.replace('schroeder_tree_', '').replace('_', '')} ({num_leaves}, {num_internal_nodes})",
+        f"Schröder tree {sampler.__name__.replace('schroeder_tree', '').replace('_', '')}",
         f"{sampler.__name__}_{num_leaves}_{num_internal_nodes}",
         validator,
         num_obs,
@@ -317,7 +317,7 @@ def run_schroeder_num_internal_nodes_validator(
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-    num_observations = 1
+    num_observations = 1000000
 
     # -------------------
     # Ordinal Validators

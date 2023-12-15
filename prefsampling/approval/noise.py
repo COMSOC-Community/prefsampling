@@ -1,8 +1,35 @@
 import math
+from enum import Enum
 
 import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
+
+
+class NoiseType(Enum):
+    """
+    Constants representing the different types of noise that can be applied to the noise sampler.
+    """
+
+    HAMMING = 1
+    """
+    Hamming noise.
+    """
+
+    JACCARD = 2
+    """
+    Jaccard noise.
+    """
+
+    ZELINKA = 3
+    """
+    Zelinka noise.
+    """
+
+    BUNKE_SHEARER = 4
+    """
+    Bunke-Shearer noise.
+    """
 
 
 @validate_num_voters_candidates
@@ -11,7 +38,7 @@ def noise(
     num_candidates: int,
     p: float,
     phi: float,
-    type_id: str = "hamming",
+    noise_type: NoiseType = NoiseType.HAMMING,
     seed: int = None,
 ) -> list[set]:
     """
@@ -27,9 +54,8 @@ def noise(
             Noise model parameter, denoting the noise.
         p : float
             Noise model parameter, denoting the length of central vote.
-        type_id : str, default: hamming
+        noise_type : NoiseType, default: :py:const:`~prefsampling.approval.NoiseType.HAMMING`
             Type of noise.
-            {'hamming', 'jaccard', 'zelinka', 'bunke-shearer'}
         seed : int
             Seed for numpy random number generator.
 
@@ -43,7 +69,6 @@ def noise(
         ValueError
             When `phi` not in [0,1] interval.
             When `p` not in [0,1] interval.
-            When `type_id` not in {'hamming', 'jaccard', 'zelinka', 'bunke-shearer'}.
     """
 
     if phi < 0 or 1 < phi:
@@ -51,9 +76,6 @@ def noise(
 
     if p < 0 or 1 < p:
         raise ValueError(f"Incorrect value of p: {p}. Value should be in [0,1]")
-
-    if type_id not in {"hamming", "jaccard", "zelinka", "bunke-shearer"}:
-        raise ValueError(f"No such type_id as {type_id}")
 
     rng = np.random.default_rng(seed)
 
@@ -71,16 +93,20 @@ def noise(
         for y in range(len(B) + 1):
             num_options_out = math.comb(len(B), y)
 
-            if type_id == "hamming":
+            if noise_type == NoiseType.HAMMING:
                 factor = phi ** (len(A) - x + y)
-            elif type_id == "jaccard":
+            elif noise_type == NoiseType.JACCARD:
                 factor = phi ** ((len(A) - x + y) / (len(A) + y))
-            elif type_id == "zelinka":
+            elif noise_type == NoiseType.ZELINKA:
                 factor = phi ** max(len(A) - x, y)
-            elif type_id == "bunke-shearer":
+            elif noise_type == NoiseType.BUNKE_SHEARER:
                 factor = phi ** (max(len(A) - x, y) / max(len(A), x + y))
             else:
-                factor = 1
+                raise ValueError(
+                    "The `noise_type` argument needs to be one of the constant defined in the "
+                    "approval.NoiseType enumeration. Choices are: "
+                    + ", ".join(str(s) for s in NoiseType)
+                )
 
             num_options = num_options_in * num_options_out * factor
 

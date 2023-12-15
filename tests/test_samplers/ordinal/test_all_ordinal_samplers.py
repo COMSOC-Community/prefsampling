@@ -3,25 +3,25 @@ import numpy as np
 from unittest import TestCase
 
 from prefsampling.core.euclidean import EuclideanSpace
-from prefsampling.ordinal import plackett_luce
-from prefsampling.ordinal.urn import urn
-from prefsampling.ordinal.impartial import (
+
+from prefsampling.ordinal import (
+    plackett_luce,
+    group_separable,
+    TreeSampler,
+    urn,
     impartial_anonymous,
     impartial,
     stratification,
-)
-from prefsampling.ordinal.singlecrossing import (
     single_crossing,
     single_crossing_impartial,
-)
-from prefsampling.ordinal.singlepeaked import (
     single_peaked_walsh,
     single_peaked_conitzer,
     single_peaked_circle,
+    mallows,
+    norm_mallows,
+    euclidean,
+    didi
 )
-from prefsampling.ordinal.mallows import mallows, norm_mallows
-from prefsampling.ordinal.euclidean import euclidean
-from prefsampling.ordinal.didi import didi
 
 ALL_ORDINAL_SAMPLERS = [
     impartial,
@@ -61,6 +61,21 @@ ALL_ORDINAL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: didi(
         num_voters, num_candidates, [1] * num_candidates, seed=seed
     ),
+    lambda num_voters, num_candidates, seed=None: group_separable(
+        num_voters, num_candidates, TreeSampler.SCHROEDER, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: group_separable(
+        num_voters, num_candidates, TreeSampler.SCHROEDER_LESCANNE, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: group_separable(
+        num_voters, num_candidates, TreeSampler.SCHROEDER_LESCANNE, seed=seed
+    ),
+    # lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
+    #     num_voters, num_candidates, TreeSampler.CATERPILLAR, seed=seed
+    # ),
+    # lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
+    #     num_voters, num_candidates, TreeSampler.BALANCED, seed=seed
+    # ),
 ]
 
 

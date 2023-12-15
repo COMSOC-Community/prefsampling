@@ -10,7 +10,7 @@ def euclidean(
     num_candidates: int,
     space: EuclideanSpace = EuclideanSpace.UNIFORM,
     dimension: int = 2,
-    radius: float = 0,
+    radius: float = 0.5,
     seed: int = None,
 ) -> list[set[int]]:
     """
@@ -27,7 +27,7 @@ def euclidean(
         :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
     dimension : int, default: 2
         Number of Dimensions.
-    radius : float, default: 0
+    radius : float, default: 0.5
         The radius.
     seed : int
         Seed for numpy random number generator.

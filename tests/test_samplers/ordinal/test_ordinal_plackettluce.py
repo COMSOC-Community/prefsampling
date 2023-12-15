@@ -8,6 +8,6 @@ class TestOrdinalPlackettLuce(TestCase):
         with self.assertRaises(ValueError):
             plackett_luce(4, 5, alphas=[0.4, 0.4])
         with self.assertRaises(ValueError):
-            plackett_luce(4, 5, alphas=[0.4, 0.4, 0.4, -0.4])
+            plackett_luce(4, 5, alphas=[0.4, 0.4, 0.4, 0.4, -0.4])
         with self.assertRaises(ValueError):
-            plackett_luce(4, 5, alphas=[0, 0, 0, 0])
+            plackett_luce(4, 5, alphas=[0, 0, 0, 0, 0])

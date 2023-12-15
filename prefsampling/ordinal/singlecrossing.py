@@ -119,13 +119,13 @@ class SingleCrossingNode:
 
     def count_elections(self, n):
         """
-        Counts the number of elections used to define the probability distribution over the nodes
-        when sampling votes.
+        Counts the number of elections. This number is used to define the probability distribution
+        over the nodes when sampling votes.
         """
-        if n == 0:
-            return 0
-        if n == 1:
-            return 1
+        if n < 0:
+            raise ValueError("The number of agents should be more at least 0.")
+        if n < 2:
+            return n
         count = self.election_count.get(n, None)
         if count is None:
             count = sum(node.count_elections(n - 1) for node in self.all_next)

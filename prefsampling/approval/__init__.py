@@ -10,7 +10,7 @@ from prefsampling.approval.resampling import (
     disjoint_resampling,
     moving_resampling,
 )
-from prefsampling.approval.noise import noise
+from prefsampling.approval.noise import noise, NoiseType
 from prefsampling.approval.euclidean import euclidean
 from prefsampling.approval.partylist import urn_partylist
 
@@ -24,6 +24,7 @@ __all__ = [
     "disjoint_resampling",
     "moving_resampling",
     "noise",
+    "NoiseType",
     "euclidean",
     "urn_partylist",
 ]

@@ -137,8 +137,8 @@ Approval Samplers
      - ---
      - | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`)
        | :code:`dimension` (defaults to 2)
-       | :code:`radius` (defaults to 0.0)
+       | :code:`radius` (defaults to 0.5)
    * - :py:func:`~prefsampling.approval.noise`
      - | :code:`p`
        | :code:`phi`
-     - :code:`type_id`
+     - :code:`noise_type` (defaults to :py:const:`~prefsampling.approval.NoiseType.HAMMING`)
