@@ -47,14 +47,12 @@ class Validator(abc.ABC):
         Cast the samples returned by the sampler to the correct type (tuple for ordinal samplers).
         """
 
-    @abc.abstractmethod
     def set_all_outcomes(self):
         """
         Populates the `self.all_outcomes` member of the class.
         """
         pass
 
-    @abc.abstractmethod
     def set_theoretical_distribution(self):
         """
         Populates the `self.theoretical_distribution` member of the class.
@@ -120,30 +118,6 @@ class Validator(abc.ABC):
             file_path=graph_file_path,
             ordering=graph_ordering,
         )
-
-    def run_chi_square_test(self):
-        if self.theoretical_distribution is None or self.observed_distribution is None:
-            raise ValueError(
-                "Before running the chi_sqaure test you need to populate the "
-                "`theoretical_distribution` and the `observed_distribution` "
-                "members of the validator"
-            )
-        test_result = chisquare(
-            f_obs=self.observed_distribution, f_exp=self.theoretical_distribution
-        )
-        if test_result.pvalue < 0.1:
-            logging.error(f"\tChi-Square test failed, p-value is {test_result.pvalue}.")
-            logging.error(
-                f"\tThe observed frequencies likely do not follow the theoretical "
-                "distribution."
-            )
-        else:
-            logging.info(f"\tChi-Square test passed, p-value is {test_result.pvalue}.")
-            logging.info(
-                "\tWe cannot conclude that the observations do not come from the theoretical "
-                "distribution."
-            )
-        self.chi_square_result = test_result
 
     def plot_frequencies(
         self,

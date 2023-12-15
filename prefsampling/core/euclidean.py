@@ -22,7 +22,7 @@ class EuclideanSpace(Enum):
     """
     Spheric space
     """
-    BALL = 3
+    BALL = 4
     """
     Ball space
     """
