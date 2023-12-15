@@ -214,14 +214,14 @@ class Node:
             str
                 The representation of the tree.
         """
-        if len(self.children) == 1:
-            return self.children[0].tree_representation()
+        if len(self.children) == 0:
+            return str(self.identifier)
         s = f"{self.identifier}("
         s += ", ".join(n.tree_representation() for n in self.children)
         s += ")"
         return s
 
-    def anonymous_tree_representation(self):
+    def anonymous_tree_representation(self) -> str:
         """
         Returns a string representation of the tree rooted in the node. Nodes are represented by their number of
         children and leaves by the underscore character `_`.

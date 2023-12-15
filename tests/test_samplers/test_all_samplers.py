@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.ordinal import (
     urn as ordinal_urn,
     impartial as ordinal_impartial,
@@ -16,7 +17,8 @@ from prefsampling.ordinal import (
     plackett_luce as ordinal_plackett_luce,
     didi as ordinal_didi,
     identity as ordinal_identity,
-    group_separable as ordinal_group_separable, TreeSampler
+    group_separable as ordinal_group_separable,
+    TreeSampler,
 )
 
 from prefsampling.approval import (
@@ -29,7 +31,8 @@ from prefsampling.approval import (
     identity as approval_identity,
     full as approval_full,
     empty as approval_empty,
-    urn_partylist as approval_urn_partylist, NoiseType
+    urn_partylist as approval_urn_partylist,
+    NoiseType,
 )
 
 ALL_SAMPLERS = [
@@ -46,7 +49,18 @@ ALL_SAMPLERS = [
     ordinal_single_peaked_walsh,
     ordinal_single_crossing,
     ordinal_single_crossing_impartial,
-    ordinal_euclidean,
+    lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.GAUSSIAN, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.SPHERE, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
+    ),
     lambda num_voters, num_candidates, seed=None: ordinal_mallows(
         num_voters, num_candidates, 0.5, seed=seed
     ),
@@ -67,15 +81,14 @@ ALL_SAMPLERS = [
         num_voters, num_candidates, TreeSampler.SCHROEDER_LESCANNE, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
-        num_voters, num_candidates, TreeSampler.SCHROEDER_LESCANNE, seed=seed
+        num_voters, num_candidates, TreeSampler.SCHROEDER_UNIFORM, seed=seed
     ),
-    # lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
-    #     num_voters, num_candidates, TreeSampler.CATERPILLAR, seed=seed
-    # ),
+    lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
+        num_voters, num_candidates, TreeSampler.CATERPILLAR, seed=seed
+    ),
     # lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
     #     num_voters, num_candidates, TreeSampler.BALANCED, seed=seed
     # ),
-
     lambda num_voters, num_candidates, seed=None: approval_resampling(
         num_voters, num_candidates, 0.5, 0.5, seed=seed
     ),
@@ -88,7 +101,18 @@ ALL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: approval_impartial(
         num_voters, num_candidates, 0.5, seed=seed
     ),
-    approval_euclidean,
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.GAUSSIAN, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.SPHERE, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
+    ),
     lambda num_voters, num_candidates, seed=None: approval_noise(
         num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.HAMMING, seed=seed
     ),
@@ -99,7 +123,12 @@ ALL_SAMPLERS = [
         num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.JACCARD, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_noise(
-        num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.BUNKE_SHEARER, seed=seed
+        num_voters,
+        num_candidates,
+        0.5,
+        0.5,
+        noise_type=NoiseType.BUNKE_SHEARER,
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: approval_identity(
         num_voters, num_candidates, 0.5, seed=seed

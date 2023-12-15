@@ -333,8 +333,11 @@ if __name__ == "__main__":
     all_sc_profiles_non_iso = get_all_sc_profiles_non_iso(
         num_voters=3, num_candidates=4
     )
-    all_gs_profiles = get_all_group_separable_profiles(num_voters=3, num_candidates=3,
-                                                       all_profiles=get_all_non_isomorphic_profilles(3, 3))
+    all_gs_profiles = get_all_group_separable_profiles(
+        num_voters=3,
+        num_candidates=3,
+        all_profiles=get_all_non_isomorphic_profilles(3, 3),
+    )
     all_gs_structures = get_all_gs_structure(all_gs_profiles=all_gs_profiles)
 
     # Mallow's
@@ -348,7 +351,12 @@ if __name__ == "__main__":
     run_ordinal_impartial_anonymous_validator(
         num_observations, all_anonymous_profiles, ordinal_plot_dir_root
     )
-    run_stratification_validator(num_observations, [0, 1/len(all_ranks[0]), 3/len(all_ranks[0]), 1], all_ranks, ordinal_plot_dir_root)
+    run_stratification_validator(
+        num_observations,
+        [0, 1 / len(all_ranks[0]), 3 / len(all_ranks[0]), 1],
+        all_ranks,
+        ordinal_plot_dir_root,
+    )
 
     # Plackett Luce
     all_alphas = [
@@ -378,7 +386,7 @@ if __name__ == "__main__":
     run_single_crossing_validator(
         num_observations,
         get_all_sc_profiles_non_iso(num_voters=2, num_candidates=4),
-        ordinal_plot_dir_root
+        ordinal_plot_dir_root,
     )
 
     # Urn
@@ -398,14 +406,19 @@ if __name__ == "__main__":
             (EuclideanSpace.GAUSSIAN, 2),
         ],
         all_ranks,
-        ordinal_plot_dir_root
+        ordinal_plot_dir_root,
     )
 
     # Group Separable
     for num_voters in range(1, 7):
         for num_candidates in [3, 4, 5]:
             run_group_separable_validator(
-                num_observations, num_voters, num_candidates, None, TreeSampler.SCHROEDER_UNIFORM, ordinal_plot_dir_root
+                num_observations,
+                num_voters,
+                num_candidates,
+                None,
+                TreeSampler.SCHROEDER_UNIFORM,
+                ordinal_plot_dir_root,
             )
 
     # ---------------
@@ -417,8 +430,7 @@ if __name__ == "__main__":
 
     for num_leaves in range(5, 6):
         all_trees = tuple(
-            r.anonymous_tree_representation()
-            for r in all_schroeder_tree(num_leaves)
+            r.anonymous_tree_representation() for r in all_schroeder_tree(num_leaves)
         )
         for sampler in [schroeder_tree, schroeder_tree_brute_force]:
             run_schroeder_validator(

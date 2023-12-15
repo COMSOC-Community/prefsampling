@@ -22,6 +22,10 @@ class EuclideanSpace(Enum):
     """
     Spheric space
     """
+    BALL = 3
+    """
+    Ball space
+    """
 
 
 @validate_num_voters_candidates
@@ -67,6 +71,13 @@ def election_positions(
         candidates = np.array(
             [list(random_sphere(dimension, rng)[0]) for _ in range(num_candidates)]
         )
+    elif space == EuclideanSpace.BALL:
+        voters = np.array(
+            [list(random_ball(dimension, rng)[0]) for _ in range(num_voters)]
+        )
+        candidates = np.array(
+            [list(random_sphere(dimension, rng)[0]) for _ in range(num_candidates)]
+        )
     else:
         raise ValueError(
             "The `space` argument needs to be one of the constant defined in the "
@@ -76,10 +87,12 @@ def election_positions(
     return voters, candidates
 
 
-def random_ball(dimension: int, num_points: int = 1, radius: float = 1) -> np.ndarray:
-    random_directions = np.random.normal(size=(dimension, num_points))
+def random_ball(
+    dimension: int, rng: np.random.Generator, num_points: int = 1, radius: float = 1
+) -> np.ndarray:
+    random_directions = rng.normal(size=(dimension, num_points))
     random_directions /= np.linalg.norm(random_directions, axis=0)
-    random_radii = np.random.random(num_points) ** (1 / dimension)
+    random_radii = rng.random(num_points) ** (1 / dimension)
     x = radius * (random_directions * random_radii).T
     return x
 

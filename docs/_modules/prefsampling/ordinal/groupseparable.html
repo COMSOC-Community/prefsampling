@@ -365,7 +365,9 @@ document.write(`
     <span class="p">):</span>
         <span class="n">buckets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">):</span>
-            <span class="n">buckets</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_number_group_separable_profiles</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">num_voters</span><span class="p">)</span>
+            <span class="n">buckets</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_number_group_separable_profiles</span><span class="p">(</span>
+                <span class="n">num_candidates</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">num_voters</span>
+            <span class="p">)</span>
         <span class="n">buckets</span> <span class="o">/=</span> <span class="n">buckets</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="n">num_internal_nodes</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">buckets</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">buckets</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 

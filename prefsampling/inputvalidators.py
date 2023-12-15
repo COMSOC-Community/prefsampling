@@ -60,7 +60,7 @@ def validate_int(
     """
     try:
         int(value)
-    except TypeError:
+    except (ValueError, TypeError):
         raise TypeError(f"The {value_descr} needs to be an integer.")
     if int(value) != value:
         raise TypeError(f"The {value_descr} needs to be an integer.")

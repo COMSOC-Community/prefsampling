@@ -11,8 +11,10 @@ from prefsampling.approval import (
     identity,
     full,
     empty,
-    urn_partylist, NoiseType
+    urn_partylist,
+    NoiseType,
 )
+from prefsampling.core.euclidean import EuclideanSpace
 
 ALL_APPROVAL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: resampling(
@@ -27,7 +29,18 @@ ALL_APPROVAL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: impartial(
         num_voters, num_candidates, 0.5, seed=seed
     ),
-    euclidean,
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.GAUSSIAN, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.SPHERE, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
+    ),
     lambda num_voters, num_candidates, seed=None: noise(
         num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.HAMMING, seed=seed
     ),
@@ -38,7 +51,12 @@ ALL_APPROVAL_SAMPLERS = [
         num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.JACCARD, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: noise(
-        num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.BUNKE_SHEARER, seed=seed
+        num_voters,
+        num_candidates,
+        0.5,
+        0.5,
+        noise_type=NoiseType.BUNKE_SHEARER,
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: identity(
         num_voters, num_candidates, 0.5, seed=seed

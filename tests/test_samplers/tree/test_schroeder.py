@@ -10,14 +10,14 @@ from prefsampling.tree.schroeder import (
 class TestTree(TestCase):
     def is_proper_schroeder_tree(self, sampler, num_leaves, num_internal_nodes):
         root = sampler(num_leaves, num_internal_nodes)
-        assert root.is_schroeder()
-        assert root.num_leaves() == num_leaves
-        if num_internal_nodes:
-            assert root.num_internal_nodes() == num_internal_nodes
+        self.assertTrue(root.is_schroeder())
+        self.assertTrue(root.num_leaves() == num_leaves)
+        if num_internal_nodes is not None:
+            self.assertTrue(root.num_internal_nodes() == num_internal_nodes)
 
     def test_schroeder_tree_sampler(self):
         for num_leaves in range(-1, 7):
-            for num_internal_nodes in [None] + list(range(-1, num_leaves)):
+            for num_internal_nodes in [None] + list(range(-1, num_leaves + 1)):
                 for sampler in (
                     schroeder_tree,
                     schroeder_tree_brute_force,
@@ -29,7 +29,11 @@ class TestTree(TestCase):
                         num_internal_nodes=num_internal_nodes,
                     ):
                         if num_leaves < 1 or (
-                            num_internal_nodes is not None and num_internal_nodes < 0
+                            num_internal_nodes is not None
+                            and (
+                                num_internal_nodes < 0
+                                or num_internal_nodes >= num_leaves
+                            )
                         ):
                             with self.assertRaises(ValueError):
                                 sampler(num_leaves, num_internal_nodes)

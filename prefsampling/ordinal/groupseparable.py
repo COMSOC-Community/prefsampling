@@ -101,7 +101,9 @@ def group_separable(
     ):
         buckets = np.zeros(num_candidates - 1)
         for r in range(1, num_candidates):
-            buckets[r - 1] = _number_group_separable_profiles(num_candidates, r, num_voters)
+            buckets[r - 1] = _number_group_separable_profiles(
+                num_candidates, r, num_voters
+            )
         buckets /= buckets.sum()
         num_internal_nodes = rng.choice(len(buckets), p=buckets) + 1
 

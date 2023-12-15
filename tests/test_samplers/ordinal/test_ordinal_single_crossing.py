@@ -8,9 +8,7 @@ class TestOrdinalSingleCrossing(TestCase):
         n = SingleCrossingNode((0, 1, 2))
         n.__repr__()
         n.__str__()
-        assert n.count_elections(0) == 0
-        assert n.count_elections(1) == 1
+        self.assertTrue(n.count_elections(0) == 0)
+        self.assertTrue(n.count_elections(1) == 1)
         with self.assertRaises(ValueError):
             n.count_elections(-1)
-
-

@@ -15,10 +15,9 @@ class TestOrdinalMawllos(TestCase):
             norm_mallows(4, 5, norm_phi=1.4)
 
     def test_phi_from_norm_phi(self):
-        assert phi_from_norm_phi(5, 1) == 1
-        assert phi_from_norm_phi(5, 1.5) == 0.5
+        self.assertTrue(phi_from_norm_phi(5, 1) == 1)
+        self.assertTrue(phi_from_norm_phi(5, 1.5) == 0.5)
         with self.assertRaises(ValueError):
             phi_from_norm_phi(5, -0.5)
         with self.assertRaises(ValueError):
             phi_from_norm_phi(5, 2.1)
-

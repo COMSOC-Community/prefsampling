@@ -24,7 +24,7 @@ def balanced_tree(num_leaves: int) -> Node:
     while q.qsize() * 2 < num_leaves:
         tmp_root = q.get()
         for _ in range(2):
-            inner_node = Node("v" + str(ctr))
+            inner_node = Node(ctr)
             tmp_root.add_child(inner_node)
             q.put(inner_node)
             ctr += 1
@@ -33,7 +33,7 @@ def balanced_tree(num_leaves: int) -> Node:
     while ctr < num_leaves:
         tmp_root = q.get()
         for _ in range(2):
-            node = Node("x" + str(ctr))
+            node = Node(ctr)
             tmp_root.add_child(node)
             ctr += 1
 

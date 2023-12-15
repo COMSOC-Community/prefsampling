@@ -15,4 +15,4 @@ class TestApprovalNoise(TestCase):
         with self.assertRaises(ValueError):
             noise(4, 5, p=-0.4, phi=0.5)
         with self.assertRaises(ValueError):
-            noise(4, 5, p=-0.4, phi=0.5, noise_type="aze")
+            noise(4, 5, p=0.4, phi=0.5, noise_type="aze")

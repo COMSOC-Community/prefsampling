@@ -20,7 +20,7 @@ from prefsampling.ordinal import (
     mallows,
     norm_mallows,
     euclidean,
-    didi
+    didi,
 )
 
 ALL_ORDINAL_SAMPLERS = [
@@ -55,6 +55,9 @@ ALL_ORDINAL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: euclidean(
         num_voters, num_candidates, space=EuclideanSpace.SPHERE, seed=seed
     ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
+    ),
     lambda num_voters, num_candidates, seed=None: plackett_luce(
         num_voters, num_candidates, [1] * num_candidates, seed=seed
     ),
@@ -68,12 +71,12 @@ ALL_ORDINAL_SAMPLERS = [
         num_voters, num_candidates, TreeSampler.SCHROEDER_LESCANNE, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: group_separable(
-        num_voters, num_candidates, TreeSampler.SCHROEDER_LESCANNE, seed=seed
+        num_voters, num_candidates, TreeSampler.SCHROEDER_UNIFORM, seed=seed
     ),
-    # lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
-    #     num_voters, num_candidates, TreeSampler.CATERPILLAR, seed=seed
-    # ),
-    # lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
+    lambda num_voters, num_candidates, seed=None: group_separable(
+        num_voters, num_candidates, TreeSampler.CATERPILLAR, seed=seed
+    ),
+    # lambda num_voters, num_candidates, seed=None: group_separable(
     #     num_voters, num_candidates, TreeSampler.BALANCED, seed=seed
     # ),
 ]
