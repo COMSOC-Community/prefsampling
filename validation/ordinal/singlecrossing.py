@@ -1,68 +1,39 @@
-import numpy as np
-
 from prefsampling.ordinal import single_crossing
 from prefsampling.ordinal.singlecrossing import single_crossing_impartial
-from validation.utils import get_all_single_crossing_profiles
+from validation.utils import get_all_sc_profiles_non_iso
 from validation.validator import Validator
 
 
 class SingleCrossingValidator(Validator):
-    def __init__(
-        self,
-        num_voters,
-        num_candidates,
-        all_outcomes=None,
-    ):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 3, "num_candidates": 4},
+        ]
         super(SingleCrossingValidator, self).__init__(
-            num_candidates,
-            sampler_func=lambda num_samples, num_candidates, num_voters=None: [
-                single_crossing(num_voters, num_candidates) for _ in range(num_samples)
-            ],
-            sampler_parameters={"num_voters": num_voters},
-            all_outcomes=all_outcomes,
-        )
-        self.num_voters = num_voters
-
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_single_crossing_profiles(
-            self.num_voters, self.num_candidates
+            parameters_list,
+            "Single Crossing",
+            "single_crossing",
+            False,
+            sampler_func=single_crossing,
+            constant_parameters=("num_voters", "num_candidates"),
         )
 
-    def set_theoretical_distribution(self):
-        pass
-        # self.theoretical_distribution = np.ones(len(self.all_outcomes)) / len(self.all_outcomes)
-
-    def sample_cast(self, sample):
-        return tuple(tuple(s) for s in sample)
-
-
-class SingleCrossingImpartialValidator(Validator):
-    def __init__(
-        self,
-        num_voters,
-        num_candidates,
-        all_outcomes=None,
-    ):
-        super(SingleCrossingImpartialValidator, self).__init__(
-            num_candidates,
-            sampler_func=lambda num_samples, num_candidates, num_voters=None: [
-                single_crossing_impartial(num_voters, num_candidates)
-                for _ in range(num_samples)
-            ],
-            sampler_parameters={"num_voters": num_voters},
-            all_outcomes=all_outcomes,
-        )
-        self.num_voters = num_voters
-
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_single_crossing_profiles(
-            self.num_voters, self.num_candidates
-        )
-
-    def set_theoretical_distribution(self):
-        self.theoretical_distribution = np.ones(len(self.all_outcomes)) / len(
-            self.all_outcomes
+    def all_outcomes(self, sampler_parameters):
+        return get_all_sc_profiles_non_iso(
+            sampler_parameters["num_voters"], sampler_parameters["num_candidates"]
         )
 
     def sample_cast(self, sample):
         return tuple(tuple(s) for s in sample)
+
+
+class SingleCrossingImpartialValidator(SingleCrossingValidator):
+    def __init__(self):
+        super(SingleCrossingImpartialValidator, self).__init__()
+        self.sampler_func = single_crossing_impartial
+        self.model_name = "Single Crossing Impartial"
+        self.model_short_name = "single_crossing_impartial"
+        self.use_theoretical = True
+
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
+        return {o: 1 / len(all_outcomes) for o in all_outcomes}

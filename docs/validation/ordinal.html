@@ -316,7 +316,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#urn">Urn</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mallows">Mallows</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plackett-luce">Plackett-Luce</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Plackett-Luce</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#didi">Didi</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean">Euclidean</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peaked">Single-Peaked</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-crossing">Single-Crossing</a></li>
@@ -337,106 +337,106 @@ document.write(`
 <p>We present below the validation tests we ran for ordinal samplers.</p>
 <section id="impartial">
 <h2>Impartial<a class="headerlink" href="#impartial" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.impartial" title="prefsampling.ordinal.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.impartial()</span></code></a></p>
 <p>Under the impartial model, all ranks are equally likely to be generated.</p>
-<a class="reference internal image-reference" href="../_images/ordinal_impartial.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="../_images/ordinal_impartial.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/impartial.png"><img alt="Observed versus theoretical frequencies for the impartial culture" src="../_images/impartial.png" style="width: 800px;" /></a>
 </section>
 <section id="impartial-anonymous">
 <h2>Impartial Anonymous<a class="headerlink" href="#impartial-anonymous" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.impartial_anonymous" title="prefsampling.ordinal.impartial_anonymous"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.impartial_anonymous()</span></code></a></p>
 <p>With the impartial anonymous culture, every multisets of votes–an anonymous profile—are
 equally likely to be generated. Note here that we are discussing anonymous profiles and
 not ranks.</p>
-<a class="reference internal image-reference" href="../_images/ordinal_impartial_anonymous.png"><img alt="Observed versus theoretical frequencies for the impartial anonymous culture" src="../_images/ordinal_impartial_anonymous.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/impartial_anonymous.png"><img alt="Observed versus theoretical frequencies for the impartial anonymous culture" src="../_images/impartial_anonymous.png" style="width: 800px;" /></a>
 </section>
 <section id="stratification">
 <h2>Stratification<a class="headerlink" href="#stratification" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.stratification" title="prefsampling.ordinal.stratification"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.stratification()</span></code></a></p>
 <p>Under the stratification model, only the ranks that are ‘’stratified’’ can occur.</p>
 <p>When the weight is 0 or 1, there is a single class, and thus, we fall back to the
 impartial culture.</p>
-<a class="reference internal image-reference" href="../_images/stratification_0.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=0" src="../_images/stratification_0.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/stratification_1.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=1" src="../_images/stratification_1.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/stratification_uniform.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=0, 1" src="../_images/stratification_uniform.png" style="width: 800px;" /></a>
 <p>We the weight is different from 0 and 1, we obtain more interesting distributions over
 the ranks.</p>
-<a class="reference internal image-reference" href="../_images/stratification_0.2.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=0.2" src="../_images/stratification_0.2.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/stratification_0.6.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=0.6" src="../_images/stratification_0.6.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/stratification.png"><img alt="Observed versus theoretical frequencies for the stratification culture with weight=0.2, 0.4, 0.8" src="../_images/stratification.png" style="width: 800px;" /></a>
 </section>
 <section id="urn">
 <h2>Urn<a class="headerlink" href="#urn" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.urn" title="prefsampling.ordinal.urn"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.urn()</span></code></a></p>
 <p>The probability distribution governing an urn model is well documented.
 See <a class="reference external" href="https://www.jstor.org/stable/30024551">https://www.jstor.org/stable/30024551</a> for instance.</p>
 <p>Once again, we are here discussing anonymous profiles and not ranks.</p>
 <p>When <cite>alpha</cite> is equal to <cite>1 / m!</cite>, we fall back to the case of the impartial anonymous
-culture.</p>
-<a class="reference internal image-reference" href="../_images/urn_0.041666666666666664.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="../_images/urn_0.041666666666666664.png" style="width: 500px;" /></a>
-<p>For other values of <cite>alpha</cite>, different probability distributions are obtained.</p>
-<a class="reference internal image-reference" href="../_images/urn_0.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="../_images/urn_0.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/urn_0.5.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="../_images/urn_0.5.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/urn_1.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="../_images/urn_1.png" style="width: 500px;" /></a>
+culture. For other values of <cite>alpha</cite>, different probability distributions are obtained.</p>
+<a class="reference internal image-reference" href="../_images/urn.png"><img alt="Observed versus theoretical frequencies for Mallow's model with alpha=0" src="../_images/urn.png" style="width: 800px;" /></a>
 </section>
 <section id="mallows">
 <h2>Mallows<a class="headerlink" href="#mallows" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.mallows" title="prefsampling.ordinal.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.mallows()</span></code></a></p>
 <p>The probability distribution generated by a Mallows’ model is also well known.
-See <a class="reference external" href="https://jmlr.org/papers/v15/lu14a.html">https://jmlr.org/papers/v15/lu14a.html</a> for instance.</p>
-<a class="reference internal image-reference" href="../_images/mallows_0.1.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=0.1" src="../_images/mallows_0.1.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/mallows_0.5.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=0.5" src="../_images/mallows_0.5.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/mallows_0.8.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=0.8" src="../_images/mallows_0.8.png" style="width: 500px;" /></a>
-<p>When <cite>phi</cite> is one,  we fall back to the impartial culture.</p>
-<a class="reference internal image-reference" href="../_images/mallows_1.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=1" src="../_images/mallows_1.png" style="width: 500px;" /></a>
+See <a class="reference external" href="https://jmlr.org/papers/v15/lu14a.html">https://jmlr.org/papers/v15/lu14a.html</a> for instance. When <cite>phi</cite> is one,
+we fall back to the impartial culture.</p>
+<a class="reference internal image-reference" href="../_images/mallows.png"><img alt="Observed versus theoretical frequencies for Mallow's model with phi=0.1" src="../_images/mallows.png" style="width: 800px;" /></a>
 </section>
 <section id="plackett-luce">
 <h2>Plackett-Luce<a class="headerlink" href="#plackett-luce" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.plackett_luce" title="prefsampling.ordinal.plackett_luce"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.plackett_luce()</span></code></a></p>
 <p>The properties of the Plackett-Luce model have also been described at length.
 See <a class="reference external" href="https://proceedings.mlr.press/v48/zhaob16.html">https://proceedings.mlr.press/v48/zhaob16.html</a> for example.</p>
 <p>When all candidates have the same quality (i.e., all <cite>alpha</cite> values are equal),
-we fall back to the impartial culture case.</p>
-<a class="reference internal image-reference" href="../_images/plackett_luce_0.png"><img alt="Observed versus theoretical frequencies for the Plackett-Luce model" src="../_images/plackett_luce_0.png" style="width: 500px;" /></a>
-<p>Otherwise, different distribution can be observed.</p>
-<a class="reference internal image-reference" href="../_images/plackett_luce_1.png"><img alt="Observed versus theoretical frequencies for the Plackett-Luce model" src="../_images/plackett_luce_1.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/plackett_luce_2.png"><img alt="Observed versus theoretical frequencies for the Plackett-Luce model" src="../_images/plackett_luce_2.png" style="width: 500px;" /></a>
+we fall back to the impartial culture case. Otherwise, different distribution
+can be observed.</p>
+<a class="reference internal image-reference" href="../_images/plackett_luce.png"><img alt="Observed versus theoretical frequencies for the Plackett-Luce model" src="../_images/plackett_luce.png" style="width: 800px;" /></a>
 </section>
-<section id="id1">
-<h2>Plackett-Luce<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
-<p>To Do</p>
+<section id="didi">
+<h2>Didi<a class="headerlink" href="#didi" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.didi" title="prefsampling.ordinal.didi"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.didi()</span></code></a></p>
+<p>For the didi model, there is no know probability distribution over the outcomes.</p>
+<a class="reference internal image-reference" href="../_images/didi.png"><img alt="Observed versus theoretical frequencies for the Didi model" src="../_images/didi.png" style="width: 800px;" /></a>
 </section>
 <section id="euclidean">
 <h2>Euclidean<a class="headerlink" href="#euclidean" title="Permalink to this heading">#</a></h2>
-<p>In the case of the Euclidean model, nothing is known about the distribution over
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.euclidean" title="prefsampling.ordinal.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.euclidean()</span></code></a></p>
+<p>In the case of the Euclidean model, little is known about the distribution over
 ranks that they generate.</p>
-<a class="reference internal image-reference" href="../_images/ordinal_euclidean_EuclideanSpace.UNIFORM_2.png"><img alt="Observed versus theoretical frequencies for the Euclidean model with uniform space" src="../_images/ordinal_euclidean_EuclideanSpace.UNIFORM_2.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/ordinal_euclidean_EuclideanSpace.SPHERE_2.png"><img alt="Observed versus theoretical frequencies for the Euclidean model with spheric space" src="../_images/ordinal_euclidean_EuclideanSpace.SPHERE_2.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/ordinal_euclidean_EuclideanSpace.GAUSSIAN_2.png"><img alt="Observed versus theoretical frequencies for the Euclidean model with Gaussian space" src="../_images/ordinal_euclidean_EuclideanSpace.GAUSSIAN_2.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/euclidean.png"><img alt="Observed versus theoretical frequencies for the Euclidean model" src="../_images/euclidean.png" style="width: 800px;" /></a>
+<p>When there a single voter, we fall back to the impartial culture case.</p>
+<a class="reference internal image-reference" href="../_images/euclidean_uniform.png"><img alt="Observed versus theoretical frequencies for the Euclidean model with one voter" src="../_images/euclidean_uniform.png" style="width: 800px;" /></a>
 </section>
 <section id="single-peaked">
 <h2>Single-Peaked<a class="headerlink" href="#single-peaked" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_walsh" title="prefsampling.ordinal.single_peaked_walsh"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.single_peaked_walsh()</span></code></a></p>
 <p>For single-peaked samplers, the one proposed by
 <a class="reference external" href="https://arxiv.org/abs/1503.02766">Walsh (2015)</a> ensures that all single-peaked
 rank are equally likely to be generated.</p>
-<a class="reference internal image-reference" href="../_images/sp_walsh.png"><img alt="Observed versus theoretical frequencies for the Walsh single-peaked culture" src="../_images/sp_walsh.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/sp_walsh.png"><img alt="Observed versus theoretical frequencies for the Walsh single-peaked culture" src="../_images/sp_walsh.png" style="width: 800px;" /></a>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_conitzer" title="prefsampling.ordinal.single_peaked_conitzer"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.single_peaked_conitzer()</span></code></a></p>
 <p>The model proposed by <a class="reference external" href="https://arxiv.org/abs/1401.3449">Conitzer (2009)</a> yields
 a different probability distribution.In this distribution, the probability of observing
 a given single-peaked rank is equal to  <cite>1/m * (1/2)**dist_peak_to_end</cite> where <cite>m</cite> is the
 number of candidates and <cite>dist_peak_to_end</cite> is the minimum distance from to peak
 to an end of the axis (i.e., candidates <cite>0</cite> or <cite>m - 1</cite>).</p>
-<a class="reference internal image-reference" href="../_images/sp_conitzer.png"><img alt="Observed versus theoretical frequencies for the Conitzer single-peaked culture" src="../_images/sp_conitzer.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/sp_conitzer.png"><img alt="Observed versus theoretical frequencies for the Conitzer single-peaked culture" src="../_images/sp_conitzer.png" style="width: 800px;" /></a>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_circle" title="prefsampling.ordinal.single_peaked_circle"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.single_peaked_circle()</span></code></a></p>
 <p>For the single-peaked on a circle model, all single-peaked on a circle rank are
 equally likely to be generated.</p>
-<a class="reference internal image-reference" href="../_images/sp_circle.png"><img alt="Observed versus theoretical frequencies for the single-peaked on a circle culture" src="../_images/sp_circle.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/sp_circle.png"><img alt="Observed versus theoretical frequencies for the single-peaked on a circle culture" src="../_images/sp_circle.png" style="width: 800px;" /></a>
 </section>
 <section id="single-crossing">
 <h2>Single-Crossing<a class="headerlink" href="#single-crossing" title="Permalink to this heading">#</a></h2>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.single_crossing" title="prefsampling.ordinal.single_crossing"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.single_crossing()</span></code></a></p>
 <p>For the single-crossing samplers, the impartial is designed to yield a uniform probability
 distribution over all non-isomorphic single-crossing profiles.</p>
-<a class="reference internal image-reference" href="../_images/single_crossing_impartial.png"><img alt="Observed versus theoretical frequencies for the single-crossing culture" src="../_images/single_crossing_impartial.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/single_crossing_impartial.png"><img alt="Observed versus theoretical frequencies for the single-crossing culture" src="../_images/single_crossing_impartial.png" style="width: 800px;" /></a>
 <p>The efficient sampler has unknown probability distribution.</p>
-<a class="reference internal image-reference" href="../_images/single_crossing_impartial.png"><img alt="Observed versus theoretical frequencies for the single-crossing culture" src="../_images/single_crossing_impartial.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/single_crossing_impartial.png"><img alt="Observed versus theoretical frequencies for the single-crossing culture" src="../_images/single_crossing_impartial.png" style="width: 800px;" /></a>
 </section>
 <section id="group-separable">
 <h2>Group-Separable<a class="headerlink" href="#group-separable" title="Permalink to this heading">#</a></h2>
-<p>The sampler is supposed to produce a uniform distribution, but it does not…</p>
-<a class="reference internal image-reference" href="../_images/groupseparable_RANDOM_2_3.png"><img alt="Observed versus theoretical frequencies for the group separable culture" src="../_images/groupseparable_RANDOM_2_3.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/groupseparable_RANDOM_3_3.png"><img alt="Observed versus theoretical frequencies for the group separable culture" src="../_images/groupseparable_RANDOM_3_3.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/groupseparable_RANDOM_4_3.png"><img alt="Observed versus theoretical frequencies for the group separable culture" src="../_images/groupseparable_RANDOM_4_3.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/groupseparable_RANDOM_5_3.png"><img alt="Observed versus theoretical frequencies for the group separable culture" src="../_images/groupseparable_RANDOM_5_3.png" style="width: 500px;" /></a>
-<a class="reference internal image-reference" href="../_images/groupseparable_RANDOM_6_3.png"><img alt="Observed versus theoretical frequencies for the group separable culture" src="../_images/groupseparable_RANDOM_6_3.png" style="width: 500px;" /></a>
+<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.group_separable" title="prefsampling.ordinal.group_separable"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.group_separable()</span></code></a></p>
+<p>The sampler is supposed to produce a uniform distribution when used with a tree sampler
+that yields a uniform distribution. This does not appear to be the case however.</p>
+<a class="reference internal image-reference" href="../_images/group_separable.png"><img alt="Observed versus theoretical frequencies for the group separable culture" src="../_images/group_separable.png" style="width: 800px;" /></a>
 </section>
 </section>
 
@@ -490,7 +490,7 @@ distribution over all non-isomorphic single-crossing profiles.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#urn">Urn</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mallows">Mallows</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plackett-luce">Plackett-Luce</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Plackett-Luce</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#didi">Didi</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean">Euclidean</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-peaked">Single-Peaked</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-crossing">Single-Crossing</a></li>

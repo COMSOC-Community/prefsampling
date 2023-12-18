@@ -1,80 +1,116 @@
-import numpy as np
-
 from prefsampling.ordinal import impartial, impartial_anonymous, stratification
-from validation.utils import get_all_ranks, get_all_profiles
+from validation.utils import get_all_ranks, get_all_anonymous_profiles
 from validation.validator import Validator
 
 
 class OrdinalImpartialValidator(Validator):
-    def __init__(self, num_candidates, all_outcomes=None):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 1, "num_candidates": 4},
+            {"num_voters": 1, "num_candidates": 5},
+            {"num_voters": 1, "num_candidates": 6},
+        ]
         super(OrdinalImpartialValidator, self).__init__(
-            num_candidates,
+            parameters_list,
+            "Impartial",
+            "impartial",
+            True,
             sampler_func=impartial,
-            all_outcomes=all_outcomes,
+            constant_parameters="num_voters",
+            faceted_parameters="num_candidates",
         )
 
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_ranks(self.num_candidates)
+    def all_outcomes(self, sampler_parameters):
+        return get_all_ranks(sampler_parameters["num_candidates"])
 
-    def set_theoretical_distribution(self):
-        self.theoretical_distribution = np.full(
-            len(self.all_outcomes), 1 / len(self.all_outcomes)
-        )
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
+        return {o: 1 / len(all_outcomes) for o in all_outcomes}
 
     def sample_cast(self, sample):
-        return tuple(sample)
+        return tuple(sample[0])
 
 
 class OrdinalImpartialAnonymousValidator(Validator):
-    def __init__(
-        self,
-        num_voters,
-        num_candidates,
-        all_outcomes=None,
-    ):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 2, "num_candidates": 4},
+            {"num_voters": 3, "num_candidates": 4},
+        ]
         super(OrdinalImpartialAnonymousValidator, self).__init__(
-            num_candidates,
-            sampler_func=lambda num_samples, num_candidates, num_voters=None: [
-                impartial_anonymous(num_voters, num_candidates)
-                for _ in range(num_samples)
-            ],
-            sampler_parameters={"num_voters": num_voters},
-            all_outcomes=all_outcomes,
+            parameters_list,
+            "Impartial Anonymous",
+            "impartial_anonymous",
+            True,
+            sampler_func=impartial_anonymous,
+            constant_parameters="num_candidates",
+            faceted_parameters="num_voters",
         )
-        self.num_voters = num_voters
 
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_profiles(self.num_voters, self.num_candidates)
-
-    def set_theoretical_distribution(self):
-        self.theoretical_distribution = np.full(
-            len(self.all_outcomes), 1 / len(self.all_outcomes)
+    def all_outcomes(self, sampler_parameters):
+        return get_all_anonymous_profiles(
+            sampler_parameters["num_voters"], sampler_parameters["num_candidates"]
         )
+
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
+        return {o: 1 / len(all_outcomes) for o in all_outcomes}
 
     def sample_cast(self, sample):
         return tuple(sorted(tuple(s) for s in sample))
 
 
-class StratificationValidator(Validator):
-    def __init__(self, num_candidates, weight, all_outcomes=None):
-        super(StratificationValidator, self).__init__(
-            num_candidates,
+class OrdinalStratificationValidator(Validator):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 1, "num_candidates": 5, "weight": 0.2},
+            {"num_voters": 1, "num_candidates": 5, "weight": 0.4},
+            {"num_voters": 1, "num_candidates": 5, "weight": 0.6},
+        ]
+        super(OrdinalStratificationValidator, self).__init__(
+            parameters_list,
+            "Stratification",
+            "stratification",
+            True,
             sampler_func=stratification,
-            all_outcomes=all_outcomes,
-            sampler_parameters={"weight": weight},
+            constant_parameters=("num_voters", "num_candidates"),
+            faceted_parameters="weight",
         )
 
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_ranks(self.num_candidates)
+    def all_outcomes(self, sampler_parameters):
+        return get_all_ranks(sampler_parameters["num_candidates"])
 
-    def set_theoretical_distribution(self):
-        upper_class_size = int(self.sampler_parameters["weight"] * self.num_candidates)
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
+        upper_class_size = int(
+            sampler_parameters["weight"] * sampler_parameters["num_candidates"]
+        )
         upper_class_candidates = set(range(upper_class_size))
-        distribution = np.zeros(len(self.all_outcomes))
-        for i, rank in enumerate(self.all_outcomes):
+        distribution = {}
+        for rank in all_outcomes:
             if set(rank[:upper_class_size]) == upper_class_candidates:
-                distribution[i] = 1
-        self.theoretical_distribution = distribution / sum(distribution)
+                distribution[rank] = 1
+            else:
+                distribution[rank] = 0
+        normaliser = sum(distribution.values())
+        for r in distribution:
+            distribution[r] /= normaliser
+        return distribution
 
     def sample_cast(self, sample):
-        return tuple(sample)
+        return tuple(sample[0])
+
+
+class OrdinalStratificationUniformValidator(OrdinalStratificationValidator):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 1, "num_candidates": 5, "weight": 0},
+            {"num_voters": 1, "num_candidates": 5, "weight": 1},
+        ]
+        Validator.__init__(
+            self,
+            parameters_list,
+            "Stratification",
+            "stratification_uniform",
+            True,
+            sampler_func=stratification,
+            constant_parameters=("num_voters", "num_candidates"),
+            faceted_parameters="weight",
+        )

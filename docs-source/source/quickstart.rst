@@ -76,6 +76,9 @@ Ordinal Samplers
    * - :py:func:`~prefsampling.ordinal.plackett_luce`
      - :code:`alphas`
      - ---
+   * - :py:func:`~prefsampling.ordinal.didi`
+     - :code:`alphas`
+     - ---
    * - :py:func:`~prefsampling.ordinal.urn`
      - :code:`alpha`
      - ---

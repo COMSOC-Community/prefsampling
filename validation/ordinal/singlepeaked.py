@@ -13,66 +13,89 @@ from validation.validator import Validator
 
 
 class SPWalshValidator(Validator):
-    def __init__(self, num_candidates, all_outcomes=None):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 1, "num_candidates": 4},
+            {"num_voters": 1, "num_candidates": 5},
+            {"num_voters": 1, "num_candidates": 6},
+        ]
         super(SPWalshValidator, self).__init__(
-            num_candidates,
+            parameters_list,
+            "Single-Peaked Walsh",
+            "sp_walsh",
+            True,
             sampler_func=single_peaked_walsh,
-            all_outcomes=all_outcomes,
+            constant_parameters="num_voters",
+            faceted_parameters="num_candidates",
         )
 
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_single_peaked_ranks(self.num_candidates)
+    def all_outcomes(self, sampler_parameters):
+        return get_all_single_peaked_ranks(sampler_parameters["num_candidates"])
 
-    def set_theoretical_distribution(self):
-        self.theoretical_distribution = np.full(
-            len(self.all_outcomes), 1 / len(self.all_outcomes)
-        )
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
+        return {o: 1 / len(all_outcomes) for o in all_outcomes}
 
     def sample_cast(self, sample):
-        return tuple(sample)
+        return tuple(sample[0])
 
 
 class SPConitzerValidator(Validator):
-    def __init__(self, num_candidates, all_outcomes=None):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 1, "num_candidates": 4},
+            {"num_voters": 1, "num_candidates": 5},
+            {"num_voters": 1, "num_candidates": 6},
+        ]
         super(SPConitzerValidator, self).__init__(
-            num_candidates,
+            parameters_list,
+            "Single-Peaked Conitzer",
+            "sp_conitzer",
+            True,
             sampler_func=single_peaked_conitzer,
-            all_outcomes=all_outcomes,
+            constant_parameters="num_voters",
+            faceted_parameters="num_candidates",
         )
 
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_single_peaked_ranks(self.num_candidates)
+    def all_outcomes(self, sampler_parameters):
+        return get_all_single_peaked_ranks(sampler_parameters["num_candidates"])
 
-    def set_theoretical_distribution(self):
-        distribution = np.zeros(len(self.all_outcomes))
-        for i, rank in enumerate(self.all_outcomes):
-            probability = 1 / self.num_candidates
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
+        distribution = {}
+        for rank in all_outcomes:
+            probability = 1 / sampler_parameters["num_candidates"]
             for alt in rank:
-                if alt == 0 or alt == self.num_candidates - 1:
+                if alt == 0 or alt == sampler_parameters["num_candidates"] - 1:
                     break
                 probability *= 1 / 2
-            distribution[i] = probability
-        self.theoretical_distribution = distribution
+            distribution[rank] = probability
+        return distribution
 
     def sample_cast(self, sample):
-        return tuple(sample)
+        return tuple(sample[0])
 
 
 class SPCircleValidator(Validator):
-    def __init__(self, num_candidates, all_outcomes=None):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 1, "num_candidates": 4},
+            {"num_voters": 1, "num_candidates": 5},
+            {"num_voters": 1, "num_candidates": 6},
+        ]
         super(SPCircleValidator, self).__init__(
-            num_candidates,
+            parameters_list,
+            "Single-Peaked on a Circle",
+            "sp_circle",
+            True,
             sampler_func=single_peaked_circle,
-            all_outcomes=all_outcomes,
+            constant_parameters="num_voters",
+            faceted_parameters="num_candidates",
         )
 
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_single_peaked_circle_ranks(self.num_candidates)
+    def all_outcomes(self, sampler_parameters):
+        return get_all_single_peaked_circle_ranks(sampler_parameters["num_candidates"])
 
-    def set_theoretical_distribution(self):
-        self.theoretical_distribution = np.full(
-            len(self.all_outcomes), 1 / len(self.all_outcomes)
-        )
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
+        return {o: 1 / len(all_outcomes) for o in all_outcomes}
 
     def sample_cast(self, sample):
-        return tuple(sample)
+        return tuple(sample[0])

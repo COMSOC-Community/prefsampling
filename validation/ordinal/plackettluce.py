@@ -6,35 +6,39 @@ from validation.validator import Validator
 
 
 class PlackettLuceValidator(Validator):
-    def __init__(
-        self,
-        num_candidates,
-        alphas,
-        all_outcomes=None,
-    ):
-        params = {"alphas": alphas}
-
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 1, "num_candidates": 5, "alphas": [0.1] * 5},
+            {"num_voters": 1, "num_candidates": 5, "alphas": [1.0] + [0.3] * 4},
+            {"num_voters": 1, "num_candidates": 5, "alphas": np.random.random(5)},
+        ]
         super(PlackettLuceValidator, self).__init__(
-            num_candidates,
+            parameters_list,
+            "Plackett-Luce",
+            "plackett_luce",
+            True,
             sampler_func=plackett_luce,
-            sampler_parameters=params,
-            all_outcomes=all_outcomes,
+            constant_parameters=("num_voters", "num_candidates"),
+            faceted_parameters="alphas",
         )
 
-    def set_all_outcomes(self):
-        self.all_outcomes = get_all_ranks(self.num_candidates)
+    def all_outcomes(self, sampler_parameters):
+        return get_all_ranks(sampler_parameters["num_candidates"])
 
-    def set_theoretical_distribution(self):
-        distribution = np.zeros(len(self.all_outcomes))
-        norm_alphas = np.array(self.sampler_parameters["alphas"]) / sum(
-            self.sampler_parameters["alphas"]
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
+        distribution = {}
+        norm_alphas = np.array(sampler_parameters["alphas"]) / sum(
+            sampler_parameters["alphas"]
         )
-        for i, rank in enumerate(self.all_outcomes):
+        for rank in all_outcomes:
             probability = 1
             for j, alt in enumerate(rank):
                 probability *= norm_alphas[alt] / np.take(norm_alphas, rank[j:]).sum()
-            distribution[i] = probability
-        self.theoretical_distribution = distribution
+            distribution[rank] = probability
+        normaliser = sum(distribution.values())
+        for r in distribution:
+            distribution[r] /= normaliser
+        return distribution
 
     def sample_cast(self, sample):
-        return tuple(sample)
+        return tuple(sample[0])

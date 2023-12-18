@@ -19,7 +19,7 @@ def didi(
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
 
-    This model is very similar in spirit to the :py:func:`~prefsampling.ordinal.plackettluce`
+    This model is very similar in spirit to the :py:func:`~prefsampling.ordinal.plackett_luce`
     model.
 
     Parameters

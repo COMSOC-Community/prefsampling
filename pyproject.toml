@@ -34,7 +34,9 @@ dev = [
     "sphinxcontrib-napoleon",
     "unittest2",
     "scipy",
-    "matplotlib"
+    "matplotlib",
+    "pandas",
+    "seaborn"
 ]
 
 [project.urls]

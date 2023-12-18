@@ -1,212 +1,240 @@
-import abc
-import logging
-from collections import Counter
+from __future__ import annotations
 
-import numpy as np
+import abc
+import os.path
+from collections import Counter
+from collections.abc import Callable
+from enum import Enum
+from multiprocessing import Pool
+
+import pandas as pd
+import seaborn as sns
 
 from matplotlib import pyplot as plt
-from scipy.stats import chisquare
 
 
 class Validator(abc.ABC):
     def __init__(
         self,
-        num_candidates,
-        all_outcomes=None,
+        parameters_list,
+        model_name,
+        model_short_name,
+        use_theoretical,
         sampler_func=None,
-        sampler_parameters=None,
+        sample_cast_func=None,
+        constant_parameters=None,
+        faceted_parameters=None,
     ):
-        self.num_candidates = num_candidates
-        if all_outcomes:
-            self.all_outcomes = all_outcomes
-        else:
-            self.all_outcomes = []
-            self.set_all_outcomes()
-        self.sampler_func = sampler_func
-        if sampler_parameters is None:
-            sampler_parameters = {}
-        self.sampler_parameters = sampler_parameters
-        self.theoretical_distribution = None
-        self.observed_distribution = None
-        self.chi_square_result = None
+        if not isinstance(parameters_list, list):
+            parameters_list = [parameters_list]
+        self.parameters_list: list[dict] = parameters_list
+        self.sampler_func: Callable = sampler_func
+        self.sample_cast_func: Callable = sample_cast_func
+        self.use_theoretical = use_theoretical
+        self.model_name = model_name
+        self.model_short_name = model_short_name
+        if constant_parameters is not None and not isinstance(constant_parameters, list) and not isinstance(
+            constant_parameters, tuple
+        ):
+            constant_parameters = [constant_parameters]
+        self.constant_parameters = constant_parameters
+        if not isinstance(faceted_parameters, list) and not isinstance(
+            faceted_parameters, tuple
+        ):
+            faceted_parameters = [faceted_parameters]
+        self.faceted_parameters = faceted_parameters
 
-    def sampler(self, num_samples):
+    def sampler(self, sampler_parameters):
         """
         The sampler, returns observations
         """
-        return [
-            self.sample_cast(s)
-            for s in self.sampler_func(
-                num_samples, self.num_candidates, **self.sampler_parameters
+        if self.sampler_func is None:
+            raise ValueError(
+                "You need to either provide a `sampler_func` argument or override the "
+                "`sampler` method"
             )
-        ]
+        return self.sampler_func(**sampler_parameters)
 
-    @abc.abstractmethod
     def sample_cast(self, sample):
         """
         Cast the samples returned by the sampler to the correct type (tuple for ordinal samplers).
         """
+        if self.sampler_func is None:
+            raise ValueError(
+                "You need to either provide a `sample_cast_func` argument or override "
+                "the `sampler_cast` method"
+            )
+        return self.sample_cast_func(sample)
 
-    def set_all_outcomes(self):
+    def collect_samples(self, num_samples, num_workers=None) -> list[Counter]:
         """
-        Populates the `self.all_outcomes` member of the class.
+        Collect the suitable number of samples for all set of sampler parameters.
         """
-        pass
+        print(f"Collecting samples for the {self.model_name} model...")
+        res = []
+        for sampler_parameters in self.parameters_list:
+            print(f"\t{sampler_parameters}")
+            count = Counter()
+            with Pool(processes=num_workers) as pool:
+                for sample in pool.imap_unordered(
+                    self.sampler, [sampler_parameters] * num_samples
+                ):
+                    sample = self.sample_cast(sample)
+                    count[sample] += 1
+            for c in count:
+                count[c] /= num_samples
+            res.append(count)
+        print("\t... collected!")
+        return res
 
-    def set_theoretical_distribution(self):
+    def all_outcomes(self, sampler_parameters):
         """
-        Populates the `self.theoretical_distribution` member of the class.
+        Return all possible outcomes for a given configuration of the sampler.
         """
-        pass
+        raise NotImplemented("You need to override the `all_outcomes` method")
 
-    def set_observed_distribution(self, num_samples):
+    def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
         """
-        Populates the `self.observed_distribution` member of the class.
+        Returns the theoretical distribution of the outcomes.
         """
-        if self.all_outcomes:
-            samples = np.zeros(len(self.all_outcomes))
-            for obs in self.sampler(num_samples):
-                samples[self.all_outcomes.index(obs)] += 1
-        else:
-            counter = Counter()
-            for obs in self.sampler(num_samples):
-                counter[obs] += 1
-            samples = np.fromiter(counter.values(), dtype=int)
-        self.observed_distribution = samples / num_samples
-
-    def run(
-        self,
-        num_samples,
-        model_name="",
-        graph_title="",
-        graph_xlabel="",
-        graph_ylabel="",
-        graph_x_tick_labels=None,
-        graph_file_path=None,
-        graph_ordering=None,
-    ):
-        self.set_theoretical_distribution()
-        self.set_observed_distribution(num_samples)
-        # if self.theoretical_distribution is not None:
-        #     self.run_chi_square_test()
-
-        if not graph_title:
-            if not model_name:
-                model_name = self.__name__.replace("Validator", "")
-            if self.theoretical_distribution is not None:
-                graph_title = (
-                    f"Observed versus theoretical frequencies for {model_name}"
-                )
-            else:
-                graph_title = f"Observed frequencies for {model_name}"
-            graph_title += f"\n(num_candidates = {self.num_candidates}"
-            if self.sampler_parameters:
-                graph_title += ", "
-                for key, value in self.sampler_parameters.items():
-                    graph_title += f"{key} = {value}, "
-                graph_title = graph_title[:-2]
-
-            graph_title += f")\n#samples = {num_samples}"
-            if self.chi_square_result:
-                graph_title += f", chi² p - value = {self.chi_square_result.pvalue}"
-
-        self.plot_frequencies(
-            graph_title=graph_title,
-            xlabel=graph_xlabel,
-            ylabel=graph_ylabel,
-            x_tick_labels=graph_x_tick_labels,
-            file_path=graph_file_path,
-            ordering=graph_ordering,
+        raise NotImplemented(
+            "You need to override the `theoretical_distribution` method"
         )
 
+    def all_theoretical_distributions(self) -> list[dict]:
+        res = []
+        for parameters in self.parameters_list:
+            all_outcomes = self.all_outcomes(parameters)
+            res.append(self.theoretical_distribution(parameters, all_outcomes))
+        return res
+
+    def write_csv(self, num_samples, dir_path, theoretical=None, num_workers=None):
+        def parameter_formatting(v):
+            if isinstance(v, Enum):
+                return v.name
+            return str(v)
+
+        if theoretical is None:
+            theoretical = self.use_theoretical
+
+        distributions = None
+        if theoretical:
+            distributions = self.all_theoretical_distributions()
+
+        sample_collections = self.collect_samples(num_samples, num_workers=num_workers)
+        param_names = list(self.parameters_list[0].keys())
+
+        print(f"Writing csv the {self.model_name} model...")
+        with open(os.path.join(dir_path, f"{self.model_short_name}.csv"), "w") as f:
+            f.write("num_samples;" + ";".join(param_names) + ";outcome;observed_freq")
+            if theoretical:
+                f.write(";theoretical_freq")
+            f.write("\n")
+            for i, parameters in enumerate(self.parameters_list):
+                samples = sample_collections[i]
+                if distributions:
+                    distribution = distributions[i]
+                    main_source = distribution
+                else:
+                    distribution = None
+                    main_source = samples
+                for outcome in main_source:
+                    f.write(
+                        f"{num_samples};"
+                        f"{';'.join(parameter_formatting(parameters[h]) for h in param_names)};"
+                        f"{outcome};{samples[outcome]}"
+                    )
+                    if distribution:
+                        f.write(f";{distribution[outcome]}")
+                    f.write("\n")
+        print("\t...written!")
+
     def plot_frequencies(
-        self,
-        graph_title="",
-        xlabel="",
-        ylabel="",
-        x_tick_labels=None,
-        file_path=None,
-        ordering=None,
+        self, csv_dir_path, plot_dir_path, ordering=None, theoretical=None
     ):
-        if self.observed_distribution is None:
-            raise ValueError(
-                "Before plotting the frequency graph you need to populate the "
-                "`observed_distribution` member of the validator"
-            )
+        print(f"Plotting frequencies for the {self.model_name} model...")
+
+        if theoretical is None:
+            theoretical = self.use_theoretical
+
+        df = pd.read_csv(
+            os.path.join(csv_dir_path, f"{self.model_short_name}.csv"), delimiter=";"
+        )
+
         plt.close("all")
+        sns.set_context("paper")
 
-        sort_permutation = None
-        xlabel_suffix = ""
-        if ordering:
-            if ordering == "theoretical" and self.theoretical_distribution is not None:
-                sort_permutation = np.flip(self.theoretical_distribution.argsort())
-                xlabel_suffix = "(ordered by theoretical frequency)"
-            elif ordering == "observed":
-                sort_permutation = np.flip(self.observed_distribution.argsort())
-                xlabel_suffix = "(ordered by observed frequency)"
-            elif (
-                ordering == "theoretical-observed"
-                and self.theoretical_distribution is not None
-            ):
-                tmp = np.rec.fromarrays(
-                    [self.theoretical_distribution, self.observed_distribution]
-                )
-                sort_permutation = np.flip(tmp.argsort())
-                xlabel_suffix = "(ordered by theoretical then observed frequency)"
-            elif (
-                ordering == "observed-theoretical"
-                and self.theoretical_distribution is not None
-            ):
-                tmp = np.rec.fromarrays(
-                    [self.observed_distribution, self.theoretical_distribution]
-                )
-                sort_permutation = np.flip(tmp.argsort())
-                xlabel_suffix = "(ordered by observed then theoretical frequency)"
-
-        if sort_permutation is not None:
-            frequencies = self.observed_distribution[sort_permutation]
+        if ordering == "theoretical-observed" and theoretical:
+            df = df.sort_values(["theoretical_freq", "observed_freq"], ascending=False)
+        elif ordering == "observed-theoretical" and theoretical:
+            df = df.sort_values(["observed_freq", "theoretical_freq"], ascending=False)
+        elif ordering == "theoretical" and theoretical:
+            df = df.sort_values("theoretical_freq", ascending=False)
         else:
-            frequencies = self.observed_distribution
-        if x_tick_labels:
-            if sort_permutation is not None:
-                x_tick_labels = [x_tick_labels[k] for k in sort_permutation]
+            df = df.sort_values("observed_freq", ascending=False)
 
-        fig, ax = plt.subplots()
-        delta_bars = 0.2 * int(self.theoretical_distribution is not None)
-        ax.bar(np.arange(len(frequencies)) - delta_bars, frequencies, width=0.4)
-        if self.theoretical_distribution is not None:
-            if sort_permutation is not None:
-                distribution = self.theoretical_distribution[sort_permutation]
+        if theoretical:
+            df = df.melt(
+                id_vars=[
+                    c
+                    for c in df.columns
+                    if c not in ("theoretical_freq", "observed_freq")
+                ],
+                var_name="freq_type",
+                value_name="frequency",
+            )
+        else:
+            df.rename(columns={"observed_freq": "frequency"}, inplace=True)
+
+        if not self.faceted_parameters:
+            faceted_parameters = [None, None]
+        elif len(self.faceted_parameters) == 1:
+            faceted_parameters = list(self.faceted_parameters)
+            faceted_parameters.append(None)
+        else:
+            faceted_parameters = self.faceted_parameters
+        g = sns.catplot(
+            data=df,
+            x="outcome",
+            y="frequency",
+            hue="freq_type" if theoretical else None,
+            col=faceted_parameters[1],
+            row=faceted_parameters[0],
+            kind="bar",
+            sharex=False if faceted_parameters[0] else True,
+            sharey="row" if faceted_parameters[0] else True,
+            legend="full",
+        )
+
+        if faceted_parameters[0] is not None:
+            if faceted_parameters[1] is None:
+                g.set_titles("{row_var} = {row_name}")
             else:
-                distribution = self.theoretical_distribution
-            ax.bar(np.arange(len(distribution)) + delta_bars, distribution, width=0.4)
-        if not graph_title:
-            graph_title = "Observed versus theoretical frequencies"
-        ax.set_title(graph_title)
-        ax.legend(["Observations", "Theoretical"])
-        if not xlabel:
-            xlabel = "Rank identifier"
-        xlabel += "\n" + xlabel_suffix
-        ax.set_xlabel(xlabel)
-        if not ylabel:
-            ylabel = "Frequency"
-        ax.set_ylabel(ylabel)
-        if x_tick_labels:
-            ax.set_xticks(range(len(x_tick_labels)))
-            ax.set_xticklabels(x_tick_labels, rotation=90)
+                g.set_titles("{row_var} = {row_name} | {col_var} = {col_name}")
+            g.set_xticklabels()
+        g.set(xticklabels=[])
+        g.set_axis_labels("Outcome identifier", "Frequency")
+        title = f"{self.model_name} Model\nnum_samples = {df['num_samples'][0]}"
+        constant_params = None
+        if self.constant_parameters:
+            constant_params = [
+                f"{k} = {self.parameters_list[0][k]}" for k in self.constant_parameters
+            ]
+        if constant_params:
+            title += " | " + " | ".join(constant_params)
+        title += "\n"
+        plt.suptitle(title, fontsize=14, fontweight="bold")
+        g.figure.tight_layout()
+        if g._legend:
+            g._legend.set_title("")
+            new_labels = ["Observed", "Theoretical"]
+            for t, l in zip(g._legend.texts, new_labels):
+                t.set_text(l)
+            sns.move_legend(g, "upper right", bbox_to_anchor=(1, 0.8), frameon=True)
 
-        if file_path:
-            plt.savefig(file_path, bbox_inches="tight", dpi=300)
-        else:
-            plt.show()
-
-
-class EmptyValidator(Validator):
-    def set_theoretical_distribution(self):
-        pass
-
-    def set_all_outcomes(self):
-        pass
-
-    def sample_cast(self, sample):
-        pass
+        plt.savefig(
+            os.path.join(plot_dir_path, f"{self.model_short_name}.png"),
+            dpi=300,
+            bbox_inches="tight",
+        )
+        print(f"\t...plotted!")

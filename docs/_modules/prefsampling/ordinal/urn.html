@@ -266,6 +266,8 @@ document.write(`
 
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
+<span class="kn">from</span> <span class="nn">prefsampling.core.urn</span> <span class="kn">import</span> <span class="n">urn_votes</span>
+
 
 <div class="viewcode-block" id="urn"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.urn">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">urn</span><span class="p">(</span>
@@ -303,16 +305,8 @@ document.write(`
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Alpha needs to be non-negative for an urn model.&quot;</span><span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">urn_size</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">urn_size</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
-            <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">votes</span><span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span>
-        <span class="n">urn_size</span> <span class="o">+=</span> <span class="n">alpha</span>
 
-    <span class="k">return</span> <span class="n">votes</span></div>
+    <span class="k">return</span> <span class="n">urn_votes</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span></div>
 </pre></div>
 
                 </article>

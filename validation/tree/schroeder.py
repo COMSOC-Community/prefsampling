@@ -1,77 +1,48 @@
-import numpy as np
-
-from prefsampling.tree.schroeder import (
-    schroeder_tree,
-    all_schroeder_tree,
-    _num_schroeder_tree,
-)
+from prefsampling.tree.schroeder import schroeder_tree, schroeder_tree_lescanne, schroeder_tree_brute_force
 from validation.validator import Validator
 
 
 class SchroederValidator(Validator):
-    def __init__(
-        self,
-        num_leaves,
-        num_internal_nodes,
-        sampler=schroeder_tree,
-        all_outcomes=None,
-    ):
-        super(SchroederValidator, self).__init__(
-            num_leaves,
-            sampler_func=lambda num_samples, num_candidates, num_internal_nodes=None: [
-                sampler(num_candidates, num_internal_nodes) for _ in range(num_samples)
-            ],
-            sampler_parameters={"num_internal_nodes": num_internal_nodes},
-            all_outcomes=all_outcomes,
-        )
-
-    def set_all_outcomes(self):
-        self.all_outcomes = [
-            r.anonymous_tree_representation()
-            for r in all_schroeder_tree(
-                self.num_candidates, self.sampler_parameters["num_internal_nodes"]
-            )
+    def __init__(self):
+        parameters_list = [
+            {"num_leaves": 4, "num_internal_nodes": None},
+            {"num_leaves": 4, "num_internal_nodes": 1},
+            {"num_leaves": 4, "num_internal_nodes": 2},
+            {"num_leaves": 4, "num_internal_nodes": 3},
+            {"num_leaves": 5, "num_internal_nodes": None},
+            {"num_leaves": 5, "num_internal_nodes": 1},
+            {"num_leaves": 5, "num_internal_nodes": 2},
+            {"num_leaves": 5, "num_internal_nodes": 3},
+            {"num_leaves": 5, "num_internal_nodes": 4},
         ]
-
-    def set_theoretical_distribution(self):
-        self.theoretical_distribution = np.full(
-            len(self.all_outcomes), 1 / len(self.all_outcomes)
+        super(SchroederValidator, self).__init__(
+            parameters_list,
+            "Schröder tree",
+            "schroeder",
+            False,
+            sampler_func=schroeder_tree,
+            faceted_parameters=("num_internal_nodes", "num_leaves"),
         )
 
     def sample_cast(self, sample):
         return sample.anonymous_tree_representation()
 
 
-class SchroederNumInternalValidator(Validator):
-    def __init__(
-        self,
-        num_leaves,
-        num_internal_nodes,
-        sampler=schroeder_tree,
-        all_outcomes=None,
-    ):
-        super(SchroederNumInternalValidator, self).__init__(
-            num_leaves,
-            sampler_func=lambda num_samples, num_candidates, num_internal_nodes=None: [
-                sampler(num_candidates, num_internal_nodes) for _ in range(num_samples)
-            ],
-            sampler_parameters={"num_internal_nodes": num_internal_nodes},
-            all_outcomes=all_outcomes,
-        )
+class SchroederLescanneValidator(SchroederValidator):
+    def __init__(self):
+        super().__init__()
+        self.sampler_func = schroeder_tree_lescanne
+        self.model_name = "Schröder tree by Lescanne (2022)"
+        self.model_short_name = "schroeder_lescanne"
 
-    def set_all_outcomes(self):
-        self.all_outcomes = [
-            r.anonymous_tree_representation()
-            for r in all_schroeder_tree(
-                self.num_candidates, self.sampler_parameters["num_internal_nodes"]
-            )
-        ]
 
-    def set_theoretical_distribution(self):
-        distribution = np.zeros(len(self.all_outcomes))
-        for i, num_internal in enumerate(self.all_outcomes):
-            distribution[i] = _num_schroeder_tree(num_internal, self.num_candidates)
-        self.theoretical_distribution = distribution / distribution.sum()
+class SchroederBruteForceValidator(SchroederValidator):
+    def __init__(self):
+        super().__init__()
+        self.sampler_func = schroeder_tree_brute_force
+        self.model_name = "Schröder tree by brute force"
+        self.model_short_name = "schroeder_brute_force"
 
-    def sample_cast(self, sample):
-        return sample.num_internal_nodes()
+    def all_outcomes(self, sampler_parameters):
+        pass
+

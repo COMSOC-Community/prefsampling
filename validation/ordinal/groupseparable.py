@@ -1,39 +1,27 @@
-import numpy as np
-
-from prefsampling.ordinal import group_separable
-from validation.utils import get_all_group_separable_profiles, gs_structure
+from prefsampling.ordinal import group_separable, TreeSampler
 from validation.validator import Validator
 
 
 class GroupSeparableValidator(Validator):
-    def __init__(
-        self,
-        num_voters,
-        num_candidates,
-        tree_sampler,
-        all_outcomes=None,
-    ):
+    def __init__(self):
+        parameters_list = [
+            {"num_voters": 3, "num_candidates": 3, "tree_sampler": TreeSampler.SCHROEDER},
+            {"num_voters": 3, "num_candidates": 3, "tree_sampler": TreeSampler.SCHROEDER_UNIFORM},
+            {"num_voters": 3, "num_candidates": 3, "tree_sampler": TreeSampler.SCHROEDER_LESCANNE},
+            {"num_voters": 3, "num_candidates": 3, "tree_sampler": TreeSampler.CATERPILLAR},
+            {"num_voters": 3, "num_candidates": 4, "tree_sampler": TreeSampler.SCHROEDER},
+            {"num_voters": 3, "num_candidates": 4, "tree_sampler": TreeSampler.SCHROEDER_UNIFORM},
+            {"num_voters": 3, "num_candidates": 4, "tree_sampler": TreeSampler.SCHROEDER_LESCANNE},
+            {"num_voters": 3, "num_candidates": 4, "tree_sampler": TreeSampler.CATERPILLAR},
+        ]
         super(GroupSeparableValidator, self).__init__(
-            num_candidates,
-            sampler_func=lambda num_samples, num_candidates, tree_sampler=None, num_voters=None: [
-                group_separable(num_voters, num_candidates, tree_sampler=tree_sampler)
-                for _ in range(num_samples)
-            ],
-            sampler_parameters={"num_voters": num_voters, "tree_sampler": tree_sampler},
-            all_outcomes=all_outcomes,
-        )
-        self.num_voters = num_voters
-
-    def set_all_outcomes(self):
-        return
-        self.all_outcomes = get_all_group_separable_profiles(
-            self.num_voters, self.num_candidates
-        )
-
-    def set_theoretical_distribution(self):
-        return
-        self.theoretical_distribution = np.ones(len(self.all_outcomes)) / len(
-            self.all_outcomes
+            parameters_list,
+            "Group Separable",
+            "group_separable",
+            False,
+            sampler_func=group_separable,
+            constant_parameters="num_voters",
+            faceted_parameters=("tree_sampler", "num_candidates"),
         )
 
     def sample_cast(self, sample):

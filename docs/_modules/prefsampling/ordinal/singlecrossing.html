@@ -424,7 +424,7 @@ document.write(`
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vote_as_tuple</span><span class="si">}</span><span class="s2">&quot;</span>
 
 
-<div class="viewcode-block" id="single_crossing_impartial"><a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_crossing_impartial">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
+<span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_crossing_impartial</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates ordinal votes that satisfy the single-crossing property. See `Elkind, Lackner,</span>
@@ -488,7 +488,7 @@ document.write(`
     <span class="n">top_node</span><span class="o">.</span><span class="n">count_elections</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
 
     <span class="n">votes</span> <span class="o">=</span> <span class="n">top_node</span><span class="o">.</span><span class="n">sample_votes</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">votes</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">votes</span><span class="p">)</span>
 </pre></div>
 
                 </article>
