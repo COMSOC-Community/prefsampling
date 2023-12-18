@@ -2,12 +2,13 @@ import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
-from prefsampling.core.urn import urn_votes
-
 
 @validate_num_voters_candidates
-def urn(
-    num_voters: int, num_candidates: int, alpha: float, seed: int = None
+def urn_votes(
+    num_voters: int,
+    num_candidates: int,
+    alpha: float,
+    rng: np.random.Generator,
 ) -> np.ndarray:
     """
     Generates votes following the Pólya-Eggenberger urn culture. The process is as follows. The urn
@@ -28,8 +29,8 @@ def urn(
         alpha: float
             The dispersion coefficient (`alpha * m!` copies of a vote are put back in the urn after
             a draw). Must be non-negative.
-        seed: int, default: :code:`None`
-            The seed for the random number generator.
+        rng : np.random.Generator
+            The numpy generator to use for randomness.
 
     Returns
     -------
@@ -40,6 +41,13 @@ def urn(
     if alpha < 0:
         raise ValueError("Alpha needs to be non-negative for an urn model.")
 
-    rng = np.random.default_rng(seed)
+    votes = np.zeros((num_voters, num_candidates), dtype=int)
+    urn_size = 1.0
+    for i in range(num_voters):
+        if rng.uniform(0, urn_size) <= 1.0:
+            votes[i] = rng.permutation(num_candidates)
+        else:
+            votes[i] = votes[rng.integers(0, i)]
+        urn_size += alpha
 
-    return urn_votes(num_voters, num_candidates, alpha, rng)
+    return votes
