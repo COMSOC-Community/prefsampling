@@ -2,9 +2,7 @@ import numpy as np
 from prefsampling.approval.resampling import resampling
 
 
-def permute_approval_voters(
-    votes: list[set[int]], seed: int = None
-) -> list[set[int]]:
+def permute_approval_voters(votes: list[set[int]], seed: int = None) -> list[set[int]]:
     """
     Permutes the voters in approval votes.
 
@@ -46,19 +44,18 @@ def rename_approval_candidates(
     """
     rng = np.random.default_rng(seed)
     max_id = max([max(vote) for vote in votes if len(vote) > 0])
-    mapping = rng.permutation(max_id+1)
+    mapping = rng.permutation(max_id + 1)
 
     votes = [{mapping[c] for c in vote} for vote in votes]
 
     return votes
 
 
-
 def resampling_filter(
     votes: list[set[int]], phi: float, seed: int = None
 ) -> list[set[int]]:
     """
-    Returns votes with added Resampling filter.
+    Returns votes with added resampling filter.
 
     Parameters
     ----------

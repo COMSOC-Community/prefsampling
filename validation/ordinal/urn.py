@@ -33,7 +33,10 @@ class OrdinalUrnValidator(Validator):
             if length == 0:
                 return 1
             return (
-                value + (length - 1) * increment * math.factorial(sampler_parameters["num_candidates"])
+                value
+                + (length - 1)
+                * increment
+                * math.factorial(sampler_parameters["num_candidates"])
             ) * ascending_factorial(value, length - 1, increment)
 
         distribution = {}
@@ -44,7 +47,9 @@ class OrdinalUrnValidator(Validator):
                     counts[rank] += 1
                 else:
                     counts[rank] = 1
-            probability = math.factorial(sampler_parameters["num_voters"]) / ascending_factorial(
+            probability = math.factorial(
+                sampler_parameters["num_voters"]
+            ) / ascending_factorial(
                 math.factorial(sampler_parameters["num_candidates"]),
                 sampler_parameters["num_voters"],
                 sampler_parameters["alpha"],

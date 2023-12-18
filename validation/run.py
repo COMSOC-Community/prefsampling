@@ -33,7 +33,11 @@ from validation.ordinal.singlepeaked import (
     SPCircleValidator,
 )
 from validation.ordinal.urn import OrdinalUrnValidator
-from validation.tree.schroeder import SchroederValidator, SchroederLescanneValidator, SchroederBruteForceValidator
+from validation.tree.schroeder import (
+    SchroederValidator,
+    SchroederLescanneValidator,
+    SchroederBruteForceValidator,
+)
 
 
 ALL_ORDINAL_VALIDATORS = [
@@ -66,7 +70,10 @@ if __name__ == "__main__":
 
     num_observations = 1000000
 
-    for validator_list, nickname in [(ALL_ORDINAL_VALIDATORS, "ordinal"), (ALL_TREE_VALIDATORS, "tree")]:
+    for validator_list, nickname in [
+        (ALL_ORDINAL_VALIDATORS, "ordinal"),
+        (ALL_TREE_VALIDATORS, "tree"),
+    ]:
         csv_dir_root = os.path.join("csv", nickname)
         os.makedirs(csv_dir_root, exist_ok=True)
         plot_dir_root = os.path.join("plots", nickname)

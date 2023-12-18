@@ -7,11 +7,7 @@ from prefsampling.core.urn import urn_votes
 
 @validate_num_voters_candidates
 def truncated_urn(
-    num_voters: int,
-    num_candidates: int,
-    alpha: float,
-    p: float,
-    seed: int = None
+    num_voters: int, num_candidates: int, alpha: float, p: float, seed: int = None
 ) -> list[set[int]]:
     """
     Generates approval votes from a truncated variant of Polya-Eggenberger urn culture.

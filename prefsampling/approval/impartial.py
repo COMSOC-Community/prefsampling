@@ -10,6 +10,10 @@ def impartial(
     """
     Generates approval votes from impartial culture.
 
+    Under the approval culture, when generating a single vote, each candidate has the same
+    probability :code:`p` of being approved. This models ensures that the average number of
+    approved candidate per voter is `p * num_candidate`.
+
     Parameters
     ----------
         num_voters : int
@@ -17,7 +21,7 @@ def impartial(
         num_candidates : int
             Number of Candidates.
         p : float
-            Resampling model parameter, denoting the average vote length.
+            Probability of approving of any given candidates.
         seed : int
             Seed for numpy random number generator.
 

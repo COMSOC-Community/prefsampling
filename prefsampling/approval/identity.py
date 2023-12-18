@@ -6,7 +6,8 @@ def identity(
     num_voters: int, num_candidates: int, p: float, seed: int = None
 ) -> list[set[int]]:
     """
-    Generates approval votes from identity culture.
+    Generates approval votes from the identity culture. These votes are simples: all voters
+    approves of the candidates `0, 1, 2, ...,  ⌊p * num_candidates⌋` and only these ones.
 
     Parameters
     ----------
@@ -15,7 +16,7 @@ def identity(
         num_candidates : int
             Number of Candidates.
         p : float
-            Resampling model parameter, denoting the average vote length.
+            Proportion of candidates approved.
         seed : int
             Seed for numpy random number generator.
 
@@ -40,7 +41,7 @@ def identity(
 @validate_num_voters_candidates
 def full(num_voters: int, num_candidates: int, seed: int = None) -> list[set[int]]:
     """
-    Generates approval votes where each voter approves all the candidates.
+    Generates approval votes where all voters approve of all the candidates.
 
     Parameters
     ----------

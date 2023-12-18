@@ -1,4 +1,8 @@
-from prefsampling.tree.schroeder import schroeder_tree, schroeder_tree_lescanne, schroeder_tree_brute_force
+from prefsampling.tree.schroeder import (
+    schroeder_tree,
+    schroeder_tree_lescanne,
+    schroeder_tree_brute_force,
+)
 from validation.validator import Validator
 
 
@@ -45,4 +49,3 @@ class SchroederBruteForceValidator(SchroederValidator):
 
     def all_outcomes(self, sampler_parameters):
         pass
-

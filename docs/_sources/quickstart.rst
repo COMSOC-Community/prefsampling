@@ -138,9 +138,9 @@ Approval Samplers
      - :code:`num_legs` (defaults to 1)
    * - :py:func:`~prefsampling.approval.euclidean`
      - ---
-     - | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`)
+     - | :code:`radius` (defaults to 0.5)
+       | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`)
        | :code:`dimension` (defaults to 2)
-       | :code:`radius` (defaults to 0.5)
    * - :py:func:`~prefsampling.approval.noise`
      - | :code:`p`
        | :code:`phi`

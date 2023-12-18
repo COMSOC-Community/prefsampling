@@ -48,7 +48,6 @@ def rename_ordinal_candidates(votes: np.ndarray, seed: int = None) -> np.ndarray
     return votes
 
 
-
 def mallows_filter(votes: np.ndarray, phi: float, seed: int = None) -> np.ndarray:
     """
     Returns votes with added Mallows filter.

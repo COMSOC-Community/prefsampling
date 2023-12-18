@@ -33,8 +33,10 @@ class Validator(abc.ABC):
         self.use_theoretical = use_theoretical
         self.model_name = model_name
         self.model_short_name = model_short_name
-        if constant_parameters is not None and not isinstance(constant_parameters, list) and not isinstance(
-            constant_parameters, tuple
+        if (
+            constant_parameters is not None
+            and not isinstance(constant_parameters, list)
+            and not isinstance(constant_parameters, tuple)
         ):
             constant_parameters = [constant_parameters]
         self.constant_parameters = constant_parameters

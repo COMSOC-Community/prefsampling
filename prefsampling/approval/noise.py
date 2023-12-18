@@ -42,7 +42,7 @@ def noise(
     seed: int = None,
 ) -> list[set]:
     """
-    Generates approval votes from noise model.
+    Generates approval votes under the noise model.
 
     Parameters
     ----------
