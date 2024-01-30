@@ -25,7 +25,9 @@ def permute_approval_voters(votes: list[set[int]], seed: int = None) -> list[set
 
 
 def rename_approval_candidates(
-    votes: list[set[int]], seed: int = None
+        votes: list[set[int]],
+        seed: int = None,
+        num_candidates: int = None
 ) -> list[set[int]]:
     """
     Renames the candidates in approval votes.
@@ -36,18 +38,20 @@ def rename_approval_candidates(
             Approval votes.
         seed : int
             Seed for numpy random number generator.
+        num_candidates : int
+            Number of Candidates.
 
     Returns
     -------
         list[set[int]]
             Approval votes.
     """
+
     rng = np.random.default_rng(seed)
-    max_id = max([max(vote) for vote in votes if len(vote) > 0])
-    mapping = rng.permutation(max_id + 1)
-
+    if num_candidates is None:
+        num_candidates = max([max(vote) for vote in votes if len(vote) > 0]) + 1
+    mapping = rng.permutation(num_candidates)
     votes = [{mapping[c] for c in vote} for vote in votes]
-
     return votes
 
 

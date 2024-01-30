@@ -1,7 +1,6 @@
 from copy import deepcopy
 from itertools import permutations, combinations_with_replacement, combinations, chain
 
-
 def powerset(iterable):
     s = list(iterable)
     return chain.from_iterable(combinations(s, r) for r in range(1, len(s) + 1))
@@ -293,3 +292,15 @@ def get_all_gs_structure(num_voters=None, num_candidates=None, all_gs_profiles=N
             )
         all_gs_profiles = get_all_group_separable_profiles(num_voters, num_candidates)
     return list(set(gs_structure(p) for p in all_gs_profiles))
+
+
+def get_all_subsets(num_candidates=None) -> list[set[int]]:
+    elements = list(range(num_candidates))
+    subsets = []
+    for r in range(num_candidates + 1):
+        subsets.extend(combinations(elements, r))
+    return [set(subset) for subset in subsets]
+
+
+def hamming(vote_1, vote_2):
+    return len(vote_1.symmetric_difference(vote_2))

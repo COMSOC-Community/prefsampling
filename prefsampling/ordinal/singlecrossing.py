@@ -85,9 +85,9 @@ def single_crossing(
         votes[i, :] = domain[index]
         last_sampled_index = index
 
-    # vote_indices = np.sort(rng.choice(np.arange(domain_size), size=num_voters))
-    # for i, index in enumerate(vote_indices):
-    #     votes[i, :] = domain[index]
+    vote_indices = np.sort(rng.choice(np.arange(domain_size), size=num_voters))
+    for i, index in enumerate(vote_indices):
+        votes[i, :] = domain[index]
     return votes
 
 

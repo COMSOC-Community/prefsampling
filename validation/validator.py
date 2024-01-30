@@ -10,7 +10,12 @@ from multiprocessing import Pool
 import pandas as pd
 import seaborn as sns
 
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+
 
 
 class Validator(abc.ABC):
