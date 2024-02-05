@@ -79,7 +79,7 @@ def noise(
 
     rng = np.random.default_rng(seed)
 
-    k = int(p * num_candidates)
+    k = math.floor(p * num_candidates)
 
     A = {i for i in range(k)}
     B = set(range(num_candidates)) - A

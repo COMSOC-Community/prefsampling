@@ -17,7 +17,7 @@ class ApprovalImpartialValidator(Validator):
         super(ApprovalImpartialValidator, self).__init__(
             parameters_list,
             "Impartial",
-            "impartial_apr",
+            "impartial",
             True,
             sampler_func=impartial,
             constant_parameters="num_voters",

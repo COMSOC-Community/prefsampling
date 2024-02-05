@@ -8,12 +8,14 @@ from validation.validator import Validator
 class ApprovalNoiseValidator(Validator):
     def __init__(self):
         parameters_list = [
-            {"num_voters": 1, "num_candidates": 4, "phi": 0.25, "p": 0.25},
-            {"num_voters": 1, "num_candidates": 4, "phi": 0.25, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 4, "phi": 0.25, "p": 0.75},
-            {"num_voters": 1, "num_candidates": 4, "phi": 0.5, "p": 0.25},
-            {"num_voters": 1, "num_candidates": 4, "phi": 0.5, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 4, "phi": 0.5, "p": 0.75},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 0.5},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.5},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 0.5},
+            {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 0.5},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 0.34},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.34},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 0.34},
+            {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 0.34},
         ]
         super(ApprovalNoiseValidator, self).__init__(
             parameters_list,

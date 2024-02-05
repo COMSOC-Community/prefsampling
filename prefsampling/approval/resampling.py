@@ -1,6 +1,8 @@
 import copy
 
+import math
 import numpy as np
+
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
@@ -52,7 +54,7 @@ def resampling(
 
     rng = np.random.default_rng(seed)
 
-    k = int(p * num_candidates)
+    k = math.floor(p * num_candidates)
     if central_vote is None:
         central_vote = set(range(k))
 
@@ -122,7 +124,7 @@ def disjoint_resampling(
     rng = np.random.default_rng(seed)
 
     num_groups = g
-    k = int(p * num_candidates)
+    k = math.floor(p * num_candidates)
 
     votes = [set() for _ in range(num_voters)]
 
@@ -189,7 +191,7 @@ def moving_resampling(
 
     breaks = [int(num_voters / num_legs) * i for i in range(num_legs)]
 
-    k = int(p * num_candidates)
+    k = math.floor(p * num_candidates)
     central_vote = {i for i in range(k)}
     ccc = copy.deepcopy(central_vote)
 

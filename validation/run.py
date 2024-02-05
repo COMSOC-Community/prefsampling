@@ -4,7 +4,10 @@ import os
 from validation.approval.impartial import ApprovalImpartialValidator
 from validation.approval.identity import ApprovalIdentityValidator
 from validation.approval.noise import ApprovalNoiseValidator
-from validation.approval.resampling import ApprovalResamplingValidator
+from validation.approval.resampling import (
+    ApprovalResamplingValidator,
+    ApprovalDisjointResamplingValidator,
+)
 
 from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.ordinal import TreeSampler
@@ -47,8 +50,9 @@ from validation.tree.schroeder import (
 ALL_APPROVAL_VALIDATORS = [
     # ApprovalImpartialValidator(),
     # ApprovalIdentityValidator(),
-    # ApprovalNoiseValidator(),
-    ApprovalResamplingValidator(),
+    ApprovalNoiseValidator(),
+    # ApprovalResamplingValidator(),
+    # ApprovalDisjointResamplingValidator(),
 ]
 
 ALL_ORDINAL_VALIDATORS = [
@@ -79,7 +83,7 @@ ALL_TREE_VALIDATORS = [
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-    num_observations = 10000
+    num_observations = 1000
 
     for validator_list, nickname in [
         (ALL_APPROVAL_VALIDATORS, "approval"),
