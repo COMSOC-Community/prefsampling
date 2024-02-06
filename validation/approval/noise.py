@@ -12,10 +12,10 @@ class ApprovalNoiseValidator(Validator):
             {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.5},
             {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 0.5},
             {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 0.34},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.34},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 0.34},
-            {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 0.34},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 1/3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1/3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 1/3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 1/3},
         ]
         super(ApprovalNoiseValidator, self).__init__(
             parameters_list,

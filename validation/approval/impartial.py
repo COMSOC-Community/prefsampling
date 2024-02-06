@@ -1,7 +1,6 @@
 from prefsampling.approval import impartial
 from validation.utils import get_all_subsets
 from validation.validator import Validator
-from math import factorial
 
 
 class ApprovalImpartialValidator(Validator):
@@ -34,11 +33,9 @@ class ApprovalImpartialValidator(Validator):
 
         probabilities = [None for _ in range(m+1)]
         for k in range(m+1):
-            binomial_coefficient = factorial(m) / (factorial(k) * factorial(m - k))
-            probability = binomial_coefficient * (p ** k) * ((1 - p) ** (m - k))
-            probabilities[k] = probability
+            probabilities[k] = (p ** k) * ((1 - p) ** (m - k))
 
-        return {str(len(o)): probabilities[len(o)] for o in all_outcomes}
+        return {str(o): probabilities[len(o)] for o in all_outcomes}
 
     def sample_cast(self, sample):
-        return str(len(sample[0]))
+        return str(sample[0])

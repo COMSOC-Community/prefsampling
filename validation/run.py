@@ -50,7 +50,7 @@ from validation.tree.schroeder import (
 ALL_APPROVAL_VALIDATORS = [
     # ApprovalImpartialValidator(),
     # ApprovalIdentityValidator(),
-    ApprovalNoiseValidator(),
+    # ApprovalNoiseValidator(),
     # ApprovalResamplingValidator(),
     # ApprovalDisjointResamplingValidator(),
 ]
@@ -83,7 +83,7 @@ ALL_TREE_VALIDATORS = [
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-    num_observations = 1000
+    num_observations = 1000000
 
     for validator_list, nickname in [
         (ALL_APPROVAL_VALIDATORS, "approval"),
