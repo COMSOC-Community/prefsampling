@@ -14,6 +14,10 @@ from prefsampling.approval.noise import noise, NoiseType
 from prefsampling.approval.euclidean import euclidean
 from prefsampling.approval.partylist import urn_partylist
 from prefsampling.approval.truncated_urn import truncated_urn
+from prefsampling.approval.mixture import (
+    mixture,
+    concat,
+)
 
 
 __all__ = [
@@ -29,4 +33,6 @@ __all__ = [
     "euclidean",
     "urn_partylist",
     "truncated_urn",
+    "mixture",
+    "concat"
 ]
