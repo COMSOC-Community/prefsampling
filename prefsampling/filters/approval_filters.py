@@ -56,7 +56,7 @@ def rename_approval_candidates(
 
 
 def resampling_filter(
-    votes: list[set[int]], phi: float, seed: int = None
+    votes: list[set[int]], num_candidates, phi: float, p, seed: int = None
 ) -> list[set[int]]:
     """
     Returns votes with added resampling filter.
@@ -65,8 +65,12 @@ def resampling_filter(
     ----------
         votes : list[set[int]]
             Approval votes.
+        num_candidates : int
+            Number of Candidates.
         phi : float
             Noise parameter.
+        p : float
+            Resampling model parameter, denoting the average vote length.
         seed : int
             Seed for numpy random number generator.
 
@@ -76,8 +80,8 @@ def resampling_filter(
             Approval votes.
     """
 
-    return [_resampling_filter_vote(votes[i], phi, seed) for i in range(len(votes))]
+    return [_resampling_filter_vote(votes[i], num_candidates, phi, p, seed) for i in range(len(votes))]
 
 
-def _resampling_filter_vote(vote, phi: float, seed: int = None):
-    return resampling(1, len(vote), phi, seed, central_vote=vote)[0]
+def _resampling_filter_vote(vote, num_candidates, phi: float, p, seed: int = None):
+    return resampling(1, num_candidates, phi, p, seed, central_vote=vote)[0]
