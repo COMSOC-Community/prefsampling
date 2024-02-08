@@ -349,9 +349,9 @@ document.write(`
         <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
         <span class="n">last_sampled_index</span> <span class="o">=</span> <span class="n">index</span>
 
-    <span class="c1"># vote_indices = np.sort(rng.choice(np.arange(domain_size), size=num_voters))</span>
-    <span class="c1"># for i, index in enumerate(vote_indices):</span>
-    <span class="c1">#     votes[i, :] = domain[index]</span>
+    <span class="n">vote_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">domain_size</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">num_voters</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vote_indices</span><span class="p">):</span>
+        <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 

@@ -16,8 +16,6 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-
-
 class Validator(abc.ABC):
     def __init__(
         self,

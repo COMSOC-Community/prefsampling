@@ -1,5 +1,5 @@
 from prefsampling.approval import identity
-from validation.utils import get_all_subsets
+from validation.utils import get_all_subsets, powerset
 from validation.validator import Validator
 
 
@@ -20,11 +20,14 @@ class ApprovalIdentityValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return get_all_subsets(sampler_parameters["num_candidates"])
+        return powerset(range(sampler_parameters["num_candidates"]))
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
         k = int(sampler_parameters["p"] * sampler_parameters["num_candidates"])
-        return {str(k): 1}
+        distribution = {}
+        for o in self.all_outcomes(sampler_parameters):
+            distribution[tuple(sorted(o))] = int(set(o) == set(range(k)))
+        return distribution
 
     def sample_cast(self, sample):
-        return str(len(sample[0]))
+        return tuple(sorted(sample[0]))

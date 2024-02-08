@@ -48,11 +48,11 @@ from validation.tree.schroeder import (
 )
 
 ALL_APPROVAL_VALIDATORS = [
-    # ApprovalImpartialValidator(),
-    # ApprovalIdentityValidator(),
-    # ApprovalNoiseValidator(),
-    # ApprovalResamplingValidator(),
-    # ApprovalDisjointResamplingValidator(),
+    ApprovalImpartialValidator(),
+    ApprovalIdentityValidator(),
+    ApprovalNoiseValidator(),
+    ApprovalResamplingValidator(),
+    ApprovalDisjointResamplingValidator(),
 ]
 
 ALL_ORDINAL_VALIDATORS = [

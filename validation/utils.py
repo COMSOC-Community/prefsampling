@@ -1,9 +1,12 @@
 from copy import deepcopy
 from itertools import permutations, combinations_with_replacement, combinations, chain
 
-def powerset(iterable):
+
+def powerset(iterable, min_size=1, max_size=None):
     s = list(iterable)
-    return chain.from_iterable(combinations(s, r) for r in range(1, len(s) + 1))
+    if max_size is None:
+        max_size = len(s) + 1
+    return chain.from_iterable(combinations(s, r) for r in range(min_size, max_size))
 
 
 def proper_powerset(iterable):

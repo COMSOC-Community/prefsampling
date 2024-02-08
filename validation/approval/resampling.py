@@ -49,11 +49,11 @@ class ApprovalResamplingValidator(Validator):
                     prob *= phi*p
                 else:
                     prob *= (1-phi) + phi*(1-p)
-            A[str(outcome)] = prob
+            A[tuple(sorted(outcome))] = prob
         return A
 
     def sample_cast(self, sample):
-        return str(sample[0])
+        return tuple(sorted(sample[0]))
 
 
 class ApprovalDisjointResamplingValidator(Validator):

@@ -6,12 +6,12 @@ from validation.validator import Validator
 class ApprovalImpartialValidator(Validator):
     def __init__(self):
         parameters_list = [
-            {"num_voters": 1, "num_candidates": 4, "p": 0.3},
-            {"num_voters": 1, "num_candidates": 4, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 4, "p": 0.7},
             {"num_voters": 1, "num_candidates": 5, "p": 0.3},
             {"num_voters": 1, "num_candidates": 5, "p": 0.5},
             {"num_voters": 1, "num_candidates": 5, "p": 0.7},
+            {"num_voters": 1, "num_candidates": 6, "p": 0.3},
+            {"num_voters": 1, "num_candidates": 6, "p": 0.5},
+            {"num_voters": 1, "num_candidates": 6, "p": 0.7},
         ]
         super(ApprovalImpartialValidator, self).__init__(
             parameters_list,
@@ -31,11 +31,11 @@ class ApprovalImpartialValidator(Validator):
         m = sampler_parameters["num_candidates"]
         p = sampler_parameters["p"]
 
-        probabilities = [None for _ in range(m+1)]
-        for k in range(m+1):
-            probabilities[k] = (p ** k) * ((1 - p) ** (m - k))
+        probabilities = []
+        for k in range(m + 1):
+            probabilities.append((p ** k) * ((1 - p) ** (m - k)))
 
-        return {str(o): probabilities[len(o)] for o in all_outcomes}
+        return {tuple(sorted(o)): probabilities[len(o)] for o in all_outcomes}
 
     def sample_cast(self, sample):
-        return str(sample[0])
+        return tuple(sorted(sample[0]))

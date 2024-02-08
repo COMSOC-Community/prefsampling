@@ -38,7 +38,7 @@ class ApprovalNoiseValidator(Validator):
         central_vote = {i for i in range(k)}
         tmp_dict = {str(o): phi**hamming(central_vote, o) for o in all_outcomes}
         denom = sum(tmp_dict.values())
-        return {str(o): tmp_dict[str(o)]/denom for o in all_outcomes}
+        return {tuple(sorted(o)): tmp_dict[str(o)]/denom for o in all_outcomes}
 
     def sample_cast(self, sample):
-        return str(sample[0])
+        return tuple(sorted(sample[0]))
