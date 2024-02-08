@@ -152,6 +152,13 @@ ALL_SAMPLERS = [
         [approval_identity, approval_full, approval_urn_partylist],
         [0.5, 0.2, 0.3],
         [{"p": 0.4}, {}, {"alpha": 0.1, "parties": 3}]
+    ),
+    lambda num_voters, num_candidates, seed=None: mixture(
+        num_voters,
+        num_candidates,
+        [ordinal_norm_mallows, ordinal_norm_mallows, ordinal_norm_mallows],
+        [4, 10, 3],
+        [{"norm_phi": 0.4}, {"norm_phi": 0.9}, {"norm_phi": 0.23}]
     )
 ]
 

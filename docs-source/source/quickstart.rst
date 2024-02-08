@@ -145,3 +145,52 @@ Approval Samplers
      - | :code:`p`
        | :code:`phi`
      - :code:`noise_type` (defaults to :py:const:`~prefsampling.approval.NoiseType.HAMMING`)
+
+
+Composition of Samplers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+It is often useful to be able to compose samplers, to define mixture for instance. The functions
+:py:func:`~prefsampling.core.mixture` and :py:func:`~prefsampling.core.concatenation` can do that.
+
+The mixture uses different samplers, each being use with a given probability.
+
+.. code-block:: python
+
+    from prefsampling.core import mixture
+    from prefsampling.ordinal import single_peaked_conitzer, single_peaked_walsh, norm_mallows
+
+    # We create a mixture for 100 voters and 10 candidates of the single-peaked samplers using the
+    # Conitzer one with probability 0.6 and the Walsh one with probability 0.4
+    mixture(
+        100,  # num_voters
+        10,  # num_candidates
+        [single_peaked_conitzer, single_peaked_walsh],  # list of samplers
+        [0.6, 0.4],  # weights of the samplers
+        [{}, {}]  # parameters of the samplers
+    )
+
+    # We create a mixture for 100 voters and 10 candidates of different Mallows' models
+    mixture(
+        100,  # num_voters
+        10,  # num_candidates
+        [norm_mallows, norm_mallows, norm_mallows],  # list of samplers
+        [4, 10, 3],  # weights of the samplers
+        [{"norm_phi": 0.4}, {"norm_phi": 0.9}, {"norm_phi": 0.23}]  # parameters of the samplers
+    )
+
+The concatenation simply concatenates the votes returned by different samplers.
+
+.. code-block:: python
+
+    from prefsampling.core import concatenation
+    from prefsampling.ordinal import single_peaked_conitzer, single_peaked_walsh
+
+    # We create a concatenation for 100 voters and 10 candidates. 60 votes are sampled from the
+    # single_peaked_conitzer sampler and 40 votes from the single_peaked_walsh sampler.
+    concatenation(
+        [60, 40],  # num_voters per sampler
+        10,  # num_candidates
+        [single_peaked_conitzer, single_peaked_walsh],  # list of samplers
+        [{}, {}]  # parameters of the samplers
+    )

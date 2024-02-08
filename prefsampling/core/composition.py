@@ -55,7 +55,7 @@ def mixture(
 
     rng = np.random.default_rng(seed)
 
-    weights = np.array(weights)
+    weights = np.array(weights, dtype=float)
     weights /= weights.sum()
     num_samplers = len(samplers)
     samples = rng.choice(range(num_samplers), size=num_voters, replace=True, p=weights)
