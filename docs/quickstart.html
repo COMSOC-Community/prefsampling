@@ -316,6 +316,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#samplers">Samplers</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composition-of-samplers">Composition of Samplers</a></li>
 </ul>
 </li>
 </ul>
@@ -528,6 +529,49 @@ the syntax described above.</p>
 </tbody>
 </table>
 </section>
+<section id="composition-of-samplers">
+<h3>Composition of Samplers<a class="headerlink" href="#composition-of-samplers" title="Permalink to this heading">#</a></h3>
+<p>It is often useful to be able to compose samplers, to define mixture for instance. The functions
+<code class="xref py py-func docutils literal notranslate"><span class="pre">mixture()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">concatenation()</span></code> can do that.</p>
+<p>The mixture uses different samplers, each being use with a given probability.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">mixture</span>
+<span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">single_peaked_conitzer</span><span class="p">,</span> <span class="n">single_peaked_walsh</span><span class="p">,</span> <span class="n">norm_mallows</span>
+
+<span class="c1"># We create a mixture for 100 voters and 10 candidates of the single-peaked samplers using the</span>
+<span class="c1"># Conitzer one with probability 0.6 and the Walsh one with probability 0.4</span>
+<span class="n">mixture</span><span class="p">(</span>
+    <span class="mi">100</span><span class="p">,</span>  <span class="c1"># num_voters</span>
+    <span class="mi">10</span><span class="p">,</span>  <span class="c1"># num_candidates</span>
+    <span class="p">[</span><span class="n">single_peaked_conitzer</span><span class="p">,</span> <span class="n">single_peaked_walsh</span><span class="p">],</span>  <span class="c1"># list of samplers</span>
+    <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span>  <span class="c1"># weights of the samplers</span>
+    <span class="p">[{},</span> <span class="p">{}]</span>  <span class="c1"># parameters of the samplers</span>
+<span class="p">)</span>
+
+<span class="c1"># We create a mixture for 100 voters and 10 candidates of different Mallows&#39; models</span>
+<span class="n">mixture</span><span class="p">(</span>
+    <span class="mi">100</span><span class="p">,</span>  <span class="c1"># num_voters</span>
+    <span class="mi">10</span><span class="p">,</span>  <span class="c1"># num_candidates</span>
+    <span class="p">[</span><span class="n">norm_mallows</span><span class="p">,</span> <span class="n">norm_mallows</span><span class="p">,</span> <span class="n">norm_mallows</span><span class="p">],</span>  <span class="c1"># list of samplers</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>  <span class="c1"># weights of the samplers</span>
+    <span class="p">[{</span><span class="s2">&quot;norm_phi&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;norm_phi&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;norm_phi&quot;</span><span class="p">:</span> <span class="mf">0.23</span><span class="p">}]</span>  <span class="c1"># parameters of the samplers</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The concatenation simply concatenates the votes returned by different samplers.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">concatenation</span>
+<span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">single_peaked_conitzer</span><span class="p">,</span> <span class="n">single_peaked_walsh</span>
+
+<span class="c1"># We create a concatenation for 100 voters and 10 candidates. 60 votes are sampled from the</span>
+<span class="c1"># single_peaked_conitzer sampler and 40 votes from the single_peaked_walsh sampler.</span>
+<span class="n">concatenation</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>  <span class="c1"># num_voters per sampler</span>
+    <span class="mi">10</span><span class="p">,</span>  <span class="c1"># num_candidates</span>
+    <span class="p">[</span><span class="n">single_peaked_conitzer</span><span class="p">,</span> <span class="n">single_peaked_walsh</span><span class="p">],</span>  <span class="c1"># list of samplers</span>
+    <span class="p">[{},</span> <span class="p">{}]</span>  <span class="c1"># parameters of the samplers</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -581,6 +625,7 @@ the syntax described above.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#samplers">Samplers</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composition-of-samplers">Composition of Samplers</a></li>
 </ul>
 </li>
 </ul>

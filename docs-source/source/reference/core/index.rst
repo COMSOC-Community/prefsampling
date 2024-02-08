@@ -1,6 +1,8 @@
 Core
 ====
 
+.. automodule:: prefsampling.core
+
 .. automodule:: prefsampling.core.composition
     :members:
 

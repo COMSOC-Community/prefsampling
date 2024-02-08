@@ -1,6 +1,8 @@
 Ordinal
 =======
 
+.. automodule:: prefsampling.ordinal
+
 .. autofunction:: prefsampling.ordinal.identity
 
 .. autofunction:: prefsampling.ordinal.impartial

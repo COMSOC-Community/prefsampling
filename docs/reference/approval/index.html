@@ -317,14 +317,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.NoiseType.ZELINKA"><code class="docutils literal notranslate"><span class="pre">NoiseType.ZELINKA</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.concat"><code class="docutils literal notranslate"><span class="pre">concatenation()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.disjoint_resampling"><code class="docutils literal notranslate"><span class="pre">disjoint_resampling()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.empty"><code class="docutils literal notranslate"><span class="pre">empty()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial"><code class="docutils literal notranslate"><span class="pre">impartial()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.mixture"><code class="docutils literal notranslate"><span class="pre">mixture()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.moving_resampling"><code class="docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.noise"><code class="docutils literal notranslate"><span class="pre">noise()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling"><code class="docutils literal notranslate"><span class="pre">resampling()</span></code></a></li>
@@ -373,29 +371,6 @@ disapprove each candidate.</p>
 <dd><p>Zelinka noise.</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.approval.concat">
-<span class="sig-name descname"><span class="pre">concatenation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_of_num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_of_cultures</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_of_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/mixture.html#concat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.concat" title="Permalink to this definition">#</a></dt>
-<dd><p>Generates a concatenation of approval votes from different cultures.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>list_of_num_voters</strong> (<em>int</em>) – List of numbers of voters to be sampled from each culture.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>list_of_cultures</strong> (<em>list</em><em>,</em>) – List of the cultures.</p></li>
-<li><p><strong>list_of_params</strong> (<em>list</em><em>,</em>) – List of params for each considered culture
-(excluding the number of voters and the number of candidates).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Approval votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -551,34 +526,6 @@ approved candidate per voter is <cite>p * num_candidate</cite>.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – When <cite>p</cite> not in [0,1] interval.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.approval.mixture">
-<span class="sig-name descname"><span class="pre">mixture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_of_cultures</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_of_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/mixture.html#mixture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.mixture" title="Permalink to this definition">#</a></dt>
-<dd><p>Generates a mixture of approval votes from different cultures.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>weights</strong> (<em>list</em>) – Probability of being sampled from a given culture</p></li>
-<li><p><strong>list_of_cultures</strong> (<em>list</em><em>,</em>) – List of the cultures.</p></li>
-<li><p><strong>list_of_params</strong> (<em>list</em><em>,</em>) – List of params for each considered culture
-(excluding the number of voters and the number of candidates).</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.
-Note that this is only the seed for this function.
-If you want to use particular seed for the functions generating votes,
-you should pass it as argument within the list of params.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Approval votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -772,14 +719,12 @@ a draw). Must be non-negative.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.NoiseType.ZELINKA"><code class="docutils literal notranslate"><span class="pre">NoiseType.ZELINKA</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.concat"><code class="docutils literal notranslate"><span class="pre">concatenation()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.disjoint_resampling"><code class="docutils literal notranslate"><span class="pre">disjoint_resampling()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.empty"><code class="docutils literal notranslate"><span class="pre">empty()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial"><code class="docutils literal notranslate"><span class="pre">impartial()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.mixture"><code class="docutils literal notranslate"><span class="pre">mixture()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.moving_resampling"><code class="docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.noise"><code class="docutils literal notranslate"><span class="pre">noise()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling"><code class="docutils literal notranslate"><span class="pre">resampling()</span></code></a></li>
