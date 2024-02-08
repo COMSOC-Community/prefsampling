@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from prefsampling.core.euclidean import EuclideanSpace
+from prefsampling.core.composition import mixture
 from prefsampling.ordinal import (
     urn as ordinal_urn,
     impartial as ordinal_impartial,
@@ -138,6 +139,20 @@ ALL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: approval_urn_partylist(
         num_voters, num_candidates, 0.1, 3, seed=seed
     ),
+    lambda num_voters, num_candidates, seed=None: mixture(
+        num_voters,
+        num_candidates,
+        [ordinal_single_crossing, ordinal_single_peaked_circle, ordinal_single_peaked_walsh],
+        [0.5, 0.2, 0.3],
+        [{}, {}, {}]
+    ),
+    lambda num_voters, num_candidates, seed=None: mixture(
+        num_voters,
+        num_candidates,
+        [approval_identity, approval_full, approval_urn_partylist],
+        [0.5, 0.2, 0.3],
+        [{"p": 0.4}, {}, {"alpha": 0.1, "parties": 3}]
+    )
 ]
 
 

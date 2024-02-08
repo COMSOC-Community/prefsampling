@@ -28,10 +28,6 @@ from prefsampling.ordinal.groupseparable import group_separable, TreeSampler
 from prefsampling.ordinal.identity import identity
 from prefsampling.ordinal.didi import didi
 from prefsampling.ordinal.identity import identity
-from prefsampling.ordinal.mixture import (
-    mixture,
-    concat,
-)
 
 __all__ = [
     "urn",
@@ -51,6 +47,4 @@ __all__ = [
     "TreeSampler",
     "identity",
     "didi",
-    "mixture",
-    "concat",
 ]
