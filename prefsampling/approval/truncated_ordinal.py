@@ -5,7 +5,11 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def truncated_ordinal(
-    num_voters: int, num_candidates: int, p: float, ordinal_sampler: Callable, ordinal_sampler_parameters: dict,
+    num_voters: int,
+    num_candidates: int,
+    p: float,
+    ordinal_sampler: Callable,
+    ordinal_sampler_parameters: dict,
     seed: int = None,
 ) -> list[set[int]]:
     """

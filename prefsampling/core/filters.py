@@ -34,23 +34,23 @@ def permute_voters(
 
 
 def rename_candidates(
-    votes: list[set[int]] | np.ndarray, seed: int = None, num_candidates: int = None
+    votes: list[set[int]] | np.ndarray, num_candidates: int = None, seed: int = None,
 ):
     """
     Renames the candidates in approval or ordinal votes.
 
     Note that if the votes can be incomplete (in the case of approval voting), you need to
     provide the number of candidates as input. If it is not provided, it is assumed to be the
-    size of the largest ballot.
+    largest integer appearing in the ballots (candidates are represented as int).
 
     Parameters
     ----------
         votes : list[set[int]] or np.ndarray
             Approval or ordinal votes.
-        seed : int
-            Seed for numpy random number generator.
         num_candidates : int
             Number of Candidates. Needed for incomplete (e.g., approval) votes.
+        seed : int
+            Seed for numpy random number generator.
 
     Returns
     -------
@@ -63,7 +63,7 @@ def rename_candidates(
         return votes
 
     if num_candidates is None:
-        num_candidates = max(len(vote) for vote in votes)
+        num_candidates = max(max(vote, default=0) for vote in votes) + 1
     renaming = rng.permutation(num_candidates)
 
     if isinstance(votes, list) and isinstance(votes[0], set):

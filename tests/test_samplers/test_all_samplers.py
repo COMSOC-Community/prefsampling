@@ -2,7 +2,11 @@ from unittest import TestCase
 
 from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.core.composition import mixture
-from prefsampling.core.filters import resample_as_central_vote, permute_voters, rename_candidates
+from prefsampling.core.filters import (
+    resample_as_central_vote,
+    permute_voters,
+    rename_candidates,
+)
 from prefsampling.ordinal import (
     urn as ordinal_urn,
     impartial as ordinal_impartial,
@@ -142,11 +146,7 @@ ALL_SAMPLERS = [
         num_voters, num_candidates, 0.1, 3, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_truncated_ordinal(
-        num_voters,
-        num_candidates,
-        0.5,
-        ordinal_urn,
-        {"alpha": 0.8}
+        num_voters, num_candidates, 0.5, ordinal_urn, {"alpha": 0.8}
     ),
     lambda num_voters, num_candidates, seed=None: mixture(
         num_voters,
@@ -174,21 +174,18 @@ ALL_SAMPLERS = [
         [{"norm_phi": 0.4}, {"norm_phi": 0.9}, {"norm_phi": 0.23}],
     ),
     lambda num_voters, num_candidates, seed=None: permute_voters(
-        ordinal_single_crossing(num_voters, num_candidates),
-        seed=seed
+        ordinal_single_crossing(num_voters, num_candidates), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: permute_voters(
-        approval_identity(num_voters, num_candidates, p=0.5),
-        seed=seed
+        approval_identity(num_voters, num_candidates, p=0.5), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: rename_candidates(
-        ordinal_single_crossing(num_voters, num_candidates),
-        seed=seed
+        ordinal_single_crossing(num_voters, num_candidates), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: rename_candidates(
         approval_identity(num_voters, num_candidates, p=0.5),
         seed=seed,
-        num_candidates=num_candidates
+        num_candidates=num_candidates,
     ),
     lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
         ordinal_single_crossing(num_voters, num_candidates),

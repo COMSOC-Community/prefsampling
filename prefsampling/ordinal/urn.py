@@ -36,10 +36,6 @@ def urn(
         np.ndarray
             The votes
     """
-
-    if alpha < 0:
-        raise ValueError("Alpha needs to be non-negative for an urn model.")
-
     rng = np.random.default_rng(seed)
 
     return urn_votes(num_voters, num_candidates, alpha, rng)
