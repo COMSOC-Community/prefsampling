@@ -298,23 +298,25 @@ document.write(`
 
 
 <div class="viewcode-block" id="rename_candidates"><a class="viewcode-back" href="../../../reference/core/index.html#prefsampling.core.filters.rename_candidates">[docs]</a><span class="k">def</span> <span class="nf">rename_candidates</span><span class="p">(</span>
-    <span class="n">votes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">votes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Renames the candidates in approval or ordinal votes.</span>
 
 <span class="sd">    Note that if the votes can be incomplete (in the case of approval voting), you need to</span>
 <span class="sd">    provide the number of candidates as input. If it is not provided, it is assumed to be the</span>
-<span class="sd">    size of the largest ballot.</span>
+<span class="sd">    largest integer appearing in the ballots (candidates are represented as int).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">        votes : list[set[int]] or np.ndarray</span>
 <span class="sd">            Approval or ordinal votes.</span>
-<span class="sd">        seed : int</span>
-<span class="sd">            Seed for numpy random number generator.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates. Needed for incomplete (e.g., approval) votes.</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -327,7 +329,7 @@ document.write(`
         <span class="k">return</span> <span class="n">votes</span>
 
     <span class="k">if</span> <span class="n">num_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">num_candidates</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span> <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">votes</span><span class="p">)</span>
+        <span class="n">num_candidates</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">vote</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">votes</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">renaming</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">votes</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">votes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">set</span><span class="p">):</span>

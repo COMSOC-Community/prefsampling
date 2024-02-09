@@ -300,10 +300,6 @@ document.write(`
 <span class="sd">        np.ndarray</span>
 <span class="sd">            The votes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">alpha</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Alpha needs to be non-negative for an urn model.&quot;</span><span class="p">)</span>
-
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">urn_votes</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span></div>

@@ -269,7 +269,11 @@ document.write(`
 
 <div class="viewcode-block" id="truncated_ordinal"><a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.truncated_ordinal">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">truncated_ordinal</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ordinal_sampler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">ordinal_sampler_parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">ordinal_sampler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">ordinal_sampler_parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>

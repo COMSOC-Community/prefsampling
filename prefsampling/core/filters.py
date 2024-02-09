@@ -34,7 +34,9 @@ def permute_voters(
 
 
 def rename_candidates(
-    votes: list[set[int]] | np.ndarray, num_candidates: int = None, seed: int = None,
+    votes: list[set[int]] | np.ndarray,
+    num_candidates: int = None,
+    seed: int = None,
 ):
     """
     Renames the candidates in approval or ordinal votes.

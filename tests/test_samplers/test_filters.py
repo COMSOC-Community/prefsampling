@@ -8,7 +8,6 @@ from prefsampling.ordinal import single_crossing
 
 class TestFilters(TestCase):
     def test_rename_candidates(self):
-
         assert rename_candidates([]) == []
 
         with self.assertRaises(ValueError):
