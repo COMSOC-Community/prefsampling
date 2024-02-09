@@ -27,13 +27,12 @@ class ApprovalImpartialValidator(Validator):
         return get_all_subsets(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-
         m = sampler_parameters["num_candidates"]
         p = sampler_parameters["p"]
 
         probabilities = []
         for k in range(m + 1):
-            probabilities.append((p ** k) * ((1 - p) ** (m - k)))
+            probabilities.append((p**k) * ((1 - p) ** (m - k)))
 
         return {tuple(sorted(o)): probabilities[len(o)] for o in all_outcomes}
 

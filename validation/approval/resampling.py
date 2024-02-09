@@ -11,11 +11,11 @@ class ApprovalResamplingValidator(Validator):
             {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 0.5},
             {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.5},
             {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 1/3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1/3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 1/3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 1/3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 1.0, "p": 0.5},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 1 / 3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1 / 3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 1 / 3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 1.0, "p": 1 / 3},
         ]
         super(ApprovalResamplingValidator, self).__init__(
             parameters_list,
@@ -34,7 +34,7 @@ class ApprovalResamplingValidator(Validator):
         m = sampler_parameters["num_candidates"]
         p = sampler_parameters["p"]
         phi = sampler_parameters["phi"]
-        k = math.floor(p*m)
+        k = math.floor(p * m)
         central_vote = {i for i in range(k)}
 
         A = {}
@@ -42,13 +42,13 @@ class ApprovalResamplingValidator(Validator):
             prob = 1
             for c in range(m):
                 if c in central_vote and c in outcome:
-                    prob *= (1-phi) + phi*p
+                    prob *= (1 - phi) + phi * p
                 elif c in central_vote and c not in outcome:
-                    prob *= phi*(1-p)
+                    prob *= phi * (1 - p)
                 elif c not in central_vote and c in outcome:
-                    prob *= phi*p
+                    prob *= phi * p
                 else:
-                    prob *= (1-phi) + phi*(1-p)
+                    prob *= (1 - phi) + phi * (1 - p)
             A[tuple(sorted(outcome))] = prob
         return A
 
@@ -60,9 +60,9 @@ class ApprovalDisjointResamplingValidator(Validator):
     def __init__(self):
         parameters_list = [
             {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.25, "g": 2},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1/3, "g": 2},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1 / 3, "g": 2},
             {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.25, "g": 3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1/3, "g": 3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1 / 3, "g": 3},
         ]
         super(ApprovalDisjointResamplingValidator, self).__init__(
             parameters_list,
@@ -82,7 +82,7 @@ class ApprovalDisjointResamplingValidator(Validator):
         p = sampler_parameters["p"]
         phi = sampler_parameters["phi"]
         num_groups = sampler_parameters["g"]
-        k = math.floor(p*m)
+        k = math.floor(p * m)
         central_votes = []
         for g in range(num_groups):
             central_votes.append({g * k + i for i in range(k)})
@@ -94,13 +94,13 @@ class ApprovalDisjointResamplingValidator(Validator):
                 prob = 1
                 for c in range(m):
                     if c in central_vote and c in outcome:
-                        prob *= (1-phi) + phi*p
+                        prob *= (1 - phi) + phi * p
                     elif c in central_vote and c not in outcome:
-                        prob *= phi*(1-p)
+                        prob *= phi * (1 - p)
                     elif c not in central_vote and c in outcome:
-                        prob *= phi*p
+                        prob *= phi * p
                     else:
-                        prob *= (1-phi) + phi*(1-p)
+                        prob *= (1 - phi) + phi * (1 - p)
                 probs.append(prob)
             A[str(outcome)] = sum(probs) / len(probs)
         return A

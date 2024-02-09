@@ -11,11 +11,11 @@ class ApprovalNoiseValidator(Validator):
             {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 0.5},
             {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.5},
             {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 1/3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1/3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 1/3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 1., "p": 1/3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 1.0, "p": 0.5},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 1 / 3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1 / 3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 1 / 3},
+            {"num_voters": 1, "num_candidates": 6, "phi": 1.0, "p": 1 / 3},
         ]
         super(ApprovalNoiseValidator, self).__init__(
             parameters_list,
@@ -34,11 +34,11 @@ class ApprovalNoiseValidator(Validator):
         m = sampler_parameters["num_candidates"]
         p = sampler_parameters["p"]
         phi = sampler_parameters["phi"]
-        k = math.floor(p*m)
+        k = math.floor(p * m)
         central_vote = {i for i in range(k)}
-        tmp_dict = {str(o): phi**hamming(central_vote, o) for o in all_outcomes}
+        tmp_dict = {str(o): phi ** hamming(central_vote, o) for o in all_outcomes}
         denom = sum(tmp_dict.values())
-        return {tuple(sorted(o)): tmp_dict[str(o)]/denom for o in all_outcomes}
+        return {tuple(sorted(o)): tmp_dict[str(o)] / denom for o in all_outcomes}
 
     def sample_cast(self, sample):
         return tuple(sorted(sample[0]))

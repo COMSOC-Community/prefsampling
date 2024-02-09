@@ -313,12 +313,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organisation-of-the-package">Organisation of the package</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-types">Sample Types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-syntax">General Syntax</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#samplers">Samplers</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composition-of-samplers">Composition of Samplers</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#composition-of-samplers">Composition of Samplers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a></li>
 </ul>
             </nav>
         </div>
@@ -335,7 +333,7 @@ document.write(`
 <section id="organisation-of-the-package">
 <h2>Organisation of the package<a class="headerlink" href="#organisation-of-the-package" title="Permalink to this heading">#</a></h2>
 <p>The samplers are organised in the package based on the format of sample they produce.
-The module <code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.ordinal</span></code> contains the ordinal samplers that
+The module <a class="reference internal" href="reference/ordinal/index.html#module-prefsampling.ordinal" title="prefsampling.ordinal"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.ordinal</span></code></a> contains the ordinal samplers that
 generate rankings of the candidates.
 The module <a class="reference internal" href="reference/approval/index.html#module-prefsampling.approval" title="prefsampling.approval"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.approval</span></code></a> contains the samplers for approval preferences,
 the ones that generate sets of candidates.</p>
@@ -361,12 +359,8 @@ The <code class="code docutils literal notranslate"><span class="pre">seed</span
 random number generator to give you more control if needed (for replication for instance).
 Other parameters are specific to the samplers.</p>
 </section>
-<section id="samplers">
-<h2>Samplers<a class="headerlink" href="#samplers" title="Permalink to this heading">#</a></h2>
-<p>In the following table, we present all the samplers provided by the package, they all follow
-the syntax described above.</p>
 <section id="ordinal-samplers">
-<h3>Ordinal Samplers<a class="headerlink" href="#ordinal-samplers" title="Permalink to this heading">#</a></h3>
+<h2>Ordinal Samplers<a class="headerlink" href="#ordinal-samplers" title="Permalink to this heading">#</a></h2>
 <table class="table">
 <colgroup>
 <col style="width: 25.0%" />
@@ -455,7 +449,7 @@ the syntax described above.</p>
 </table>
 </section>
 <section id="approval-samplers">
-<h3>Approval Samplers<a class="headerlink" href="#approval-samplers" title="Permalink to this heading">#</a></h3>
+<h2>Approval Samplers<a class="headerlink" href="#approval-samplers" title="Permalink to this heading">#</a></h2>
 <table class="table">
 <colgroup>
 <col style="width: 25.0%" />
@@ -530,9 +524,10 @@ the syntax described above.</p>
 </table>
 </section>
 <section id="composition-of-samplers">
-<h3>Composition of Samplers<a class="headerlink" href="#composition-of-samplers" title="Permalink to this heading">#</a></h3>
+<h2>Composition of Samplers<a class="headerlink" href="#composition-of-samplers" title="Permalink to this heading">#</a></h2>
 <p>It is often useful to be able to compose samplers, to define mixture for instance. The functions
-<code class="xref py py-func docutils literal notranslate"><span class="pre">mixture()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">concatenation()</span></code> can do that.</p>
+<a class="reference internal" href="reference/core/index.html#prefsampling.core.composition.mixture" title="prefsampling.core.composition.mixture"><code class="xref py py-func docutils literal notranslate"><span class="pre">mixture()</span></code></a> and <a class="reference internal" href="reference/core/index.html#prefsampling.core.composition.concatenation" title="prefsampling.core.composition.concatenation"><code class="xref py py-func docutils literal notranslate"><span class="pre">concatenation()</span></code></a>
+can do that.</p>
 <p>The mixture uses different samplers, each being use with a given probability.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">mixture</span>
 <span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">single_peaked_conitzer</span><span class="p">,</span> <span class="n">single_peaked_walsh</span><span class="p">,</span> <span class="n">norm_mallows</span>
@@ -572,6 +567,47 @@ the syntax described above.</p>
 </pre></div>
 </div>
 </section>
+<section id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this heading">#</a></h2>
+<p>Filters are functions that operate on collections of votes and apply some random operation to them.
+These are the filters we have implemented:</p>
+<table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Filter</p></th>
+<th class="head"><p>Effect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/core/index.html#prefsampling.core.filters.permute_voters" title="prefsampling.core.filters.permute_voters"><code class="xref py py-func docutils literal notranslate"><span class="pre">permute_voters()</span></code></a></p></td>
+<td><p>Randomly permutes the voters</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/core/index.html#prefsampling.core.filters.rename_candidates" title="prefsampling.core.filters.rename_candidates"><code class="xref py py-func docutils literal notranslate"><span class="pre">rename_candidates()</span></code></a></p></td>
+<td><p>Randomly rename the candidates</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/core/index.html#prefsampling.core.filters.resample_as_central_vote" title="prefsampling.core.filters.resample_as_central_vote"><code class="xref py py-func docutils literal notranslate"><span class="pre">resample_as_central_vote()</span></code></a></p></td>
+<td><p>Resamples the votes using them as central votes of sampler whose definition include a central vote (e.g., <a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.mallows" title="prefsampling.ordinal.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a> or <a class="reference internal" href="reference/approval/index.html#prefsampling.approval.resampling" title="prefsampling.approval.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a>)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Below is an example of how to use the <a class="reference internal" href="reference/core/index.html#prefsampling.core.filters.resample_as_central_vote" title="prefsampling.core.filters.resample_as_central_vote"><code class="xref py py-func docutils literal notranslate"><span class="pre">resample_as_central_vote()</span></code></a>
+filter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">resample_as_central_vote</span>
+<span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">single_crossing</span><span class="p">,</span> <span class="n">norm_mallows</span>
+
+<span class="n">num_candidates</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">initial_votes</span> <span class="o">=</span> <span class="n">single_crossing</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
+
+<span class="n">resample_as_central_vote</span><span class="p">(</span>
+    <span class="n">initial_votes</span><span class="p">,</span>  <span class="c1"># The votes</span>
+    <span class="n">norm_mallows</span><span class="p">,</span>  <span class="c1"># The sampler</span>
+    <span class="p">{</span><span class="s2">&quot;norm_phi&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">855</span><span class="p">,</span> <span class="s2">&quot;num_candidates&quot;</span><span class="p">:</span> <span class="n">num_candidates</span><span class="p">},</span>  <span class="c1"># The arguments for the sampler</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -622,12 +658,10 @@ the syntax described above.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#organisation-of-the-package">Organisation of the package</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-types">Sample Types</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-syntax">General Syntax</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#samplers">Samplers</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composition-of-samplers">Composition of Samplers</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinal-samplers">Ordinal Samplers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#composition-of-samplers">Composition of Samplers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a></li>
 </ul>
   </nav></div>
 

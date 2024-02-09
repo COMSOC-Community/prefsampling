@@ -309,16 +309,28 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.composition.concatenation"><code class="docutils literal notranslate"><span class="pre">concatenation()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.composition.mixture"><code class="docutils literal notranslate"><span class="pre">mixture()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.BALL</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.SPHERE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.SPHERE</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.composition">Composition of Samplers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.composition.concatenation"><code class="docutils literal notranslate"><span class="pre">concatenation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.composition.mixture"><code class="docutils literal notranslate"><span class="pre">mixture()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.election_positions"><code class="docutils literal notranslate"><span class="pre">election_positions()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.filters">Filters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.permute_voters"><code class="docutils literal notranslate"><span class="pre">permute_voters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.rename_candidates"><code class="docutils literal notranslate"><span class="pre">rename_candidates()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.resample_as_central_vote"><code class="docutils literal notranslate"><span class="pre">resample_as_central_vote()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.euclidean">Module core.euclidean</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.BALL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.SPHERE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.SPHERE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.election_positions"><code class="docutils literal notranslate"><span class="pre">election_positions()</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -333,7 +345,9 @@ document.write(`
   <section id="module-prefsampling.core">
 <span id="core"></span><h1>Core<a class="headerlink" href="#module-prefsampling.core" title="Permalink to this heading">#</a></h1>
 <p>Core functions that are not specific to any ballot format.</p>
-<span class="target" id="module-prefsampling.core.composition"></span><dl class="py function">
+<section id="module-prefsampling.core.composition">
+<span id="composition-of-samplers"></span><h2>Composition of Samplers<a class="headerlink" href="#module-prefsampling.core.composition" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.core.composition.concatenation">
 <span class="sig-name descname"><span class="pre">concatenation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters_per_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samplers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">collections.abc.Callable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/core/composition.html#concatenation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.composition.concatenation" title="Permalink to this definition">#</a></dt>
 <dd><p>Generate votes from different samplers and concatenate them together to form the final set of
@@ -390,7 +404,85 @@ you should pass it as parameter within the <code class="code docutils literal no
 </dl>
 </dd></dl>
 
-<span class="target" id="module-prefsampling.core.euclidean"></span><dl class="py class">
+</section>
+<section id="module-prefsampling.core.filters">
+<span id="filters"></span><h2>Filters<a class="headerlink" href="#module-prefsampling.core.filters" title="Permalink to this heading">#</a></h2>
+<p>Filters are functions that operate on collections of votes and apply some random operation to them.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.core.filters.permute_voters">
+<span class="sig-name descname"><span class="pre">permute_voters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">MutableSequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">MutableSequence</span></span></span><a class="reference internal" href="../../_modules/prefsampling/core/filters.html#permute_voters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.filters.permute_voters" title="Permalink to this definition">#</a></dt>
+<dd><p>Randomly permutes the voters in an ordered collection of votes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>votes</strong> (<em>np.ndarray</em><em> | </em><em>MutableSequence</em>) – The votes.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Ordinal votes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.core.filters.rename_candidates">
+<span class="sig-name descname"><span class="pre">rename_candidates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/core/filters.html#rename_candidates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.filters.rename_candidates" title="Permalink to this definition">#</a></dt>
+<dd><p>Renames the candidates in approval or ordinal votes.</p>
+<p>Note that if the votes can be incomplete (in the case of approval voting), you need to
+provide the number of candidates as input. If it is not provided, it is assumed to be the
+size of the largest ballot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>votes</strong> (<em>list</em><em>[</em><em>set</em><em>[</em><em>int</em><em>]</em><em>] or </em><em>np.ndarray</em>) – Approval or ordinal votes.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates. Needed for incomplete (e.g., approval) votes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Votes with renamed candidates.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]] or np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.core.filters.resample_as_central_vote">
+<span class="sig-name descname"><span class="pre">resample_as_central_vote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/core/filters.html#resample_as_central_vote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.filters.resample_as_central_vote" title="Permalink to this definition">#</a></dt>
+<dd><p>Resamples the votes by using them as the central vote of a given sampler. Only samplers that
+accept a <code class="code docutils literal notranslate"><span class="pre">central_vote</span></code> argument can be used.</p>
+<p>Votes are copied before being returned to avoid loss of data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>votes</strong> (<em>list</em><em>[</em><em>set</em><em>[</em><em>int</em><em>]</em><em>] or </em><em>np.ndarray</em>) – Approval or ordinal votes.</p></li>
+<li><p><strong>sampler</strong> (<em>Callable</em>) – The sampler used to resample the votes.</p></li>
+<li><p><strong>sampler_parameters</strong> (<em>dict</em>) – <dl class="simple">
+<dt>Dictionary passed as keyword parameters of the sampler. Number of voters or central vote</dt><dd><p>of this dictionary are not taken into account.</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Votes resampled.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]] or np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-prefsampling.core.euclidean">
+<span id="module-core-euclidean"></span><h2>Module core.euclidean<a class="headerlink" href="#module-prefsampling.core.euclidean" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
 <dt class="sig sig-object py" id="prefsampling.core.euclidean.EuclideanSpace">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EuclideanSpace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/core/euclidean.html#EuclideanSpace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.euclidean.EuclideanSpace" title="Permalink to this definition">#</a></dt>
 <dd><p>Constants used to represent Euclidean spaces</p>
@@ -445,6 +537,7 @@ you should pass it as parameter within the <code class="code docutils literal no
 </dd></dl>
 
 </section>
+</section>
 
 
                 </article>
@@ -481,16 +574,28 @@ you should pass it as parameter within the <code class="code docutils literal no
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.composition.concatenation"><code class="docutils literal notranslate"><span class="pre">concatenation()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.composition.mixture"><code class="docutils literal notranslate"><span class="pre">mixture()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.BALL</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.SPHERE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.SPHERE</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.composition">Composition of Samplers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.composition.concatenation"><code class="docutils literal notranslate"><span class="pre">concatenation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.composition.mixture"><code class="docutils literal notranslate"><span class="pre">mixture()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.election_positions"><code class="docutils literal notranslate"><span class="pre">election_positions()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.filters">Filters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.permute_voters"><code class="docutils literal notranslate"><span class="pre">permute_voters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.rename_candidates"><code class="docutils literal notranslate"><span class="pre">rename_candidates()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.resample_as_central_vote"><code class="docutils literal notranslate"><span class="pre">resample_as_central_vote()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.euclidean">Module core.euclidean</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.BALL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.SPHERE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.SPHERE</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.election_positions"><code class="docutils literal notranslate"><span class="pre">election_positions()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

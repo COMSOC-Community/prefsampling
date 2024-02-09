@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.core.composition import mixture
+from prefsampling.core.filters import resample_as_central_vote
 from prefsampling.ordinal import (
     urn as ordinal_urn,
     impartial as ordinal_impartial,
@@ -142,24 +143,38 @@ ALL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: mixture(
         num_voters,
         num_candidates,
-        [ordinal_single_crossing, ordinal_single_peaked_circle, ordinal_single_peaked_walsh],
+        [
+            ordinal_single_crossing,
+            ordinal_single_peaked_circle,
+            ordinal_single_peaked_walsh,
+        ],
         [0.5, 0.2, 0.3],
-        [{}, {}, {}]
+        [{}, {}, {}],
     ),
     lambda num_voters, num_candidates, seed=None: mixture(
         num_voters,
         num_candidates,
         [approval_identity, approval_full, approval_urn_partylist],
         [0.5, 0.2, 0.3],
-        [{"p": 0.4}, {}, {"alpha": 0.1, "parties": 3}]
+        [{"p": 0.4}, {}, {"alpha": 0.1, "parties": 3}],
     ),
     lambda num_voters, num_candidates, seed=None: mixture(
         num_voters,
         num_candidates,
         [ordinal_norm_mallows, ordinal_norm_mallows, ordinal_norm_mallows],
         [4, 10, 3],
-        [{"norm_phi": 0.4}, {"norm_phi": 0.9}, {"norm_phi": 0.23}]
-    )
+        [{"norm_phi": 0.4}, {"norm_phi": 0.9}, {"norm_phi": 0.23}],
+    ),
+    lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
+        ordinal_single_crossing(num_voters, num_candidates),
+        ordinal_norm_mallows,
+        {"norm_phi": 0.4, "seed": seed, "num_candidates": num_candidates},
+    ),
+    lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
+        approval_identity(num_voters, num_candidates, p=0.5),
+        approval_resampling,
+        {"phi": 0.4, "p": 0.523, "seed": seed, "num_candidates": num_candidates},
+    ),
 ]
 
 

@@ -37,14 +37,8 @@ The :code:`seed` parameter can be used to pass the seed used to defined the nump
 random number generator to give you more control if needed (for replication for instance).
 Other parameters are specific to the samplers.
 
-Samplers
---------
-
-In the following table, we present all the samplers provided by the package, they all follow
-the syntax described above.
-
 Ordinal Samplers
-~~~~~~~~~~~~~~~~
+----------------
 
 .. list-table::
    :widths: 25 25 50
@@ -103,7 +97,7 @@ Ordinal Samplers
 
 
 Approval Samplers
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. list-table::
    :widths: 25 25 50
@@ -148,10 +142,11 @@ Approval Samplers
 
 
 Composition of Samplers
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 It is often useful to be able to compose samplers, to define mixture for instance. The functions
-:py:func:`~prefsampling.core.mixture` and :py:func:`~prefsampling.core.concatenation` can do that.
+:py:func:`~prefsampling.core.composition.mixture` and :py:func:`~prefsampling.core.composition.concatenation`
+can do that.
 
 The mixture uses different samplers, each being use with a given probability.
 
@@ -193,4 +188,40 @@ The concatenation simply concatenates the votes returned by different samplers.
         10,  # num_candidates
         [single_peaked_conitzer, single_peaked_walsh],  # list of samplers
         [{}, {}]  # parameters of the samplers
+    )
+
+Filters
+-------
+
+Filters are functions that operate on collections of votes and apply some random operation to them.
+These are the filters we have implemented:
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Filter
+     - Effect
+   * - :py:func:`~prefsampling.core.filters.permute_voters`
+     - Randomly permutes the voters
+   * - :py:func:`~prefsampling.core.filters.rename_candidates`
+     - Randomly rename the candidates
+   * - :py:func:`~prefsampling.core.filters.resample_as_central_vote`
+     - Resamples the votes using them as central votes of sampler whose definition include a central vote (e.g., :py:func:`~prefsampling.ordinal.mallows` or :py:func:`~prefsampling.approval.resampling`)
+
+Below is an example of how to use the :py:func:`~prefsampling.core.filters.resample_as_central_vote`
+filter.
+
+.. code-block:: python
+
+    from prefsampling.core import resample_as_central_vote
+    from prefsampling.ordinal import single_crossing, norm_mallows
+
+    num_candidates = 10
+    initial_votes = single_crossing(100, num_candidates)
+
+    resample_as_central_vote(
+        initial_votes,  # The votes
+        norm_mallows,  # The sampler
+        {"norm_phi": 0.4, "seed": 855, "num_candidates": num_candidates},  # The arguments for the sampler
     )

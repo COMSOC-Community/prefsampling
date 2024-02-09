@@ -4,12 +4,12 @@ import numpy as np
 
 
 def mixture(
-        num_voters: int,
-        num_candidates: int,
-        samplers: list[Callable],
-        weights: list[float],
-        sampler_parameters: list[dict],
-        seed: int = None,
+    num_voters: int,
+    num_candidates: int,
+    samplers: list[Callable],
+    weights: list[float],
+    sampler_parameters: list[dict],
+    seed: int = None,
 ):
     """
     Generates a mixture of samplers. The process works as follows: for each vote, we sample which
@@ -43,11 +43,15 @@ def mixture(
             you should pass it as parameter within the :code:`sampler_parameters` list.
     """
     if len(samplers) != len(weights):
-        raise ValueError("For a mixture, you need to provide one weight per sampler, no more, no "
-                         "less.")
+        raise ValueError(
+            "For a mixture, you need to provide one weight per sampler, no more, no "
+            "less."
+        )
     if len(samplers) != len(sampler_parameters):
-        raise ValueError("For a mixture, you need to provide one dictionary of parameters per "
-                         "sampler, no more, no less.")
+        raise ValueError(
+            "For a mixture, you need to provide one dictionary of parameters per "
+            "sampler, no more, no less."
+        )
     if min(weights) < 0:
         raise ValueError("For a mixture, the weight of a sampler cannot be negative.")
     if sum(weights) == 0:
@@ -63,14 +67,16 @@ def mixture(
     num_voters_per_sampler = [0 for _ in range(num_samplers)]
     for i, j in enumerate(counts[0]):
         num_voters_per_sampler[j] = counts[1][i]
-    return concatenation(num_voters_per_sampler, num_candidates, samplers, sampler_parameters)
+    return concatenation(
+        num_voters_per_sampler, num_candidates, samplers, sampler_parameters
+    )
 
 
 def concatenation(
-        num_voters_per_sampler: list[int],
-        num_candidates: int,
-        samplers: list[Callable],
-        sampler_parameters: list[dict]
+    num_voters_per_sampler: list[int],
+    num_candidates: int,
+    samplers: list[Callable],
+    sampler_parameters: list[dict],
 ) -> np.ndarray:
     """
     Generate votes from different samplers and concatenate them together to form the final set of
@@ -101,18 +107,24 @@ def concatenation(
     """
 
     if len(num_voters_per_sampler) != len(samplers):
-        raise ValueError("For a concatenation, you need to provide one number of voters per "
-                         "sampler, no more, no less.")
+        raise ValueError(
+            "For a concatenation, you need to provide one number of voters per "
+            "sampler, no more, no less."
+        )
     if len(samplers) != len(sampler_parameters):
-        raise ValueError("For a concatenation, you need to provide one dictionary of parameters"
-                         " per sampler, no more, no less.")
+        raise ValueError(
+            "For a concatenation, you need to provide one dictionary of parameters"
+            " per sampler, no more, no less."
+        )
 
     for i, params in enumerate(sampler_parameters):
         params["num_voters"] = num_voters_per_sampler[i]
         params["num_candidates"] = num_candidates
 
     all_votes = None
-    for num_voters, sampler, params in zip(num_voters_per_sampler, samplers, sampler_parameters):
+    for num_voters, sampler, params in zip(
+        num_voters_per_sampler, samplers, sampler_parameters
+    ):
         if num_voters > 0:
             votes = sampler(**params)
             if all_votes is None:
@@ -122,8 +134,10 @@ def concatenation(
             elif isinstance(all_votes, list):
                 all_votes.extend(votes)
             else:
-                raise ValueError(f"The type of the votes returned by the sampler "
-                                 f"{sampler.__name__} do not match known types and thus cannot "
-                                 f"be used for concatenation of samplers. Did you mix-up ordinal "
-                                 f"and approval samplers?")
+                raise ValueError(
+                    f"The type of the votes returned by the sampler "
+                    f"{sampler.__name__} do not match known types and thus cannot "
+                    f"be used for concatenation of samplers. Did you mix-up ordinal "
+                    f"and approval samplers?"
+                )
     return all_votes
