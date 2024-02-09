@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.core.composition import mixture
-from prefsampling.core.filters import resample_as_central_vote
+from prefsampling.core.filters import resample_as_central_vote, permute_voters, rename_candidates
 from prefsampling.ordinal import (
     urn as ordinal_urn,
     impartial as ordinal_impartial,
@@ -164,6 +164,23 @@ ALL_SAMPLERS = [
         [ordinal_norm_mallows, ordinal_norm_mallows, ordinal_norm_mallows],
         [4, 10, 3],
         [{"norm_phi": 0.4}, {"norm_phi": 0.9}, {"norm_phi": 0.23}],
+    ),
+    lambda num_voters, num_candidates, seed=None: permute_voters(
+        ordinal_single_crossing(num_voters, num_candidates),
+        seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: permute_voters(
+        approval_identity(num_voters, num_candidates, p=0.5),
+        seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: rename_candidates(
+        ordinal_single_crossing(num_voters, num_candidates),
+        seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: rename_candidates(
+        approval_identity(num_voters, num_candidates, p=0.5),
+        seed=seed,
+        num_candidates=num_candidates
     ),
     lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
         ordinal_single_crossing(num_voters, num_candidates),

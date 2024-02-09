@@ -66,7 +66,7 @@ def rename_candidates(
         num_candidates = max(len(vote) for vote in votes)
     renaming = rng.permutation(num_candidates)
 
-    if isinstance(votes, list) and isinstance(votes[0], int):
+    if isinstance(votes, list) and isinstance(votes[0], set):
         renamed_votes = [{renaming[c] for c in vote} for vote in votes]
     elif isinstance(votes, np.ndarray):
         renamed_votes = renaming[votes]
