@@ -13,8 +13,8 @@ def resampling(
     num_candidates: int,
     phi: float,
     p: float,
-    seed: int = None,
     central_vote: set = None,
+    seed: int = None,
 ) -> list[set[int]]:
     """
     Generates approval votes from the resampling model.
@@ -29,10 +29,10 @@ def resampling(
             Resampling model parameter, denoting the noise.
         p : float
             Resampling model parameter, denoting the average vote length.
-        seed : int
-            Seed for numpy random number generator.
         central_vote : set
             The central vote.
+        seed : int
+            Seed for numpy random number generator.
 
     Returns
     -------

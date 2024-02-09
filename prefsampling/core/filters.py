@@ -30,7 +30,7 @@ def permute_voters(
     rng = np.random.default_rng(seed)
     rng.shuffle(votes)
 
-    return np.array(votes)
+    return votes
 
 
 def rename_candidates(

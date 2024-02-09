@@ -40,6 +40,8 @@ Other parameters are specific to the samplers.
 Ordinal Samplers
 ----------------
 
+Reference: :py:mod:`prefsampling.ordinal`
+
 .. list-table::
    :widths: 25 25 50
    :header-rows: 1
@@ -99,6 +101,8 @@ Ordinal Samplers
 Approval Samplers
 -----------------
 
+Reference: :py:mod:`prefsampling.approval`
+
 .. list-table::
    :widths: 25 25 50
    :header-rows: 1
@@ -139,7 +143,15 @@ Approval Samplers
      - | :code:`p`
        | :code:`phi`
      - :code:`noise_type` (defaults to :py:const:`~prefsampling.approval.NoiseType.HAMMING`)
-
+   * - :py:func:`~prefsampling.approval.truncated_ordinal`
+     - | :code:`p`
+       | :code:`ordinal_sampler`
+       | :code:`ordinal_sampler_parameters`
+     -
+   * - :py:func:`~prefsampling.approval.urn_partylist`
+     - | :code:`alpha`
+       | :code:`parties`
+     -
 
 Composition of Samplers
 -----------------------

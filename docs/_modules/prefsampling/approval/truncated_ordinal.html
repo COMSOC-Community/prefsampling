@@ -40,7 +40,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/prefsampling/approval/truncated_urn';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/prefsampling/approval/truncated_ordinal';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -262,21 +262,22 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for prefsampling.approval.truncated_ordinal</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
 
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.core.urn</span> <span class="kn">import</span> <span class="n">urn_votes</span>
 
-
-<div class="viewcode-block" id="truncated_urn"><a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.truncated_urn">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
+<div class="viewcode-block" id="truncated_ordinal"><a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.truncated_ordinal">[docs]</a><span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">truncated_ordinal</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">ordinal_sampler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">ordinal_sampler_parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes from a truncated variant of Polya-Eggenberger urn culture.</span>
+<span class="sd">    Generates approval votes by truncating ordinal votes sampled from a given ordinal sampler.</span>
 
-<span class="sd">    Note that for a given number of voters, votes are not sampled independently.</span>
+<span class="sd">    The process is as follows: ordinal votes are sampled from the ordinal sampler. These votes are</span>
+<span class="sd">    then truncated in a way that each approval vote consists in the `p * num_candidates` first</span>
+<span class="sd">    candidates of the ordinal vote.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -284,44 +285,31 @@ document.write(`
 <span class="sd">            Number of voters</span>
 <span class="sd">        num_candidates: int</span>
 <span class="sd">            Number of candidates</span>
-<span class="sd">        alpha: float,</span>
-<span class="sd">            The dispersion coefficient (`alpha * m!` copies of a vote are put back in the urn after</span>
-<span class="sd">            a draw). Must be non-negative.</span>
 <span class="sd">        p: float,</span>
 <span class="sd">            Ratio of approved candidates.</span>
-<span class="sd">        seed: int, default: :code:`None`</span>
-<span class="sd">            The seed for the random number generator.</span>
+<span class="sd">        ordinal_sampler: Callable</span>
+<span class="sd">            The ordinal sampler to be used.</span>
+<span class="sd">        ordinal_sampler_parameters: dict</span>
+<span class="sd">            The arguments passed ot the ordinal sampler. The num_voters, num_candidates and seed</span>
+<span class="sd">            parameters are overriden by those passed to this function.</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">        list[set[int]]</span>
 <span class="sd">            Approval votes</span>
-
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            When `alpha` is a negative number.</span>
-<span class="sd">            When `p` not in [0,1] interval.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">alpha</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Alpha needs to be non-negative for an urn model.&quot;</span><span class="p">)</span>
-
     <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
 
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_voters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_voters</span>
+    <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_candidates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_candidates</span>
+    <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+    <span class="n">ordinal_votes</span> <span class="o">=</span> <span class="n">ordinal_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">ordinal_sampler_parameters</span><span class="p">)</span>
 
-    <span class="n">ordinal_votes</span> <span class="o">=</span> <span class="n">urn_votes</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">rng</span><span class="p">)</span>
-
-    <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">vote_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
-        <span class="n">set_</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ordinal_votes</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">vote_length</span><span class="p">])</span>
-        <span class="n">set_</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">set_</span><span class="p">}</span>
-        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">votes</span></div>
+    <span class="k">return</span> <span class="p">[{</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">vote_length</span><span class="p">]}</span> <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">ordinal_votes</span><span class="p">]</span></div>
 </pre></div>
 
                 </article>

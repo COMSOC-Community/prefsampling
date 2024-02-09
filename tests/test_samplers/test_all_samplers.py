@@ -34,6 +34,7 @@ from prefsampling.approval import (
     full as approval_full,
     empty as approval_empty,
     urn_partylist as approval_urn_partylist,
+    truncated_ordinal as approval_truncated_ordinal,
     NoiseType,
 )
 
@@ -139,6 +140,13 @@ ALL_SAMPLERS = [
     approval_empty,
     lambda num_voters, num_candidates, seed=None: approval_urn_partylist(
         num_voters, num_candidates, 0.1, 3, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_truncated_ordinal(
+        num_voters,
+        num_candidates,
+        0.5,
+        ordinal_urn,
+        {"alpha": 0.8}
     ),
     lambda num_voters, num_candidates, seed=None: mixture(
         num_voters,

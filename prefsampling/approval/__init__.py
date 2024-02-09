@@ -13,7 +13,7 @@ from prefsampling.approval.resampling import (
 from prefsampling.approval.noise import noise, NoiseType
 from prefsampling.approval.euclidean import euclidean
 from prefsampling.approval.partylist import urn_partylist
-from prefsampling.approval.truncated_urn import truncated_urn
+from prefsampling.approval.truncated_ordinal import truncated_ordinal
 
 
 __all__ = [
@@ -28,5 +28,5 @@ __all__ = [
     "NoiseType",
     "euclidean",
     "urn_partylist",
-    "truncated_urn",
+    "truncated_ordinal",
 ]

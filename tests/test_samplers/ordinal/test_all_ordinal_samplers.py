@@ -2,6 +2,7 @@ import numpy as np
 
 from unittest import TestCase
 
+from prefsampling.core import resample_as_central_vote, rename_candidates, permute_voters, mixture
 from prefsampling.core.euclidean import EuclideanSpace
 
 from prefsampling.ordinal import (
@@ -79,6 +80,37 @@ ALL_ORDINAL_SAMPLERS = [
     # lambda num_voters, num_candidates, seed=None: group_separable(
     #     num_voters, num_candidates, TreeSampler.BALANCED, seed=seed
     # ),
+    lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
+        single_crossing(num_voters, num_candidates),
+        norm_mallows,
+        {"norm_phi": 0.4, "seed": seed, "num_candidates": num_candidates},
+    ),
+    lambda num_voters, num_candidates, seed=None: rename_candidates(
+        single_crossing(num_voters, num_candidates),
+        seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: permute_voters(
+        single_crossing(num_voters, num_candidates),
+        seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: mixture(
+        num_voters,
+        num_candidates,
+        [norm_mallows, norm_mallows, norm_mallows],
+        [4, 10, 3],
+        [{"norm_phi": 0.4}, {"norm_phi": 0.9}, {"norm_phi": 0.23}],
+    ),
+    lambda num_voters, num_candidates, seed=None: mixture(
+        num_voters,
+        num_candidates,
+        [
+            single_crossing,
+            single_peaked_circle,
+            single_peaked_walsh,
+        ],
+        [0.5, 0.2, 0.3],
+        [{}, {}, {}],
+    ),
 ]
 
 
