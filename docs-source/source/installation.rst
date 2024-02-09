@@ -10,5 +10,5 @@ easily install it by using:
 
     pip3 install prefsampling
 
-The source code is hosted on `GitHub repository <https://github.com/Simon-Rey/prefsampling>`_
+The source code is hosted on `GitHub repository <https://github.com/COMSOC-Community/prefsampling>`_
 as well.

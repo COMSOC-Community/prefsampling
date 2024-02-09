@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light">
+<html lang="en" data-content_root="./" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Quick Start &#8212; PrefSampling</title>
   
@@ -19,28 +18,28 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'quickstart';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -55,10 +54,9 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -99,11 +97,14 @@
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -118,6 +119,7 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -130,7 +132,18 @@
     <p class="title logo__title">PrefSampling</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="index.html">PrefSampling</a></li>
@@ -192,7 +205,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/Simon-Rey/prefsampling" target="_blank"
+<a href="https://github.com/COMSOC-Community/prefsampling" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -270,6 +283,7 @@
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -279,6 +293,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -326,12 +341,12 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="quick-start">
-<span id="quickstart"></span><h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading">#</a></h1>
+<span id="quickstart"></span><h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h1>
 <section id="organisation-of-the-package">
-<h2>Organisation of the package<a class="headerlink" href="#organisation-of-the-package" title="Permalink to this heading">#</a></h2>
+<h2>Organisation of the package<a class="headerlink" href="#organisation-of-the-package" title="Link to this heading">#</a></h2>
 <p>The samplers are organised in the package based on the format of sample they produce.
 The module <a class="reference internal" href="reference/ordinal/index.html#module-prefsampling.ordinal" title="prefsampling.ordinal"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.ordinal</span></code></a> contains the ordinal samplers that
 generate rankings of the candidates.
@@ -339,7 +354,7 @@ The module <a class="reference internal" href="reference/approval/index.html#mod
 the ones that generate sets of candidates.</p>
 </section>
 <section id="sample-types">
-<h2>Sample Types<a class="headerlink" href="#sample-types" title="Permalink to this heading">#</a></h2>
+<h2>Sample Types<a class="headerlink" href="#sample-types" title="Link to this heading">#</a></h2>
 <p>To make it easy to embed the package in all kinds of tools, we use basic Python types:</p>
 <ul class="simple">
 <li><p>Ordinal samplers return collections of <code class="code docutils literal notranslate"><span class="pre">np.ndarray</span></code>, that is, <a class="reference external" href="https://numpy.org/">Numpy</a> arrays where the most preferred candidate is at position 0, the next one at position 1 and so forth;</p></li>
@@ -348,7 +363,7 @@ the ones that generate sets of candidates.</p>
 <p>In all cases, the candidates are named <cite>0, 1, 2, …</cite>.</p>
 </section>
 <section id="general-syntax">
-<h2>General Syntax<a class="headerlink" href="#general-syntax" title="Permalink to this heading">#</a></h2>
+<h2>General Syntax<a class="headerlink" href="#general-syntax" title="Link to this heading">#</a></h2>
 <p>All the sampler we provide have the same signature:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
@@ -360,7 +375,7 @@ random number generator to give you more control if needed (for replication for 
 Other parameters are specific to the samplers.</p>
 </section>
 <section id="ordinal-samplers">
-<h2>Ordinal Samplers<a class="headerlink" href="#ordinal-samplers" title="Permalink to this heading">#</a></h2>
+<h2>Ordinal Samplers<a class="headerlink" href="#ordinal-samplers" title="Link to this heading">#</a></h2>
 <p>Reference: <a class="reference internal" href="reference/ordinal/index.html#module-prefsampling.ordinal" title="prefsampling.ordinal"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.ordinal</span></code></a></p>
 <table class="table">
 <colgroup>
@@ -450,7 +465,7 @@ Other parameters are specific to the samplers.</p>
 </table>
 </section>
 <section id="approval-samplers">
-<h2>Approval Samplers<a class="headerlink" href="#approval-samplers" title="Permalink to this heading">#</a></h2>
+<h2>Approval Samplers<a class="headerlink" href="#approval-samplers" title="Link to this heading">#</a></h2>
 <p>Reference: <a class="reference internal" href="reference/approval/index.html#module-prefsampling.approval" title="prefsampling.approval"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.approval</span></code></a></p>
 <table class="table">
 <colgroup>
@@ -543,7 +558,7 @@ Other parameters are specific to the samplers.</p>
 </table>
 </section>
 <section id="composition-of-samplers">
-<h2>Composition of Samplers<a class="headerlink" href="#composition-of-samplers" title="Permalink to this heading">#</a></h2>
+<h2>Composition of Samplers<a class="headerlink" href="#composition-of-samplers" title="Link to this heading">#</a></h2>
 <p>It is often useful to be able to compose samplers, to define mixture for instance. The functions
 <a class="reference internal" href="reference/core/index.html#prefsampling.core.composition.mixture" title="prefsampling.core.composition.mixture"><code class="xref py py-func docutils literal notranslate"><span class="pre">mixture()</span></code></a> and <a class="reference internal" href="reference/core/index.html#prefsampling.core.composition.concatenation" title="prefsampling.core.composition.concatenation"><code class="xref py py-func docutils literal notranslate"><span class="pre">concatenation()</span></code></a>
 can do that.</p>
@@ -587,7 +602,7 @@ can do that.</p>
 </div>
 </section>
 <section id="filters">
-<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this heading">#</a></h2>
+<h2>Filters<a class="headerlink" href="#filters" title="Link to this heading">#</a></h2>
 <p>Filters are functions that operate on collections of votes and apply some random operation to them.
 These are the filters we have implemented:</p>
 <table class="table">
@@ -639,7 +654,7 @@ filter.</p>
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="installation.html"
@@ -667,6 +682,7 @@ filter.</p>
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -702,6 +718,7 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -728,8 +745,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

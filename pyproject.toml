@@ -33,12 +33,11 @@ dev = [
     "sphinx-book-theme",
     "sphinxcontrib-napoleon",
     "unittest2",
-    "scipy",
     "matplotlib",
     "pandas",
     "seaborn"
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Simon-Rey/prefsampling"
-"Bug Tracker" = "https://github.com/Simon-Rey/prefsampling/issues"
+"Homepage" = "https://github.com/COMSOC-Community/prefsampling"
+"Bug Tracker" = "https://github.com/COMSOC-Community/prefsampling/issues"

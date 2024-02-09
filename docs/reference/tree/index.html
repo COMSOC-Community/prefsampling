@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light">
+<html lang="en" data-content_root="../../" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Tree &#8212; PrefSampling</title>
   
@@ -19,28 +18,28 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/tree/index';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -55,10 +54,9 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -99,11 +97,14 @@
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -118,6 +119,7 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -130,7 +132,18 @@
     <p class="title logo__title">PrefSampling</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">PrefSampling</a></li>
@@ -192,7 +205,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/Simon-Rey/prefsampling" target="_blank"
+<a href="https://github.com/COMSOC-Community/prefsampling" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -270,6 +283,7 @@
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -279,6 +293,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -324,13 +339,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="module-prefsampling.tree">
-<span id="tree"></span><h1>Tree<a class="headerlink" href="#module-prefsampling.tree" title="Permalink to this heading">#</a></h1>
+<span id="tree"></span><h1>Tree<a class="headerlink" href="#module-prefsampling.tree" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.tree.all_schroeder_tree">
-<span class="sig-name descname"><span class="pre">all_schroeder_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">prefsampling.tree.node.Node</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#all_schroeder_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.all_schroeder_tree" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">all_schroeder_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#all_schroeder_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.all_schroeder_tree" title="Link to this definition">#</a></dt>
 <dd><p>Reruns all Schröder trees with given numbers of leaves and internal nodes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -350,7 +365,7 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.tree.caterpillar_tree">
-<span class="sig-name descname"><span class="pre">caterpillar_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/caterpillar.html#caterpillar_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.caterpillar_tree" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">caterpillar_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/caterpillar.html#caterpillar_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.caterpillar_tree" title="Link to this definition">#</a></dt>
 <dd><p>Generates a caterpillar tree.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -364,7 +379,7 @@ document.write(`
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.tree.schroeder_tree">
-<span class="sig-name descname"><span class="pre">schroeder_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#schroeder_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.schroeder_tree" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">schroeder_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#schroeder_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.schroeder_tree" title="Link to this definition">#</a></dt>
 <dd><p>Generates a random Schöder tree with suitable number of leaves and internal nodes.
 The algorithm was presented by <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0020019097001749">Alonso, Rémy, Schott (1997a)</a> building on <a class="reference external" href="https://link.springer.com/article/10.1007/BF02522824">Alonso,
 Rémy, Schott (1997b)</a>.</p>
@@ -390,7 +405,7 @@ the corresponding number of internal nodes.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.tree.schroeder_tree_brute_force">
-<span class="sig-name descname"><span class="pre">schroeder_tree_brute_force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#schroeder_tree_brute_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.schroeder_tree_brute_force" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">schroeder_tree_brute_force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#schroeder_tree_brute_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.schroeder_tree_brute_force" title="Link to this definition">#</a></dt>
 <dd><p>Sample a Schröder tree uniformly at random by enumerating all possible Schröder tree and
 selecting one of them uniformly at random. This procedure is particularly inefficient but
 ensures uniformity.</p>
@@ -413,7 +428,7 @@ ensures uniformity.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.tree.schroeder_tree_lescanne">
-<span class="sig-name descname"><span class="pre">schroeder_tree_lescanne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#schroeder_tree_lescanne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.schroeder_tree_lescanne" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">schroeder_tree_lescanne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#schroeder_tree_lescanne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.schroeder_tree_lescanne" title="Link to this definition">#</a></dt>
 <dd><p>Samples a random Schröder tree following the algorithm provided by <a class="reference external" href="https://arxiv.org/abs/2205.11982">Lescanne (2022)</a>. The sampler is directcly taken from the <a class="reference external" href="https://github.com/PierreLescanne/Motzkin">corresponding
 GitHub repository</a> (no licence available).</p>
 <p>If a specific number of internal nodes is given, trees are sampled at random until the required
@@ -446,7 +461,7 @@ number of internal nodes is achieved (rejection sampling).</p>
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="../approval/index.html"
@@ -474,6 +489,7 @@ number of internal nodes is achieved (rejection sampling).</p>
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -507,6 +523,7 @@ By Simon Rey and Stanisław Szufa
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2023, Simon Rey and Stanisław Szufa.
@@ -533,8 +550,8 @@ By Simon Rey and Stanisław Szufa
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

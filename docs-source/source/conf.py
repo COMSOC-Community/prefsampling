@@ -53,7 +53,7 @@ html_theme = "sphinx_book_theme"
 
 html_title = "PrefSampling"
 html_theme_options = {
-    "repository_url": "https://github.com/Simon-Rey/prefsampling",
+    "repository_url": "https://github.com/COMSOC-Community/prefsampling",
     "use_repository_button": True,
 }
 html_context = {"default_mode": "light"}
