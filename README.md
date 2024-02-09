@@ -2,7 +2,7 @@
 
 [![PyPI Status](https://img.shields.io/pypi/v/prefsampling.svg)](https://pypi.python.org/pypi/prefsampling)
 [![Build badge](https://github.com/COMSOC-Community/prefsampling/workflows/build/badge.svg)](https://github.com/COMSOC-Community/prefsampling/actions/workflows/build.yml)
-[![codecov](https://codecov.io/gh/simon-rey/prefsampling/branch/main/graphs/badge.svg)](https://codecov.io/gh/simon-rey/prefsampling/tree/main)
+[![codecov](https://codecov.io/gh/COMSOC-Community/prefsampling/branch/main/graphs/badge.svg)](https://codecov.io/gh/COMSOC-Community/prefsampling/tree/main)
 
 ## Overview
 
