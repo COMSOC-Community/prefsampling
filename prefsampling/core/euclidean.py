@@ -76,7 +76,7 @@ def election_positions(
             [list(random_ball(dimension, rng)[0]) for _ in range(num_voters)]
         )
         candidates = np.array(
-            [list(random_sphere(dimension, rng)[0]) for _ in range(num_candidates)]
+            [list(random_ball(dimension, rng)[0]) for _ in range(num_candidates)]
         )
     else:
         raise ValueError(
