@@ -2,6 +2,8 @@ from collections.abc import Callable
 
 import numpy as np
 
+from prefsampling.core.filters import rename_candidates
+
 
 def mixture(
     num_voters: int,
@@ -127,6 +129,7 @@ def concatenation(
     ):
         if num_voters > 0:
             votes = sampler(**params)
+            votes = rename_candidates(votes)
             if all_votes is None:
                 all_votes = votes
             elif isinstance(all_votes, np.ndarray):
