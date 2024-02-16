@@ -282,6 +282,7 @@ document.write(`
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">impartial</span>
 
 
 <div class="viewcode-block" id="mallows">
@@ -293,6 +294,7 @@ document.write(`
     <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">normalise_phi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">central_vote</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">impartial_central_vote</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -321,11 +323,13 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        phi : float</span>
 <span class="sd">            The dispersion coefficient.</span>
-<span class="sd">        normalise_phi : bool, optional</span>
+<span class="sd">        normalise_phi : bool, default: :code:`False`</span>
 <span class="sd">            Indicates whether phi should be normalised (see `Boehmer, Faliszewski and Kraiczy (2023)</span>
 <span class="sd">            &lt;https://proceedings.mlr.press/v202/boehmer23b.html&gt;`_)</span>
 <span class="sd">        central_vote : np.ndarray, default: :code:`np.arrange(num_candidates)`</span>
-<span class="sd">            The central vote.</span>
+<span class="sd">            The central vote. Ignored if :code:`impartial_central_vote = True`.</span>
+<span class="sd">        impartial_central_vote: bool, default: :code:`False`</span>
+<span class="sd">            If true, the partial vote is sampled from :py:func:`~prefsampling.ordinal.impartial`.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -340,6 +344,9 @@ document.write(`
         <span class="n">phi</span> <span class="o">=</span> <span class="n">phi_from_norm_phi</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">impartial_central_vote</span><span class="p">:</span>
+        <span class="n">central_vote</span> <span class="o">=</span> <span class="n">impartial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="n">insert_distributions</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">_insert_prob_distr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>

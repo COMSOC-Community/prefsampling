@@ -62,6 +62,7 @@ Reference: :py:mod:`prefsampling.ordinal`
      - :code:`phi`
      - | :code:`central_vote` (defaults to `0, 1, 2, ...`)
        | :code:`normalise_phi` (defaults to :code:`False`)
+       | :code:`impartial_central_vote` (defaults to :code:`False`)
    * - :py:func:`~prefsampling.ordinal.norm_mallows`
      - :code:`norm_phi`
      - | :code:`central_vote` (defaults to `0, 1, 2, ...`)
@@ -125,7 +126,8 @@ Reference: :py:mod:`prefsampling.approval`
    * - :py:func:`~prefsampling.approval.resampling`
      - | :code:`p`
        | :code:`phi`
-     - :code:`central_vote` (defaults to `{0, 1, 2, ...}`)
+     - | :code:`central_vote` (defaults to `{0, 1, 2, ...}`)
+       | :code:`impartial_central_vote` (defaults to :code:`False`)
    * - :py:func:`~prefsampling.approval.disjoint_resampling`
      - | :code:`p`
        | :code:`phi`

@@ -1,6 +1,7 @@
 import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
+from prefsampling.ordinal import impartial
 
 
 @validate_num_voters_candidates
@@ -10,6 +11,7 @@ def mallows(
     phi: float,
     normalise_phi: bool = False,
     central_vote: np.ndarray = None,
+    impartial_central_vote: bool = False,
     seed: int = None,
 ) -> np.ndarray:
     """
@@ -38,11 +40,13 @@ def mallows(
             Number of Candidates.
         phi : float
             The dispersion coefficient.
-        normalise_phi : bool, optional
+        normalise_phi : bool, default: :code:`False`
             Indicates whether phi should be normalised (see `Boehmer, Faliszewski and Kraiczy (2023)
             <https://proceedings.mlr.press/v202/boehmer23b.html>`_)
         central_vote : np.ndarray, default: :code:`np.arrange(num_candidates)`
-            The central vote.
+            The central vote. Ignored if :code:`impartial_central_vote = True`.
+        impartial_central_vote: bool, default: :code:`False`
+            If true, the partial vote is sampled from :py:func:`~prefsampling.ordinal.impartial`.
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
@@ -57,6 +61,9 @@ def mallows(
         phi = phi_from_norm_phi(num_candidates, phi)
 
     rng = np.random.default_rng(seed)
+
+    if impartial_central_vote:
+        central_vote = impartial(1, num_candidates, seed=seed)[0]
 
     insert_distributions = [
         _insert_prob_distr(i, phi) for i in range(1, num_candidates)

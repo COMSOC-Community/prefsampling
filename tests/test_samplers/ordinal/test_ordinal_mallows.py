@@ -21,3 +21,7 @@ class TestOrdinalMawllos(TestCase):
             phi_from_norm_phi(5, -0.5)
         with self.assertRaises(ValueError):
             phi_from_norm_phi(5, 2.1)
+
+    def test_impartial_central_vote(self):
+        mallows(4, 5, phi=0.4, impartial_central_vote=True)
+        

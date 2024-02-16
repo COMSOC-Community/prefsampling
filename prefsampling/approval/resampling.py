@@ -3,7 +3,7 @@ import copy
 import math
 import numpy as np
 
-
+from prefsampling.approval import impartial
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
@@ -14,6 +14,7 @@ def resampling(
     phi: float,
     p: float,
     central_vote: set = None,
+    impartial_central_vote: bool = False,
     seed: int = None,
 ) -> list[set[int]]:
     """
@@ -30,7 +31,9 @@ def resampling(
         p : float
             Resampling model parameter, denoting the average vote length.
         central_vote : set
-            The central vote.
+            The central vote. Ignored if :code:`impartial_central_vote = True`.
+        impartial_central_vote: bool, default: :code:`False`
+            If true, the partial vote is sampled from :py:func:`~prefsampling.approval.impartial` with the same value for the parameter :code:`p` as passed to this sampler.
         seed : int
             Seed for numpy random number generator.
 
@@ -55,6 +58,8 @@ def resampling(
     rng = np.random.default_rng(seed)
 
     k = math.floor(p * num_candidates)
+    if impartial_central_vote:
+        central_vote = impartial(1, num_candidates, p)[0]
     if central_vote is None:
         central_vote = set(range(k))
 
