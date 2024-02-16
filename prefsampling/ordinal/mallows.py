@@ -46,7 +46,7 @@ def mallows(
         central_vote : np.ndarray, default: :code:`np.arrange(num_candidates)`
             The central vote. Ignored if :code:`impartial_central_vote = True`.
         impartial_central_vote: bool, default: :code:`False`
-            If true, the partial vote is sampled from :py:func:`~prefsampling.ordinal.impartial`.
+            If true, the central vote is sampled from :py:func:`~prefsampling.ordinal.impartial`.
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 

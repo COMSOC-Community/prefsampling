@@ -33,7 +33,7 @@ def resampling(
         central_vote : set
             The central vote. Ignored if :code:`impartial_central_vote = True`.
         impartial_central_vote: bool, default: :code:`False`
-            If true, the partial vote is sampled from :py:func:`~prefsampling.approval.impartial` with the same value for the parameter :code:`p` as passed to this sampler.
+            If true, the central vote is sampled from :py:func:`~prefsampling.approval.impartial` with the same value for the parameter :code:`p` as passed to this sampler.
         seed : int
             Seed for numpy random number generator.
 
