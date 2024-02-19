@@ -24,4 +24,3 @@ class TestOrdinalMawllos(TestCase):
 
     def test_impartial_central_vote(self):
         mallows(4, 5, phi=0.4, impartial_central_vote=True)
-        

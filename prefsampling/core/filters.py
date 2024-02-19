@@ -1,6 +1,7 @@
 """
 Filters are functions that operate on collections of votes and apply some random operation to them.
 """
+
 from __future__ import annotations
 
 from collections.abc import MutableSequence, Callable
