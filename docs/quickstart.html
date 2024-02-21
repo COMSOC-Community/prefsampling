@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="_static/documentation_options.js?v=7ed07c24"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -332,6 +332,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#composition-of-samplers">Composition of Samplers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constants">Constants</a></li>
 </ul>
             </nav>
         </div>
@@ -652,6 +653,19 @@ filter.</p>
 </pre></div>
 </div>
 </section>
+<section id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Link to this heading">#</a></h2>
+<p>The constants used in the package are defined with respect to their corresponding samplers, see for
+instance <a class="reference internal" href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a> or <a class="reference internal" href="reference/approval/index.html#prefsampling.approval.NoiseType" title="prefsampling.approval.NoiseType"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseType</span></code></a>.
+They are also all gathered in the <code class="code docutils literal notranslate"><span class="pre">prefsampling.CONSTANTS</span></code> enumeration.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling</span> <span class="kn">import</span> <span class="n">CONSTANTS</span>
+
+<span class="n">CONSTANTS</span><span class="o">.</span><span class="n">BALL</span>
+<span class="n">CONSTANTS</span><span class="o">.</span><span class="n">SCHROEDER</span>
+<span class="n">CONSTANTS</span><span class="o">.</span><span class="n">BUNKE_SHEARER</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -706,6 +720,7 @@ filter.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approval-samplers">Approval Samplers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#composition-of-samplers">Composition of Samplers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constants">Constants</a></li>
 </ul>
   </nav></div>
 

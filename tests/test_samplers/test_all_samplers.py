@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from prefsampling import CONSTANTS
 from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.core.composition import mixture
 from prefsampling.core.filters import (
@@ -69,6 +70,18 @@ ALL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
         num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
     ),
+    lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
+        num_voters, num_candidates, space=CONSTANTS.UNIFORM, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
+        num_voters, num_candidates, space=CONSTANTS.GAUSSIAN, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
+        num_voters, num_candidates, space=CONSTANTS.SPHERE, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
+        num_voters, num_candidates, space=CONSTANTS.BALL, seed=seed
+    ),
     lambda num_voters, num_candidates, seed=None: ordinal_mallows(
         num_voters, num_candidates, 0.5, seed=seed
     ),
@@ -93,6 +106,18 @@ ALL_SAMPLERS = [
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
         num_voters, num_candidates, TreeSampler.CATERPILLAR, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
+        num_voters, num_candidates, CONSTANTS.SCHROEDER, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
+        num_voters, num_candidates, CONSTANTS.SCHROEDER_LESCANNE, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
+        num_voters, num_candidates, CONSTANTS.SCHROEDER_UNIFORM, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
+        num_voters, num_candidates, CONSTANTS.CATERPILLAR, seed=seed
     ),
     # lambda num_voters, num_candidates, seed=None: ordinal_group_separable(
     #     num_voters, num_candidates, TreeSampler.BALANCED, seed=seed
@@ -124,6 +149,18 @@ ALL_SAMPLERS = [
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
         num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
     ),
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, space=CONSTANTS.UNIFORM, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, space=CONSTANTS.GAUSSIAN, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, space=CONSTANTS.SPHERE, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, space=CONSTANTS.BALL, seed=seed
+    ),
     lambda num_voters, num_candidates, seed=None: approval_noise(
         num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.HAMMING, seed=seed
     ),
@@ -139,6 +176,23 @@ ALL_SAMPLERS = [
         0.5,
         0.5,
         noise_type=NoiseType.BUNKE_SHEARER,
+        seed=seed,
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_noise(
+        num_voters, num_candidates, 0.5, 0.5, noise_type=CONSTANTS.HAMMING, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_noise(
+        num_voters, num_candidates, 0.5, 0.5, noise_type=CONSTANTS.ZELINKA, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_noise(
+        num_voters, num_candidates, 0.5, 0.5, noise_type=CONSTANTS.JACCARD, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_noise(
+        num_voters,
+        num_candidates,
+        0.5,
+        0.5,
+        noise_type=CONSTANTS.BUNKE_SHEARER,
         seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: approval_identity(

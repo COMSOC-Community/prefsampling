@@ -1,32 +1,32 @@
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
-class EuclideanSpace(Enum):
+class EuclideanSpace(StrEnum):
     """
     Constants used to represent Euclidean spaces
     """
 
-    UNIFORM = 1
+    UNIFORM = "Uniform Space"
     """
     Uniform space
     """
-    GAUSSIAN = 2
+    GAUSSIAN = "Gaussian Space"
     """
     Gaussian space
     """
-    SPHERE = 3
+    SPHERE = "Spherical Space"
     """
-    Spheric space
+    Spherical space
     """
-    BALL = 4
+    BALL = "Ball Space"
     """
-    Ball space
+    Ball-shaped space
     """
 
 

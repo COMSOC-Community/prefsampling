@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/documentation_options.js?v=7ed07c24"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -281,8 +281,7 @@ document.write(`
   <h1>Source code for prefsampling.ordinal.groupseparable</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">StrEnum</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -300,33 +299,33 @@ document.write(`
 
 <div class="viewcode-block" id="TreeSampler">
 <a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.TreeSampler">[docs]</a>
-<span class="k">class</span> <span class="nc">TreeSampler</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">TreeSampler</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constants use to represent different samplers for trees that can be used for group separable</span>
 <span class="sd">    preferences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">SCHROEDER</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">SCHROEDER</span> <span class="o">=</span> <span class="s2">&quot;Scröder Tree by Alsonso, Rémy, Schott&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Random Schröder trees sampled following Alonso, Rémy, Schott (1997)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">SCHROEDER_UNIFORM</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">SCHROEDER_UNIFORM</span> <span class="o">=</span> <span class="s2">&quot;Scröder Tree by brute-force&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Random Schröder sampled uniformly via complete enumeration algorithm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">SCHROEDER_LESCANNE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">SCHROEDER_LESCANNE</span> <span class="o">=</span> <span class="s2">&quot;Scröder Tree by Lescanne&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Random Schröder trees sampled following Lescanne (2022)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">CATERPILLAR</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">CATERPILLAR</span> <span class="o">=</span> <span class="s2">&quot;Caterpillar Tree&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Caterpillar trees</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">BALANCED</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">BALANCED</span> <span class="o">=</span> <span class="s2">&quot;Balanced Tree&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Balanced trees</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-import math
-from enum import Enum
+from enum import StrEnum
 from itertools import chain
 
 import numpy as np
@@ -17,33 +16,33 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 from prefsampling.utils import comb
 
 
-class TreeSampler(Enum):
+class TreeSampler(StrEnum):
     """
     Constants use to represent different samplers for trees that can be used for group separable
     preferences.
     """
 
-    SCHROEDER = 1
+    SCHROEDER = "Scröder Tree by Alsonso, Rémy, Schott"
     """
     Random Schröder trees sampled following Alonso, Rémy, Schott (1997)
     """
 
-    SCHROEDER_UNIFORM = 2
+    SCHROEDER_UNIFORM = "Scröder Tree by brute-force"
     """
     Random Schröder sampled uniformly via complete enumeration algorithm
     """
 
-    SCHROEDER_LESCANNE = 3
+    SCHROEDER_LESCANNE = "Scröder Tree by Lescanne"
     """
     Random Schröder trees sampled following Lescanne (2022)
     """
 
-    CATERPILLAR = 4
+    CATERPILLAR = "Caterpillar Tree"
     """
     Caterpillar trees
     """
 
-    BALANCED = 5
+    BALANCED = "Balanced Tree"
     """
     Balanced trees
     """

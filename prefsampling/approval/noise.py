@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from enum import Enum
+from enum import StrEnum
 
 import numpy as np
 
@@ -9,27 +9,27 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 from prefsampling.utils import comb
 
 
-class NoiseType(Enum):
+class NoiseType(StrEnum):
     """
     Constants representing the different types of noise that can be applied to the noise sampler.
     """
 
-    HAMMING = 1
+    HAMMING = "Hamming noise"
     """
     Hamming noise.
     """
 
-    JACCARD = 2
+    JACCARD = "Jaccard noise"
     """
     Jaccard noise.
     """
 
-    ZELINKA = 3
+    ZELINKA = "Zelinka noise"
     """
     Zelinka noise.
     """
 
-    BUNKE_SHEARER = 4
+    BUNKE_SHEARER = "Bunke-Shearer noise"
     """
     Bunke-Shearer noise.
     """

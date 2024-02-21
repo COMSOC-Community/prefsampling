@@ -242,3 +242,18 @@ filter.
         norm_mallows,  # The sampler
         {"norm_phi": 0.4, "seed": 855, "num_candidates": num_candidates},  # The arguments for the sampler
     )
+
+Constants
+---------
+
+The constants used in the package are defined with respect to their corresponding samplers, see for
+instance :py:class:`~prefsampling.core.euclidean.EuclideanSpace` or :py:class:`~prefsampling.approval.NoiseType`.
+They are also all gathered in the :code:`prefsampling.CONSTANTS` enumeration.
+
+.. code-block:: python
+
+    from prefsampling import CONSTANTS
+
+    CONSTANTS.BALL
+    CONSTANTS.SCHROEDER
+    CONSTANTS.BUNKE_SHEARER
