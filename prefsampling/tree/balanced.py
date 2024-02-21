@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import queue
 
 from prefsampling.inputvalidators import validate_int

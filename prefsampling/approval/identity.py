@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
 

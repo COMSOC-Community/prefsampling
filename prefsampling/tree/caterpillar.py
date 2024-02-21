@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from prefsampling.inputvalidators import validate_int
 from prefsampling.tree.node import Node
 
