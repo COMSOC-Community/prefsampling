@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import StrEnum
+from enum import Enum
 from itertools import chain
 
 import numpy as np
@@ -16,7 +16,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 from prefsampling.utils import comb
 
 
-class TreeSampler(StrEnum):
+class TreeSampler(Enum):
     """
     Constants use to represent different samplers for trees that can be used for group separable
     preferences.
@@ -96,6 +96,10 @@ def group_separable(
 
     rng = np.random.default_rng(seed)
 
+    if isinstance(tree_sampler, Enum):
+        tree_sampler = TreeSampler(tree_sampler.value)
+    else:
+        tree_sampler = TreeSampler(tree_sampler)
     if tree_sampler in (
         TreeSampler.SCHROEDER,
         TreeSampler.SCHROEDER_UNIFORM,

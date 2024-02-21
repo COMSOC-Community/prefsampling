@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from enum import StrEnum
+from enum import Enum
 
 import numpy as np
 
@@ -9,7 +9,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 from prefsampling.utils import comb
 
 
-class NoiseType(StrEnum):
+class NoiseType(Enum):
     """
     Constants representing the different types of noise that can be applied to the noise sampler.
     """
@@ -93,6 +93,10 @@ def noise(
     choices = []
     probabilities = []
 
+    if isinstance(noise_type, Enum):
+        noise_type = NoiseType(noise_type.value)
+    else:
+        noise_type = NoiseType(noise_type)
     # Prepare buckets
     for x in range(len(A) + 1):
         num_options_in = comb(len(A), x)

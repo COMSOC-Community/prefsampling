@@ -2,7 +2,7 @@ __author__ = "Simon Rey and Stanisław Szufa"
 __email__ = "reysimon@orange.fr"
 __version__ = "0.1.8"
 
-from enum import StrEnum
+from enum import Enum
 from itertools import chain
 
 from prefsampling.approval import NoiseType
@@ -10,7 +10,7 @@ from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.ordinal import TreeSampler
 
 
-class CONSTANTS(StrEnum):
+class CONSTANTS(Enum):
     """ All constants of the package """
     _ignore_ = 'member cls'
     cls = vars()

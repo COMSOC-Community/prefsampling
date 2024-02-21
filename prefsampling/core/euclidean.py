@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from enum import StrEnum
+from enum import Enum
 
 import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
-class EuclideanSpace(StrEnum):
+class EuclideanSpace(Enum):
     """
     Constants used to represent Euclidean spaces
     """
@@ -60,6 +60,10 @@ def election_positions(
     (np.ndarray, np.ndarray)
         The position of the voters and of the candidates respectively.
     """
+    if isinstance(space, Enum):
+        space = EuclideanSpace(space.value)
+    else:
+        space = EuclideanSpace(space)
     if space == EuclideanSpace.UNIFORM:
         voters = rng.random((num_voters, dimension))
         candidates = rng.random((num_candidates, dimension))
