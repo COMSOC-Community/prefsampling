@@ -112,7 +112,7 @@ Reference: :py:mod:`prefsampling.approval`
      - \*\*args
      - \*\*kwargs
    * - :py:func:`~prefsampling.approval.identity`
-     - :code:`p`
+     - :code:`rel_num_approvals`
      - ---
    * - :py:func:`~prefsampling.approval.empty`
      - ---

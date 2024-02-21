@@ -110,7 +110,7 @@ ALL_SAMPLERS = [
         num_voters, num_candidates, 0.5, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_impartial_constant_size(
-        num_voters, num_candidates, int(0.5 * num_candidates), seed=seed
+        num_voters, num_candidates, 0.5, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
         num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
@@ -168,7 +168,7 @@ ALL_SAMPLERS = [
         num_candidates,
         [approval_identity, approval_full, approval_urn_partylist],
         [0.5, 0.2, 0.3],
-        [{"p": 0.4}, {}, {"alpha": 0.1, "parties": 3}],
+        [{"rel_num_approvals": 0.4}, {}, {"alpha": 0.1, "parties": 3}],
     ),
     lambda num_voters, num_candidates, seed=None: mixture(
         num_voters,
@@ -181,13 +181,13 @@ ALL_SAMPLERS = [
         ordinal_single_crossing(num_voters, num_candidates), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: permute_voters(
-        approval_identity(num_voters, num_candidates, p=0.5), seed=seed
+        approval_identity(num_voters, num_candidates, rel_num_approvals=0.5), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: rename_candidates(
         ordinal_single_crossing(num_voters, num_candidates), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: rename_candidates(
-        approval_identity(num_voters, num_candidates, p=0.5),
+        approval_identity(num_voters, num_candidates, rel_num_approvals=0.5),
         seed=seed,
         num_candidates=num_candidates,
     ),
@@ -197,7 +197,7 @@ ALL_SAMPLERS = [
         {"norm_phi": 0.4, "seed": seed, "num_candidates": num_candidates},
     ),
     lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
-        approval_identity(num_voters, num_candidates, p=0.5),
+        approval_identity(num_voters, num_candidates, rel_num_approvals=0.5),
         approval_resampling,
         {"phi": 0.4, "p": 0.523, "seed": seed, "num_candidates": num_candidates},
     ),

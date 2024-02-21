@@ -342,13 +342,13 @@ document.write(`
 <a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.impartial_constant_size">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">impartial_constant_size</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_approvals</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rel_num_approvals</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates approval votes from impartial culture with constant size.</span>
 
-<span class="sd">    Under this culture, all ballots are of size :code:`num_approvals`. The ballot is selected</span>
-<span class="sd">    uniformly at random over all ballots of size :code:`num_approvals`.</span>
+<span class="sd">    Under this culture, all ballots are of size `⌊rel_num_approvals * num_candidates⌋`. The ballot</span>
+<span class="sd">    is selected uniformly at random over all ballots of size `⌊rel_num_approvals * num_candidates⌋`.</span>
 
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>
@@ -359,7 +359,7 @@ document.write(`
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
-<span class="sd">        num_approvals : int</span>
+<span class="sd">        rel_num_approvals : float</span>
 <span class="sd">            Number of approvals per ballot, i.e., size of the approval ballot.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
@@ -371,17 +371,14 @@ document.write(`
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
-<span class="sd">        TypeError</span>
-<span class="sd">            When `num_approvals` is not an int.</span>
 <span class="sd">        ValueError</span>
-<span class="sd">            When `num_approvals` is not in [0, num_candidates] interval.</span>
+<span class="sd">            When `rel_num_approvals` is not in [0, 1] interval.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">validate_int</span><span class="p">(</span><span class="n">num_approvals</span><span class="p">,</span> <span class="s2">&quot;number of approvals&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">num_approvals</span> <span class="o">&gt;</span> <span class="n">num_candidates</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of approval is higher than the number of candidates:&quot;</span>
-                         <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">num_approvals</span><span class="si">}</span><span class="s2"> &gt; </span><span class="si">{</span><span class="n">num_candidates</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
 
+    <span class="n">num_approvals</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_num_approvals</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">candidate_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span>

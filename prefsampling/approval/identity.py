@@ -5,11 +5,12 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def identity(
-    num_voters: int, num_candidates: int, p: float, seed: int = None
+    num_voters: int, num_candidates: int, rel_num_approvals: float, seed: int = None
 ) -> list[set[int]]:
     """
     Generates approval votes from the identity culture. These votes are simples: all voters
-    approves of the candidates `0, 1, 2, ...,  ⌊p * num_candidates⌋` and only these ones.
+    approves of the candidates `0, 1, 2, ...,  ⌊rel_num_approvals * num_candidates⌋` and only these
+    ones.
 
     Parameters
     ----------
@@ -17,7 +18,7 @@ def identity(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        p : float
+        rel_num_approvals : float
             Proportion of candidates approved.
         seed : int
             Seed for numpy random number generator.
@@ -30,13 +31,13 @@ def identity(
     Raises
     ------
         ValueError
-            When `p` not in [0,1] interval.
+            When `rel_num_approvals` is not in the [0, 1] interval.
     """
 
-    if p < 0 or 1 < p:
-        raise ValueError(f"Incorrect value of p: {p}. Value should be in [0,1]")
+    if rel_num_approvals < 0 or 1 < rel_num_approvals:
+        raise ValueError(f"Incorrect value of p: {rel_num_approvals}. Value should be in [0, 1]")
 
-    k = int(p * num_candidates)
+    k = int(rel_num_approvals * num_candidates)
     return [set(range(k)) for _ in range(num_voters)]
 
 

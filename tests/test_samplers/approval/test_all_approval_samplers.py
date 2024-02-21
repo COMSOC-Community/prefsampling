@@ -39,7 +39,7 @@ ALL_APPROVAL_SAMPLERS = [
         num_voters, num_candidates, 0.5, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: impartial_constant_size(
-        num_voters, num_candidates, int(0.5 * num_candidates), seed=seed
+        num_voters, num_candidates, 0.5, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
         num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
@@ -79,24 +79,24 @@ ALL_APPROVAL_SAMPLERS = [
         num_voters, num_candidates, 0.1, 3, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
-        identity(num_voters, num_candidates, p=0.5),
+        identity(num_voters, num_candidates, rel_num_approvals=0.5),
         resampling,
         {"phi": 0.4, "p": 0.523, "seed": seed, "num_candidates": num_candidates},
     ),
     lambda num_voters, num_candidates, seed=None: rename_candidates(
-        identity(num_voters, num_candidates, p=0.5),
+        identity(num_voters, num_candidates, rel_num_approvals=0.5),
         seed=seed,
         num_candidates=num_candidates,
     ),
     lambda num_voters, num_candidates, seed=None: permute_voters(
-        identity(num_voters, num_candidates, p=0.5), seed=seed
+        identity(num_voters, num_candidates, rel_num_approvals=0.5), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: mixture(
         num_voters,
         num_candidates,
         [identity, full, urn_partylist],
         [0.5, 0.2, 0.3],
-        [{"p": 0.4}, {}, {"alpha": 0.1, "parties": 3}],
+        [{"rel_num_approvals": 0.4}, {}, {"alpha": 0.1, "parties": 3}],
     ),
     lambda num_voters, num_candidates, seed=None: truncated_ordinal(
         num_voters, num_candidates, 0.5, ordinal_urn, {"alpha": 0.8}

@@ -494,15 +494,16 @@ process described above.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.identity">
-<span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/identity.html#identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.identity" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_num_approvals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/identity.html#identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.identity" title="Link to this definition">#</a></dt>
 <dd><p>Generates approval votes from the identity culture. These votes are simples: all voters
-approves of the candidates <cite>0, 1, 2, …,  ⌊p * num_candidates⌋</cite> and only these ones.</p>
+approves of the candidates <cite>0, 1, 2, …,  ⌊rel_num_approvals * num_candidates⌋</cite> and only these
+ones.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>p</strong> (<em>float</em>) – Proportion of candidates approved.</p></li>
+<li><p><strong>rel_num_approvals</strong> (<em>float</em>) – Proportion of candidates approved.</p></li>
 <li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
@@ -513,7 +514,7 @@ approves of the candidates <cite>0, 1, 2, …,  ⌊p * num_candidates⌋</cite> 
 <dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When <cite>p</cite> not in [0,1] interval.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – When <cite>rel_num_approvals</cite> is not in the [0, 1] interval.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -550,10 +551,10 @@ process described above.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.impartial_constant_size">
-<span class="sig-name descname"><span class="pre">impartial_constant_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_approvals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/impartial.html#impartial_constant_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.impartial_constant_size" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">impartial_constant_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_num_approvals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/impartial.html#impartial_constant_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.impartial_constant_size" title="Link to this definition">#</a></dt>
 <dd><p>Generates approval votes from impartial culture with constant size.</p>
-<p>Under this culture, all ballots are of size <code class="code docutils literal notranslate"><span class="pre">num_approvals</span></code>. The ballot is selected
-uniformly at random over all ballots of size <code class="code docutils literal notranslate"><span class="pre">num_approvals</span></code>.</p>
+<p>Under this culture, all ballots are of size <cite>⌊rel_num_approvals * num_candidates⌋</cite>. The ballot
+is selected uniformly at random over all ballots of size <cite>⌊rel_num_approvals * num_candidates⌋</cite>.</p>
 <p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
 process described above.</p>
 <dl class="field-list simple">
@@ -561,7 +562,7 @@ process described above.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>num_approvals</strong> (<em>int</em>) – Number of approvals per ballot, i.e., size of the approval ballot.</p></li>
+<li><p><strong>rel_num_approvals</strong> (<em>float</em>) – Number of approvals per ballot, i.e., size of the approval ballot.</p></li>
 <li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
@@ -572,10 +573,7 @@ process described above.</p>
 <dd class="field-odd"><p><em>list</em>[<em>set</em>]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>TypeError</strong> – When <cite>num_approvals</cite> is not an int.</p></li>
-<li><p><strong>ValueError</strong> – When <cite>num_approvals</cite> is not in [0, num_candidates] interval.</p></li>
-</ul>
+<dd class="field-even"><p><strong>ValueError</strong> – When <cite>rel_num_approvals</cite> is not in [0, 1] interval.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -650,7 +648,8 @@ process described above.</p>
 <li><p><strong>phi</strong> (<em>float</em>) – Resampling model parameter, denoting the noise.</p></li>
 <li><p><strong>p</strong> (<em>float</em>) – Resampling model parameter, denoting the average vote length.</p></li>
 <li><p><strong>central_vote</strong> (<em>set</em>) – The central vote. Ignored if <code class="code docutils literal notranslate"><span class="pre">impartial_central_vote</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p></li>
-<li><p><strong>impartial_central_vote</strong> (bool, default: <code class="code docutils literal notranslate"><span class="pre">False</span></code>) – If true, the central vote is sampled from <a class="reference internal" href="#prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a> with the same value for the parameter <code class="code docutils literal notranslate"><span class="pre">p</span></code> as passed to this sampler.</p></li>
+<li><p><strong>impartial_central_vote</strong> (bool, default: <code class="code docutils literal notranslate"><span class="pre">False</span></code>) – If true, the central vote is sampled from <a class="reference internal" href="#prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a>
+with the same value for the parameter <code class="code docutils literal notranslate"><span class="pre">p</span></code> as passed to this sampler.</p></li>
 <li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
@@ -669,17 +668,17 @@ process described above.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.truncated_ordinal">
-<span class="sig-name descname"><span class="pre">truncated_ordinal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordinal_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordinal_sampler_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/truncated_ordinal.html#truncated_ordinal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.truncated_ordinal" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">truncated_ordinal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_num_approvals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordinal_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordinal_sampler_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/truncated_ordinal.html#truncated_ordinal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.truncated_ordinal" title="Link to this definition">#</a></dt>
 <dd><p>Generates approval votes by truncating ordinal votes sampled from a given ordinal sampler.</p>
 <p>The process is as follows: ordinal votes are sampled from the ordinal sampler. These votes are
-then truncated in a way that each approval vote consists in the <cite>p * num_candidates</cite> first
-candidates of the ordinal vote.</p>
+then truncated in a way that each approval vote consists in the
+<cite>rel_num_approvals * num_candidates</cite> first candidates of the ordinal vote.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of voters</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of candidates</p></li>
-<li><p><strong>p</strong> (<em>float</em><em>,</em>) – Ratio of approved candidates.</p></li>
+<li><p><strong>rel_num_approvals</strong> (<em>float</em><em>,</em>) – Ratio of approved candidates.</p></li>
 <li><p><strong>ordinal_sampler</strong> (<em>Callable</em>) – The ordinal sampler to be used.</p></li>
 <li><p><strong>ordinal_sampler_parameters</strong> (<em>dict</em>) – The arguments passed ot the ordinal sampler. The num_voters, num_candidates and seed
 parameters are overriden by those passed to this function.</p></li>

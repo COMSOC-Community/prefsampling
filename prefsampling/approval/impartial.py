@@ -56,13 +56,13 @@ def impartial(
 
 @validate_num_voters_candidates
 def impartial_constant_size(
-    num_voters: int, num_candidates: int, num_approvals: int, seed: int = None
+    num_voters: int, num_candidates: int, rel_num_approvals: float, seed: int = None
 ) -> list[set]:
     """
     Generates approval votes from impartial culture with constant size.
 
-    Under this culture, all ballots are of size :code:`num_approvals`. The ballot is selected
-    uniformly at random over all ballots of size :code:`num_approvals`.
+    Under this culture, all ballots are of size `⌊rel_num_approvals * num_candidates⌋`. The ballot
+    is selected uniformly at random over all ballots of size `⌊rel_num_approvals * num_candidates⌋`.
 
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
@@ -73,7 +73,7 @@ def impartial_constant_size(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        num_approvals : int
+        rel_num_approvals : float
             Number of approvals per ballot, i.e., size of the approval ballot.
         seed : int
             Seed for numpy random number generator.
@@ -85,17 +85,14 @@ def impartial_constant_size(
 
     Raises
     ------
-        TypeError
-            When `num_approvals` is not an int.
         ValueError
-            When `num_approvals` is not in [0, num_candidates] interval.
+            When `rel_num_approvals` is not in [0, 1] interval.
     """
 
-    validate_int(num_approvals, "number of approvals", lower_bound=0)
-    if num_approvals > num_candidates:
-        raise ValueError("The number of approval is higher than the number of candidates:"
-                         f" {num_approvals} > {num_candidates}.")
+    if rel_num_approvals < 0 or 1 < rel_num_approvals:
+        raise ValueError(f"Incorrect value of p: {rel_num_approvals}. Value should be in [0,1]")
 
+    num_approvals = int(rel_num_approvals * num_candidates)
     rng = np.random.default_rng(seed)
     candidate_range = range(num_candidates)
     votes = [

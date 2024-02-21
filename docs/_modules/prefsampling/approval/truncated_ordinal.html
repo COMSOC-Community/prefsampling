@@ -292,7 +292,7 @@ document.write(`
 <span class="k">def</span> <span class="nf">truncated_ordinal</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">rel_num_approvals</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">ordinal_sampler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
     <span class="n">ordinal_sampler_parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -301,8 +301,8 @@ document.write(`
 <span class="sd">    Generates approval votes by truncating ordinal votes sampled from a given ordinal sampler.</span>
 
 <span class="sd">    The process is as follows: ordinal votes are sampled from the ordinal sampler. These votes are</span>
-<span class="sd">    then truncated in a way that each approval vote consists in the `p * num_candidates` first</span>
-<span class="sd">    candidates of the ordinal vote.</span>
+<span class="sd">    then truncated in a way that each approval vote consists in the</span>
+<span class="sd">    `rel_num_approvals * num_candidates` first candidates of the ordinal vote.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -310,7 +310,7 @@ document.write(`
 <span class="sd">            Number of voters</span>
 <span class="sd">        num_candidates: int</span>
 <span class="sd">            Number of candidates</span>
-<span class="sd">        p: float,</span>
+<span class="sd">        rel_num_approvals: float,</span>
 <span class="sd">            Ratio of approved candidates.</span>
 <span class="sd">        ordinal_sampler: Callable</span>
 <span class="sd">            The ordinal sampler to be used.</span>
@@ -325,15 +325,16 @@ document.write(`
 <span class="sd">        list[set[int]]</span>
 <span class="sd">            Approval votes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_num_approvals: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should&quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot; be in [0, 1]&quot;</span><span class="p">)</span>
 
     <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_voters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_voters</span>
     <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_candidates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_candidates</span>
     <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
     <span class="n">ordinal_votes</span> <span class="o">=</span> <span class="n">ordinal_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">ordinal_sampler_parameters</span><span class="p">)</span>
 
-    <span class="n">vote_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
+    <span class="n">vote_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_num_approvals</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[{</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">vote_length</span><span class="p">]}</span> <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">ordinal_votes</span><span class="p">]</span></div>
 
 </pre></div>
