@@ -50,8 +50,8 @@ def didi(
             "Incorrect length of alphas vector. Should be equal to num_candidates."
         )
 
-    if not all(a >= 0 for a in alphas):
-        raise ValueError("The values of the alpha vector should all be positive.")
+    if not all(a > 0 for a in alphas):
+        raise ValueError("The values of the alpha vector should all be strictly positive.")
 
     rng = np.random.default_rng(seed)
 

@@ -9,4 +9,6 @@ class TestOrdinalDidi(TestCase):
             didi(4, 5, alphas=[0.4, 0.4])
         with self.assertRaises(ValueError):
             didi(4, 5, alphas=[0.4, 0.4, 0.4, 0.4, -0.4])
-        didi(4, 5, alphas=[0, 0, 0, 0, 0])
+        with self.assertRaises(ValueError):
+            didi(4, 5, alphas=[0, 0, 0, 0, 0])
+        didi(4, 5, alphas=[0.1, 0.4, 0.8, 0.9, 1])
