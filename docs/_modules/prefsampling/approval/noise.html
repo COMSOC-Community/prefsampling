@@ -282,7 +282,7 @@ document.write(`
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -292,7 +292,7 @@ document.write(`
 
 <div class="viewcode-block" id="NoiseType">
 <a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.NoiseType">[docs]</a>
-<span class="k">class</span> <span class="nc">NoiseType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">NoiseType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constants representing the different types of noise that can be applied to the noise sampler.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -379,6 +379,10 @@ document.write(`
     <span class="n">choices</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[]</span>
 
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">noise_type</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+        <span class="n">noise_type</span> <span class="o">=</span> <span class="n">NoiseType</span><span class="p">(</span><span class="n">noise_type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">noise_type</span> <span class="o">=</span> <span class="n">NoiseType</span><span class="p">(</span><span class="n">noise_type</span><span class="p">)</span>
     <span class="c1"># Prepare buckets</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">num_options_in</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>

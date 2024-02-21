@@ -665,6 +665,11 @@ They are also all gathered in the <code class="code docutils literal notranslate
 <span class="n">CONSTANTS</span><span class="o">.</span><span class="n">BUNKE_SHEARER</span>
 </pre></div>
 </div>
+<p>Not that <a class="reference internal" href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">constants</span></code> are not the same enumeration so direct comparison will fail.
+Indeed, <code class="code docutils literal notranslate"><span class="pre">CONSTANTS.BALL</span> <span class="pre">==</span> <span class="pre">EuclideanSpace.BALL</span></code> is evaluated to <code class="code docutils literal notranslate"><span class="pre">False</span></code>. However,
+the values are the same so <code class="code docutils literal notranslate"><span class="pre">CONSTANTS.BALL.value</span> <span class="pre">==</span> <span class="pre">EuclideanSpace.BALL.value</span></code> is evaluated
+to <code class="code docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </section>
 </section>
 
