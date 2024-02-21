@@ -47,6 +47,9 @@ def noise(
     """
     Generates approval votes under the noise model.
 
+    A collection of `num_voters` vote is generated independently and identically following the
+    process described above.
+
     Parameters
     ----------
         num_voters : int

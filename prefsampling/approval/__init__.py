@@ -3,7 +3,7 @@ Module for sampling approval preferences: preferences in which a voter either ap
 disapprove each candidate.
 """
 
-from prefsampling.approval.impartial import impartial
+from prefsampling.approval.impartial import impartial, impartial_constant_size
 from prefsampling.approval.identity import identity, full, empty
 from prefsampling.approval.resampling import (
     resampling,
@@ -18,6 +18,7 @@ from prefsampling.approval.truncated_ordinal import truncated_ordinal
 
 __all__ = [
     "impartial",
+    "impartial_constant_size",
     "identity",
     "full",
     "empty",

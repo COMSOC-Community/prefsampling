@@ -123,6 +123,9 @@ Reference: :py:mod:`prefsampling.approval`
    * - :py:func:`~prefsampling.approval.impartial`
      - :code:`p`
      - ---
+   * - :py:func:`~prefsampling.approval.impartial_constant_size`
+     - :code:`num_approvals`
+     - ---
    * - :py:func:`~prefsampling.approval.resampling`
      - | :code:`p`
        | :code:`phi`

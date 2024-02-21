@@ -6,6 +6,7 @@ from prefsampling.approval import (
     disjoint_resampling,
     moving_resampling,
     impartial,
+    impartial_constant_size,
     euclidean,
     noise,
     identity,
@@ -36,6 +37,9 @@ ALL_APPROVAL_SAMPLERS = [
     ),
     lambda num_voters, num_candidates, seed=None: impartial(
         num_voters, num_candidates, 0.5, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: impartial_constant_size(
+        num_voters, num_candidates, int(0.5 * num_candidates), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
         num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed

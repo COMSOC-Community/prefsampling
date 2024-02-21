@@ -338,6 +338,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial"><code class="docutils literal notranslate"><span class="pre">impartial()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial_constant_size"><code class="docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.moving_resampling"><code class="docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.noise"><code class="docutils literal notranslate"><span class="pre">noise()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling"><code class="docutils literal notranslate"><span class="pre">resampling()</span></code></a></li>
@@ -524,6 +525,8 @@ approves of the candidates <cite>0, 1, 2, …,  ⌊p * num_candidates⌋</cite> 
 <p>Under the approval culture, when generating a single vote, each candidate has the same
 probability <code class="code docutils literal notranslate"><span class="pre">p</span></code> of being approved. This models ensures that the average number of
 approved candidate per voter is <cite>p * num_candidate</cite>.</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -541,6 +544,38 @@ approved candidate per voter is <cite>p * num_candidate</cite>.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – When <cite>p</cite> not in [0,1] interval.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.approval.impartial_constant_size">
+<span class="sig-name descname"><span class="pre">impartial_constant_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_approvals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/impartial.html#impartial_constant_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.impartial_constant_size" title="Link to this definition">#</a></dt>
+<dd><p>Generates approval votes from impartial culture with constant size.</p>
+<p>Under this culture, all ballots are of size <code class="code docutils literal notranslate"><span class="pre">num_approvals</span></code>. The ballot is selected
+uniformly at random over all ballots of size <code class="code docutils literal notranslate"><span class="pre">num_approvals</span></code>.</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
+<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>num_approvals</strong> (<em>int</em>) – Number of approvals per ballot, i.e., size of the approval ballot.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Approval votes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list</em>[<em>set</em>]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – When <cite>num_approvals</cite> is not an int.</p></li>
+<li><p><strong>ValueError</strong> – When <cite>num_approvals</cite> is not in [0, num_candidates] interval.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -577,6 +612,8 @@ approved candidate per voter is <cite>p * num_candidate</cite>.</p>
 <dt class="sig sig-object py" id="prefsampling.approval.noise">
 <span class="sig-name descname"><span class="pre">noise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#prefsampling.approval.NoiseType" title="prefsampling.approval.noise.NoiseType"><span class="pre">NoiseType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NoiseType.HAMMING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/noise.html#noise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.noise" title="Link to this definition">#</a></dt>
 <dd><p>Generates approval votes under the noise model.</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -741,6 +778,7 @@ parameters are overriden by those passed to this function.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial"><code class="docutils literal notranslate"><span class="pre">impartial()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial_constant_size"><code class="docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.moving_resampling"><code class="docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.noise"><code class="docutils literal notranslate"><span class="pre">noise()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling"><code class="docutils literal notranslate"><span class="pre">resampling()</span></code></a></li>

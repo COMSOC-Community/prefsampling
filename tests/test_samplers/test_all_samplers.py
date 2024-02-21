@@ -32,6 +32,7 @@ from prefsampling.approval import (
     disjoint_resampling as approval_disjoint_resampling,
     moving_resampling as approval_moving_resampling,
     impartial as approval_impartial,
+    impartial_constant_size as approval_impartial_constant_size,
     euclidean as approval_euclidean,
     noise as approval_noise,
     identity as approval_identity,
@@ -107,6 +108,9 @@ ALL_SAMPLERS = [
     ),
     lambda num_voters, num_candidates, seed=None: approval_impartial(
         num_voters, num_candidates, 0.5, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_impartial_constant_size(
+        num_voters, num_candidates, int(0.5 * num_candidates), seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
         num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed

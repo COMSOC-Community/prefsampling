@@ -279,9 +279,11 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.approval.impartial</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 
 
 <div class="viewcode-block" id="impartial">
@@ -296,6 +298,9 @@ document.write(`
 <span class="sd">    Under the approval culture, when generating a single vote, each candidate has the same</span>
 <span class="sd">    probability :code:`p` of being approved. This models ensures that the average number of</span>
 <span class="sd">    approved candidate per voter is `p * num_candidate`.</span>
+
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -320,12 +325,67 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0, 1]&quot;</span><span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="nb">set</span><span class="p">(</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span> <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">votes</span></div>
+
+
+
+<div class="viewcode-block" id="impartial_constant_size">
+<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.impartial_constant_size">[docs]</a>
+<span class="nd">@validate_num_voters_candidates</span>
+<span class="k">def</span> <span class="nf">impartial_constant_size</span><span class="p">(</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_approvals</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates approval votes from impartial culture with constant size.</span>
+
+<span class="sd">    Under this culture, all ballots are of size :code:`num_approvals`. The ballot is selected</span>
+<span class="sd">    uniformly at random over all ballots of size :code:`num_approvals`.</span>
+
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        num_approvals : int</span>
+<span class="sd">            Number of approvals per ballot, i.e., size of the approval ballot.</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Seed for numpy random number generator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        list[set]</span>
+<span class="sd">            Approval votes.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            When `num_approvals` is not an int.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            When `num_approvals` is not in [0, num_candidates] interval.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">num_approvals</span><span class="p">,</span> <span class="s2">&quot;number of approvals&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num_approvals</span> <span class="o">&gt;</span> <span class="n">num_candidates</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of approval is higher than the number of candidates:&quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">num_approvals</span><span class="si">}</span><span class="s2"> &gt; </span><span class="si">{</span><span class="n">num_candidates</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">candidate_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">set</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidate_range</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_approvals</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
     <span class="p">]</span>
 

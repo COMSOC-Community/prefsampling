@@ -279,12 +279,15 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.approval.noise</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">math</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.utils</span> <span class="kn">import</span> <span class="n">comb</span>
 
 
 <div class="viewcode-block" id="NoiseType">
@@ -329,6 +332,9 @@ document.write(`
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates approval votes under the noise model.</span>
+
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -375,9 +381,9 @@ document.write(`
 
     <span class="c1"># Prepare buckets</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">num_options_in</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">num_options_in</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">num_options_out</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">num_options_out</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">noise_type</span> <span class="o">==</span> <span class="n">NoiseType</span><span class="o">.</span><span class="n">HAMMING</span><span class="p">:</span>
                 <span class="n">factor</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">**</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
