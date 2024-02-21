@@ -121,10 +121,10 @@ Reference: :py:mod:`prefsampling.approval`
      - ---
      - ---
    * - :py:func:`~prefsampling.approval.impartial`
-     - :code:`p`
+     - :code:`rel_num_approvals`
      - ---
    * - :py:func:`~prefsampling.approval.impartial_constant_size`
-     - :code:`num_approvals`
+     - :code:`rel_num_approvals`
      - ---
    * - :py:func:`~prefsampling.approval.resampling`
      - | :code:`p`
@@ -149,7 +149,7 @@ Reference: :py:mod:`prefsampling.approval`
        | :code:`phi`
      - :code:`noise_type` (defaults to :py:const:`~prefsampling.approval.NoiseType.HAMMING`)
    * - :py:func:`~prefsampling.approval.truncated_ordinal`
-     - | :code:`p`
+     - | :code:`rel_num_approvals`
        | :code:`ordinal_sampler`
        | :code:`ordinal_sampler_parameters`
      -
