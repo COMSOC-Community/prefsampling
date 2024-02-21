@@ -14,6 +14,7 @@ from prefsampling.tree.schroeder import (
 from prefsampling.tree.caterpillar import caterpillar_tree
 from prefsampling.tree.balanced import balanced_tree
 from prefsampling.inputvalidators import validate_num_voters_candidates
+from prefsampling.utils import comb
 
 
 class TreeSampler(Enum):
@@ -161,7 +162,7 @@ def _number_group_separable_profiles(m: int, r: int, n: int) -> float:
     of internal nodes `r` based on the formula from `Karpov (2019)
     <https://link.springer.com/article/10.1007/s10726-019-09621-w>`_
     """
-    return math.comb(m - 1, r) * math.comb(m - 1 + r, m) * (2 ** (n - 1) - 1) ** (r - 1)
+    return comb(m - 1, r) * comb(m - 1 + r, m) * (2 ** (n - 1) - 1) ** (r - 1)
 
 
 def _sample_a_vote(node, reverse=False):

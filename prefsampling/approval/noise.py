@@ -6,6 +6,7 @@ from enum import Enum
 import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
+from prefsampling.utils import comb
 
 
 class NoiseType(Enum):
@@ -91,9 +92,9 @@ def noise(
 
     # Prepare buckets
     for x in range(len(A) + 1):
-        num_options_in = math.comb(len(A), x)
+        num_options_in = comb(len(A), x)
         for y in range(len(B) + 1):
-            num_options_out = math.comb(len(B), y)
+            num_options_out = comb(len(B), y)
 
             if noise_type == NoiseType.HAMMING:
                 factor = phi ** (len(A) - x + y)

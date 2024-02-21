@@ -7,6 +7,7 @@ from itertools import permutations, combinations_with_replacement, product
 
 from prefsampling.inputvalidators import validate_int
 from prefsampling.tree.node import Node
+from prefsampling.utils import comb
 
 
 def validate_num_leaves_nodes(num_leaves: int, num_internal_nodes: int | None):
@@ -52,8 +53,8 @@ def _random_num_internal_nodes(num_leaves: int, rng: np.random.Generator) -> int
 
 def _num_schroeder_tree(num_internal_nodes, num_leaves):
     return (
-        math.comb(num_leaves - 1, num_internal_nodes)
-        * math.comb(num_leaves - 1 + num_internal_nodes, num_leaves)
+        comb(num_leaves - 1, num_internal_nodes)
+        * comb(num_leaves - 1 + num_internal_nodes, num_leaves)
         / (num_leaves - 1)
     )
 
