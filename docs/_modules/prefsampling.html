@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview: module code &#8212; PrefSampling</title>
+    <title>prefsampling &#8212; PrefSampling</title>
   
   
   
@@ -39,7 +39,7 @@
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/prefsampling';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -280,32 +280,32 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="prefsampling.html">prefsampling</a></li>
-<ul><li><a href="prefsampling/approval/euclidean.html">prefsampling.approval.euclidean</a></li>
-<li><a href="prefsampling/approval/identity.html">prefsampling.approval.identity</a></li>
-<li><a href="prefsampling/approval/impartial.html">prefsampling.approval.impartial</a></li>
-<li><a href="prefsampling/approval/noise.html">prefsampling.approval.noise</a></li>
-<li><a href="prefsampling/approval/partylist.html">prefsampling.approval.partylist</a></li>
-<li><a href="prefsampling/approval/resampling.html">prefsampling.approval.resampling</a></li>
-<li><a href="prefsampling/approval/truncated_ordinal.html">prefsampling.approval.truncated_ordinal</a></li>
-<li><a href="prefsampling/core/composition.html">prefsampling.core.composition</a></li>
-<li><a href="prefsampling/core/euclidean.html">prefsampling.core.euclidean</a></li>
-<li><a href="prefsampling/core/filters.html">prefsampling.core.filters</a></li>
-<li><a href="prefsampling/inputvalidators.html">prefsampling.inputvalidators</a></li>
-<li><a href="prefsampling/ordinal/didi.html">prefsampling.ordinal.didi</a></li>
-<li><a href="prefsampling/ordinal/euclidean.html">prefsampling.ordinal.euclidean</a></li>
-<li><a href="prefsampling/ordinal/groupseparable.html">prefsampling.ordinal.groupseparable</a></li>
-<li><a href="prefsampling/ordinal/identity.html">prefsampling.ordinal.identity</a></li>
-<li><a href="prefsampling/ordinal/impartial.html">prefsampling.ordinal.impartial</a></li>
-<li><a href="prefsampling/ordinal/mallows.html">prefsampling.ordinal.mallows</a></li>
-<li><a href="prefsampling/ordinal/plackettluce.html">prefsampling.ordinal.plackettluce</a></li>
-<li><a href="prefsampling/ordinal/singlecrossing.html">prefsampling.ordinal.singlecrossing</a></li>
-<li><a href="prefsampling/ordinal/singlepeaked.html">prefsampling.ordinal.singlepeaked</a></li>
-<li><a href="prefsampling/ordinal/urn.html">prefsampling.ordinal.urn</a></li>
-<li><a href="prefsampling/tree/caterpillar.html">prefsampling.tree.caterpillar</a></li>
-<li><a href="prefsampling/tree/schroeder.html">prefsampling.tree.schroeder</a></li>
-</ul></ul>
+  <h1>Source code for prefsampling</h1><div class="highlight"><pre>
+<span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Simon Rey and Stanisław Szufa&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;reysimon@orange.fr&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.1.8&quot;</span>
+
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+
+<span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">NoiseType</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">EuclideanSpace</span>
+<span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">TreeSampler</span>
+
+
+<div class="viewcode-block" id="CONSTANTS">
+<a class="viewcode-back" href="../reference/constants.html#prefsampling.CONSTANTS">[docs]</a>
+<span class="k">class</span> <span class="nc">CONSTANTS</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; All constants of the package &quot;&quot;&quot;</span>
+    <span class="n">_ignore_</span> <span class="o">=</span> <span class="s1">&#39;member cls&#39;</span>
+    <span class="bp">cls</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">EuclideanSpace</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">TreeSampler</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">NoiseType</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The name </span><span class="si">{</span><span class="n">member</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is used in more than one enumeration. The&quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;CONSTANTS class needs unique names to be well-defined.&quot;</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="p">[</span><span class="n">member</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">member</span><span class="o">.</span><span class="n">value</span></div>
+
+</pre></div>
 
                 </article>
               

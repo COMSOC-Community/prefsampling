@@ -259,7 +259,7 @@ They are also all gathered in the :code:`prefsampling.CONSTANTS` enumeration.
     CONSTANTS.BUNKE_SHEARER
 
 Not that :py:class:`~prefsampling.core.euclidean.EuclideanSpace` and
-:py:class:`~prefsampling.constants` are not the same enumeration so direct comparison will fail.
+:py:class:`~prefsampling.CONSTANTS` are not the same enumeration so direct comparison will fail.
 Indeed, :code:`CONSTANTS.BALL == EuclideanSpace.BALL` is evaluated to :code:`False`. However,
 the values are the same so :code:`CONSTANTS.BALL.value == EuclideanSpace.BALL.value` is evaluated
 to :code:`True`.
