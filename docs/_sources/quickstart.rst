@@ -121,10 +121,18 @@ Reference: :py:mod:`prefsampling.approval`
      - ---
      - ---
    * - :py:func:`~prefsampling.approval.impartial`
-     - :code:`rel_num_approvals`
+     - :code:`p`
      - ---
    * - :py:func:`~prefsampling.approval.impartial_constant_size`
      - :code:`rel_num_approvals`
+     - ---
+   * - :py:func:`~prefsampling.approval.urn`
+     - | :code:`p`
+       | :code:`alpha`
+     - ---
+   * - :py:func:`~prefsampling.approval.urn_constant_size`
+     - | :code:`rel_num_approvals`
+       | :code:`alpha`
      - ---
    * - :py:func:`~prefsampling.approval.resampling`
      - | :code:`p`

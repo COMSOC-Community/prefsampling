@@ -40,6 +40,8 @@ from prefsampling.approval import (
     full as approval_full,
     empty as approval_empty,
     urn_partylist as approval_urn_partylist,
+    urn as approval_urn,
+    urn_constant_size as approval_urn_constant_size,
     truncated_ordinal as approval_truncated_ordinal,
     NoiseType,
 )
@@ -136,6 +138,12 @@ ALL_SAMPLERS = [
     ),
     lambda num_voters, num_candidates, seed=None: approval_impartial_constant_size(
         num_voters, num_candidates, 0.5, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_urn(
+        num_voters, num_candidates, 0.5, 0.8, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: approval_urn_constant_size(
+        num_voters, num_candidates, 0.5, 0.8, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
         num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed

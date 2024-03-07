@@ -4,7 +4,7 @@ import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
-from prefsampling.core.urn import urn_votes
+from prefsampling.core.urn import urn_scheme
 
 
 @validate_num_voters_candidates
@@ -40,4 +40,10 @@ def urn(
     """
     rng = np.random.default_rng(seed)
 
-    return urn_votes(num_voters, num_candidates, alpha, rng)
+    votes = urn_scheme(
+        num_voters,
+        alpha,
+        lambda x: x.permutation(num_candidates),
+        rng
+    )
+    return np.array(votes, dtype=int)

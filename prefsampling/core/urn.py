@@ -1,55 +1,52 @@
 from __future__ import annotations
 
+from collections.abc import Callable
+
 import numpy as np
 
-from prefsampling.inputvalidators import validate_num_voters_candidates
 
-
-@validate_num_voters_candidates
-def urn_votes(
-    num_voters: int,
-    num_candidates: int,
+def urn_scheme(
+    num_samples: int,
     alpha: float,
-    rng: np.random.Generator,
-) -> np.ndarray:
+    base_case_sampler: Callable,
+    rng: np.random.Generator
+) -> list:
     """
-    Generates votes following the Pólya-Eggenberger urn culture. The process is as follows. The urn
-    is initially empty and votes are generated one after the other, in turns. When generating a
-    vote, the following happens. With a probability of 1/(urn_size + 1), the vote is selected
-    uniformly at random (following an impartial culture). With probability `1/urn_size` a vote
-    from the urn is selected uniformly at random. In both cases, the vote is put back in the urn
-    together with `alpha * m!` copies of the vote (where `m` is the number of candidates).
+    Generates votes following a Pólya-Eggenberger urn process. This is the general scheme that is
+    used, for instance, in :py:func:`~prefsampling.ordinal.urn`.
 
-    Note that for a given number of voters, votes are not sampled independently.
+    When generating a sample the following happens. With a probability of 1/(urn_size + 1), the
+    a base case sample is generated (based on :code:`base_case_sampler`). With probability
+    `1/urn_size` a element of the urn is selected uniformly at random. In both cases, the element is
+    put back in the urn together with `alpha * num_different_balls` copies of the vote
+    (where `num_different_balls` is the number different outcomes of the :code:`base_case_sampler`
+    function).
 
     Parameters
     ----------
-        num_voters: int
-            Number of voters
-        num_candidates: int
-            Number of candidates
+        num_samples: int
+            The number of samples to select
         alpha: float
             The dispersion coefficient (`alpha * m!` copies of a vote are put back in the urn after
             a draw). Must be non-negative.
-        rng : np.random.Generator
-            The numpy generator to use for randomness.
+        base_case_sampler: Callable
+            A function that returns a sample to add in the urn in the base case
+        rng
 
     Returns
     -------
-        np.ndarray
-            The votes
+
     """
 
     if alpha < 0:
         raise ValueError("Alpha needs to be non-negative for an urn model.")
 
-    votes = np.zeros((num_voters, num_candidates), dtype=int)
+    balls = []
     urn_size = 1.0
-    for i in range(num_voters):
+    for i in range(num_samples):
         if rng.uniform(0, urn_size) <= 1.0:
-            votes[i] = rng.permutation(num_candidates)
+            balls.append(base_case_sampler(rng))
         else:
-            votes[i] = votes[rng.integers(0, i)]
+            balls.append(balls[rng.integers(0, i)])
         urn_size += alpha
-
-    return votes
+    return balls

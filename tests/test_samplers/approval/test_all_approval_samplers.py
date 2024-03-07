@@ -15,6 +15,8 @@ from prefsampling.approval import (
     urn_partylist,
     NoiseType,
     truncated_ordinal,
+    urn,
+    urn_constant_size,
 )
 from prefsampling.core import (
     resample_as_central_vote,
@@ -40,6 +42,12 @@ ALL_APPROVAL_SAMPLERS = [
     ),
     lambda num_voters, num_candidates, seed=None: impartial_constant_size(
         num_voters, num_candidates, 0.5, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: urn(
+        num_voters, num_candidates, 0.5, 0.8, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: urn_constant_size(
+        num_voters, num_candidates, 0.5, 0.8, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
         num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed

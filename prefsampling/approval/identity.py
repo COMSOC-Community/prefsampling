@@ -19,7 +19,7 @@ def identity(
         num_candidates : int
             Number of Candidates.
         rel_num_approvals : float
-            Proportion of candidates approved.
+            Proportion of approved candidates in a ballot.
         seed : int
             Seed for numpy random number generator.
 
@@ -35,7 +35,8 @@ def identity(
     """
 
     if rel_num_approvals < 0 or 1 < rel_num_approvals:
-        raise ValueError(f"Incorrect value of p: {rel_num_approvals}. Value should be in [0, 1]")
+        raise ValueError(f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should "
+                         f"be in [0, 1]")
 
     k = int(rel_num_approvals * num_candidates)
     return [set(range(k)) for _ in range(num_voters)]

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
+from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
 @validate_num_voters_candidates
@@ -74,7 +74,7 @@ def impartial_constant_size(
         num_candidates : int
             Number of Candidates.
         rel_num_approvals : float
-            Number of approvals per ballot, i.e., size of the approval ballot.
+            Proportion of approved candidates in a ballot.
         seed : int
             Seed for numpy random number generator.
 
@@ -90,7 +90,8 @@ def impartial_constant_size(
     """
 
     if rel_num_approvals < 0 or 1 < rel_num_approvals:
-        raise ValueError(f"Incorrect value of p: {rel_num_approvals}. Value should be in [0,1]")
+        raise ValueError(f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
+                         f" be in [0,1]")
 
     num_approvals = int(rel_num_approvals * num_candidates)
     rng = np.random.default_rng(seed)
