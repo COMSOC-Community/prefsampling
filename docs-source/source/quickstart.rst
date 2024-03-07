@@ -134,6 +134,10 @@ Reference: :py:mod:`prefsampling.approval`
      - | :code:`rel_num_approvals`
        | :code:`alpha`
      - ---
+   * - :py:func:`~prefsampling.approval.urn_partylist`
+     - | :code:`alpha`
+       | :code:`parties`
+     -
    * - :py:func:`~prefsampling.approval.resampling`
      - | :code:`p`
        | :code:`phi`
@@ -160,10 +164,6 @@ Reference: :py:mod:`prefsampling.approval`
      - | :code:`rel_num_approvals`
        | :code:`ordinal_sampler`
        | :code:`ordinal_sampler_parameters`
-     -
-   * - :py:func:`~prefsampling.approval.urn_partylist`
-     - | :code:`alpha`
-       | :code:`parties`
      -
 
 Composition of Samplers
