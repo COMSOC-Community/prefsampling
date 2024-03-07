@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/documentation_options.js?v=7ed07c24"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -159,6 +159,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/constants.html">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/inputvalidators.html">Input Validators</a></li>
 </ul>
 </li>
 </ul>
@@ -283,7 +285,7 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
 
 <div class="viewcode-block" id="impartial">
@@ -360,7 +362,7 @@ document.write(`
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        rel_num_approvals : float</span>
-<span class="sd">            Number of approvals per ballot, i.e., size of the approval ballot.</span>
+<span class="sd">            Proportion of approved candidates in a ballot.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -376,7 +378,8 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_num_approvals: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should&quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot; be in [0,1]&quot;</span><span class="p">)</span>
 
     <span class="n">num_approvals</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_num_approvals</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>

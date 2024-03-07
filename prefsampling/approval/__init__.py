@@ -12,9 +12,8 @@ from prefsampling.approval.resampling import (
 )
 from prefsampling.approval.noise import noise, NoiseType
 from prefsampling.approval.euclidean import euclidean
-from prefsampling.approval.partylist import urn_partylist
 from prefsampling.approval.truncated_ordinal import truncated_ordinal
-from prefsampling.approval.urn import urn, urn_constant_size
+from prefsampling.approval.urn import urn, urn_constant_size, urn_partylist
 
 
 __all__ = [

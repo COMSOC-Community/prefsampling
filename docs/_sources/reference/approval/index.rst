@@ -3,30 +3,30 @@ Approval
 
 .. automodule:: prefsampling.approval
 
-.. automodule:: prefsampling.approval.identity
+.. autofunction:: prefsampling.approval.identity
 
-.. automodule:: prefsampling.approval.empty
+.. autofunction:: prefsampling.approval.empty
 
-.. automodule:: prefsampling.approval.full
+.. autofunction:: prefsampling.approval.full
 
-.. automodule:: prefsampling.approval.impartial
+.. autofunction:: prefsampling.approval.impartial
 
-.. automodule:: prefsampling.approval.impartial_constant_size
+.. autofunction:: prefsampling.approval.impartial_constant_size
 
-.. automodule:: prefsampling.approval.urn
+.. autofunction:: prefsampling.approval.urn
 
-.. automodule:: prefsampling.approval.urn_constant_size
+.. autofunction:: prefsampling.approval.urn_constant_size
 
-.. automodule:: prefsampling.approval.urn_partylist
+.. autofunction:: prefsampling.approval.urn_partylist
 
-.. automodule:: prefsampling.approval.resampling
+.. autofunction:: prefsampling.approval.resampling
 
-.. automodule:: prefsampling.approval.disjoint_resampling
+.. autofunction:: prefsampling.approval.disjoint_resampling
 
-.. automodule:: prefsampling.approval.moving_resampling
+.. autofunction:: prefsampling.approval.moving_resampling
 
-.. automodule:: prefsampling.approval.euclidean
+.. autofunction:: prefsampling.approval.euclidean
 
-.. automodule:: prefsampling.approval.noise
+.. autofunction:: prefsampling.approval.noise
 
-.. automodule:: prefsampling.approval.truncated_ordinal
+.. autofunction:: prefsampling.approval.truncated_ordinal
