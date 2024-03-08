@@ -8,7 +8,6 @@ from prefsampling.core import (
     permute_voters,
     mixture,
 )
-from prefsampling.core.euclidean import EuclideanSpace
 
 from prefsampling.ordinal import (
     plackett_luce,
@@ -27,6 +26,13 @@ from prefsampling.ordinal import (
     norm_mallows,
     euclidean,
     didi,
+)
+
+from prefsampling.point import (
+    uniform as point_uniform,
+    ball as point_ball,
+    sphere as point_sphere,
+    gaussian as point_gaussian,
 )
 
 ALL_ORDINAL_SAMPLERS = [
@@ -50,19 +56,28 @@ ALL_ORDINAL_SAMPLERS = [
         num_voters, num_candidates, 0.5, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, seed=seed
+        num_voters, num_candidates, point_sampler=point_uniform, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
+        num_voters, num_candidates, point_sampler=point_gaussian, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.GAUSSIAN, seed=seed
+        num_voters, num_candidates, point_sampler=point_sphere, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.SPHERE, seed=seed
+        num_voters, num_candidates, point_sampler=point_ball, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
+        num_voters, num_candidates, point_sampler=point_uniform, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_ball, candidate_point_sampler_args={"dimension": 2}, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, point_sampler=point_gaussian, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_ball, candidate_point_sampler_args={"dimension": 2}, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, point_sampler=point_sphere, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_ball, candidate_point_sampler_args={"dimension": 2}, seed=seed
+    ),
+    lambda num_voters, num_candidates, seed=None: euclidean(
+        num_voters, num_candidates, point_sampler=point_ball, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_ball, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: plackett_luce(
         num_voters, num_candidates, [1] * num_candidates, seed=seed

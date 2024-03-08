@@ -1,7 +1,6 @@
 from unittest import TestCase
 
 from prefsampling import CONSTANTS
-from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.core.composition import mixture
 from prefsampling.core.filters import (
     resample_as_central_vote,
@@ -46,6 +45,13 @@ from prefsampling.approval import (
     NoiseType,
 )
 
+from prefsampling.point import (
+    uniform as point_uniform,
+    ball as point_ball,
+    sphere as point_sphere,
+    gaussian as point_gaussian,
+)
+
 ALL_SAMPLERS = [
     ordinal_impartial,
     ordinal_impartial_anonymous,
@@ -61,28 +67,28 @@ ALL_SAMPLERS = [
     ordinal_single_crossing,
     ordinal_single_crossing_impartial,
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
+        num_voters, num_candidates, point_sampler=point_uniform, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.GAUSSIAN, seed=seed
+        num_voters, num_candidates, point_sampler=point_gaussian, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.SPHERE, seed=seed
+        num_voters, num_candidates, point_sampler=point_sphere, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
+        num_voters, num_candidates, point_sampler=point_ball, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
-        num_voters, num_candidates, space=CONSTANTS.UNIFORM, seed=seed
+        num_voters, num_candidates, point_sampler=point_uniform, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_gaussian, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
-        num_voters, num_candidates, space=CONSTANTS.GAUSSIAN, seed=seed
+        num_voters, num_candidates, point_sampler=point_gaussian, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_uniform, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
-        num_voters, num_candidates, space=CONSTANTS.SPHERE, seed=seed
+        num_voters, num_candidates, point_sampler=point_sphere, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_gaussian, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_euclidean(
-        num_voters, num_candidates, space=CONSTANTS.BALL, seed=seed
+        num_voters, num_candidates, point_sampler=point_ball, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_gaussian, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: ordinal_mallows(
         num_voters, num_candidates, 0.5, seed=seed
@@ -146,28 +152,29 @@ ALL_SAMPLERS = [
         num_voters, num_candidates, 0.5, 0.8, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.UNIFORM, seed=seed
+        num_voters, num_candidates, point_sampler=point_uniform, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.GAUSSIAN, seed=seed
+        num_voters, num_candidates, point_sampler=point_gaussian, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.SPHERE, seed=seed
+        num_voters, num_candidates, point_sampler=point_sphere, point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
-        num_voters, num_candidates, space=EuclideanSpace.BALL, seed=seed
+        num_voters, num_candidates, point_sampler=point_ball, point_sampler_args={"dimension": 2}, seed=seed
+    ),
+
+    lambda num_voters, num_candidates, seed=None: approval_euclidean(
+        num_voters, num_candidates, point_sampler=point_uniform, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_sphere, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
-        num_voters, num_candidates, space=CONSTANTS.UNIFORM, seed=seed
+        num_voters, num_candidates, point_sampler=point_gaussian, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_sphere, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
-        num_voters, num_candidates, space=CONSTANTS.GAUSSIAN, seed=seed
+        num_voters, num_candidates, point_sampler=point_sphere, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_sphere, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_euclidean(
-        num_voters, num_candidates, space=CONSTANTS.SPHERE, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: approval_euclidean(
-        num_voters, num_candidates, space=CONSTANTS.BALL, seed=seed
+        num_voters, num_candidates, point_sampler=point_ball, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_sphere, candidate_point_sampler_args={"dimension": 2}, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: approval_noise(
         num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.HAMMING, seed=seed

@@ -1,112 +1,73 @@
 from __future__ import annotations
 
-from enum import Enum
+from collections.abc import Callable
 
 import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
-class EuclideanSpace(Enum):
-    """
-    Constants used to represent Euclidean spaces
-    """
-
-    UNIFORM = "Uniform Space"
-    """
-    Uniform space
-    """
-    GAUSSIAN = "Gaussian Space"
-    """
-    Gaussian space
-    """
-    SPHERE = "Spherical Space"
-    """
-    Spherical space
-    """
-    BALL = "Ball Space"
-    """
-    Ball-shaped space
-    """
-
-
 @validate_num_voters_candidates
-def election_positions(
+def sample_election_positions(
     num_voters: int,
     num_candidates: int,
-    space: EuclideanSpace,
-    dimension: int,
-    rng: np.random.Generator,
-) -> (np.ndarray, np.ndarray):
+    point_sampler: Callable,
+    point_sampler_args: dict,
+    candidate_point_sampler: Callable = None,
+    candidate_point_sampler_args: dict = None,
+    seed: int = None,
+) -> tuple[np.ndarray, np.ndarray]:
     """
-    Returns the position of the voters and the candidates in a Euclidean space.
 
     Parameters
     ----------
-    num_voters: int
-        The number of voters.
-    num_candidates: int
-        The number of candidates.
-    space : :py:class:`~prefsampling.core.euclidean.EuclideanSpace`
-        Type of space considered. Should be a constant defined in the
-        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
-    dimension : int
-        Number of dimensions for the space considered.
-    rng : np.random.Generator
-        The numpy generator to use for randomness.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        point_sampler : Callable
+            The sampler used to sample point in the space. Used for both voters and candidates
+            unless a `candidate_space` is provided.
+        point_sampler_args : dict
+            The arguments passed to the `point_sampler`. The argument `num_points` is ignored
+            and replaced by the number of voters or candidates.
+        candidate_point_sampler : Callable, default: :code:`None`
+            The sampler used to sample the points of the candidates. If a value is provided,
+            then the `space` argument is only used for voters.
+        candidate_point_sampler_args : dict
+            The arguments passed to the `candidate_point_sampler`. The argument `num_points`
+            is ignored and replaced by the number of candidates.
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator. Also passed to the point samplers if
+            a value is provided.
 
     Returns
     -------
-    (np.ndarray, np.ndarray)
-        The position of the voters and of the candidates respectively.
+        tuple[np.ndarray, np.ndarray]
+            The positions of the voters and of the candidates.
+
     """
-    if isinstance(space, Enum):
-        space = EuclideanSpace(space.value)
+    if candidate_point_sampler is not None and candidate_point_sampler_args is None:
+        raise ValueError("If candidate_point_sampler is not None, a value needs to be "
+                         "passed to candidate_point_sampler_args (even if it's just "
+                         "an empty dictionary).")
+
+    if seed is not None:
+        point_sampler_args["seed"] = seed
+        if candidate_point_sampler is not None:
+            candidate_point_sampler_args["seed"] = seed
+
+    point_sampler_args['num_points'] = num_voters
+    voters_pos = point_sampler(**point_sampler_args)
+    dimension = len(voters_pos[0])
+    if candidate_point_sampler is None:
+        point_sampler_args['num_points'] = num_candidates
+        candidates_pos = point_sampler(**point_sampler_args)
     else:
-        space = EuclideanSpace(space)
-    if space == EuclideanSpace.UNIFORM:
-        voters = rng.random((num_voters, dimension))
-        candidates = rng.random((num_candidates, dimension))
-    elif space == EuclideanSpace.GAUSSIAN:
-        voters = rng.normal(loc=0.5, scale=0.15, size=(num_voters, dimension))
-        candidates = rng.normal(loc=0.5, scale=0.15, size=(num_candidates, dimension))
-    elif space == EuclideanSpace.SPHERE:
-        voters = np.array(
-            [list(random_sphere(dimension, rng)[0]) for _ in range(num_voters)]
-        )
-        candidates = np.array(
-            [list(random_sphere(dimension, rng)[0]) for _ in range(num_candidates)]
-        )
-    elif space == EuclideanSpace.BALL:
-        voters = np.array(
-            [list(random_ball(dimension, rng)[0]) for _ in range(num_voters)]
-        )
-        candidates = np.array(
-            [list(random_ball(dimension, rng)[0]) for _ in range(num_candidates)]
-        )
-    else:
-        raise ValueError(
-            "The `space` argument needs to be one of the constant defined in the "
-            "core.euclidean.EuclideanSpace enumeration. Choices are: "
-            + ", ".join(str(s) for s in EuclideanSpace)
-        )
-    return voters, candidates
-
-
-def random_ball(
-    dimension: int, rng: np.random.Generator, num_points: int = 1, radius: float = 1
-) -> np.ndarray:
-    random_directions = rng.normal(size=(dimension, num_points))
-    random_directions /= np.linalg.norm(random_directions, axis=0)
-    random_radii = rng.random(num_points) ** (1 / dimension)
-    x = radius * (random_directions * random_radii).T
-    return x
-
-
-def random_sphere(
-    dimension: int, rng: np.random.Generator, num_points: int = 1, radius: float = 1
-) -> np.ndarray:
-    random_directions = rng.normal(size=(dimension, num_points))
-    random_directions /= np.linalg.norm(random_directions, axis=0)
-    random_radii = 1.0
-    return radius * (random_directions * random_radii).T
+        candidate_point_sampler_args['num_points'] = num_candidates
+        candidates_pos = candidate_point_sampler(**candidate_point_sampler_args)
+        if len(candidates_pos[0]) != dimension:
+            raise ValueError("The position of the voters and of the candidates do not have the "
+                             "same dimension. Use different point samplers to solve this "
+                             "problem.")
+    return voters_pos, candidates_pos
