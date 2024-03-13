@@ -48,26 +48,30 @@ def sample_election_positions(
 
     """
     if candidate_point_sampler is not None and candidate_point_sampler_args is None:
-        raise ValueError("If candidate_point_sampler is not None, a value needs to be "
-                         "passed to candidate_point_sampler_args (even if it's just "
-                         "an empty dictionary).")
+        raise ValueError(
+            "If candidate_point_sampler is not None, a value needs to be "
+            "passed to candidate_point_sampler_args (even if it's just "
+            "an empty dictionary)."
+        )
 
     if seed is not None:
         point_sampler_args["seed"] = seed
         if candidate_point_sampler is not None:
             candidate_point_sampler_args["seed"] = seed
 
-    point_sampler_args['num_points'] = num_voters
+    point_sampler_args["num_points"] = num_voters
     voters_pos = point_sampler(**point_sampler_args)
     dimension = len(voters_pos[0])
     if candidate_point_sampler is None:
-        point_sampler_args['num_points'] = num_candidates
+        point_sampler_args["num_points"] = num_candidates
         candidates_pos = point_sampler(**point_sampler_args)
     else:
-        candidate_point_sampler_args['num_points'] = num_candidates
+        candidate_point_sampler_args["num_points"] = num_candidates
         candidates_pos = candidate_point_sampler(**candidate_point_sampler_args)
         if len(candidates_pos[0]) != dimension:
-            raise ValueError("The position of the voters and of the candidates do not have the "
-                             "same dimension. Use different point samplers to solve this "
-                             "problem.")
+            raise ValueError(
+                "The position of the voters and of the candidates do not have the "
+                "same dimension. Use different point samplers to solve this "
+                "problem."
+            )
     return voters_pos, candidates_pos

@@ -51,13 +51,17 @@ def urn(
         num_voters,
         alpha,
         lambda x: set(j for j in range(num_candidates) if rng.random() <= p),
-        rng
+        rng,
     )
 
 
 @validate_num_voters_candidates
 def urn_constant_size(
-    num_voters: int, num_candidates: int, rel_num_approvals: float, alpha: float, seed: int = None
+    num_voters: int,
+    num_candidates: int,
+    rel_num_approvals: float,
+    alpha: float,
+    seed: int = None,
 ) -> list[set]:
     """
     Generates votes following the Pólya-Eggenberger urn culture. The process is as follows. The urn
@@ -92,8 +96,10 @@ def urn_constant_size(
             The votes
     """
     if rel_num_approvals < 0 or 1 < rel_num_approvals:
-        raise ValueError(f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
-                         f" be in [0,1]")
+        raise ValueError(
+            f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
+            f" be in [0,1]"
+        )
 
     num_approvals = int(rel_num_approvals * num_candidates)
     rng = np.random.default_rng(seed)
@@ -102,17 +108,17 @@ def urn_constant_size(
         num_voters,
         alpha,
         lambda x: set(rng.choice(candidate_range, size=num_approvals, replace=False)),
-        rng
+        rng,
     )
 
 
 @validate_num_voters_candidates
 def urn_partylist(
-        num_voters: int,
-        num_candidates: int,
-        alpha: float,
-        parties: int | list[float],
-        seed: int = None,
+    num_voters: int,
+    num_candidates: int,
+    alpha: float,
+    parties: int | list[float],
+    seed: int = None,
 ) -> list[set[int]]:
     """
     Generates approval votes partylist model.

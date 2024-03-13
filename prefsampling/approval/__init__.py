@@ -31,5 +31,5 @@ __all__ = [
     "urn_partylist",
     "truncated_ordinal",
     "urn",
-    "urn_constant_size"
+    "urn_constant_size",
 ]

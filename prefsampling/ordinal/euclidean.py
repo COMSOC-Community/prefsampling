@@ -78,7 +78,9 @@ def euclidean(
     distances = np.zeros([num_voters, num_candidates], dtype=float)
     for i in range(num_voters):
         for j in range(num_candidates):
-            distances[i][j] = np.linalg.norm(voters_pos[i] - candidates_pos[j], ord=dimension)
+            distances[i][j] = np.linalg.norm(
+                voters_pos[i] - candidates_pos[j], ord=dimension
+            )
         votes[i] = np.argsort(distances[i])
 
     return votes

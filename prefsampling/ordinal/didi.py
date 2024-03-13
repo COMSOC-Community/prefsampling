@@ -51,7 +51,9 @@ def didi(
         )
 
     if not all(a > 0 for a in alphas):
-        raise ValueError("The values of the alpha vector should all be strictly positive.")
+        raise ValueError(
+            "The values of the alpha vector should all be strictly positive."
+        )
 
     rng = np.random.default_rng(seed)
 

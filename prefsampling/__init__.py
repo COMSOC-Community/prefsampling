@@ -10,11 +10,14 @@ from prefsampling.ordinal import TreeSampler
 
 
 class CONSTANTS(Enum):
-    """ All constants of the package """
-    _ignore_ = 'member cls'
+    """All constants of the package"""
+
+    _ignore_ = "member cls"
     cls = vars()
     for member in chain(list(TreeSampler), list(NoiseType)):
         if member.name in cls:
-            raise ValueError(f"The name {member.name} is used in more than one enumeration. The"
-                             f"CONSTANTS class needs unique names to be well-defined.")
+            raise ValueError(
+                f"The name {member.name} is used in more than one enumeration. The"
+                f"CONSTANTS class needs unique names to be well-defined."
+            )
         cls[member.name] = member.value

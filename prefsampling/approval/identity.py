@@ -35,8 +35,10 @@ def identity(
     """
 
     if rel_num_approvals < 0 or 1 < rel_num_approvals:
-        raise ValueError(f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should "
-                         f"be in [0, 1]")
+        raise ValueError(
+            f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should "
+            f"be in [0, 1]"
+        )
 
     k = int(rel_num_approvals * num_candidates)
     return [set(range(k)) for _ in range(num_voters)]

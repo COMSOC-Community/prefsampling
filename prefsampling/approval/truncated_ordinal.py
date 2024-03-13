@@ -43,8 +43,10 @@ def truncated_ordinal(
             Approval votes
     """
     if rel_num_approvals < 0 or 1 < rel_num_approvals:
-        raise ValueError(f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
-                         f" be in [0, 1]")
+        raise ValueError(
+            f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
+            f" be in [0, 1]"
+        )
 
     ordinal_sampler_parameters["num_voters"] = num_voters
     ordinal_sampler_parameters["num_candidates"] = num_candidates

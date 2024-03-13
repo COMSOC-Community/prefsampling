@@ -56,28 +56,68 @@ ALL_ORDINAL_SAMPLERS = [
         num_voters, num_candidates, 0.5, seed=seed
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, point_sampler=point_uniform, point_sampler_args={"dimension": 2}, seed=seed
+        num_voters,
+        num_candidates,
+        point_sampler=point_uniform,
+        point_sampler_args={"dimension": 2},
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, point_sampler=point_gaussian, point_sampler_args={"dimension": 2}, seed=seed
+        num_voters,
+        num_candidates,
+        point_sampler=point_gaussian,
+        point_sampler_args={"dimension": 2},
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, point_sampler=point_sphere, point_sampler_args={"dimension": 2}, seed=seed
+        num_voters,
+        num_candidates,
+        point_sampler=point_sphere,
+        point_sampler_args={"dimension": 2},
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, point_sampler=point_ball, point_sampler_args={"dimension": 2}, seed=seed
+        num_voters,
+        num_candidates,
+        point_sampler=point_ball,
+        point_sampler_args={"dimension": 2},
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, point_sampler=point_uniform, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_ball, candidate_point_sampler_args={"dimension": 2}, seed=seed
+        num_voters,
+        num_candidates,
+        point_sampler=point_uniform,
+        point_sampler_args={"dimension": 2},
+        candidate_point_sampler=point_ball,
+        candidate_point_sampler_args={"dimension": 2},
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, point_sampler=point_gaussian, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_ball, candidate_point_sampler_args={"dimension": 2}, seed=seed
+        num_voters,
+        num_candidates,
+        point_sampler=point_gaussian,
+        point_sampler_args={"dimension": 2},
+        candidate_point_sampler=point_ball,
+        candidate_point_sampler_args={"dimension": 2},
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, point_sampler=point_sphere, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_ball, candidate_point_sampler_args={"dimension": 2}, seed=seed
+        num_voters,
+        num_candidates,
+        point_sampler=point_sphere,
+        point_sampler_args={"dimension": 2},
+        candidate_point_sampler=point_ball,
+        candidate_point_sampler_args={"dimension": 2},
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters, num_candidates, point_sampler=point_ball, point_sampler_args={"dimension": 2}, candidate_point_sampler=point_ball, candidate_point_sampler_args={"dimension": 2}, seed=seed
+        num_voters,
+        num_candidates,
+        point_sampler=point_ball,
+        point_sampler_args={"dimension": 2},
+        candidate_point_sampler=point_ball,
+        candidate_point_sampler_args={"dimension": 2},
+        seed=seed,
     ),
     lambda num_voters, num_candidates, seed=None: plackett_luce(
         num_voters, num_candidates, [1] * num_candidates, seed=seed

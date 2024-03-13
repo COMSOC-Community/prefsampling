@@ -9,7 +9,7 @@ def urn_scheme(
     num_samples: int,
     alpha: float,
     base_case_sampler: Callable,
-    rng: np.random.Generator
+    rng: np.random.Generator,
 ) -> list:
     """
     Generates votes following a Pólya-Eggenberger urn process. This is the general scheme that is

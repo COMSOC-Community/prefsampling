@@ -90,8 +90,10 @@ def impartial_constant_size(
     """
 
     if rel_num_approvals < 0 or 1 < rel_num_approvals:
-        raise ValueError(f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
-                         f" be in [0,1]")
+        raise ValueError(
+            f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
+            f" be in [0,1]"
+        )
 
     num_approvals = int(rel_num_approvals * num_candidates)
     rng = np.random.default_rng(seed)

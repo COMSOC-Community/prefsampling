@@ -40,10 +40,5 @@ def urn(
     """
     rng = np.random.default_rng(seed)
 
-    votes = urn_scheme(
-        num_voters,
-        alpha,
-        lambda x: x.permutation(num_candidates),
-        rng
-    )
+    votes = urn_scheme(num_voters, alpha, lambda x: x.permutation(num_candidates), rng)
     return np.array(votes, dtype=int)
