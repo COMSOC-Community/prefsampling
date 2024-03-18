@@ -123,8 +123,6 @@ def ball_resampling(
         width: float, defaults to :code:`1`
             The width of the ball. Can only be a single value (as opposed to
             :py:function:`~prefsampling.point.ball.ball_uniform`).
-        only_envelope
-        seed
 
     Returns
     -------
@@ -139,6 +137,13 @@ def ball_resampling(
     points = []
     for _ in range(num_points):
         point = inner_sampler(**inner_sampler_args)
+        if not isinstance(point, Iterable):
+            point = np.array([point])
+        else:
+            point = np.array(point)
+        if len(point) != num_dimensions:
+            raise ValueError(f"The inner sampler did not return a point with the suitable dimensions ({num_dimensions} "
+                             f"needed but {len(point)} returned).")
         while np.linalg.norm(point - center_point) > width:
             point = inner_sampler(**inner_sampler_args)
         points.append(point)

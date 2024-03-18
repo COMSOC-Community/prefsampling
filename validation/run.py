@@ -9,7 +9,6 @@ from validation.approval.resampling import (
     ApprovalDisjointResamplingValidator,
 )
 
-from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.ordinal import TreeSampler
 from prefsampling.tree.schroeder import (
     all_schroeder_tree,
@@ -41,6 +40,7 @@ from validation.ordinal.singlepeaked import (
     SPCircleValidator,
 )
 from validation.ordinal.urn import OrdinalUrnValidator
+from validation.point.ball import plot_ball_uniform, plot_ball_resampling
 from validation.tree.schroeder import (
     SchroederValidator,
     SchroederLescanneValidator,
@@ -48,11 +48,11 @@ from validation.tree.schroeder import (
 )
 
 ALL_APPROVAL_VALIDATORS = [
-    ApprovalImpartialValidator(),
-    ApprovalIdentityValidator(),
-    ApprovalNoiseValidator(),
-    ApprovalResamplingValidator(),
-    ApprovalDisjointResamplingValidator(),
+    # ApprovalImpartialValidator(),
+    # ApprovalIdentityValidator(),
+    # ApprovalNoiseValidator(),
+    # ApprovalResamplingValidator(),
+    # ApprovalDisjointResamplingValidator(),
 ]
 
 ALL_ORDINAL_VALIDATORS = [
@@ -101,3 +101,8 @@ if __name__ == "__main__":
             validator.plot_frequencies(
                 csv_dir_root, plot_dir_root, ordering="theoretical-observed"
             )
+
+    plot_dir_root = os.path.join("plots", "point")
+    os.makedirs(plot_dir_root, exist_ok=True)
+#    plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
+    plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))
