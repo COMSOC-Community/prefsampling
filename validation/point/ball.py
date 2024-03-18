@@ -1,9 +1,9 @@
-from prefsampling.point import ball
+from prefsampling.point import ball_uniform
 
 import matplotlib.pyplot as plt
 
 width = [4, 10]
-points = ball(10000, 2, width=width, center_point=[4, 10])
+points = ball_uniform(10000, 2, widths=width, center_point=[4, 10])
 print(points)
 x = points[:, 0]
 y = points[:, 1]

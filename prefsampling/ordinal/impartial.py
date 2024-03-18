@@ -21,17 +21,17 @@ def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndar
 
     Parameters
     ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    seed : int, default: :code:`None`
-        Seed for numpy random number generator.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator.
 
     Returns
     -------
-    np.ndarray
-        Ordinal votes.
+        np.ndarray
+            Ordinal votes.
     """
     rng = np.random.default_rng(seed)
     votes = np.zeros([num_voters, num_candidates], dtype=int)

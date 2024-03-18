@@ -47,8 +47,8 @@ from prefsampling.approval import (
 
 from prefsampling.point import (
     uniform as point_uniform,
-    ball as point_ball,
-    sphere as point_sphere,
+    ball_uniform as point_ball,
+    sphere_uniform as point_sphere,
     gaussian as point_gaussian,
 )
 
