@@ -4,27 +4,27 @@ from validation.validator import Validator
 
 
 class OrdinalEuclideanValidatorUniform(Validator):
-    def __init__(self):
-        parameters_list = []
-        for space in EuclideanSpace:
-            for dimension in [2, 3]:
-                parameters_list.append(
-                    {
-                        "num_voters": 50,
-                        "num_candidates": 5,
-                        "space": space,
-                        "dimension": dimension,
-                    },
-                )
-        super(OrdinalEuclideanValidatorUniform, self).__init__(
-            parameters_list,
-            "Euclidean",
-            "euclidean_uniform",
-            True,
-            sampler_func=euclidean,
-            constant_parameters=("num_voters", "num_candidates"),
-            faceted_parameters=("space", "dimension"),
-        )
+    # def __init__(self):
+    #     parameters_list = []
+    #     for space in EuclideanSpace:
+    #         for dimension in [2, 3]:
+    #             parameters_list.append(
+    #                 {
+    #                     "num_voters": 50,
+    #                     "num_candidates": 5,
+    #                     "space": space,
+    #                     "dimension": dimension,
+    #                 },
+    #             )
+    #     super(OrdinalEuclideanValidatorUniform, self).__init__(
+    #         parameters_list,
+    #         "Euclidean",
+    #         "euclidean_uniform",
+    #         True,
+    #         sampler_func=euclidean,
+    #         constant_parameters=("num_voters", "num_candidates"),
+    #         faceted_parameters=("space", "dimension"),
+    #     )
 
     def sample_cast(self, sample):
         return tuple(sample[0])
@@ -37,27 +37,27 @@ class OrdinalEuclideanValidatorUniform(Validator):
 
 
 class OrdinalEuclideanValidator(Validator):
-    def __init__(self):
-        parameters_list = []
-        for space in EuclideanSpace:
-            for dimension in [2, 3]:
-                parameters_list.append(
-                    {
-                        "num_voters": 3,
-                        "num_candidates": 3,
-                        "space": space,
-                        "dimension": dimension,
-                    },
-                )
-        super(OrdinalEuclideanValidator, self).__init__(
-            parameters_list,
-            "Euclidean",
-            "euclidean",
-            False,
-            sampler_func=euclidean,
-            constant_parameters=("num_voters", "num_candidates"),
-            faceted_parameters=("space", "dimension"),
-        )
+    # def __init__(self):
+    #     parameters_list = []
+    #     for space in EuclideanSpace:
+    #         for dimension in [2, 3]:
+    #             parameters_list.append(
+    #                 {
+    #                     "num_voters": 3,
+    #                     "num_candidates": 3,
+    #                     "space": space,
+    #                     "dimension": dimension,
+    #                 },
+    #             )
+    #     super(OrdinalEuclideanValidator, self).__init__(
+    #         parameters_list,
+    #         "Euclidean",
+    #         "euclidean",
+    #         False,
+    #         sampler_func=euclidean,
+    #         constant_parameters=("num_voters", "num_candidates"),
+    #         faceted_parameters=("space", "dimension"),
+    #     )
 
     def sample_cast(self, sample):
         return tuple(tuple(r) for r in sample)
