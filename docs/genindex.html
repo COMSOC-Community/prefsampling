@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=7ed07c24"></script>
+    <script src="_static/documentation_options.js?v=86f9da5d"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -157,6 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/constants.html">Constants</a></li>
@@ -317,7 +318,9 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace.BALL">BALL (EuclideanSpace attribute)</a>
+      <li><a href="reference/point/index.html#prefsampling.point.ball_resampling">ball_resampling() (in module prefsampling.point)</a>
+</li>
+      <li><a href="reference/point/index.html#prefsampling.point.ball_uniform">ball_uniform() (in module prefsampling.point)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -353,8 +356,6 @@ document.write(`
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/core/index.html#prefsampling.core.euclidean.election_positions">election_positions() (in module prefsampling.core.euclidean)</a>
-</li>
       <li><a href="reference/approval/index.html#prefsampling.approval.empty">empty() (in module prefsampling.approval)</a>
 </li>
   </ul></td>
@@ -365,8 +366,6 @@ document.write(`
         <li><a href="reference/ordinal/index.html#prefsampling.ordinal.euclidean">(in module prefsampling.ordinal)</a>
 </li>
       </ul></li>
-      <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace">EuclideanSpace (class in prefsampling.core.euclidean)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -381,7 +380,7 @@ document.write(`
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN">GAUSSIAN (EuclideanSpace attribute)</a>
+      <li><a href="reference/point/index.html#prefsampling.point.gaussian">gaussian() (in module prefsampling.point)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -438,6 +437,8 @@ document.write(`
         <li><a href="reference/inputvalidators.html#module-prefsampling.inputvalidators">prefsampling.inputvalidators</a>
 </li>
         <li><a href="reference/ordinal/index.html#module-prefsampling.ordinal">prefsampling.ordinal</a>
+</li>
+        <li><a href="reference/point/index.html#module-prefsampling.point">prefsampling.point</a>
 </li>
         <li><a href="reference/tree/index.html#module-prefsampling.tree">prefsampling.tree</a>
 </li>
@@ -520,6 +521,13 @@ document.write(`
 </li>
       </ul></li>
       <li>
+    prefsampling.point
+
+      <ul>
+        <li><a href="reference/point/index.html#module-prefsampling.point">module</a>
+</li>
+      </ul></li>
+      <li>
     prefsampling.tree
 
       <ul>
@@ -546,6 +554,8 @@ document.write(`
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/core/index.html#prefsampling.core.euclidean.sample_election_positions">sample_election_positions() (in module prefsampling.core.euclidean)</a>
+</li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER">SCHROEDER (TreeSampler attribute)</a>
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER_LESCANNE">SCHROEDER_LESCANNE (TreeSampler attribute)</a>
@@ -556,10 +566,10 @@ document.write(`
 </li>
       <li><a href="reference/tree/index.html#prefsampling.tree.schroeder_tree_lescanne">schroeder_tree_lescanne() (in module prefsampling.tree)</a>
 </li>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER_UNIFORM">SCHROEDER_UNIFORM (TreeSampler attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER_UNIFORM">SCHROEDER_UNIFORM (TreeSampler attribute)</a>
+</li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_crossing">single_crossing() (in module prefsampling.ordinal)</a>
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_circle">single_peaked_circle() (in module prefsampling.ordinal)</a>
@@ -568,7 +578,7 @@ document.write(`
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_walsh">single_peaked_walsh() (in module prefsampling.ordinal)</a>
 </li>
-      <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace.SPHERE">SPHERE (EuclideanSpace attribute)</a>
+      <li><a href="reference/point/index.html#prefsampling.point.sphere_uniform">sphere_uniform() (in module prefsampling.point)</a>
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.stratification">stratification() (in module prefsampling.ordinal)</a>
 </li>
@@ -590,7 +600,7 @@ document.write(`
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace.UNIFORM">UNIFORM (EuclideanSpace attribute)</a>
+      <li><a href="reference/point/index.html#prefsampling.point.uniform">uniform() (in module prefsampling.point)</a>
 </li>
       <li><a href="reference/approval/index.html#prefsampling.approval.urn">urn() (in module prefsampling.approval)</a>
 

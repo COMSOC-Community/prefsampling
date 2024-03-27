@@ -17,8 +17,9 @@ def ball_uniform(
     seed: int = None,
 ) -> np.ndarray:
     """
-    Samples points uniformly at random in a ball. This function can also handle spheres and spheres of different
-    width per dimensions (discus).
+    Samples points uniformly at random in a ball. This function can also handle spheres and spheres
+    of different width per dimensions, leading to distributions that are not really balls. For
+    instance, you can obtain an ellipse by providing two different widths in the 2D case.
 
     Parameters
     ----------
@@ -27,13 +28,15 @@ def ball_uniform(
         num_dimensions: int
             The number of dimensions for the ball.
         center_point: Iterable[float]
-            The coordinates of the center point of the ball.
-        widths: float | Iterable[float], defaults to :code:`1`
-            The width of the ball. If a single value is given, the width is applied to all dimensions. In case multiple
-            values are given, they are applied to each dimension independently.
-        only_envelope: bool, defaults to :code:`False`
-            If set to :code:`True` only points on the envelope of the ball (the corresponding sphere) are sampled, and
-            not in the inside.
+            The coordinates of the center point of the ball. It needs to have one coordinate per
+            dimension.
+        widths: float | Iterable[float], default: :code:`1`
+            The width of the ball. If a single value is given, the width is applied to all
+            dimensions. In case multiple values are given, they are applied to each dimension
+            independently.
+        only_envelope: bool, default: :code:`False`
+            If set to :code:`True` only points on the envelope of the ball (the corresponding
+            sphere) are sampled, and not in the inside.
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
@@ -69,8 +72,8 @@ def sphere_uniform(
     """
     Samples points uniformly at random in a sphere, that is, in the envelope of a ball.
 
-    This is simply a shortcut of the :py:function:`~prefsampling.point.ball.ball_uniform` with
-    :code:only_envelope=True`.
+    This is simply a shortcut of the :py:func:`~prefsampling.point.ball_uniform` with
+    :code:`only_envelope = True`.
 
     Parameters
     ----------
@@ -79,11 +82,14 @@ def sphere_uniform(
         num_dimensions: int
             The number of dimensions for the ball.
         center_point: Iterable[float]
-            The coordinates of the center point of the ball.
-        widths: float | Iterable[float], defaults to :code:`1`
-            The width of the ball. If a single value is given, the width is applied to all dimensions. In case multiple
-            values are given, they are applied to each dimension independently.
-        seed
+            The coordinates of the center point of the ball. It needs to have one coordinate per
+            dimension.
+        widths: float | Iterable[float], default: :code:`1`
+            The width of the ball. If a single value is given, the width is applied to all
+            dimensions. In case multiple values are given, they are applied to each dimension
+            independently.
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator.
 
     Returns
     -------
@@ -105,8 +111,8 @@ def ball_resampling(
     width: float = 1,
 ) -> np.ndarray:
     """
-    Samples points uniformly at random in a ball. This function can also handle spheres and spheres of different
-    width per dimensions (discus).
+    Uses another point sampler and reject all points that do not fall inside the ball described
+    as parameter.
 
     Parameters
     ----------
@@ -119,10 +125,11 @@ def ball_resampling(
         inner_sampler_args: dict
             The arguments passed to the `inner_sampler`.
         center_point: Iterable[float]
-            The coordinates of the center point of the ball.
-        width: float, defaults to :code:`1`
+            The coordinates of the center point of the ball. It needs to have one coordinate per
+            dimension.
+        width: float, default: :code:`1`
             The width of the ball. Can only be a single value (as opposed to
-            :py:function:`~prefsampling.point.ball.ball_uniform`).
+            :py:func:`~prefsampling.point.ball.ball_uniform`).
 
     Returns
     -------
@@ -142,8 +149,8 @@ def ball_resampling(
         else:
             point = np.array(point)
         if len(point) != num_dimensions:
-            raise ValueError(f"The inner sampler did not return a point with the suitable dimensions ({num_dimensions} "
-                             f"needed but {len(point)} returned).")
+            raise ValueError(f"The inner sampler did not return a point with the suitable number "
+                             f"of dimensions ({num_dimensions} needed but {len(point)} returned).")
         while np.linalg.norm(point - center_point) > width:
             point = inner_sampler(**inner_sampler_args)
         points.append(point)

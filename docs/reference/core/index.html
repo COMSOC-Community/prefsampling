@@ -36,13 +36,14 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=7ed07c24"></script>
+    <script src="../../_static/documentation_options.js?v=86f9da5d"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/core/index';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Constants" href="../constants.html" />
     <link rel="prev" title="Tree" href="../tree/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -157,8 +158,11 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tree/index.html">Tree</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputvalidators.html">Input Validators</a></li>
 </ul>
 </li>
 </ul>
@@ -336,14 +340,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.euclidean">Module core.euclidean</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.BALL</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.SPHERE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.SPHERE</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.election_positions"><code class="docutils literal notranslate"><span class="pre">election_positions()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.sample_election_positions"><code class="docutils literal notranslate"><span class="pre">sample_election_positions()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -497,56 +494,31 @@ accept a <code class="code docutils literal notranslate"><span class="pre">centr
 </section>
 <section id="module-prefsampling.core.euclidean">
 <span id="module-core-euclidean"></span><h2>Module core.euclidean<a class="headerlink" href="#module-prefsampling.core.euclidean" title="Link to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="prefsampling.core.euclidean.EuclideanSpace">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EuclideanSpace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/core/euclidean.html#EuclideanSpace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.euclidean.EuclideanSpace" title="Link to this definition">#</a></dt>
-<dd><p>Constants used to represent Euclidean spaces</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.core.euclidean.EuclideanSpace.BALL">
-<span class="sig-name descname"><span class="pre">BALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Ball</span> <span class="pre">Space'</span></em><a class="headerlink" href="#prefsampling.core.euclidean.EuclideanSpace.BALL" title="Link to this definition">#</a></dt>
-<dd><p>Ball-shaped space</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN">
-<span class="sig-name descname"><span class="pre">GAUSSIAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Gaussian</span> <span class="pre">Space'</span></em><a class="headerlink" href="#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN" title="Link to this definition">#</a></dt>
-<dd><p>Gaussian space</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.core.euclidean.EuclideanSpace.SPHERE">
-<span class="sig-name descname"><span class="pre">SPHERE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Spherical</span> <span class="pre">Space'</span></em><a class="headerlink" href="#prefsampling.core.euclidean.EuclideanSpace.SPHERE" title="Link to this definition">#</a></dt>
-<dd><p>Spherical space</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.core.euclidean.EuclideanSpace.UNIFORM">
-<span class="sig-name descname"><span class="pre">UNIFORM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Uniform</span> <span class="pre">Space'</span></em><a class="headerlink" href="#prefsampling.core.euclidean.EuclideanSpace.UNIFORM" title="Link to this definition">#</a></dt>
-<dd><p>Uniform space</p>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.core.euclidean.election_positions">
-<span class="sig-name descname"><span class="pre">election_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><span class="pre">EuclideanSpace</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.random.Generator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/core/euclidean.html#election_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.euclidean.election_positions" title="Link to this definition">#</a></dt>
-<dd><p>Returns the position of the voters and the candidates in a Euclidean space.</p>
-<dl class="field-list simple">
+<dt class="sig sig-object py" id="prefsampling.core.euclidean.sample_election_positions">
+<span class="sig-name descname"><span class="pre">sample_election_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_sampler_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate_point_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate_point_sampler_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/core/euclidean.html#sample_election_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.euclidean.sample_election_positions" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – The number of voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – The number of candidates.</p></li>
-<li><p><strong>space</strong> (<a class="reference internal" href="#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a>) – Type of space considered. Should be a constant defined in the
-<a class="reference internal" href="#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a>.</p></li>
-<li><p><strong>dimension</strong> (<em>int</em>) – Number of dimensions for the space considered.</p></li>
-<li><p><strong>rng</strong> (<em>np.random.Generator</em>) – The numpy generator to use for randomness.</p></li>
+<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
+<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>point_sampler</strong> (<em>Callable</em>) – The sampler used to sample point in the space. Used for both voters and candidates
+unless a <cite>candidate_space</cite> is provided.</p></li>
+<li><p><strong>point_sampler_args</strong> (<em>dict</em>) – The arguments passed to the <cite>point_sampler</cite>. The argument <cite>num_points</cite> is ignored
+and replaced by the number of voters or candidates.</p></li>
+<li><p><strong>candidate_point_sampler</strong> (Callable, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The sampler used to sample the points of the candidates. If a value is provided,
+then the <cite>space</cite> argument is only used for voters.</p></li>
+<li><p><strong>candidate_point_sampler_args</strong> (<em>dict</em>) – The arguments passed to the <cite>candidate_point_sampler</cite>. The argument <cite>num_points</cite>
+is ignored and replaced by the number of candidates.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator. Also passed to the point samplers if
+a value is provided.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The position of the voters and of the candidates respectively.</p>
+<dd class="field-even"><p>The positions of the voters and of the candidates.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>(np.ndarray, np.ndarray)</p>
+<dd class="field-odd"><p><em>tuple</em>[np.ndarray, np.ndarray]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -573,6 +545,15 @@ accept a <code class="code docutils literal notranslate"><span class="pre">centr
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Tree</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../constants.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Constants</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -602,14 +583,7 @@ accept a <code class="code docutils literal notranslate"><span class="pre">centr
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.euclidean">Module core.euclidean</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.BALL</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.GAUSSIAN"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.SPHERE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.SPHERE</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.election_positions"><code class="docutils literal notranslate"><span class="pre">election_positions()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.euclidean.sample_election_positions"><code class="docutils literal notranslate"><span class="pre">sample_election_positions()</span></code></a></li>
 </ul>
 </li>
 </ul>

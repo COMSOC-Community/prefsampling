@@ -36,14 +36,14 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=7ed07c24"></script>
+    <script src="../../_static/documentation_options.js?v=86f9da5d"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/approval/index';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Tree" href="../tree/index.html" />
+    <link rel="next" title="Point" href="../point/index.html" />
     <link rel="prev" title="Ordinal" href="../ordinal/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -158,6 +158,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants</a></li>
@@ -661,13 +662,13 @@ with the same value for the parameter <code class="code docutils literal notrans
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.euclidean">
-<span class="sig-name descname"><span class="pre">euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><span class="pre">EuclideanSpace</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">EuclideanSpace.UNIFORM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/euclidean.html#euclidean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.euclidean" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_sampler_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate_point_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate_point_sampler_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/euclidean.html#euclidean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.euclidean" title="Link to this definition">#</a></dt>
 <dd><p>Generates approval votes according to the Euclidean model.</p>
 <p>In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.
 A voter then approves of the candidates that are within a certain radius. In other words, a
 voter approves of all the candidates that are with distance <code class="code docutils literal notranslate"><span class="pre">radius</span></code> of their position.</p>
 <p>Several Euclidean spaces can be considered. The possibilities are defined in the
-<a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a> enumeration. You can also change the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code> enumeration. You can also change the
 dimension with the parameter <code class="code docutils literal notranslate"><span class="pre">dimension</span></code>.</p>
 <p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
 process described above.</p>
@@ -676,11 +677,17 @@ process described above.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>point_sampler</strong> (<em>Callable</em>) – The sampler used to sample point in the space. Used for both voters and candidates
+unless a <cite>candidate_space</cite> is provided.</p></li>
+<li><p><strong>point_sampler_args</strong> (<em>dict</em>) – The arguments passed to the <cite>point_sampler</cite>. The argument <cite>num_points</cite> is ignored
+and replaced by the number of voters or candidates.</p></li>
+<li><p><strong>candidate_point_sampler</strong> (Callable, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The sampler used to sample the points of the candidates. If a value is provided,
+then the <cite>space</cite> argument is only used for voters.</p></li>
+<li><p><strong>candidate_point_sampler_args</strong> (<em>dict</em>) – The arguments passed to the <cite>candidate_point_sampler</cite>. The argument <cite>num_points</cite>
+is ignored and replaced by the number of candidates.</p></li>
 <li><p><strong>radius</strong> (<em>float</em><em>, </em><em>default: 0.5</em>) – Radius of approval.</p></li>
-<li><p><strong>space</strong> (EuclideanSpace, default: <a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace.UNIFORM" title="prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="xref py py-const docutils literal notranslate"><span class="pre">UNIFORM</span></code></a>) – Type of space considered. Should be a constant defined in the
-<a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a>.</p></li>
-<li><p><strong>dimension</strong> (<em>int</em><em>, </em><em>default: 2</em>) – Number of Dimensions.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator. Also passed to the point samplers if
+a value is provided.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -773,11 +780,11 @@ parameters are overriden by those passed to this function.</p></li>
       </div>
     </a>
     <a class="right-next"
-       href="../tree/index.html"
+       href="../point/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tree</p>
+        <p class="prev-next-title">Point</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

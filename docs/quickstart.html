@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=7ed07c24"></script>
+    <script src="_static/documentation_options.js?v=86f9da5d"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -158,6 +158,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/constants.html">Constants</a></li>
@@ -424,7 +425,7 @@ Other parameters are specific to the samplers.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.euclidean" title="prefsampling.ordinal.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean()</span></code></a></p></td>
 <td><p>—</p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">space</span></code> (defaults to <a class="reference internal" href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace.UNIFORM" title="prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="xref py py-const docutils literal notranslate"><span class="pre">UNIFORM</span></code></a>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">space</span></code> (defaults to <code class="xref py py-const docutils literal notranslate"><span class="pre">UNIFORM</span></code>)</div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">dimension</span></code> (defaults to 2)</div>
 </div>
 </td>
@@ -560,7 +561,7 @@ Other parameters are specific to the samplers.</p>
 <td><p>—</p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">radius</span></code> (defaults to 0.5)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">space</span></code> (defaults to <a class="reference internal" href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace.UNIFORM" title="prefsampling.core.euclidean.EuclideanSpace.UNIFORM"><code class="xref py py-const docutils literal notranslate"><span class="pre">UNIFORM</span></code></a>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">space</span></code> (defaults to <code class="xref py py-const docutils literal notranslate"><span class="pre">UNIFORM</span></code>)</div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">dimension</span></code> (defaults to 2)</div>
 </div>
 </td>
@@ -674,7 +675,7 @@ filter.</p>
 <section id="constants">
 <h2>Constants<a class="headerlink" href="#constants" title="Link to this heading">#</a></h2>
 <p>The constants used in the package are defined with respect to their corresponding samplers, see for
-instance <a class="reference internal" href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseType</span></code>.
+instance <code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">NoiseType</span></code>.
 They are also all gathered in the <code class="code docutils literal notranslate"><span class="pre">prefsampling.CONSTANTS</span></code> enumeration.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling</span> <span class="kn">import</span> <span class="n">CONSTANTS</span>
 
@@ -683,7 +684,7 @@ They are also all gathered in the <code class="code docutils literal notranslate
 <span class="n">CONSTANTS</span><span class="o">.</span><span class="n">BUNKE_SHEARER</span>
 </pre></div>
 </div>
-<p>Not that <a class="reference internal" href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a> and
+<p>Not that <code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code> and
 <a class="reference internal" href="reference/constants.html#prefsampling.CONSTANTS" title="prefsampling.CONSTANTS"><code class="xref py py-class docutils literal notranslate"><span class="pre">CONSTANTS</span></code></a> are not the same enumeration so direct comparison will fail.
 Indeed, <code class="code docutils literal notranslate"><span class="pre">CONSTANTS.BALL</span> <span class="pre">==</span> <span class="pre">EuclideanSpace.BALL</span></code> is evaluated to <code class="code docutils literal notranslate"><span class="pre">False</span></code>. However,
 the values are the same so <code class="code docutils literal notranslate"><span class="pre">CONSTANTS.BALL.value</span> <span class="pre">==</span> <span class="pre">EuclideanSpace.BALL.value</span></code> is evaluated

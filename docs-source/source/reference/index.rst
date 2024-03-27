@@ -6,6 +6,7 @@ Reference
 
     ordinal/index
     approval/index
+    point/index
     tree/index
     core/index
     constants

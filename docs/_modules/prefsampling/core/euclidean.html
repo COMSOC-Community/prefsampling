@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=7ed07c24"></script>
+    <script src="../../../_static/documentation_options.js?v=86f9da5d"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -157,8 +157,11 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/constants.html">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/inputvalidators.html">Input Validators</a></li>
 </ul>
 </li>
 </ul>
@@ -281,122 +284,84 @@ document.write(`
   <h1>Source code for prefsampling.core.euclidean</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
 
-<div class="viewcode-block" id="EuclideanSpace">
-<a class="viewcode-back" href="../../../reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace">[docs]</a>
-<span class="k">class</span> <span class="nc">EuclideanSpace</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Constants used to represent Euclidean spaces</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">UNIFORM</span> <span class="o">=</span> <span class="s2">&quot;Uniform Space&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Uniform space</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">GAUSSIAN</span> <span class="o">=</span> <span class="s2">&quot;Gaussian Space&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Gaussian space</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">SPHERE</span> <span class="o">=</span> <span class="s2">&quot;Spherical Space&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Spherical space</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">BALL</span> <span class="o">=</span> <span class="s2">&quot;Ball Space&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Ball-shaped space</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="election_positions">
-<a class="viewcode-back" href="../../../reference/core/index.html#prefsampling.core.euclidean.election_positions">[docs]</a>
+<div class="viewcode-block" id="sample_election_positions">
+<a class="viewcode-back" href="../../../reference/core/index.html#prefsampling.core.euclidean.sample_election_positions">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
-<span class="k">def</span> <span class="nf">election_positions</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">sample_election_positions</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">space</span><span class="p">:</span> <span class="n">EuclideanSpace</span><span class="p">,</span>
-    <span class="n">dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="n">point_sampler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">candidate_point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">candidate_point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns the position of the voters and the candidates in a Euclidean space.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    num_voters: int</span>
-<span class="sd">        The number of voters.</span>
-<span class="sd">    num_candidates: int</span>
-<span class="sd">        The number of candidates.</span>
-<span class="sd">    space : :py:class:`~prefsampling.core.euclidean.EuclideanSpace`</span>
-<span class="sd">        Type of space considered. Should be a constant defined in the</span>
-<span class="sd">        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.</span>
-<span class="sd">    dimension : int</span>
-<span class="sd">        Number of dimensions for the space considered.</span>
-<span class="sd">    rng : np.random.Generator</span>
-<span class="sd">        The numpy generator to use for randomness.</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        point_sampler : Callable</span>
+<span class="sd">            The sampler used to sample point in the space. Used for both voters and candidates</span>
+<span class="sd">            unless a `candidate_space` is provided.</span>
+<span class="sd">        point_sampler_args : dict</span>
+<span class="sd">            The arguments passed to the `point_sampler`. The argument `num_points` is ignored</span>
+<span class="sd">            and replaced by the number of voters or candidates.</span>
+<span class="sd">        candidate_point_sampler : Callable, default: :code:`None`</span>
+<span class="sd">            The sampler used to sample the points of the candidates. If a value is provided,</span>
+<span class="sd">            then the `space` argument is only used for voters.</span>
+<span class="sd">        candidate_point_sampler_args : dict</span>
+<span class="sd">            The arguments passed to the `candidate_point_sampler`. The argument `num_points`</span>
+<span class="sd">            is ignored and replaced by the number of candidates.</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator. Also passed to the point samplers if</span>
+<span class="sd">            a value is provided.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    (np.ndarray, np.ndarray)</span>
-<span class="sd">        The position of the voters and of the candidates respectively.</span>
+<span class="sd">        tuple[np.ndarray, np.ndarray]</span>
+<span class="sd">            The positions of the voters and of the candidates.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
-        <span class="n">space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">space</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">space</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM</span><span class="p">:</span>
-        <span class="n">voters</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">dimension</span><span class="p">))</span>
-        <span class="n">candidates</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">dimension</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN</span><span class="p">:</span>
-        <span class="n">voters</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">dimension</span><span class="p">))</span>
-        <span class="n">candidates</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">dimension</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">:</span>
-        <span class="n">voters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">random_sphere</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">rng</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)]</span>
-        <span class="p">)</span>
-        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">random_sphere</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">rng</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)]</span>
-        <span class="p">)</span>
-    <span class="k">elif</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">BALL</span><span class="p">:</span>
-        <span class="n">voters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">random_ball</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">rng</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)]</span>
-        <span class="p">)</span>
-        <span class="n">candidates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">random_ball</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">rng</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)]</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">candidate_point_sampler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">candidate_point_sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;The `space` argument needs to be one of the constant defined in the &quot;</span>
-            <span class="s2">&quot;core.euclidean.EuclideanSpace enumeration. Choices are: &quot;</span>
-            <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">EuclideanSpace</span><span class="p">)</span>
+            <span class="s2">&quot;If candidate_point_sampler is not None, a value needs to be &quot;</span>
+            <span class="s2">&quot;passed to candidate_point_sampler_args (even if it&#39;s just &quot;</span>
+            <span class="s2">&quot;an empty dictionary).&quot;</span>
         <span class="p">)</span>
-    <span class="k">return</span> <span class="n">voters</span><span class="p">,</span> <span class="n">candidates</span></div>
 
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">point_sampler_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+        <span class="k">if</span> <span class="n">candidate_point_sampler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">candidate_point_sampler_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
 
+    <span class="n">point_sampler_args</span><span class="p">[</span><span class="s2">&quot;num_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_voters</span>
+    <span class="n">voters_pos</span> <span class="o">=</span> <span class="n">point_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">point_sampler_args</span><span class="p">)</span>
+    <span class="n">dimension</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">voters_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">candidate_point_sampler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">point_sampler_args</span><span class="p">[</span><span class="s2">&quot;num_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_candidates</span>
+        <span class="n">candidates_pos</span> <span class="o">=</span> <span class="n">point_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">point_sampler_args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">candidate_point_sampler_args</span><span class="p">[</span><span class="s2">&quot;num_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_candidates</span>
+        <span class="n">candidates_pos</span> <span class="o">=</span> <span class="n">candidate_point_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">candidate_point_sampler_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">dimension</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The position of the voters and of the candidates do not have the &quot;</span>
+                <span class="s2">&quot;same dimension. Use different point samplers to solve this &quot;</span>
+                <span class="s2">&quot;problem.&quot;</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">voters_pos</span><span class="p">,</span> <span class="n">candidates_pos</span></div>
 
-<span class="k">def</span> <span class="nf">random_ball</span><span class="p">(</span>
-    <span class="n">dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span> <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="n">random_directions</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">num_points</span><span class="p">))</span>
-    <span class="n">random_directions</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">random_directions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">random_radii</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">num_points</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">dimension</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="p">(</span><span class="n">random_directions</span> <span class="o">*</span> <span class="n">random_radii</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-    <span class="k">return</span> <span class="n">x</span>
-
-
-<span class="k">def</span> <span class="nf">random_sphere</span><span class="p">(</span>
-    <span class="n">dimension</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span> <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="n">random_directions</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">num_points</span><span class="p">))</span>
-    <span class="n">random_directions</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">random_directions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">random_radii</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="k">return</span> <span class="n">radius</span> <span class="o">*</span> <span class="p">(</span><span class="n">random_directions</span> <span class="o">*</span> <span class="n">random_radii</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
                 </article>
