@@ -35,8 +35,7 @@ def gaussian(
         widths: Iterable[float], default: :code:`None`
             Maximal widths for the Gaussian distributions. One width per dimension needs to be
             provided. When sampling points, if the distance between the point and the center point
-            is larger than the width of a dimension, the point is resampled. The widths are
-            symmetric and apply to both side of the center point (thus you may want to divide by 2).
+            is larger than half the width of a dimension, the point is resampled.
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
@@ -53,12 +52,12 @@ def gaussian(
             widths = np.array(widths, dtype=float)
             if len(widths) != num_dimensions:
                 raise ValueError(
-                    f"The number of bounds needs to be equal to the number of dimensions "
+                    f"The number of widths needs to be equal to the number of dimensions "
                     f"({len(widths)} given for {num_dimensions} dimensions)."
                 )
         else:
             raise TypeError(
-                "The 'bounds' parameter needs to be an iterable with one value per dimension."
+                "The 'widths' parameter needs to be an iterable with one value per dimension."
             )
     center_point = validate_center_point(center_point, num_dimensions)
     sigmas = validate_width(sigmas, num_dimensions)
@@ -72,7 +71,7 @@ def gaussian(
         points = []
         for _ in range(num_points):
             point = rng.normal(loc=center_point, scale=sigmas, size=num_dimensions)
-            while not (np.abs(point - center_point) <= widths).all():
+            while not (np.abs(point - center_point) <= (widths / 2)).all():
                 point = rng.normal(loc=center_point, scale=sigmas, size=num_dimensions)
             points.append(point)
 

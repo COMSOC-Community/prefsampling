@@ -59,7 +59,7 @@ def ball_uniform(
         random_radii = 1.0
     else:
         random_radii = rng.random(num_points) ** (1 / num_dimensions)
-    return center_point + widths * (random_directions * random_radii).T
+    return center_point + (widths / 2) * (random_directions * random_radii).T
 
 
 def sphere_uniform(
@@ -151,7 +151,7 @@ def ball_resampling(
         if len(point) != num_dimensions:
             raise ValueError(f"The inner sampler did not return a point with the suitable number "
                              f"of dimensions ({num_dimensions} needed but {len(point)} returned).")
-        while np.linalg.norm(point - center_point) > width:
+        while np.linalg.norm(point - center_point) > (width / 2):
             point = inner_sampler(**inner_sampler_args)
         points.append(point)
     return np.array(points)
