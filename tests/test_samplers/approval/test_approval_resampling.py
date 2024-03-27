@@ -15,6 +15,11 @@ class TestApprovalResampling(TestCase):
         with self.assertRaises(ValueError):
             resampling(4, 5, p=-0.4, phi=0.5)
 
+        with self.assertRaises(ValueError):
+            resampling(4, 5, p=0.5, phi=0.4, central_vote="1234")
+        with self.assertRaises(ValueError):
+            resampling(4, 5, p=0.5, phi=0.4, central_vote={1, 2, 3, 4, 5, 6, 7})
+
     def test_approval_disjoint_resampling(self):
         with self.assertRaises(ValueError):
             disjoint_resampling(4, 5, p=0.5, phi=-0.4)
