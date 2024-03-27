@@ -51,8 +51,8 @@ def random_gaussian_samplers(num_dim):
                         num_points,
                         num_dimensions,
                         center_point=center_point,
-                        widths=widths,
-                        bounds=bounds,
+                        sigmas=widths,
+                        widths=bounds,
                         seed=seed,
                     )
                 )

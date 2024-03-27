@@ -45,4 +45,4 @@ def uniform(
     center_point = validate_center_point(center_point, num_dimensions)
     widths = validate_width(widths, num_dimensions)
     rng = np.random.default_rng(seed)
-    return rng.random((num_points, num_dimensions)) * widths + center_point
+    return rng.random((num_points, num_dimensions)) * widths + (center_point - widths / 2)
