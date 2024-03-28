@@ -1,35 +1,34 @@
 from unittest import TestCase
 
-import numpy as np
-
 from prefsampling.approval.resampling import (
     resampling,
     disjoint_resampling,
     moving_resampling,
 )
-from tests.utils import float_parameter_test_values, int_parameter_test_values
+from tests.utils import (
+    float_parameter_test_values,
+    int_parameter_test_values,
+    TestSampler,
+)
 
 
-def random_app_resampling_samplers():
+def all_test_samplers_approval_resampling():
     samplers = [
-        lambda num_voters, num_candidates, seed=None: resampling(
-            num_voters, num_candidates, random_phi, random_p, seed=seed
-        )
+        TestSampler(resampling, {"p": random_p, "phi": random_phi})
         for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)
     ]
     samplers += [
-        lambda num_voters, num_candidates, seed=None: disjoint_resampling(
-            num_voters, num_candidates, random_phi, random_p, random_g, seed=seed
+        TestSampler(
+            disjoint_resampling, {"p": random_p, "phi": random_phi, "g": random_g}
         )
         for random_g in int_parameter_test_values(1, 10, 2)
-        for random_p in float_parameter_test_values(0, 1 / random_g, 2)
+        for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)
+        if random_g * random_p <= 1
     ]
     samplers += [
-        lambda num_voters, num_candidates, seed=None: moving_resampling(
-            num_voters, num_candidates, random_phi, random_p, seed=seed
-        )
+        TestSampler(moving_resampling, {"p": random_p, "phi": random_phi})
         for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)
     ]

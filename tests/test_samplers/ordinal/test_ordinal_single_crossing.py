@@ -1,12 +1,17 @@
 from unittest import TestCase
 
-from prefsampling.ordinal.singlecrossing import SingleCrossingNode, single_crossing, single_crossing_impartial
+from prefsampling.ordinal.singlecrossing import (
+    SingleCrossingNode,
+    single_crossing,
+    single_crossing_impartial,
+)
+from tests.utils import TestSampler
 
 
-def random_ord_single_crossing_samplers():
+def all_test_samplers_ordinal_single_crossing():
     return [
-        single_crossing,
-        single_crossing_impartial,
+        TestSampler(single_crossing, {}),
+        TestSampler(single_crossing_impartial, {}),
     ]
 
 

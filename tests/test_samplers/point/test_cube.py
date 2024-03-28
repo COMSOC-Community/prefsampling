@@ -5,8 +5,8 @@ from prefsampling.point import cube
 
 def random_cube_samplers(num_dim):
     samplers = []
-    for center_point in [None] + 3 * [np.random.random(num_dim)]:
-        for widths in 3 * [np.random.random(1)] + 3 * [np.random.random(num_dim)]:
+    for center_point in [None] + 2 * [np.random.random(num_dim)]:
+        for widths in 2 * [np.random.random(1)] + 2 * [np.random.random(num_dim)]:
             samplers.append(
                 lambda num_points, num_dimensions, seed=None: cube(
                     num_points,

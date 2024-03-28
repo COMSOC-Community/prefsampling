@@ -1,18 +1,16 @@
 from unittest import TestCase
 
 from prefsampling.ordinal import stratification, impartial_anonymous, impartial
-from tests.utils import float_parameter_test_values
+from tests.utils import float_parameter_test_values, TestSampler
 
 
-def random_ord_impartial_samplers():
+def all_test_samplers_ordinal_impartial():
     samplers = [
-        lambda num_voters, num_candidates, seed=None: stratification(
-            num_voters, num_candidates, random_weight, seed
-        )
+        TestSampler(stratification, {"weight": random_weight})
         for random_weight in float_parameter_test_values(0, 1, 2)
     ]
-    samplers.append(impartial)
-    samplers.append(impartial_anonymous)
+    samplers.append(TestSampler(impartial, {}))
+    samplers.append(TestSampler(impartial_anonymous, {}))
     return samplers
 
 

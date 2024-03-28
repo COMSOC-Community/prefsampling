@@ -1,12 +1,16 @@
 from unittest import TestCase
 
-from prefsampling.ordinal.singlepeaked import single_peaked_walsh, single_peaked_conitzer, single_peaked_circle
+from prefsampling.ordinal.singlepeaked import (
+    single_peaked_walsh,
+    single_peaked_conitzer,
+    single_peaked_circle,
+)
+from tests.utils import TestSampler
 
 
-def random_ord_single_peaked_samplers():
+def all_test_samplers_ordinal_single_peaked():
     return [
-        single_peaked_conitzer,
-        single_peaked_circle,
-        single_peaked_walsh,
+        TestSampler(single_peaked_conitzer, {}),
+        TestSampler(single_peaked_circle, {}),
+        TestSampler(single_peaked_walsh, {}),
     ]
-

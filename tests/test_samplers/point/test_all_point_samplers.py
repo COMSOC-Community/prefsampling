@@ -2,9 +2,9 @@ from unittest import TestCase
 
 import numpy as np
 
-from tests.test_samplers.point.ball import random_ball_samplers
-from tests.test_samplers.point.cube import random_cube_samplers
-from tests.test_samplers.point.gaussian import random_gaussian_samplers
+from tests.test_samplers.point.test_ball import random_ball_samplers
+from tests.test_samplers.point.test_cube import random_cube_samplers
+from tests.test_samplers.point.test_gaussian import random_gaussian_samplers
 
 
 def random_point_samplers(num_dimensions=3):
@@ -33,7 +33,7 @@ class TestAllPointSamplers(TestCase):
     def test_all_point_samplers(self):
         num_points = 200
 
-        for num_dimensions in [1, 2, 3, 4, 5]:
+        for num_dimensions in range(1, 5):
             all_samplers = random_point_samplers(num_dimensions)
             for sampler in all_samplers:
                 for test_sampler in [

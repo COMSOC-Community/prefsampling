@@ -87,8 +87,8 @@ def noise(
 
     k = math.floor(p * num_candidates)
 
-    A = {i for i in range(k)}
-    B = set(range(num_candidates)) - A
+    A = list(range(k))
+    B = list(range(k + 1, num_candidates))
 
     choices = []
     probabilities = []
@@ -107,14 +107,14 @@ def noise(
                 factor = phi ** (len(A) - x + y)
             elif noise_type == NoiseType.JACCARD:
                 if len(A) + y == 0:
-                    factor = 0
+                    factor = int(phi == 0)
                 else:
                     factor = phi ** ((len(A) - x + y) / (len(A) + y))
             elif noise_type == NoiseType.ZELINKA:
                 factor = phi ** max(len(A) - x, y)
             elif noise_type == NoiseType.BUNKE_SHEARER:
                 if max(len(A), x + y) == 0:
-                    factor = 0
+                    factor = int(phi == 0)
                 else:
                     factor = phi ** (max(len(A) - x, y) / max(len(A), x + y))
             else:
@@ -128,16 +128,14 @@ def noise(
 
             choices.append((x, y))
             probabilities.append(num_options)
-
     denominator = sum(probabilities)
     probabilities = [p / denominator for p in probabilities]
 
     # Sample Votes
     votes = []
     for _ in range(num_voters):
-        _id = rng.choice(range(len(choices)), 1, p=probabilities)[0]
-        x, y = choices[_id]
-        vote = set(rng.choice(list(A), x, replace=False))
+        x, y = rng.choice(choices, p=probabilities)
+        vote = set(rng.choice(A, x, replace=False))
         vote = vote.union(set(rng.choice(list(B), y, replace=False)))
         votes.append(vote)
 

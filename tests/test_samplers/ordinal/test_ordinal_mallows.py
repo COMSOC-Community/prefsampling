@@ -1,23 +1,29 @@
 from unittest import TestCase
 
 from prefsampling.ordinal.mallows import mallows, norm_mallows, phi_from_norm_phi
-from tests.utils import float_parameter_test_values
+from tests.utils import float_parameter_test_values, TestSampler
 
 
-def random_ord_mallows_samplers():
+def all_test_samplers_ordinal_mallows():
     samplers = [
-        lambda num_voters, num_candidates, seed=None: mallows(
-            num_voters, num_candidates, random_phi, normalise_phi=random_normalise_phi, impartial_central_vote=impartial_central_vote, seed=seed
+        TestSampler(
+            mallows,
+            {
+                "phi": random_phi,
+                "normalise_phi": random_normalise_phi,
+                "impartial_central_vote": impartial_central_vote,
+            },
         )
         for random_phi in float_parameter_test_values(0, 1, 2)
         for random_normalise_phi in [True, False]
         for impartial_central_vote in [True, False]
     ]
     samplers += [
-        lambda num_voters, num_candidates, seed=None: norm_mallows(
-            num_voters, num_candidates, random_norm_phi, impartial_central_vote=impartial_central_vote, seed=seed
+        TestSampler(
+            norm_mallows,
+            {"norm_phi": random_phi, "impartial_central_vote": impartial_central_vote},
         )
-        for random_norm_phi in float_parameter_test_values(0, 1, 2)
+        for random_phi in float_parameter_test_values(0, 1, 2)
         for impartial_central_vote in [True, False]
     ]
     return samplers

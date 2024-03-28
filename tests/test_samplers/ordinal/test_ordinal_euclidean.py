@@ -1,48 +1,61 @@
 from prefsampling.ordinal.euclidean import euclidean
 from prefsampling.point import ball_uniform, ball_resampling, cube, gaussian
+from tests.utils import TestSampler
 
 
-def random_ord_euclidean_samplers():
+def all_test_samplers_euclidean():
+    def test_ball_uniform_1d(num_points, seed=None):
+        return ball_uniform(num_points, 1, seed=seed)
+
+    def test_ball_resampling_2d(num_points, seed=None):
+        return ball_resampling(num_points, 2, lambda: gaussian(1, 2)[0], {}, seed=seed)
+
+    def test_cube_3d(num_points, seed=None):
+        return cube(num_points, 3, seed=seed)
+
+    def test_gaussian_4d(num_points, seed=None):
+        return gaussian(num_points, 4, seed=seed)
+
     all_point_samplers = [
-        lambda num_points, seed=None: ball_uniform(num_points, 1, seed=seed),
-        lambda num_points, seed=None: ball_resampling(
-            num_points, 2, lambda: gaussian(1, 2)[0], {}, seed=seed
-        ),
-        lambda num_points, seed=None: cube(num_points, 3, seed=seed),
-        lambda num_points, seed=None: gaussian(num_points, 4, seed=seed),
+        test_ball_uniform_1d,
+        test_ball_resampling_2d,
+        test_cube_3d,
+        test_gaussian_4d,
     ]
 
-    samplers = [
-        lambda num_voters, num_candidates, seed=None: euclidean(
+    def euclidean_positions(
+        num_voters, num_candidates, pos_sampler, seed=None, **kwargs
+    ):
+        v_pos = pos_sampler(num_voters, seed=seed)
+        c_pos = pos_sampler(num_candidates, seed=seed)
+        return euclidean(
             num_voters,
             num_candidates,
-            point_sampler=sampler,
-            point_sampler_args={},
+            voters_positions=v_pos,
+            candidates_positions=c_pos,
             seed=seed,
+            **kwargs,
         )
-        for sampler in all_point_samplers
-    ]
-    samplers += [
-        lambda num_voters, num_candidates, seed=None: euclidean(
-            num_voters,
-            num_candidates,
-            voters_positions=sampler(num_voters, seed),
-            candidates_positions=sampler(num_candidates, seed),
-            seed=seed,
+
+    samplers = []
+    for point_sampler in all_point_samplers:
+        samplers.append(
+            TestSampler(
+                euclidean,
+                {
+                    "point_sampler": point_sampler,
+                    "point_sampler_args": {},
+                    "candidate_point_sampler": point_sampler,
+                    "candidate_point_sampler_args": {},
+                },
+            )
         )
-        for sampler in all_point_samplers
-    ]
-    samplers += [
-        lambda num_voters, num_candidates, seed=None: euclidean(
-            num_voters,
-            num_candidates,
-            point_sampler=sampler1,
-            point_sampler_args={},
-            candidate_point_sampler=sampler2,
-            candidate_point_sampler_args={},
-            seed=seed,
+        samplers.append(
+            TestSampler(
+                euclidean, {"point_sampler": point_sampler, "point_sampler_args": {}}
+            )
         )
-        for sampler1 in all_point_samplers
-        for sampler2 in all_point_samplers
-    ]
+        samplers.append(
+            TestSampler(euclidean_positions, {"pos_sampler": point_sampler})
+        )
     return samplers

@@ -71,7 +71,6 @@ def euclidean_threshold(
         list[set[int]]
             Approval votes.
     """
-
     if threshold < 1:
         raise ValueError(
             f"Threshold cannot be lower than 1 (current value: {threshold})."
@@ -181,22 +180,22 @@ def euclidean_vcr(
                 f"element per voter ({len(voters_radius)} provided for num_voters="
                 f"{num_voters}"
             )
-        else:
-            voters_radius = np.array(
-                [voters_radius for _ in range(num_voters)], dtype=float
-            )
+    else:
+        voters_radius = np.array(
+            [voters_radius for _ in range(num_voters)], dtype=float
+        )
     if isinstance(candidates_radius, Iterable):
-        candidates_radius = np.array(voters_radius, dtype=float)
-        if len(candidates_radius) != num_voters:
+        candidates_radius = np.array(candidates_radius, dtype=float)
+        if len(candidates_radius) != num_candidates:
             raise ValueError(
                 "If the 'candidates_radius' parameter is an iterable, it needs to "
                 f"have one element per candidate ({len(candidates_radius)} provided "
                 f"for num_candidates={num_candidates}"
             )
-        else:
-            candidates_radius = np.array(
-                [voters_radius for _ in range(num_voters)], dtype=float
-            )
+    else:
+        candidates_radius = np.array(
+            [candidates_radius for _ in range(num_candidates)], dtype=float
+        )
 
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
@@ -209,15 +208,15 @@ def euclidean_vcr(
         candidates_positions,
         seed,
     )
-
     votes = []
     for v, voter_pos in enumerate(voters_pos):
         ballot = set()
-        voter_radius = voters_radius[v]
+        radius = voters_radius[v]
         for c in range(num_candidates):
             distance = np.linalg.norm(voter_pos - candidates_pos[c])
-            if distance <= voter_radius + candidates_radius[c]:
+            if distance <= radius + candidates_radius[c]:
                 ballot.add(c)
+        votes.append(ballot)
     return votes
 
 

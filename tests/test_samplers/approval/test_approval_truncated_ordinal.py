@@ -3,17 +3,18 @@ from unittest import TestCase
 
 from prefsampling.approval.truncated_ordinal import truncated_ordinal
 from prefsampling.ordinal import mallows, urn
-from tests.utils import float_parameter_test_values
+from tests.utils import float_parameter_test_values, TestSampler
 
 
-def random_app_truncated_ordinal_samplers():
+def all_test_samplers_approval_truncated_ordinal():
     return [
-        lambda num_voters, num_candidates, seed=None: truncated_ordinal(
-            num_voters,
-            num_candidates,
-            random_rel_num_approvals,
-            urn,
-            {"alpha": random_alpha},
+        TestSampler(
+            truncated_ordinal,
+            {
+                "rel_num_approvals": random_rel_num_approvals,
+                "ordinal_sampler": urn,
+                "ordinal_sampler_parameters": {"alpha": random_alpha},
+            },
         )
         for random_rel_num_approvals in float_parameter_test_values(0, 1, 2)
         for random_alpha in float_parameter_test_values(0, 10, 2)

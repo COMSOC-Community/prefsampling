@@ -112,10 +112,12 @@ def group_separable(
             )
 
         if not (buckets >= 0).all():
-            warnings.warn("Something went wrong when computing the distribution of the number of "
-                          "group-separable profiles, probably due to way too high numbers. We are "
-                          "defaulting to a uniform choice over the number of internal nodes.",
-                          RuntimeWarning)
+            warnings.warn(
+                "Something went wrong when computing the distribution of the number of "
+                "group-separable profiles, probably due to way too high numbers. We are "
+                "defaulting to a uniform choice over the number of internal nodes.",
+                RuntimeWarning,
+            )
             buckets = np.ones(num_candidates - 1)
         buckets /= buckets.sum()
         num_internal_nodes = rng.choice(len(buckets), p=buckets) + 1
