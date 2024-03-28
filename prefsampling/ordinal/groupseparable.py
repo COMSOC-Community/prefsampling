@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from enum import Enum
 from itertools import chain
 
@@ -109,6 +110,13 @@ def group_separable(
             buckets[r - 1] = _number_group_separable_profiles(
                 num_candidates, r, num_voters
             )
+
+        if not (buckets >= 0).all():
+            warnings.warn("Something went wrong when computing the distribution of the number of "
+                          "group-separable profiles, probably due to way too high numbers. We are "
+                          "defaulting to a uniform choice over the number of internal nodes.",
+                          RuntimeWarning)
+            buckets = np.ones(num_candidates - 1)
         buckets /= buckets.sum()
         num_internal_nodes = rng.choice(len(buckets), p=buckets) + 1
 

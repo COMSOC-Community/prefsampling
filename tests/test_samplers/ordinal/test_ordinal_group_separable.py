@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from prefsampling import TreeSampler
+from prefsampling.core import mixture
 from prefsampling.ordinal import group_separable
 
 
@@ -14,6 +15,16 @@ def random_ord_group_separable_samplers():
 
 
 class TestOrdinalGroupSeparable(TestCase):
-    def test_ordinal_graoup_separable(self):
+    def test_ordinal_group_separable(self):
         with self.assertRaises(ValueError):
             group_separable(4, 5, "caterpillar")
+
+        group_separable(3, 20, TreeSampler.SCHROEDER)
+
+        mixture(
+            4,
+            20,
+            [group_separable, group_separable, group_separable],
+            [0.5, 0.2, 0.3],
+            [{"tree_sampler": TreeSampler.SCHROEDER}, {"tree_sampler": TreeSampler.SCHROEDER}, {"tree_sampler": TreeSampler.SCHROEDER}],
+        )
