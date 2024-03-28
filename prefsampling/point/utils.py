@@ -25,7 +25,7 @@ def validate_center_point(
             The coordinates of the center point to be used by the point samplers.
     """
     if center_point is None:
-        center_point = np.array([0 for _ in range(num_dimensions)])
+        center_point = np.array([0 for _ in range(num_dimensions)], dtype=float)
     else:
         if not isinstance(center_point, Iterable):
             raise TypeError(

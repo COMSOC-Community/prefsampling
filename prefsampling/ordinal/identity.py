@@ -25,4 +25,4 @@ def identity(num_voters: int, num_candidates: int, seed: int = None) -> np.ndarr
             Ordinal votes.
     """
 
-    return np.array([np.arange(num_candidates) for _ in range(num_voters)])
+    return np.array([np.arange(num_candidates) for _ in range(num_voters)], dtype=int)

@@ -27,7 +27,7 @@ class PlackettLuceValidator(Validator):
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
         distribution = {}
-        norm_alphas = np.array(sampler_parameters["alphas"]) / sum(
+        norm_alphas = np.array(sampler_parameters["alphas"], dtype=float) / sum(
             sampler_parameters["alphas"]
         )
         for rank in all_outcomes:

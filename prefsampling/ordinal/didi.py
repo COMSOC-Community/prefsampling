@@ -63,4 +63,4 @@ def didi(
         points = rng.dirichlet(alphas)
         votes[i] = np.flip(points.argsort())
 
-    return np.array(votes)
+    return votes

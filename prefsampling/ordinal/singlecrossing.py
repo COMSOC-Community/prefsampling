@@ -207,7 +207,7 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
     vote_node_map = {top_node.vote_as_tuple: top_node}
 
     def graph_builder(node):
-        vote = np.array(node.vote)
+        vote = np.array(node.vote, dtype=int)
         for j in range(num_candidates - 1):
             if vote[j] < vote[j + 1]:
                 new_vote = vote.copy()
@@ -226,4 +226,4 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
     top_node.count_elections(num_voters)
 
     votes = top_node.sample_votes(num_voters)
-    return np.array(votes)
+    return np.array(votes, dtype=int)

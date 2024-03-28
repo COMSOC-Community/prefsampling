@@ -298,7 +298,8 @@ def euclidean_constant_size(
             [
                 np.linalg.norm(voter_pos - candidates_pos[c])
                 for c in range(num_candidates)
-            ]
+            ],
+            dtype=float
         )
         arg_sort_distances = distances.argsort()
         votes.append(set(arg_sort_distances[:num_approvals]))

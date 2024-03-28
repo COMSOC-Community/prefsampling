@@ -149,9 +149,9 @@ def ball_resampling(
     for _ in range(num_points):
         point = inner_sampler(**inner_sampler_args)
         if isinstance(point, Iterable):
-            point = np.array(point)
+            point = np.array(point, dtype=float)
         else:
-            point = np.array([point])
+            point = np.array([point], dtype=float)
         if len(point) != num_dimensions:
             raise ValueError(
                 f"The inner sampler did not return a point with the suitable number "
@@ -160,4 +160,4 @@ def ball_resampling(
         while np.linalg.norm(point - center_point) > (width / 2):
             point = inner_sampler(**inner_sampler_args)
         points.append(point)
-    return np.array(points)
+    return np.array(points, dtype=float)

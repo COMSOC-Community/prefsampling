@@ -23,7 +23,7 @@ def _sample_points(
         sampler_args["num_points"] = num_points
         positions = sampler(**sampler_args)
     else:
-        positions = np.array(positions)
+        positions = np.array(positions, dtype=float)
         if len(positions) != num_points:
             raise ValueError(
                 f"The provided number of points does not match the number of "
