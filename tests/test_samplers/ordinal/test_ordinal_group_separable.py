@@ -1,3 +1,4 @@
+from enum import Enum
 from unittest import TestCase
 
 from prefsampling import TreeSampler
@@ -21,6 +22,11 @@ class TestOrdinalGroupSeparable(TestCase):
     def test_ordinal_group_separable(self):
         with self.assertRaises(ValueError):
             group_separable(4, 5, "caterpillar")
+        with self.assertRaises(ValueError):
+            class TestEnum(Enum):
+                a = "1"
+            group_separable(4, 5, TestEnum.a)
+
 
         group_separable(3, 20, TreeSampler.SCHROEDER)
 

@@ -20,6 +20,9 @@ class TestOrdinalSingleCrossing(TestCase):
         n = SingleCrossingNode((0, 1, 2))
         n.__repr__()
         n.__str__()
+        self.assertEqual(n, (0, 1, 2))
+        self.assertNotEqual(n, (0, 2))
+        self.assertNotEqual(n, [0, 1, 2])
         self.assertTrue(n.count_elections(0) == 0)
         self.assertTrue(n.count_elections(1) == 1)
         with self.assertRaises(ValueError):

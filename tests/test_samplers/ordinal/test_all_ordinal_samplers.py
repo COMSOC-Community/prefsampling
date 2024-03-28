@@ -18,6 +18,7 @@ from tests.test_samplers.ordinal.test_ordinal_euclidean import (
 from tests.test_samplers.ordinal.test_ordinal_group_separable import (
     all_test_samplers_ordinal_group_separable,
 )
+from tests.test_samplers.ordinal.test_ordinal_identity import all_test_samplers_ordinal_identity
 from tests.test_samplers.ordinal.test_ordinal_impartial import (
     all_test_samplers_ordinal_impartial,
 )
@@ -53,6 +54,7 @@ def all_test_samplers_ordinal():
     test_samplers += all_test_samplers_ordinal_single_crossing()
     test_samplers += all_test_samplers_ordinal_single_peaked()
     test_samplers += all_test_samplers_ordinal_urn()
+    test_samplers += all_test_samplers_ordinal_identity()
 
     permute_test_samplers = [
         TestSampler(sample_then_permute, {"main_test_sampler": test_sampler})

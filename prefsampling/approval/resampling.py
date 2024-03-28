@@ -6,7 +6,7 @@ import math
 import numpy as np
 
 from prefsampling.approval import impartial
-from prefsampling.inputvalidators import validate_num_voters_candidates
+from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
 
 
 @validate_num_voters_candidates
@@ -210,6 +210,7 @@ def moving_resampling(
             When `phi` not in [0,1] interval.
             When `p` not in [0,1] interval.
     """
+    validate_int(num_legs, "number of legs", lower_bound=1)
 
     rng = np.random.default_rng(seed)
 

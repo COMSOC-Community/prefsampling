@@ -1,3 +1,4 @@
+from enum import Enum
 from unittest import TestCase
 
 
@@ -26,6 +27,10 @@ class TestApprovalNoise(TestCase):
             noise(4, 5, p=-0.4, phi=0.5)
         with self.assertRaises(ValueError):
             noise(4, 5, p=0.4, phi=0.5, noise_type="aze")
+        with self.assertRaises(ValueError):
+            class TestEnum(Enum):
+                a = "1"
+            noise(4, 5, p=0.4, phi=0.5, noise_type=TestEnum.a)
 
         # Test when len(A) = 0
         noise(4, 5, p=0, phi=0, noise_type=NoiseType.HAMMING)

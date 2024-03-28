@@ -28,9 +28,10 @@ def all_test_samplers_approval_resampling():
         if random_g * random_p <= 1
     ]
     samplers += [
-        TestSampler(moving_resampling, {"p": random_p, "phi": random_phi})
+        TestSampler(moving_resampling, {"p": random_p, "phi": random_phi, "num_legs": random_num_legs})
         for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)
+        for random_num_legs in int_parameter_test_values(1, 4, 1)
     ]
     return samplers
 
