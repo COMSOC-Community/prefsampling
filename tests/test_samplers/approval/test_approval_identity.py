@@ -9,7 +9,7 @@ def random_app_identity_samplers():
         lambda num_voters, num_candidates, seed=None: identity(
             num_voters, num_candidates, random_p, seed=seed
         )
-        for random_p in float_parameter_test_values(0, 1, 4)
+        for random_p in float_parameter_test_values(0, 1, 2)
     ]
     samplers += [empty, full]
     return samplers

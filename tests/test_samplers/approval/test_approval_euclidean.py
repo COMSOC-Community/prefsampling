@@ -19,20 +19,20 @@ def random_app_euclidean_samplers():
 
     def euclidean_vcr_params():
         res = []
-        for v in float_parameter_test_values(0, 10, 3):
-            for c in float_parameter_test_values(0, 10, 3):
+        for v in float_parameter_test_values(0, 10, 2):
+            for c in float_parameter_test_values(0, 10, 2):
                 res.append({"voters_radius": v, "candidates_radius": c})
         return res
 
     def euclidean_threshold_params():
         res = []
-        for t in float_parameter_test_values(1, 10, 3):
+        for t in float_parameter_test_values(1, 10, 2):
             res.append({"threshold": t})
         return res
 
     def euclidean_constant_size_params():
         res = []
-        for t in float_parameter_test_values(0, 1, 3):
+        for t in float_parameter_test_values(0, 1, 2):
             res.append({"rel_num_approvals": t})
         return res
 

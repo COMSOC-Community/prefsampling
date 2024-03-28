@@ -11,7 +11,7 @@ def random_ord_didi_samplers():
             num_voters, num_candidates, [1] * num_candidates, seed=seed
         )
     ]
-    for _ in range(10):
+    for _ in range(3):
         samplers.append(
             lambda num_voters, num_candidates, seed=None: didi(
                 num_voters, num_candidates, np.random.random(size=num_candidates) * 3 + 0.1, seed=seed

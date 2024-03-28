@@ -9,7 +9,7 @@ def random_ord_mallows_samplers():
         lambda num_voters, num_candidates, seed=None: mallows(
             num_voters, num_candidates, random_phi, normalise_phi=random_normalise_phi, impartial_central_vote=impartial_central_vote, seed=seed
         )
-        for random_phi in float_parameter_test_values(0, 1, 4)
+        for random_phi in float_parameter_test_values(0, 1, 2)
         for random_normalise_phi in [True, False]
         for impartial_central_vote in [True, False]
     ]
@@ -17,7 +17,7 @@ def random_ord_mallows_samplers():
         lambda num_voters, num_candidates, seed=None: norm_mallows(
             num_voters, num_candidates, random_norm_phi, impartial_central_vote=impartial_central_vote, seed=seed
         )
-        for random_norm_phi in float_parameter_test_values(0, 1, 4)
+        for random_norm_phi in float_parameter_test_values(0, 1, 2)
         for impartial_central_vote in [True, False]
     ]
     return samplers

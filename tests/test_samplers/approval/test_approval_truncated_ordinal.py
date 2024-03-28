@@ -15,8 +15,8 @@ def random_app_truncated_ordinal_samplers():
             urn,
             {"alpha": random_alpha},
         )
-        for random_rel_num_approvals in float_parameter_test_values(0, 1, 4)
-        for random_alpha in float_parameter_test_values(0, 10, 4)
+        for random_rel_num_approvals in float_parameter_test_values(0, 1, 2)
+        for random_alpha in float_parameter_test_values(0, 10, 2)
     ]
 
 

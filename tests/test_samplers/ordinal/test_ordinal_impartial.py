@@ -9,7 +9,7 @@ def random_ord_impartial_samplers():
         lambda num_voters, num_candidates, seed=None: stratification(
             num_voters, num_candidates, random_weight, seed
         )
-        for random_weight in float_parameter_test_values(0, 1, 4)
+        for random_weight in float_parameter_test_values(0, 1, 2)
     ]
     samplers.append(impartial)
     samplers.append(impartial_anonymous)

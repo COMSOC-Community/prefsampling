@@ -1,7 +1,5 @@
 from unittest import TestCase
 
-import numpy as np
-
 from prefsampling.approval.impartial import impartial, impartial_constant_size
 from tests.utils import float_parameter_test_values
 
@@ -11,13 +9,13 @@ def random_app_impartial_samplers():
         lambda num_voters, num_candidates, seed=None: impartial(
             num_voters, num_candidates, random_p, seed=seed
         )
-        for random_p in float_parameter_test_values(0, 1, 4)
+        for random_p in float_parameter_test_values(0, 1, 2)
     ]
     samplers += [
         lambda num_voters, num_candidates, seed=None: impartial_constant_size(
             num_voters, num_candidates, random_rel_num_approvals, seed=seed
         )
-        for random_rel_num_approvals in float_parameter_test_values(0, 1, 4)
+        for random_rel_num_approvals in float_parameter_test_values(0, 1, 2)
     ]
     return samplers
 

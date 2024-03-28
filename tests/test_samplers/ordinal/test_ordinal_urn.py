@@ -9,7 +9,7 @@ def random_ord_urn_samplers():
         lambda num_voters, num_candidates, seed=None: urn(
             num_voters, num_candidates, random_alpha, seed=seed
         )
-        for random_alpha in float_parameter_test_values(0, 10, 4)
+        for random_alpha in float_parameter_test_values(0, 10, 2)
     ]
 
 

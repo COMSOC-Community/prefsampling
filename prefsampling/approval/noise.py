@@ -106,11 +106,17 @@ def noise(
             if noise_type == NoiseType.HAMMING:
                 factor = phi ** (len(A) - x + y)
             elif noise_type == NoiseType.JACCARD:
-                factor = phi ** ((len(A) - x + y) / (len(A) + y))
+                if len(A) + y == 0:
+                    factor = 0
+                else:
+                    factor = phi ** ((len(A) - x + y) / (len(A) + y))
             elif noise_type == NoiseType.ZELINKA:
                 factor = phi ** max(len(A) - x, y)
             elif noise_type == NoiseType.BUNKE_SHEARER:
-                factor = phi ** (max(len(A) - x, y) / max(len(A), x + y))
+                if max(len(A), x + y) == 0:
+                    factor = 0
+                else:
+                    factor = phi ** (max(len(A) - x, y) / max(len(A), x + y))
             else:
                 raise ValueError(
                     "The `noise_type` argument needs to be one of the constant defined in the "

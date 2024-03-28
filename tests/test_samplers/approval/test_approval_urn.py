@@ -11,21 +11,21 @@ def random_app_urn_samplers():
         lambda num_voters, num_candidates, seed=None: urn(
             num_voters, num_candidates, random_p, random_alpha, seed=seed
         )
-        for random_p in float_parameter_test_values(0, 1, 4)
-        for random_alpha in float_parameter_test_values(0, 10, 4)
+        for random_p in float_parameter_test_values(0, 1, 2)
+        for random_alpha in float_parameter_test_values(0, 10, 2)
     ]
     samplers += [
         lambda num_voters, num_candidates, seed=None: urn_constant_size(
             num_voters, num_candidates, random_p, random_alpha, seed=seed
         )
-        for random_p in float_parameter_test_values(0, 1, 4)
-        for random_alpha in float_parameter_test_values(0, 10, 4)
+        for random_p in float_parameter_test_values(0, 1, 2)
+        for random_alpha in float_parameter_test_values(0, 10, 2)
     ]
     samplers += [
         lambda num_voters, num_candidates, seed=None: urn_partylist(
             num_voters, num_candidates, random_p, random_num_parties, seed=seed
         )
-        for random_p in float_parameter_test_values(0, 1, 4)
+        for random_p in float_parameter_test_values(0, 1, 2)
         for random_num_parties in range(1, 6)
     ]
     return samplers

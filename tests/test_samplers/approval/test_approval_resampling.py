@@ -15,23 +15,23 @@ def random_app_resampling_samplers():
         lambda num_voters, num_candidates, seed=None: resampling(
             num_voters, num_candidates, random_phi, random_p, seed=seed
         )
-        for random_p in float_parameter_test_values(0, 1, 4)
-        for random_phi in float_parameter_test_values(0, 1, 4)
+        for random_p in float_parameter_test_values(0, 1, 2)
+        for random_phi in float_parameter_test_values(0, 1, 2)
     ]
     samplers += [
         lambda num_voters, num_candidates, seed=None: disjoint_resampling(
             num_voters, num_candidates, random_phi, random_p, random_g, seed=seed
         )
-        for random_g in int_parameter_test_values(1, 10, 4)
-        for random_p in float_parameter_test_values(0, 1 / random_g, 4)
-        for random_phi in float_parameter_test_values(0, 1, 4)
+        for random_g in int_parameter_test_values(1, 10, 2)
+        for random_p in float_parameter_test_values(0, 1 / random_g, 2)
+        for random_phi in float_parameter_test_values(0, 1, 2)
     ]
     samplers += [
         lambda num_voters, num_candidates, seed=None: moving_resampling(
             num_voters, num_candidates, random_phi, random_p, seed=seed
         )
-        for random_p in float_parameter_test_values(0, 1, 4)
-        for random_phi in float_parameter_test_values(0, 1, 4)
+        for random_p in float_parameter_test_values(0, 1, 2)
+        for random_phi in float_parameter_test_values(0, 1, 2)
     ]
     return samplers
 

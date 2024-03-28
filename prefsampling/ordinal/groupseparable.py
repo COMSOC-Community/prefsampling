@@ -158,13 +158,13 @@ def group_separable(
     return votes
 
 
-def _number_group_separable_profiles(m: int, r: int, n: int) -> float:
+def _number_group_separable_profiles(m: int, r: int, n: int) -> int:
     """
     Returns the number of decomposition trees given the number of candidates `m` and the number
     of internal nodes `r` based on the formula from `Karpov (2019)
     <https://link.springer.com/article/10.1007/s10726-019-09621-w>`_
     """
-    return comb(m - 1, r) * comb(m - 1 + r, m) * (2 ** (n - 1) - 1) ** (r - 1)
+    return int(comb(m - 1, r) * comb(m - 1 + r, m) * (2 ** (n - 1) - 1) ** (r - 1))
 
 
 def _sample_a_vote(node, reverse=False):

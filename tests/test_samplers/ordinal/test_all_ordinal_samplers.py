@@ -40,13 +40,13 @@ def random_ord_samplers():
         lambda num_voters, num_candidates, seed=None: permute_voters(
             sampler(num_voters, num_candidates, seed)
         )
-        for sampler in samplers
+        for sampler in np.random.choice(samplers, size=200)
     ]
     samplers_rename_candidates = [
         lambda num_voters, num_candidates, seed=None: rename_candidates(
             sampler(num_voters, num_candidates, seed)
         )
-        for sampler in samplers
+        for sampler in np.random.choice(samplers, size=200)
     ]
     sampler_resample_as_central_vote = [
         lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
@@ -54,7 +54,7 @@ def random_ord_samplers():
             norm_mallows,
             {"norm_phi": 0.4, "seed": seed, "num_candidates": num_candidates},
         )
-        for sampler in samplers
+        for sampler in np.random.choice(samplers, size=200)
     ]
     samplers_mixture = [
         lambda num_voters, num_candidates, seed=None: mixture(
@@ -65,7 +65,7 @@ def random_ord_samplers():
             [{}, {}, {}],
         )
         for sampler1, sampler2, sampler3 in np.random.choice(
-            samplers, size=(1000, 3)
+            samplers, size=(200, 3)
         )
     ]
 

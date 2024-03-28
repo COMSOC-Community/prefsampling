@@ -63,7 +63,7 @@ Within the package, the samplers are organised in modules based on the ballot fo
 generate. The `prefsampling.core` module is used for features used across samplers.
 Within the submodule corresponding to the ballot format, there is a Python file 
 for each family of samplers. All the samplers are imported and appear in the `__all__`
-variable of the `__init__.py` file of the corresponding module (defined byt the ballot
+variable of the `__init__.py` file of the corresponding module (defined by the ballot
 format).
 
 ### Tests
@@ -73,12 +73,22 @@ The tests are run with unittest. Simply run the following command to launch the 
 python -m unittest
 ```
 
-Several tests are automatised. When a new sampler is added to the package, it needs
-to be added in several places for the tests. The following list provides the details:
+The structure of the test module follows that of the package. There is one submodule per
+ballot format we sample. Within the submodule, there is one file per statistical culture.
 
-- Add the sampler to the list `ALL_SAMPLERS` in `test_all_samplers.py`. Follow the convention for the import statements (that you can guess from the ones already there) to avoid duplicated names. The basic requirements (parameters, validation, etc.) that any sampler need to satisfy will then be checked.
-- Add the sampler to corresponding test file for its ballot format: `test_all_ballotformat_samplers.py`.
-- If needed, add a file `test_ballotformat_samplername.py` for tests that are specific to the sampler.
+At the submodule level, there is a file `test_all_ballotformat_samplers.py` that gathers the
+test that are common to all samplers of the given ballot format.
+
+In the file corresponding the statistical culture, there is a function that returns all 
+the samplers (with their arguments set) that are used as test cases, together with
+the tests that are specific to the sampler.
+
+When a new sampler is added to the package, it needs to be added in several places within the test
+module:
+
+- A file `test/ballotformat/test_ballotformat_culturename.py` defining the tests specific to the sampler and the functions to use for the tests (called `random_ballotformat_culturename_samplers`).
+- In `test_all_ballotformat_samplers.py`, add the functions for the sampler to the `random_ballotformat_samplers()` function.
+- If it is a sampler for actual ballots (i.e., not points in space or trees), add the functions for the samplers to the `random_samplers()` in the file `test/test_all_samplers.py`.
 
 ### Validation
 
@@ -108,6 +118,7 @@ make html
 This will generate the documentation locally (in the folder `docs-source/build`). If you want the documentation 
 to also be updated when pushing, run:
 ```shell
+make githubclean
 make github
 ```
 
@@ -118,5 +129,6 @@ After having pushed, the documentation will automatically be updated. Note that 
 
 The pipeline between GitHub and PyPI is automatised. To push a new version do the following:
 - Update the `pyproject.toml` with the new version number.
-- On GitHub, create a new release tagged with the bew version number.
+- Update the `prefsampling/__init__.py` with the new version number.
+- On GitHub, create a new release tagged with the new version number (only admins can do that).
 - You're done, the new version of the package is automatically pushed to PyPI after the creation of a GitHub release.
