@@ -68,10 +68,12 @@ def resampling(
             if not all(type(c) is int for c in central_vote):
                 raise ValueError("The central vote needs to be a set of int")
             if max(central_vote) > num_candidates - 1 or min(central_vote) < 0:
-                raise ValueError("The elements of the central vote cannot be smaller than 0 "
-                                 f"(min is currently {min(central_vote)}) and cannot be larger "
-                                 f"than {num_candidates - 1} (max is currently "
-                                 f"{max(central_vote)}).")
+                raise ValueError(
+                    "The elements of the central vote cannot be smaller than 0 "
+                    f"(min is currently {min(central_vote)}) and cannot be larger "
+                    f"than {num_candidates - 1} (max is currently "
+                    f"{max(central_vote)})."
+                )
         else:
             central_vote = set(range(k))
 

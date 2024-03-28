@@ -34,8 +34,18 @@ def plot_ball_uniform(path):
     num_points = 2000
     for num_dimensions in [1, 2, 3]:
         for i, params in enumerate(all_params):
-            points = ball_uniform(num_points, num_dimensions, widths=params["widths"][num_dimensions - 1], only_envelope=params["only_envelope"])
-            ax = fig.add_subplot(3, 4, (num_dimensions - 1) * 4 + i + 1, projection="3d" if num_dimensions == 3 else None)
+            points = ball_uniform(
+                num_points,
+                num_dimensions,
+                widths=params["widths"][num_dimensions - 1],
+                only_envelope=params["only_envelope"],
+            )
+            ax = fig.add_subplot(
+                3,
+                4,
+                (num_dimensions - 1) * 4 + i + 1,
+                projection="3d" if num_dimensions == 3 else None,
+            )
             plot_scatter_points(points, ax, [ax_limits] * num_dimensions, path)
 
 
@@ -44,7 +54,9 @@ def uniform_square(num_dimensions):
 
 
 def gamma_square(num_dimensions):
-    return np.random.gamma(2, size=num_dimensions) * np.random.choice((-1, 1), size=num_dimensions)
+    return np.random.gamma(2, size=num_dimensions) * np.random.choice(
+        (-1, 1), size=num_dimensions
+    )
 
 
 def plot_ball_resampling(path):
@@ -55,11 +67,31 @@ def plot_ball_resampling(path):
     num_points = 2000
     for num_dimensions in [1, 2, 3]:
         all_params = (
-            {"inner_sampler": uniform_square, "inner_sampler_args": {"num_dimensions": num_dimensions}},
-            {"inner_sampler": np.random.normal, "inner_sampler_args": {"size": num_dimensions}},
-            {"inner_sampler": gamma_square, "inner_sampler_args": {"num_dimensions": num_dimensions}},
+            {
+                "inner_sampler": uniform_square,
+                "inner_sampler_args": {"num_dimensions": num_dimensions},
+            },
+            {
+                "inner_sampler": np.random.normal,
+                "inner_sampler_args": {"size": num_dimensions},
+            },
+            {
+                "inner_sampler": gamma_square,
+                "inner_sampler_args": {"num_dimensions": num_dimensions},
+            },
         )
         for i, params in enumerate(all_params):
-            points = ball_resampling(num_points, num_dimensions, inner_sampler=params["inner_sampler"], inner_sampler_args=params["inner_sampler_args"], width=4)
-            ax = fig.add_subplot(3, 4, (num_dimensions - 1) * 4 + i + 1, projection="3d" if num_dimensions == 3 else None)
+            points = ball_resampling(
+                num_points,
+                num_dimensions,
+                inner_sampler=params["inner_sampler"],
+                inner_sampler_args=params["inner_sampler_args"],
+                width=4,
+            )
+            ax = fig.add_subplot(
+                3,
+                4,
+                (num_dimensions - 1) * 4 + i + 1,
+                projection="3d" if num_dimensions == 3 else None,
+            )
             plot_scatter_points(points, ax, [ax_limits] * num_dimensions, path)

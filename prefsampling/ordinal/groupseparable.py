@@ -93,7 +93,6 @@ def group_separable(
         np.ndarray
             Ordinal votes.
     """
-
     rng = np.random.default_rng(seed)
 
     if isinstance(tree_sampler, Enum):

@@ -11,7 +11,11 @@ from prefsampling.approval.resampling import (
     moving_resampling,
 )
 from prefsampling.approval.noise import noise, NoiseType
-from prefsampling.approval.euclidean import euclidean
+from prefsampling.approval.euclidean import (
+    euclidean_threshold,
+    euclidean_vcr,
+    euclidean_constant_size,
+)
 from prefsampling.approval.truncated_ordinal import truncated_ordinal
 from prefsampling.approval.urn import urn, urn_constant_size, urn_partylist
 
@@ -27,7 +31,9 @@ __all__ = [
     "moving_resampling",
     "noise",
     "NoiseType",
-    "euclidean",
+    "euclidean_threshold",
+    "euclidean_vcr",
+    "euclidean_constant_size",
     "urn_partylist",
     "truncated_ordinal",
     "urn",

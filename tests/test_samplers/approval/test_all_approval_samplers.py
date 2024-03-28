@@ -1,172 +1,82 @@
 from unittest import TestCase
 
+import numpy as np
 
-from prefsampling.approval import (
-    resampling,
-    disjoint_resampling,
-    moving_resampling,
-    impartial,
-    impartial_constant_size,
-    euclidean,
-    noise,
-    identity,
-    full,
-    empty,
-    urn_partylist,
-    NoiseType,
-    truncated_ordinal,
-    urn,
-    urn_constant_size,
-)
+from prefsampling.approval import resampling
 from prefsampling.core import (
     resample_as_central_vote,
     rename_candidates,
     permute_voters,
     mixture,
 )
-from prefsampling.ordinal import urn as ordinal_urn
-from prefsampling.point import (
-    uniform as point_uniform,
-    ball_uniform as point_ball,
-    sphere_uniform as point_sphere,
-    gaussian as point_gaussian,
-)
 
-ALL_APPROVAL_SAMPLERS = [
-    lambda num_voters, num_candidates, seed=None: resampling(
-        num_voters, num_candidates, 0.5, 0.5, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: disjoint_resampling(
-        num_voters, num_candidates, 0.5, 0.5, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: moving_resampling(
-        num_voters, num_candidates, 0.5, 0.5, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: impartial(
-        num_voters, num_candidates, 0.5, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: impartial_constant_size(
-        num_voters, num_candidates, 0.5, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: urn(
-        num_voters, num_candidates, 0.5, 0.8, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: urn_constant_size(
-        num_voters, num_candidates, 0.5, 0.8, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_uniform,
-        point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_gaussian,
-        point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_sphere,
-        point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_ball,
-        point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_uniform,
-        point_sampler_args={"num_dimensions": 2},
-        candidate_point_sampler=point_uniform,
-        candidate_point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_gaussian,
-        point_sampler_args={"num_dimensions": 2},
-        candidate_point_sampler=point_uniform,
-        candidate_point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_sphere,
-        point_sampler_args={"num_dimensions": 2},
-        candidate_point_sampler=point_uniform,
-        candidate_point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_ball,
-        point_sampler_args={"num_dimensions": 2},
-        candidate_point_sampler=point_uniform,
-        candidate_point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: noise(
-        num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.HAMMING, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: noise(
-        num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.ZELINKA, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: noise(
-        num_voters, num_candidates, 0.5, 0.5, noise_type=NoiseType.JACCARD, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: noise(
-        num_voters,
-        num_candidates,
-        0.5,
-        0.5,
-        noise_type=NoiseType.BUNKE_SHEARER,
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: identity(
-        num_voters, num_candidates, 0.5, seed=seed
-    ),
-    full,
-    empty,
-    lambda num_voters, num_candidates, seed=None: urn_partylist(
-        num_voters, num_candidates, 0.1, 3, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
-        identity(num_voters, num_candidates, rel_num_approvals=0.5),
-        resampling,
-        {"phi": 0.4, "p": 0.523, "seed": seed, "num_candidates": num_candidates},
-    ),
-    lambda num_voters, num_candidates, seed=None: rename_candidates(
-        identity(num_voters, num_candidates, rel_num_approvals=0.5),
-        seed=seed,
-        num_candidates=num_candidates,
-    ),
-    lambda num_voters, num_candidates, seed=None: permute_voters(
-        identity(num_voters, num_candidates, rel_num_approvals=0.5), seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: mixture(
-        num_voters,
-        num_candidates,
-        [identity, full, urn_partylist],
-        [0.5, 0.2, 0.3],
-        [{"rel_num_approvals": 0.4}, {}, {"alpha": 0.1, "parties": 3}],
-    ),
-    lambda num_voters, num_candidates, seed=None: truncated_ordinal(
-        num_voters, num_candidates, 0.5, ordinal_urn, {"alpha": 0.8}
-    ),
-]
+from tests.test_samplers.approval.test_approval_euclidean import (
+    random_app_euclidean_samplers,
+)
+from tests.test_samplers.approval.test_approval_identity import (
+    random_app_identity_samplers,
+)
+from tests.test_samplers.approval.test_approval_impartial import (
+    random_app_impartial_samplers,
+)
+from tests.test_samplers.approval.test_approval_noise import random_app_noise_samplers
+from tests.test_samplers.approval.test_approval_resampling import (
+    random_app_resampling_samplers,
+)
+from tests.test_samplers.approval.test_approval_truncated_ordinal import (
+    random_app_truncated_ordinal_samplers,
+)
+from tests.test_samplers.approval.test_approval_urn import random_app_urn_samplers
+
+
+def random_app_samplers():
+    samplers = []
+    samplers += random_app_euclidean_samplers()
+    samplers += random_app_identity_samplers()
+    samplers += random_app_impartial_samplers()
+    samplers += random_app_noise_samplers()
+    samplers += random_app_resampling_samplers()
+    samplers += random_app_urn_samplers()
+    samplers += random_app_truncated_ordinal_samplers()
+
+    samplers_permute = [
+        lambda num_voters, num_candidates, seed=None: permute_voters(
+            sampler(num_voters, num_candidates, seed)
+        )
+        for sampler in samplers
+    ]
+    samplers_rename_candidates = [
+        lambda num_voters, num_candidates, seed=None: rename_candidates(
+            sampler(num_voters, num_candidates, seed)
+        )
+        for sampler in samplers
+    ]
+    sampler_resample_as_central_vote = [
+        lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
+            sampler(num_voters, num_candidates, seed),
+            resampling,
+            {"phi": 0.4, "p": 0.523, "seed": seed, "num_candidates": num_candidates},
+        )
+        for sampler in samplers
+    ]
+    samplers_mixture = [
+        lambda num_voters, num_candidates, seed=None: mixture(
+            num_voters,
+            num_candidates,
+            [sampler1, sampler2, sampler3],
+            [0.5, 0.2, 0.3],
+            [{}, {}, {}],
+        )
+        for sampler1, sampler2, sampler3 in np.random.choice(
+            samplers, size=(1000, 3)
+        )
+    ]
+
+    samplers += samplers_permute
+    samplers += samplers_rename_candidates
+    samplers += sampler_resample_as_central_vote
+    samplers += samplers_mixture
+    return samplers
 
 
 class TestApprovalSamplers(TestCase):
@@ -194,7 +104,7 @@ class TestApprovalSamplers(TestCase):
         num_voters = 200
         num_candidates = 5
 
-        for sampler in ALL_APPROVAL_SAMPLERS:
+        for sampler in random_app_samplers():
             for test_sampler in [
                 sampler,
                 lambda x, y: sampler(num_voters=x, num_candidates=y),

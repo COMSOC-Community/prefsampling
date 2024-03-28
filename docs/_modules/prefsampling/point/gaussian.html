@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=86f9da5d"></script>
+    <script src="../../../_static/documentation_options.js?v=bf645af7"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -298,8 +298,8 @@ document.write(`
     <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">center_point</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">widths</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">bounds</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">sigmas</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">widths</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -314,13 +314,14 @@ document.write(`
 <span class="sd">        center_point: Iterable[float]</span>
 <span class="sd">            The coordinates of the center point of the gaussian distribution. It needs to have one</span>
 <span class="sd">            coordinate per dimension.</span>
-<span class="sd">        widths: float | Iterable[float], default: :code:`1`</span>
-<span class="sd">            The width of the gaussian distribution, i.e., the standard deviation. If a single value</span>
+<span class="sd">        sigmas: float | Iterable[float], default: :code:`1`</span>
+<span class="sd">            The standard deviation of the gaussian distribution. If a single value</span>
 <span class="sd">            is given, the width is applied to all dimensions. In case multiple values are given,</span>
 <span class="sd">            they are applied to each dimension independently.</span>
-<span class="sd">        bounds: Iterable[float], default: :code:`None`</span>
-<span class="sd">            Bounds for the Gaussian distribution. One bound per dimension needs to be provided.</span>
-<span class="sd">            When sampling points, the ones that fall outside the bounds are resampled.</span>
+<span class="sd">        widths: Iterable[float], default: :code:`None`</span>
+<span class="sd">            Maximal widths for the Gaussian distributions. One width per dimension needs to be</span>
+<span class="sd">            provided. When sampling points, if the distance between the point and the center point</span>
+<span class="sd">            is larger than half the width of a dimension, the point is resampled.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -332,32 +333,32 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">validate_int</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="s2">&quot;num_points&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">validate_int</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;num_dimensions&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
-            <span class="n">bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_dimensions</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">widths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widths</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="n">widths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">widths</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">widths</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_dimensions</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;The number of bounds needs to be equal to the number of dimensions &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span><span class="si">}</span><span class="s2"> given for </span><span class="si">{</span><span class="n">num_dimensions</span><span class="si">}</span><span class="s2"> dimensions).&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;The number of widths needs to be equal to the number of dimensions &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">widths</span><span class="p">)</span><span class="si">}</span><span class="s2"> given for </span><span class="si">{</span><span class="n">num_dimensions</span><span class="si">}</span><span class="s2"> dimensions).&quot;</span>
                 <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s2">&quot;The &#39;bounds&#39; parameter needs to be an iterable with one value per dimension.&quot;</span>
+                <span class="s2">&quot;The &#39;widths&#39; parameter needs to be an iterable with one value per dimension.&quot;</span>
             <span class="p">)</span>
     <span class="n">center_point</span> <span class="o">=</span> <span class="n">validate_center_point</span><span class="p">(</span><span class="n">center_point</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
-    <span class="n">widths</span> <span class="o">=</span> <span class="n">validate_width</span><span class="p">(</span><span class="n">widths</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
+    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">validate_width</span><span class="p">(</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">widths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
-            <span class="n">loc</span><span class="o">=</span><span class="n">center_point</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">widths</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
+            <span class="n">loc</span><span class="o">=</span><span class="n">center_point</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="p">):</span>
-            <span class="n">point</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">center_point</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">widths</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_dimensions</span><span class="p">)</span>
-            <span class="k">while</span> <span class="ow">not</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">point</span> <span class="o">-</span> <span class="n">center_point</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">bounds</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
-                <span class="n">point</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">center_point</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">widths</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_dimensions</span><span class="p">)</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">center_point</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_dimensions</span><span class="p">)</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">point</span> <span class="o">-</span> <span class="n">center_point</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">widths</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">center_point</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_dimensions</span><span class="p">)</span>
             <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">points</span><span class="p">)</span></div>

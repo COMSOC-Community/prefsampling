@@ -151,11 +151,15 @@ Reference: :py:mod:`prefsampling.approval`
      - | :code:`p`
        | :code:`phi`
      - :code:`num_legs` (defaults to 1)
-   * - :py:func:`~prefsampling.approval.euclidean`
+   * - :py:func:`~prefsampling.approval.euclidean_threshold`
      - ---
-     - | :code:`radius` (defaults to 0.5)
-       | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`)
-       | :code:`dimension` (defaults to 2)
+     -
+   * - :py:func:`~prefsampling.approval.euclidean_vcr`
+     - ---
+     -
+   * - :py:func:`~prefsampling.approval.euclidean_constant_size`
+     - ---
+     -
    * - :py:func:`~prefsampling.approval.noise`
      - | :code:`p`
        | :code:`phi`

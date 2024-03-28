@@ -85,6 +85,7 @@ def norm_mallows(
     num_candidates: int,
     norm_phi: float,
     central_vote: np.ndarray = None,
+    impartial_central_vote: bool = False,
     seed: int = None,
 ) -> np.ndarray:
     """
@@ -101,8 +102,9 @@ def norm_mallows(
         num_candidates,
         norm_phi,
         normalise_phi=True,
-        seed=seed,
         central_vote=central_vote,
+        impartial_central_vote=impartial_central_vote,
+        seed=seed,
     )
 
 

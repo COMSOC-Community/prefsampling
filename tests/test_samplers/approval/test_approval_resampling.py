@@ -1,7 +1,39 @@
 from unittest import TestCase
 
+import numpy as np
 
-from prefsampling.approval.resampling import resampling, disjoint_resampling
+from prefsampling.approval.resampling import (
+    resampling,
+    disjoint_resampling,
+    moving_resampling,
+)
+from tests.utils import float_parameter_test_values, int_parameter_test_values
+
+
+def random_app_resampling_samplers():
+    samplers = [
+        lambda num_voters, num_candidates, seed=None: resampling(
+            num_voters, num_candidates, random_phi, random_p, seed=seed
+        )
+        for random_p in float_parameter_test_values(0, 1, 4)
+        for random_phi in float_parameter_test_values(0, 1, 4)
+    ]
+    samplers += [
+        lambda num_voters, num_candidates, seed=None: disjoint_resampling(
+            num_voters, num_candidates, random_phi, random_p, random_g, seed=seed
+        )
+        for random_g in int_parameter_test_values(1, 10, 4)
+        for random_p in float_parameter_test_values(0, 1 / random_g, 4)
+        for random_phi in float_parameter_test_values(0, 1, 4)
+    ]
+    samplers += [
+        lambda num_voters, num_candidates, seed=None: moving_resampling(
+            num_voters, num_candidates, random_phi, random_p, seed=seed
+        )
+        for random_p in float_parameter_test_values(0, 1, 4)
+        for random_phi in float_parameter_test_values(0, 1, 4)
+    ]
+    return samplers
 
 
 class TestApprovalResampling(TestCase):

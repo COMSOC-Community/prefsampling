@@ -8,7 +8,7 @@ from prefsampling.inputvalidators import validate_int
 from prefsampling.point.utils import validate_center_point, validate_width
 
 
-def uniform(
+def cube(
     num_points: int,
     num_dimensions: int,
     center_point: Iterable[float] = None,
@@ -16,16 +16,16 @@ def uniform(
     seed: int = None,
 ) -> np.ndarray:
     """
-    Samples points uniformly at random in a bounded Euclidean space.
+    Samples points uniformly at random in a cube.
 
     Parameters
     ----------
         num_points: int
             The number of points to sample.
         num_dimensions: int
-            The number of dimensions for the ball.
+            The number of dimensions for the cube.
         center_point: Iterable[float]
-            The coordinates of the center point of the space. It needs to have one coordinate per
+            The coordinates of the center point of the cube. It needs to have one coordinate per
             dimension.
         widths: float | Iterable[float], default: :code:`1`
             The width of the space distribution. If a single value is given, the width is applied
@@ -45,4 +45,6 @@ def uniform(
     center_point = validate_center_point(center_point, num_dimensions)
     widths = validate_width(widths, num_dimensions)
     rng = np.random.default_rng(seed)
-    return rng.random((num_points, num_dimensions)) * widths + (center_point - widths / 2)
+    return rng.random((num_points, num_dimensions)) * widths + (
+        center_point - widths / 2
+    )

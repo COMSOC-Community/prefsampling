@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>prefsampling.core.euclidean &#8212; PrefSampling</title>
+    <title>prefsampling.point.cube &#8212; PrefSampling</title>
   
   
   
@@ -39,7 +39,7 @@
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/prefsampling/core/euclidean';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/prefsampling/point/cube';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -281,122 +281,59 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for prefsampling.core.euclidean</h1><div class="highlight"><pre>
+  <h1>Source code for prefsampling.point.cube</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_int</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point.utils</span> <span class="kn">import</span> <span class="n">validate_center_point</span><span class="p">,</span> <span class="n">validate_width</span>
 
 
-<span class="k">def</span> <span class="nf">_sample_points</span><span class="p">(</span>
+<div class="viewcode-block" id="cube">
+<a class="viewcode-back" href="../../../reference/point/index.html#prefsampling.point.cube">[docs]</a>
+<span class="k">def</span> <span class="nf">cube</span><span class="p">(</span>
     <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">sampler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
-    <span class="n">sampler_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="n">positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
-    <span class="n">sampled_object_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_points</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;The provided number of points does not match the number of &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2"> required (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span><span class="si">}</span><span class="s2"> points provided for&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_points</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;You need to provide an argument dictionary for the &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2"> (even if empty).&quot;</span>
-            <span class="p">)</span>
-        <span class="n">sampler_args</span><span class="p">[</span><span class="s2">&quot;num_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_points</span>
-        <span class="n">positions</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="o">**</span><span class="n">sampler_args</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">positions</span>
-
-
-<div class="viewcode-block" id="sample_election_positions">
-<a class="viewcode-back" href="../../../reference/core/index.html#prefsampling.core.euclidean.sample_election_positions">[docs]</a>
-<span class="nd">@validate_num_voters_candidates</span>
-<span class="k">def</span> <span class="nf">sample_election_positions</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">center_point</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">widths</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Samples points uniformly at random in a cube.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">        num_voters : int</span>
-<span class="sd">            Number of Voters.</span>
-<span class="sd">        num_candidates : int</span>
-<span class="sd">            Number of Candidates.</span>
-<span class="sd">        point_sampler : Callable</span>
-<span class="sd">            The sampler used to sample point in the space. It should be a function accepting</span>
-<span class="sd">            arguments &#39;num_points&#39; and &#39;seed&#39;. Used for both voters and candidates unless a</span>
-<span class="sd">            `candidate_space` is provided.</span>
-<span class="sd">        point_sampler_args : dict</span>
-<span class="sd">            The arguments passed to the `point_sampler`. The argument `num_points` is ignored</span>
-<span class="sd">            and replaced by the number of voters or candidates.</span>
-<span class="sd">        candidate_point_sampler : Callable, default: :code:`None`</span>
-<span class="sd">            The sampler used to sample the points of the candidates. It should be a function</span>
-<span class="sd">            accepting  arguments &#39;num_points&#39; and &#39;seed&#39;. If a value is provided, then the</span>
-<span class="sd">            `point_sampler_args` argument is only used for voters.</span>
-<span class="sd">        candidate_point_sampler_args : dict</span>
-<span class="sd">            The arguments passed to the `candidate_point_sampler`. The argument `num_points`</span>
-<span class="sd">            is ignored and replaced by the number of candidates.</span>
-<span class="sd">        voters_positions : Iterable[float]</span>
-<span class="sd">            Position of the voters.</span>
-<span class="sd">        candidates_positions : Iterable[float]</span>
-<span class="sd">            Position of the candidates.</span>
+<span class="sd">        num_points: int</span>
+<span class="sd">            The number of points to sample.</span>
+<span class="sd">        num_dimensions: int</span>
+<span class="sd">            The number of dimensions for the cube.</span>
+<span class="sd">        center_point: Iterable[float]</span>
+<span class="sd">            The coordinates of the center point of the cube. It needs to have one coordinate per</span>
+<span class="sd">            dimension.</span>
+<span class="sd">        widths: float | Iterable[float], default: :code:`1`</span>
+<span class="sd">            The width of the space distribution. If a single value is given, the width is applied</span>
+<span class="sd">            to all dimensions. In case multiple values are given, they are applied to each dimension</span>
+<span class="sd">            independently.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
-<span class="sd">            Seed for numpy random number generator. Also passed to the point samplers if</span>
-<span class="sd">            a value is provided.</span>
+<span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        tuple[np.ndarray, np.ndarray]</span>
-<span class="sd">            The positions of the voters and of the candidates.</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            The coordinates of the :code:`num_points` points that have been sampled.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">point_sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">point_sampler_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
-        <span class="k">if</span> <span class="n">candidate_point_sampler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">candidate_point_sampler_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
-
-    <span class="n">voters_pos</span> <span class="o">=</span> <span class="n">_sample_points</span><span class="p">(</span>
-        <span class="n">num_voters</span><span class="p">,</span> <span class="n">point_sampler</span><span class="p">,</span> <span class="n">point_sampler_args</span><span class="p">,</span> <span class="n">voters_positions</span><span class="p">,</span> <span class="s2">&quot;voters&quot;</span>
-    <span class="p">)</span>
-    <span class="n">dimension</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">voters_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">candidate_point_sampler</span><span class="p">:</span>
-        <span class="n">point_sampler</span> <span class="o">=</span> <span class="n">candidate_point_sampler</span>
-        <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="n">candidate_point_sampler_args</span>
-    <span class="n">cand_pos</span> <span class="o">=</span> <span class="n">_sample_points</span><span class="p">(</span>
-        <span class="n">num_candidates</span><span class="p">,</span>
-        <span class="n">point_sampler</span><span class="p">,</span>
-        <span class="n">point_sampler_args</span><span class="p">,</span>
-        <span class="n">candidates_positions</span><span class="p">,</span>
-        <span class="s2">&quot;candidates&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cand_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="n">dimension</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;The position of the voters and of the candidates do not have the same dimension (&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dimension</span><span class="si">}</span><span class="s2"> for the voters and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cand_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> for the candidates).&quot;</span>
-        <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">voters_pos</span><span class="p">,</span> <span class="n">cand_pos</span></div>
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="s2">&quot;num_points&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;num_dimensions&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">center_point</span> <span class="o">=</span> <span class="n">validate_center_point</span><span class="p">(</span><span class="n">center_point</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
+    <span class="n">widths</span> <span class="o">=</span> <span class="n">validate_width</span><span class="p">(</span><span class="n">widths</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">num_points</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">))</span> <span class="o">*</span> <span class="n">widths</span> <span class="o">+</span> <span class="p">(</span>
+        <span class="n">center_point</span> <span class="o">-</span> <span class="n">widths</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="p">)</span></div>
 
 </pre></div>
 

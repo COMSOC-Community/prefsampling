@@ -104,5 +104,5 @@ if __name__ == "__main__":
 
     plot_dir_root = os.path.join("plots", "point")
     os.makedirs(plot_dir_root, exist_ok=True)
-#    plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
+    #    plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
     plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))

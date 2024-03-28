@@ -10,166 +10,70 @@ from prefsampling.core import (
 )
 
 from prefsampling.ordinal import (
-    plackett_luce,
-    group_separable,
-    TreeSampler,
-    urn,
-    impartial_anonymous,
-    impartial,
-    stratification,
-    single_crossing,
-    single_crossing_impartial,
-    single_peaked_walsh,
-    single_peaked_conitzer,
-    single_peaked_circle,
-    mallows,
     norm_mallows,
-    euclidean,
-    didi,
 )
+from tests.test_samplers.ordinal.test_ordinal_didi import random_ord_didi_samplers
+from tests.test_samplers.ordinal.test_ordinal_euclidean import random_ord_euclidean_samplers
+from tests.test_samplers.ordinal.test_ordinal_group_separable import \
+    random_ord_group_separable_samplers
+from tests.test_samplers.ordinal.test_ordinal_impartial import random_ord_impartial_samplers
+from tests.test_samplers.ordinal.test_ordinal_mallows import random_ord_mallows_samplers
+from tests.test_samplers.ordinal.test_ordinal_plackettluce import random_ord_plackett_luce_samplers
+from tests.test_samplers.ordinal.test_ordinal_single_crossing import \
+    random_ord_single_crossing_samplers
+from tests.test_samplers.ordinal.test_ordinal_single_peaked import random_ord_single_peaked_samplers
+from tests.test_samplers.ordinal.test_ordinal_urn import random_ord_urn_samplers
 
-from prefsampling.point import (
-    uniform as point_uniform,
-    ball_uniform as point_ball,
-    sphere_uniform as point_sphere,
-    gaussian as point_gaussian,
-)
 
-ALL_ORDINAL_SAMPLERS = [
-    impartial,
-    impartial_anonymous,
-    lambda num_voters, num_candidates, seed=None: stratification(
-        num_voters, num_candidates, 0.5, seed
-    ),
-    lambda num_voters, num_candidates, seed=None: urn(
-        num_voters, num_candidates, 0.1, seed
-    ),
-    single_peaked_conitzer,
-    single_peaked_circle,
-    single_peaked_walsh,
-    single_crossing,
-    single_crossing_impartial,
-    lambda num_voters, num_candidates, seed=None: mallows(
-        num_voters, num_candidates, 0.5, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: norm_mallows(
-        num_voters, num_candidates, 0.5, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_uniform,
-        point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_gaussian,
-        point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_sphere,
-        point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_ball,
-        point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_uniform,
-        point_sampler_args={"num_dimensions": 2},
-        candidate_point_sampler=point_ball,
-        candidate_point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_gaussian,
-        point_sampler_args={"num_dimensions": 2},
-        candidate_point_sampler=point_ball,
-        candidate_point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_sphere,
-        point_sampler_args={"num_dimensions": 2},
-        candidate_point_sampler=point_ball,
-        candidate_point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: euclidean(
-        num_voters,
-        num_candidates,
-        point_sampler=point_ball,
-        point_sampler_args={"num_dimensions": 2},
-        candidate_point_sampler=point_ball,
-        candidate_point_sampler_args={"num_dimensions": 2},
-        seed=seed,
-    ),
-    lambda num_voters, num_candidates, seed=None: plackett_luce(
-        num_voters, num_candidates, [1] * num_candidates, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: didi(
-        num_voters, num_candidates, [1] * num_candidates, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: group_separable(
-        num_voters, num_candidates, TreeSampler.SCHROEDER, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: group_separable(
-        num_voters, num_candidates, TreeSampler.SCHROEDER_LESCANNE, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: group_separable(
-        num_voters, num_candidates, TreeSampler.SCHROEDER_UNIFORM, seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: group_separable(
-        num_voters, num_candidates, TreeSampler.CATERPILLAR, seed=seed
-    ),
-    # lambda num_voters, num_candidates, seed=None: group_separable(
-    #     num_voters, num_candidates, TreeSampler.BALANCED, seed=seed
-    # ),
-    lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
-        single_crossing(num_voters, num_candidates),
-        norm_mallows,
-        {"norm_phi": 0.4, "seed": seed, "num_candidates": num_candidates},
-    ),
-    lambda num_voters, num_candidates, seed=None: rename_candidates(
-        single_crossing(num_voters, num_candidates), seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: permute_voters(
-        single_crossing(num_voters, num_candidates), seed=seed
-    ),
-    lambda num_voters, num_candidates, seed=None: mixture(
-        num_voters,
-        num_candidates,
-        [norm_mallows, norm_mallows, norm_mallows],
-        [4, 10, 3],
-        [{"norm_phi": 0.4}, {"norm_phi": 0.9}, {"norm_phi": 0.23}],
-    ),
-    lambda num_voters, num_candidates, seed=None: mixture(
-        num_voters,
-        num_candidates,
-        [
-            single_crossing,
-            single_peaked_circle,
-            single_peaked_walsh,
-        ],
-        [0.5, 0.2, 0.3],
-        [{}, {}, {}],
-    ),
-]
+def random_ord_samplers():
+    samplers = random_ord_didi_samplers()
+    samplers += random_ord_euclidean_samplers()
+    samplers += random_ord_group_separable_samplers()
+    samplers += random_ord_impartial_samplers()
+    samplers += random_ord_mallows_samplers()
+    samplers += random_ord_plackett_luce_samplers()
+    samplers += random_ord_single_crossing_samplers()
+    samplers += random_ord_single_peaked_samplers()
+    samplers += random_ord_urn_samplers()
+
+    samplers_permute = [
+        lambda num_voters, num_candidates, seed=None: permute_voters(
+            sampler(num_voters, num_candidates, seed)
+        )
+        for sampler in samplers
+    ]
+    samplers_rename_candidates = [
+        lambda num_voters, num_candidates, seed=None: rename_candidates(
+            sampler(num_voters, num_candidates, seed)
+        )
+        for sampler in samplers
+    ]
+    sampler_resample_as_central_vote = [
+        lambda num_voters, num_candidates, seed=None: resample_as_central_vote(
+            sampler(num_voters, num_candidates, seed),
+            norm_mallows,
+            {"norm_phi": 0.4, "seed": seed, "num_candidates": num_candidates},
+        )
+        for sampler in samplers
+    ]
+    samplers_mixture = [
+        lambda num_voters, num_candidates, seed=None: mixture(
+            num_voters,
+            num_candidates,
+            [sampler1, sampler2, sampler3],
+            [0.5, 0.2, 0.3],
+            [{}, {}, {}],
+        )
+        for sampler1, sampler2, sampler3 in np.random.choice(
+            samplers, size=(1000, 3)
+        )
+    ]
+
+    samplers += samplers_permute
+    samplers += samplers_rename_candidates
+    samplers += sampler_resample_as_central_vote
+    samplers += samplers_mixture
+    return samplers
 
 
 class TestOrdinalSamplers(TestCase):
@@ -195,7 +99,7 @@ class TestOrdinalSamplers(TestCase):
         num_voters = 200
         num_candidates = 5
 
-        for sampler in ALL_ORDINAL_SAMPLERS:
+        for sampler in random_ord_samplers():
             for test_sampler in [
                 sampler,
                 lambda x, y: sampler(num_voters=x, num_candidates=y),

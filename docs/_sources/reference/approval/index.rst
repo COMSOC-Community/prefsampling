@@ -25,7 +25,11 @@ Approval
 
 .. autofunction:: prefsampling.approval.moving_resampling
 
-.. autofunction:: prefsampling.approval.euclidean
+.. autofunction:: prefsampling.approval.euclidean_threshold
+
+.. autofunction:: prefsampling.approval.euclidean_vcr
+
+.. autofunction:: prefsampling.approval.euclidean_constant_size
 
 .. autofunction:: prefsampling.approval.noise
 

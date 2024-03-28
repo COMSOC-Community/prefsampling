@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 
 import numpy as np
 from numpy import linalg
@@ -13,10 +13,12 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 def euclidean(
     num_voters: int,
     num_candidates: int,
-    point_sampler: Callable,
-    point_sampler_args: dict,
+    point_sampler: Callable = None,
+    point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
     candidate_point_sampler_args: dict = None,
+    voters_positions: Iterable[float] = None,
+    candidates_positions: Iterable[float] = None,
     seed: int = None,
 ) -> np.ndarray:
     """
@@ -32,7 +34,7 @@ def euclidean(
     the voters and for the candidates.
 
     A collection of `num_voters` vote is generated independently and identically following the
-    process described above.
+    process described above (as long as the point distribution is iid).
 
     Parameters
     ----------
@@ -40,18 +42,24 @@ def euclidean(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        point_sampler : Callable
-            The sampler used to sample point in the space. Used for both voters and candidates
-            unless a `candidate_space` is provided.
-        point_sampler_args : dict
+        point_sampler : Callable, default: :code:`None`
+            The sampler used to sample point in the space. It should be a function accepting
+            arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
+            `candidate_space` is provided.
+        point_sampler_args : dict, default: :code:`None`
             The arguments passed to the `point_sampler`. The argument `num_points` is ignored
             and replaced by the number of voters or candidates.
         candidate_point_sampler : Callable, default: :code:`None`
-            The sampler used to sample the points of the candidates. If a value is provided,
-            then the `space` argument is only used for voters.
+            The sampler used to sample the points of the candidates. It should be a function
+            accepting  arguments 'num_points' and 'seed'. If a value is provided, then the
+            `point_sampler_args` argument is only used for voters.
         candidate_point_sampler_args : dict
             The arguments passed to the `candidate_point_sampler`. The argument `num_points`
             is ignored and replaced by the number of candidates.
+        voters_positions : Iterable[float]
+            Position of the voters.
+        candidates_positions : Iterable[float]
+            Position of the candidates.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
             a value is provided.
@@ -70,6 +78,8 @@ def euclidean(
         point_sampler_args,
         candidate_point_sampler,
         candidate_point_sampler_args,
+        voters_positions,
+        candidates_positions,
         seed,
     )
 

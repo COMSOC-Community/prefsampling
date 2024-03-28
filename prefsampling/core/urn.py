@@ -35,7 +35,8 @@ def urn_scheme(
 
     Returns
     -------
-
+        list
+            A list of samples
     """
 
     if alpha < 0:

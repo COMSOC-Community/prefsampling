@@ -109,6 +109,7 @@ def ball_resampling(
     inner_sampler_args: dict,
     center_point: Iterable[float] = None,
     width: float = 1,
+    seed: int = None,
 ) -> np.ndarray:
     """
     Uses another point sampler and reject all points that do not fall inside the ball described
@@ -149,8 +150,10 @@ def ball_resampling(
         else:
             point = np.array([point])
         if len(point) != num_dimensions:
-            raise ValueError(f"The inner sampler did not return a point with the suitable number "
-                             f"of dimensions ({num_dimensions} needed but {len(point)} returned).")
+            raise ValueError(
+                f"The inner sampler did not return a point with the suitable number "
+                f"of dimensions ({num_dimensions} needed but {len(point)} returned)."
+            )
         while np.linalg.norm(point - center_point) > (width / 2):
             point = inner_sampler(**inner_sampler_args)
         points.append(point)
