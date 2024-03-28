@@ -14,7 +14,15 @@ def _sample_points(
     positions: Iterable[float],
     sampled_object_name: str,
 ) -> np.ndarray:
-    if positions is not None:
+    if positions is None:
+        if sampler is None:
+            raise ValueError(f"You need to either provide a sampler for the {sampled_object_name} "
+                             f"or their positions.")
+        if sampler_args is None:
+            sampler_args = dict()
+        sampler_args["num_points"] = num_points
+        positions = sampler(**sampler_args)
+    else:
         positions = np.array(positions)
         if len(positions) != num_points:
             raise ValueError(
@@ -22,15 +30,6 @@ def _sample_points(
                 f"{sampled_object_name} required ({len(positions)} points provided for"
                 f"{num_points} {sampled_object_name}."
             )
-    else:
-        if sampler_args is None:
-            raise ValueError(
-                f"You need to provide an argument dictionary for the "
-                f"{sampled_object_name} (even if empty)."
-            )
-        sampler_args["num_points"] = num_points
-        positions = sampler(**sampler_args)
-
     return positions
 
 

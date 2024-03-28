@@ -298,7 +298,15 @@ document.write(`
     <span class="n">positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="n">sampled_object_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sampler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You need to either provide a sampler for the </span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2"> &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;or their positions.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sampler_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">sampler_args</span><span class="p">[</span><span class="s2">&quot;num_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_points</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="o">**</span><span class="n">sampler_args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
         <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_points</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -306,15 +314,6 @@ document.write(`
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2"> required (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span><span class="si">}</span><span class="s2"> points provided for&quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_points</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;You need to provide an argument dictionary for the &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2"> (even if empty).&quot;</span>
-            <span class="p">)</span>
-        <span class="n">sampler_args</span><span class="p">[</span><span class="s2">&quot;num_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_points</span>
-        <span class="n">positions</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="o">**</span><span class="n">sampler_args</span><span class="p">)</span>
-
     <span class="k">return</span> <span class="n">positions</span>
 
 

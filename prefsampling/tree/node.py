@@ -53,8 +53,8 @@ class Node:
 
     def get_child(self, identifier: str | int) -> Node | None:
         """
-        Traverses the tree rooted in the node looking for a node with the given identifier. The node itself can be
-        returned. If no suitable node is found, :code:`None` is returned.
+        Traverses the tree rooted in the node looking for a node with the given identifier. The
+        node itself can be returned. If no suitable node is found, :code:`None` is returned.
 
         Parameters
         ----------
@@ -148,7 +148,8 @@ class Node:
 
     def copy_tree(self, tree: dict = None):
         """
-        Copies the tree rooted in the node. All nodes are copied and the children are attached where they should be.
+        Copies the tree rooted in the node. All nodes are copied and the children are attached
+        where they should be.
 
         Returns
         -------
@@ -172,8 +173,8 @@ class Node:
 
     def rename_frontier(self, new_names: list = None):
         """
-        Renames the frontier of the tree rooted in the node. Leaves are renamed from the left-most leaf to the
-        right-most one. If :code:`new_names == None`, leaves are renamed `0, 1, 2...`.
+        Renames the frontier of the tree rooted in the node. Leaves are renamed from the left-most
+        leaf to the right-most one. If :code:`new_names == None`, leaves are renamed `0, 1, 2...`.
 
         Parameters
         ----------
@@ -198,8 +199,8 @@ class Node:
                         current_node.identifier = new_names[leaf_counter]
                     else:
                         raise ValueError(
-                            f"The list of new names is not long enough, there are at least {leaf_counter}"
-                            f" leaves."
+                            f"The list of new names is not long enough, there are at least "
+                            f"{leaf_counter} leaves."
                         )
                 leaf_counter += 1
 
@@ -207,7 +208,8 @@ class Node:
 
     def tree_representation(self) -> str:
         """
-        Returns a string representation of the tree rooted in the node. The nodes are represented by their identifier.
+        Returns a string representation of the tree rooted in the node. The nodes are represented
+        by their identifier.
 
         Returns
         -------
@@ -223,8 +225,8 @@ class Node:
 
     def anonymous_tree_representation(self) -> str:
         """
-        Returns a string representation of the tree rooted in the node. Nodes are represented by their number of
-        children and leaves by the underscore character `_`.
+        Returns a string representation of the tree rooted in the node. Nodes are represented by
+        their number of children and leaves by the underscore character `_`.
 
         Returns
         -------

@@ -94,13 +94,29 @@ def all_test_samplers_approval_euclidean():
 
 class TestApprovalEuclidean(TestCase):
     def test_euclidean_threshold(self):
+        euclidean_threshold(4, 5, 2, point_sampler=ball_uniform,
+                            point_sampler_args={"num_dimensions": 2})
         with self.assertRaises(ValueError):
-            euclidean_threshold(4, 5, 0)
+            euclidean_threshold(4, 5, 0, point_sampler=ball_uniform, point_sampler_args={"num_dimensions": 2})
         with self.assertRaises(ValueError):
-            euclidean_threshold(4, 5, 0.9)
+            euclidean_threshold(4, 5, 0.9, point_sampler=ball_uniform, point_sampler_args={"num_dimensions": 2})
+        with self.assertRaises(ValueError):
+            euclidean_threshold(4, 5, 2)
 
     def test_euclidean_vcr(self):
+        euclidean_vcr(4, 5, voters_radius=4, candidates_radius=0, point_sampler=ball_uniform,
+                            point_sampler_args={"num_dimensions": 2})
         with self.assertRaises(ValueError):
-            euclidean_vcr(4, 5, voters_radius=[0, 1], candidates_radius=0)
+            euclidean_vcr(4, 5, voters_radius=[0, 1], candidates_radius=0, point_sampler=ball_uniform,
+                            point_sampler_args={"num_dimensions": 2})
         with self.assertRaises(ValueError):
-            euclidean_vcr(4, 5, candidates_radius=[0, 1], voters_radius=0)
+            euclidean_vcr(4, 5, candidates_radius=[0, 1], voters_radius=0, point_sampler=ball_uniform,
+                            point_sampler_args={"num_dimensions": 2})
+        with self.assertRaises(ValueError):
+            euclidean_vcr(4, 5, candidates_radius=0, voters_radius=0)
+
+    def test_euclidean_constant_size(self):
+        euclidean_constant_size(4, 5, 0.7, point_sampler=ball_uniform,
+                                point_sampler_args={"num_dimensions": 2})
+        with self.assertRaises(ValueError):
+            euclidean_constant_size(4, 5, 0.7)

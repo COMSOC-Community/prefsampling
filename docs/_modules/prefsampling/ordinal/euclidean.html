@@ -308,19 +308,16 @@ document.write(`
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates ordinal votes according to the Euclidean model.</span>
+<span class="sd">    Generates approval votes according to the Euclidean model.</span>
 
-<span class="sd">    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.</span>
+<span class="sd">    In this model voters and candidates are assigned random positions in a Euclidean space</span>
+<span class="sd">    (positions can also be provided as argument to the function).</span>
 <span class="sd">    A voter then ranks the candidates in increasing order of distance: their most preferred</span>
 <span class="sd">    candidate is the closest one to them, etc.</span>
 
-<span class="sd">    Several Euclidean spaces can be considered. The possibilities are defined in the</span>
-<span class="sd">    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the</span>
-<span class="sd">    dimension with the parameter :code:`dimension`. Note that you can specify different spaces for</span>
-<span class="sd">    the voters and for the candidates.</span>
-
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
-<span class="sd">    process described above (as long as the point distribution is iid).</span>
+<span class="sd">    process described above (as long as the point distribution is independent and identical).</span>
+<span class="sd">    Generates ordinal votes according to the Euclidean model.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

@@ -22,19 +22,16 @@ def euclidean(
     seed: int = None,
 ) -> np.ndarray:
     """
-    Generates ordinal votes according to the Euclidean model.
+    Generates approval votes according to the Euclidean model.
 
-    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.
+    In this model voters and candidates are assigned random positions in a Euclidean space
+    (positions can also be provided as argument to the function).
     A voter then ranks the candidates in increasing order of distance: their most preferred
     candidate is the closest one to them, etc.
 
-    Several Euclidean spaces can be considered. The possibilities are defined in the
-    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the
-    dimension with the parameter :code:`dimension`. Note that you can specify different spaces for
-    the voters and for the candidates.
-
     A collection of `num_voters` vote is generated independently and identically following the
-    process described above (as long as the point distribution is iid).
+    process described above (as long as the point distribution is independent and identical).
+    Generates ordinal votes according to the Euclidean model.
 
     Parameters
     ----------

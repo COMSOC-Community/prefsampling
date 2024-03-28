@@ -68,8 +68,12 @@ Reference: :py:mod:`prefsampling.ordinal`
      - | :code:`central_vote` (defaults to `0, 1, 2, ...`)
    * - :py:func:`~prefsampling.ordinal.euclidean`
      - ---
-     - | :code:`space` (defaults to :py:const:`~prefsampling.core.euclidean.EuclideanSpace.UNIFORM`)
-       | :code:`dimension` (defaults to 2)
+     - | :code:`point_sampler` (defaults to :code:`None`)
+       | :code:`point_sampler_args` (defaults to :code:`None`)
+       | :code:`candidate_point_sampler` (defaults to :code:`None`)
+       | :code:`candidate_point_sampler_args` (defaults to :code:`None`)
+       | :code:`voters_positions` (defaults to :code:`None`)
+       | :code:`candidates_positions` (defaults to :code:`None`)
    * - :py:func:`~prefsampling.ordinal.plackett_luce`
      - :code:`alphas`
      - ---
@@ -137,7 +141,7 @@ Reference: :py:mod:`prefsampling.approval`
    * - :py:func:`~prefsampling.approval.urn_partylist`
      - | :code:`alpha`
        | :code:`parties`
-     -
+     - ---
    * - :py:func:`~prefsampling.approval.resampling`
      - | :code:`p`
        | :code:`phi`
@@ -152,14 +156,30 @@ Reference: :py:mod:`prefsampling.approval`
        | :code:`phi`
      - :code:`num_legs` (defaults to 1)
    * - :py:func:`~prefsampling.approval.euclidean_threshold`
-     - ---
-     -
+     - :code:`threshold`
+     - | :code:`point_sampler` (defaults to :code:`None`)
+       | :code:`point_sampler_args` (defaults to :code:`None`)
+       | :code:`candidate_point_sampler` (defaults to :code:`None`)
+       | :code:`candidate_point_sampler_args` (defaults to :code:`None`)
+       | :code:`voters_positions` (defaults to :code:`None`)
+       | :code:`candidates_positions` (defaults to :code:`None`)
    * - :py:func:`~prefsampling.approval.euclidean_vcr`
-     - ---
-     -
+     - | :code:`voters_radius`
+       | :code:`candidates_radius`
+     - | :code:`point_sampler` (defaults to :code:`None`)
+       | :code:`point_sampler_args` (defaults to :code:`None`)
+       | :code:`candidate_point_sampler` (defaults to :code:`None`)
+       | :code:`candidate_point_sampler_args` (defaults to :code:`None`)
+       | :code:`voters_positions` (defaults to :code:`None`)
+       | :code:`candidates_positions` (defaults to :code:`None`)
    * - :py:func:`~prefsampling.approval.euclidean_constant_size`
-     - ---
-     -
+     - :code:`rel_num_approvals`
+     - | :code:`point_sampler` (defaults to :code:`None`)
+       | :code:`point_sampler_args` (defaults to :code:`None`)
+       | :code:`candidate_point_sampler` (defaults to :code:`None`)
+       | :code:`candidate_point_sampler_args` (defaults to :code:`None`)
+       | :code:`voters_positions` (defaults to :code:`None`)
+       | :code:`candidates_positions` (defaults to :code:`None`)
    * - :py:func:`~prefsampling.approval.noise`
      - | :code:`p`
        | :code:`phi`

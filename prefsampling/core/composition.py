@@ -34,7 +34,8 @@ def mixture(
         samplers: list
             List of samplers.
         weights: list
-            Probability distribution over the samplers, the sampler in position k has weight :code:`weights[k]`.
+            Probability distribution over the samplers, the sampler in position k has weight
+            :code:`weights[k]`.
         sampler_parameters: list[dict]
             List of dictionaries passed as keyword parameters of the samplers. Number of voters and
             number of candidates of these dictionaries are not taken into account.

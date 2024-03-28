@@ -16,9 +16,9 @@ def urn_scheme(
     used, for instance, in :py:func:`~prefsampling.ordinal.urn`.
 
     When generating a sample the following happens. With a probability of 1/(urn_size + 1), the
-    a base case sample is generated (based on :code:`base_case_sampler`). With probability
-    `1/urn_size` a element of the urn is selected uniformly at random. In both cases, the element is
-    put back in the urn together with `alpha * num_different_balls` copies of the vote
+    base case sample is generated (based on :code:`base_case_sampler`). With probability
+    `1/urn_size`, an element of the urn is selected uniformly at random. In both cases, the element
+    is put back in the urn together with `alpha * num_different_balls` copies of the vote
     (where `num_different_balls` is the number different outcomes of the :code:`base_case_sampler`
     function).
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-from prefsampling.point import ball_uniform, ball_resampling, uniform
+from prefsampling.point import ball_uniform, ball_resampling, cube
 
 import matplotlib.pyplot as plt
 

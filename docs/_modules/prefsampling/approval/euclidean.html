@@ -308,18 +308,15 @@ document.write(`
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes according to the Euclidean model.</span>
+<span class="sd">    Generates approval votes according to the threshold Euclidean model.</span>
 
-<span class="sd">    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.</span>
-<span class="sd">    A voter then approves of the candidates that are within a certain radius. In other words, a</span>
-<span class="sd">    voter approves of all the candidates that are with distance :code:`radius` of their position.</span>
-
-<span class="sd">    Several Euclidean spaces can be considered. The possibilities are defined in the</span>
-<span class="sd">    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the</span>
-<span class="sd">    dimension with the parameter :code:`dimension`.</span>
+<span class="sd">    In this model voters and candidates are assigned random positions in a Euclidean space</span>
+<span class="sd">    (positions can also be provided as argument to the function).</span>
+<span class="sd">    A voter then approves of the candidates that are at a distance no greater tha</span>
+<span class="sd">    `min_d * threshold` where `min_d` is the minimum distance between the voter and any candidates.</span>
 
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
-<span class="sd">    process described above (as long as the point distribution is iid).</span>
+<span class="sd">    process described above (as long as the point distribution is independent and identical).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -329,7 +326,8 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        threshold : float</span>
 <span class="sd">            Threshold of approval. Voters approve all candidates that are at distance threshold</span>
-<span class="sd">            times minimum distance between the voter and any candidates.</span>
+<span class="sd">            times minimum distance between the voter and any candidates. This value should be 1 or</span>
+<span class="sd">            more.</span>
 <span class="sd">        point_sampler : Callable, default: :code:`None`</span>
 <span class="sd">            The sampler used to sample point in the space. It should be a function accepting</span>
 <span class="sd">            arguments &#39;num_points&#39; and &#39;seed&#39;. Used for both voters and candidates unless a</span>
@@ -357,7 +355,6 @@ document.write(`
 <span class="sd">        list[set[int]]</span>
 <span class="sd">            Approval votes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">if</span> <span class="n">threshold</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Threshold cannot be lower than 1 (current value: </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">).&quot;</span>
@@ -405,18 +402,18 @@ document.write(`
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes according to the Euclidean model.</span>
+<span class="sd">    Generates approval votes according to the voters and candidates range Euclidean model.</span>
 
-<span class="sd">    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.</span>
-<span class="sd">    A voter then approves of the candidates that are within a certain radius. In other words, a</span>
-<span class="sd">    voter approves of all the candidates that are with distance :code:`radius` of their position.</span>
-
-<span class="sd">    Several Euclidean spaces can be considered. The possibilities are defined in the</span>
-<span class="sd">    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the</span>
-<span class="sd">    dimension with the parameter :code:`dimension`.</span>
+<span class="sd">    In this model voters and candidates are assigned random positions in a Euclidean space</span>
+<span class="sd">    (positions can also be provided as argument to the function).</span>
+<span class="sd">    The voters and the candidates have a radius (can be the set agent per agent, or globally).</span>
+<span class="sd">    A voter approves of all the candidates that are at distance no more than</span>
+<span class="sd">    `voter_radius + candidate_radius`, where these two values can be agent-specific. It models the</span>
+<span class="sd">    idea that a voter approves of a candidate if and only if their respective influence spheres</span>
+<span class="sd">    overlap.</span>
 
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
-<span class="sd">    process described above (as long as the point distribution is iid).</span>
+<span class="sd">    process described above (as long as the point distribution is independent and identical).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -470,22 +467,22 @@ document.write(`
                 <span class="sa">f</span><span class="s2">&quot;element per voter (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">voters_radius</span><span class="p">)</span><span class="si">}</span><span class="s2"> provided for num_voters=&quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_voters</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">voters_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">voters_radius</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
-            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">voters_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">voters_radius</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidates_radius</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
-        <span class="n">candidates_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">voters_radius</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates_radius</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_voters</span><span class="p">:</span>
+        <span class="n">candidates_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">candidates_radius</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates_radius</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_candidates</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;If the &#39;candidates_radius&#39; parameter is an iterable, it needs to &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;have one element per candidate (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">candidates_radius</span><span class="p">)</span><span class="si">}</span><span class="s2"> provided &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;for num_candidates=</span><span class="si">{</span><span class="n">num_candidates</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">candidates_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">voters_radius</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
-            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">candidates_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">candidates_radius</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
+        <span class="p">)</span>
 
     <span class="n">voters_pos</span><span class="p">,</span> <span class="n">candidates_pos</span> <span class="o">=</span> <span class="n">sample_election_positions</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span>
@@ -498,15 +495,15 @@ document.write(`
         <span class="n">candidates_positions</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">,</span>
     <span class="p">)</span>
-
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">voter_pos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">voters_pos</span><span class="p">):</span>
         <span class="n">ballot</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="n">voter_radius</span> <span class="o">=</span> <span class="n">voters_radius</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="n">voters_radius</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">):</span>
             <span class="n">distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">voter_pos</span> <span class="o">-</span> <span class="n">candidates_pos</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;=</span> <span class="n">voter_radius</span> <span class="o">+</span> <span class="n">candidates_radius</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;=</span> <span class="n">radius</span> <span class="o">+</span> <span class="n">candidates_radius</span><span class="p">[</span><span class="n">c</span><span class="p">]:</span>
                 <span class="n">ballot</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ballot</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
@@ -527,18 +524,16 @@ document.write(`
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes according to the Euclidean model.</span>
+<span class="sd">    Generates approval votes according to the constant size Euclidean model.</span>
 
-<span class="sd">    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.</span>
-<span class="sd">    A voter then approves of the candidates that are within a certain radius. In other words, a</span>
-<span class="sd">    voter approves of all the candidates that are with distance :code:`radius` of their position.</span>
-
-<span class="sd">    Several Euclidean spaces can be considered. The possibilities are defined in the</span>
-<span class="sd">    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the</span>
-<span class="sd">    dimension with the parameter :code:`dimension`.</span>
+<span class="sd">    In this model voters and candidates are assigned random positions in a Euclidean space</span>
+<span class="sd">    (positions can also be provided as argument to the function).</span>
+<span class="sd">    A voter then approves of the `rel_num_approvals * num_candidates` the closest candidates to</span>
+<span class="sd">    their position. This ensures that all approval ballots have length `⌊rel_num_approvals *</span>
+<span class="sd">    num_candidates⌋`.</span>
 
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
-<span class="sd">    process described above (as long as the point distribution is iid).</span>
+<span class="sd">    process described above (as long as the point distribution is independent and identical).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

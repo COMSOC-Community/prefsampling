@@ -22,18 +22,15 @@ def euclidean_threshold(
     seed: int = None,
 ) -> list[set[int]]:
     """
-    Generates approval votes according to the Euclidean model.
+    Generates approval votes according to the threshold Euclidean model.
 
-    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.
-    A voter then approves of the candidates that are within a certain radius. In other words, a
-    voter approves of all the candidates that are with distance :code:`radius` of their position.
-
-    Several Euclidean spaces can be considered. The possibilities are defined in the
-    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the
-    dimension with the parameter :code:`dimension`.
+    In this model voters and candidates are assigned random positions in a Euclidean space
+    (positions can also be provided as argument to the function).
+    A voter then approves of the candidates that are at a distance no greater tha
+    `min_d * threshold` where `min_d` is the minimum distance between the voter and any candidates.
 
     A collection of `num_voters` vote is generated independently and identically following the
-    process described above (as long as the point distribution is iid).
+    process described above (as long as the point distribution is independent and identical).
 
     Parameters
     ----------
@@ -43,7 +40,8 @@ def euclidean_threshold(
             Number of Candidates.
         threshold : float
             Threshold of approval. Voters approve all candidates that are at distance threshold
-            times minimum distance between the voter and any candidates.
+            times minimum distance between the voter and any candidates. This value should be 1 or
+            more.
         point_sampler : Callable, default: :code:`None`
             The sampler used to sample point in the space. It should be a function accepting
             arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
@@ -115,18 +113,18 @@ def euclidean_vcr(
     seed: int = None,
 ) -> list[set[int]]:
     """
-    Generates approval votes according to the Euclidean model.
+    Generates approval votes according to the voters and candidates range Euclidean model.
 
-    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.
-    A voter then approves of the candidates that are within a certain radius. In other words, a
-    voter approves of all the candidates that are with distance :code:`radius` of their position.
-
-    Several Euclidean spaces can be considered. The possibilities are defined in the
-    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the
-    dimension with the parameter :code:`dimension`.
+    In this model voters and candidates are assigned random positions in a Euclidean space
+    (positions can also be provided as argument to the function).
+    The voters and the candidates have a radius (can be the set agent per agent, or globally).
+    A voter approves of all the candidates that are at distance no more than
+    `voter_radius + candidate_radius`, where these two values can be agent-specific. It models the
+    idea that a voter approves of a candidate if and only if their respective influence spheres
+    overlap.
 
     A collection of `num_voters` vote is generated independently and identically following the
-    process described above (as long as the point distribution is iid).
+    process described above (as long as the point distribution is independent and identical).
 
     Parameters
     ----------
@@ -234,18 +232,16 @@ def euclidean_constant_size(
     seed: int = None,
 ) -> list[set[int]]:
     """
-    Generates approval votes according to the Euclidean model.
+    Generates approval votes according to the constant size Euclidean model.
 
-    In the Euclidean model voters and candidates are assigned random positions in a Euclidean space.
-    A voter then approves of the candidates that are within a certain radius. In other words, a
-    voter approves of all the candidates that are with distance :code:`radius` of their position.
-
-    Several Euclidean spaces can be considered. The possibilities are defined in the
-    :py:class:`~prefsampling.core.euclidean.EuclideanSpace` enumeration. You can also change the
-    dimension with the parameter :code:`dimension`.
+    In this model voters and candidates are assigned random positions in a Euclidean space
+    (positions can also be provided as argument to the function).
+    A voter then approves of the `rel_num_approvals * num_candidates` the closest candidates to
+    their position. This ensures that all approval ballots have length `⌊rel_num_approvals *
+    num_candidates⌋`.
 
     A collection of `num_voters` vote is generated independently and identically following the
-    process described above (as long as the point distribution is iid).
+    process described above (as long as the point distribution is independent and identical).
 
     Parameters
     ----------

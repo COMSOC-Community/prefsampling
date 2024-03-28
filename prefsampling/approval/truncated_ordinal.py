@@ -33,7 +33,7 @@ def truncated_ordinal(
             The ordinal sampler to be used.
         ordinal_sampler_parameters: dict
             The arguments passed ot the ordinal sampler. The num_voters, num_candidates and seed
-            parameters are overriden by those passed to this function.
+            parameters are overridden by those passed to this function.
         seed : int
             Seed for numpy random number generator.
 
