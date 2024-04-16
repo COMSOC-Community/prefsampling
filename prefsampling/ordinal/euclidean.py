@@ -5,7 +5,7 @@ from collections.abc import Callable, Iterable
 import numpy as np
 from numpy import linalg
 
-from prefsampling.core.euclidean import sample_election_positions
+from prefsampling.core.euclidean import sample_election_positions, EuclideanSpace
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
@@ -13,6 +13,9 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 def euclidean(
     num_voters: int,
     num_candidates: int,
+    euclidean_space: EuclideanSpace = None,
+    candidate_euclidean_space: EuclideanSpace = None,
+    num_dimensions: int = None,
     point_sampler: Callable = None,
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
@@ -39,6 +42,17 @@ def euclidean(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
+        euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the voters. If no
+            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
+            candidates as well. A number of dimension needs to be provided.
+        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
+            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
+            to be provided.
+        num_dimensions: int, default: :code:`None`
+            The number of dimensions to use. Using this argument is mandatory when passing a space
+            as argument.
         point_sampler : Callable, default: :code:`None`
             The sampler used to sample point in the space. It should be a function accepting
             arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
@@ -66,11 +80,27 @@ def euclidean(
         np.ndarray
             Ordinal votes.
 
+
+    References
+    ----------
+        *How to Sample Approval Elections?*
+        Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,
+        Krzysztof Sornat, Nimrod Talmon.
+        https://arxiv.org/abs/2207.01140
+
+    Examples
+    --------
+        .. code-block:: python
+
+            from lala.sad
     """
 
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
+        euclidean_space,
+        candidate_euclidean_space,
+        num_dimensions,
         point_sampler,
         point_sampler_args,
         candidate_point_sampler,

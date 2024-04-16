@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=bf645af7"></script>
+    <script src="../../../_static/documentation_options.js?v=a4bead0a"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -289,7 +289,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">sample_election_positions</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">sample_election_positions</span><span class="p">,</span> <span class="n">EuclideanSpace</span>
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
 
@@ -299,6 +299,9 @@ document.write(`
 <span class="k">def</span> <span class="nf">euclidean</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">candidate_euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">candidate_point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -325,6 +328,17 @@ document.write(`
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
+<span class="sd">        euclidean_space: EuclideanSpace, default: :code:`None`</span>
+<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the voters. If no</span>
+<span class="sd">            `candidate_euclidean_space` is provided, the value of &#39;euclidean_space&#39; is used for the</span>
+<span class="sd">            candidates as well. A number of dimension needs to be provided.</span>
+<span class="sd">        candidate_euclidean_space: EuclideanSpace, default: :code:`None`</span>
+<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the candidates. If no</span>
+<span class="sd">            value is provided, the value of &#39;euclidean_space&#39; is used. A number of dimension needs</span>
+<span class="sd">            to be provided.</span>
+<span class="sd">        num_dimensions: int, default: :code:`None`</span>
+<span class="sd">            The number of dimensions to use. Using this argument is mandatory when passing a space</span>
+<span class="sd">            as argument.</span>
 <span class="sd">        point_sampler : Callable, default: :code:`None`</span>
 <span class="sd">            The sampler used to sample point in the space. It should be a function accepting</span>
 <span class="sd">            arguments &#39;num_points&#39; and &#39;seed&#39;. Used for both voters and candidates unless a</span>
@@ -352,11 +366,27 @@ document.write(`
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
 
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        *How to Sample Approval Elections?*</span>
+<span class="sd">        Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,</span>
+<span class="sd">        Krzysztof Sornat, Nimrod Talmon.</span>
+<span class="sd">        https://arxiv.org/abs/2207.01140</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from lala.sad</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">voters_pos</span><span class="p">,</span> <span class="n">candidates_pos</span> <span class="o">=</span> <span class="n">sample_election_positions</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span>
         <span class="n">num_candidates</span><span class="p">,</span>
+        <span class="n">euclidean_space</span><span class="p">,</span>
+        <span class="n">candidate_euclidean_space</span><span class="p">,</span>
+        <span class="n">num_dimensions</span><span class="p">,</span>
         <span class="n">point_sampler</span><span class="p">,</span>
         <span class="n">point_sampler_args</span><span class="p">,</span>
         <span class="n">candidate_point_sampler</span><span class="p">,</span>

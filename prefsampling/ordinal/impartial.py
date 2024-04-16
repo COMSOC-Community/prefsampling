@@ -58,17 +58,17 @@ def impartial_anonymous(
 
     Parameters
     ----------
-    num_voters : int
-        Number of Voters.
-    num_candidates : int
-        Number of Candidates.
-    seed : int, default: :code:`None`
-        Seed for numpy random number generator.
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator.
 
     Returns
     -------
-    np.ndarray
-        Ordinal votes.
+        np.ndarray
+            Ordinal votes.
     """
     return urn(
         num_voters, num_candidates, alpha=1 / math.factorial(num_candidates), seed=seed

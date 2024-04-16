@@ -37,8 +37,89 @@ def urn(
     -------
         np.ndarray
             The votes
+
+    Validation
+    ----------
+
+        The probability distribution governing an urn model is well documented.
+
+        When :code:`alpha = 1 / m!`, we fall back to the case of the impartial anonymous
+        culture. For other values of :code:`alpha`, different probability distributions are
+        obtained.
+
+        With the impartial anonymous culture, every multisets of votes--an anonymous profile---are
+        equally likely to be generated. Note here that we are discussing anonymous profiles and
+        not ranks.
+
+        .. image:: ../validation_plots/ordinal/urn.png
+            :width: 600
+            :alt: Observed versus theoretical frequencies for an urn model with alpha=0
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import urn
+
+            # Sample from an urn model with 2 voters and 3 candidate. Urn parameter is 0.5.
+            urn(2, 3, 0.5)
+
+            # For reproducibility, you can set the seed.
+            urn(2, 3, 4, seed=1002)
+
+            # Passing a negative alpha will fail
+            try:
+                urn(2, 3, -0.5)
+            except ValueError:
+                pass
+
+
+    References
+    ----------
+        `Paradox of Voting under an Urn Model: The Effect of Homogeneity
+        <https://www.jstor.org/stable/30024551>`_,
+        *Sven Berg*,
+        Public Choice, Vol. 47, No. 2 (1985).
     """
     rng = np.random.default_rng(seed)
 
     votes = urn_scheme(num_voters, alpha, lambda x: x.permutation(num_candidates), rng)
     return np.array(votes, dtype=int)
+
+
+def theoretical_distribution(num_voters, num_candidates, alpha) -> dict:
+    def ascending_factorial(value, length, increment):
+        if length == 0:
+            return 1
+        return (
+            value
+            + (length - 1)
+            * increment
+            * math.factorial(sampler_parameters["num_candidates"])
+        ) * ascending_factorial(value, length - 1, increment)
+
+    distribution = {}
+    for profile in all_profiles():
+        counts = {}
+        for rank in profile:
+            if rank in counts:
+                counts[rank] += 1
+            else:
+                counts[rank] = 1
+        probability = math.factorial(
+            sampler_parameters["num_voters"]
+        ) / ascending_factorial(
+            math.factorial(sampler_parameters["num_candidates"]),
+            sampler_parameters["num_voters"],
+            sampler_parameters["alpha"],
+        )
+        for c in counts.values():
+            probability *= ascending_factorial(
+                1, c, sampler_parameters["alpha"]
+            ) / math.factorial(c)
+        distribution[profile] = probability
+    normaliser = sum(distribution.values())
+    for r in distribution:
+        distribution[r] /= normaliser
+    return distribution

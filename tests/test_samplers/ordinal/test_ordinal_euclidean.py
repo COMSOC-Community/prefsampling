@@ -1,3 +1,4 @@
+from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.ordinal.euclidean import euclidean
 from prefsampling.point import ball_uniform, ball_resampling, cube, gaussian
 from tests.utils import TestSampler
@@ -8,7 +9,7 @@ def all_test_samplers_euclidean():
         return ball_uniform(num_points, 1, seed=seed)
 
     def test_ball_resampling_2d(num_points, seed=None):
-        return ball_resampling(num_points, 2, lambda: gaussian(1, 2)[0], {}, seed=seed)
+        return ball_resampling(num_points, 2, lambda seed=None: gaussian(1, 2, seed=seed)[0], {}, seed=seed)
 
     def test_cube_3d(num_points, seed=None):
         return cube(num_points, 3, seed=seed)
@@ -57,5 +58,9 @@ def all_test_samplers_euclidean():
         )
         samplers.append(
             TestSampler(euclidean_positions, {"pos_sampler": point_sampler})
+        )
+    for space in EuclideanSpace:
+        samplers.append(
+            TestSampler(euclidean, {"euclidean_space": space, "num_dimensions": 2})
         )
     return samplers

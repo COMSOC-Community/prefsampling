@@ -5,6 +5,7 @@ from prefsampling.approval.euclidean import (
     euclidean_vcr,
     euclidean_constant_size,
 )
+from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.point import ball_uniform, ball_resampling, cube, gaussian
 from tests.utils import float_parameter_test_values, TestSampler
 
@@ -14,7 +15,7 @@ def all_test_samplers_approval_euclidean():
         return ball_uniform(num_points, 1, seed=seed)
 
     def test_ball_resampling_2d(num_points, seed=None):
-        return ball_resampling(num_points, 2, lambda: gaussian(1, 2)[0], {}, seed=seed)
+        return ball_resampling(num_points, 2, lambda seed=None: gaussian(1, 2, seed=seed)[0], {}, seed=seed)
 
     def test_cube_3d(num_points, seed=None):
         return cube(num_points, 3, seed=seed)
@@ -69,6 +70,12 @@ def all_test_samplers_approval_euclidean():
         (euclidean_constant_size, euclidean_constant_size_params),
     ]:
         for extra_params in params_generator():
+            for space in EuclideanSpace:
+                params = {"euclidean_space": space, "num_dimensions": 2}
+                params.update(extra_params)
+                samplers.append(
+                    TestSampler(euclidean_sampler, params)
+                )
             for point_sampler in all_point_samplers:
                 params1 = {"point_sampler": point_sampler, "point_sampler_args": {}}
                 params1.update(extra_params)

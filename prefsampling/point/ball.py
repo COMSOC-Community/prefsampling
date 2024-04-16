@@ -132,8 +132,7 @@ def ball_resampling(
             The width of the ball. Can only be a single value (as opposed to
             :py:func:`~prefsampling.point.ball.ball_uniform`).
         seed : int, default: :code:`None`
-            Seed for numpy random number generator (not used in this function, pass it to the
-            `inner_sampler_args` argument).
+            Seed for numpy random number generator (not used in this function).
 
     Returns
     -------

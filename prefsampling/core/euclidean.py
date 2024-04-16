@@ -1,10 +1,45 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
+from enum import Enum
 
 import numpy as np
 
-from prefsampling.inputvalidators import validate_num_voters_candidates
+from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
+from prefsampling.point import ball_uniform, cube, ball_resampling, gaussian
+
+
+class EuclideanSpace(Enum):
+    """
+    Constants for some pre-defined Euclidean distributions.
+    """
+
+    UNIFORM_BALL = "uniform_ball"
+    UNIFORM_SPHERE = "uniform_sphere"
+    UNIFORM_CUBE = "uniform_cube"
+    GAUSSIAN_BALL = "gaussian_ball"
+    GAUSSIAN_CUBE = "gaussian_cube"
+    UNBOUNDED_GAUSSIAN = "unbounded_gaussian"
+
+
+def euclidean_space_to_sampler(space: EuclideanSpace, num_dimensions: int):
+    if space == EuclideanSpace.UNIFORM_BALL:
+        return ball_uniform, {"num_dimensions": num_dimensions}
+    if space == EuclideanSpace.UNIFORM_SPHERE:
+        return ball_uniform, {"num_dimensions": num_dimensions, "only_envelope": True}
+    if space == EuclideanSpace.UNIFORM_CUBE:
+        return cube, {"num_dimensions": num_dimensions}
+    if space == EuclideanSpace.GAUSSIAN_BALL:
+        return ball_resampling, {"num_dimensions": num_dimensions, "inner_sampler": lambda **kwargs: gaussian(**kwargs)[0], "inner_sampler_args": {"num_dimensions": num_dimensions, "num_points": 1}}
+    if space == EuclideanSpace.GAUSSIAN_CUBE:
+        return gaussian, {"num_dimensions": num_dimensions, "widths": np.array([1 for _ in range(num_dimensions)])}
+    if space == EuclideanSpace.UNBOUNDED_GAUSSIAN:
+        return gaussian, {"num_dimensions": num_dimensions}
+    raise ValueError(
+        "The 'euclidean_space' and/or the 'candidate_euclidean_space' arguments need to be one of "
+        "the constant defined in the core.euclidean.EuclideanSpace enumeration. Choices are: "
+        + ", ".join(str(s) for s in EuclideanSpace) + "."
+    )
 
 
 def _sample_points(
@@ -37,6 +72,9 @@ def _sample_points(
 def sample_election_positions(
     num_voters: int,
     num_candidates: int,
+    euclidean_space: EuclideanSpace = None,
+    candidate_euclidean_space: EuclideanSpace = None,
+    num_dimensions: int = None,
     point_sampler: Callable = None,
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
@@ -53,11 +91,22 @@ def sample_election_positions(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        point_sampler : Callable
+        euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the voters. If no
+            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
+            candidates as well. A number of dimension needs to be provided.
+        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
+            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
+            to be provided.
+        num_dimensions: int, default: :code:`None`
+            The number of dimensions to use. Using this argument is mandatory when passing a space
+            as argument.
+        point_sampler : Callable, default: :code:`None`
             The sampler used to sample point in the space. It should be a function accepting
             arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
             `candidate_space` is provided.
-        point_sampler_args : dict
+        point_sampler_args : dict, default: :code:`None`
             The arguments passed to the `point_sampler`. The argument `num_points` is ignored
             and replaced by the number of voters or candidates.
         candidate_point_sampler : Callable, default: :code:`None`
@@ -81,6 +130,28 @@ def sample_election_positions(
             The positions of the voters and of the candidates.
 
     """
+    if euclidean_space:
+        if num_dimensions is None:
+            raise ValueError("If you are using the 'euclidean_space' argument, you need to also "
+                             "provide a number of dimensions.")
+        validate_int(num_dimensions, "number of dimensions", 1)
+        if isinstance(euclidean_space, Enum):
+            euclidean_space = EuclideanSpace(euclidean_space.value)
+        else:
+            euclidean_space = EuclideanSpace(euclidean_space)
+
+        point_sampler, point_sampler_args = euclidean_space_to_sampler(euclidean_space,
+                                                                       num_dimensions)
+        if candidate_euclidean_space:
+            if isinstance(candidate_euclidean_space, Enum):
+                candidate_euclidean_space = EuclideanSpace(candidate_euclidean_space.value)
+            else:
+                candidate_euclidean_space = EuclideanSpace(candidate_euclidean_space)
+
+            candidate_point_sampler, candidate_point_sampler_args = euclidean_space_to_sampler(
+                candidate_euclidean_space,
+                num_dimensions)
+
     if point_sampler_args is None:
         point_sampler_args = dict()
     if seed is not None:

@@ -48,9 +48,9 @@ def validate_int(
             A description of the value used in the message of the exceptions raised when the value
             is not a valid input.
         lower_bound: int, default: :code:`None`
-            A lower bound on the value.
+            A lower bound on the value, the value cannot be strictly smaller than the bound.
         upper_bound: int, default: :code:`None`
-            An upper bound on the value.
+            An upper bound on the value, the value cannot be strictly larger than the bound.
 
     Raises
     ------

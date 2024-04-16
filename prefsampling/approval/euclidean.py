@@ -4,7 +4,7 @@ from collections.abc import Callable, Iterable
 
 import numpy as np
 
-from prefsampling.core.euclidean import sample_election_positions
+from prefsampling.core.euclidean import sample_election_positions, EuclideanSpace
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
@@ -13,6 +13,9 @@ def euclidean_threshold(
     num_voters: int,
     num_candidates: int,
     threshold: float,
+    euclidean_space: EuclideanSpace = None,
+    candidate_euclidean_space: EuclideanSpace = None,
+    num_dimensions: int = None,
     point_sampler: Callable = None,
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
@@ -42,6 +45,17 @@ def euclidean_threshold(
             Threshold of approval. Voters approve all candidates that are at distance threshold
             times minimum distance between the voter and any candidates. This value should be 1 or
             more.
+        euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the voters. If no
+            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
+            candidates as well. A number of dimension needs to be provided.
+        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
+            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
+            to be provided.
+        num_dimensions: int, default: :code:`None`
+            The number of dimensions to use. Using this argument is mandatory when passing a space
+            as argument.
         point_sampler : Callable, default: :code:`None`
             The sampler used to sample point in the space. It should be a function accepting
             arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
@@ -77,6 +91,9 @@ def euclidean_threshold(
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
+        euclidean_space,
+        candidate_euclidean_space,
+        num_dimensions,
         point_sampler,
         point_sampler_args,
         candidate_point_sampler,
@@ -104,6 +121,9 @@ def euclidean_vcr(
     num_candidates: int,
     voters_radius: float | Iterable[float],
     candidates_radius: float | Iterable[float],
+    euclidean_space: EuclideanSpace = None,
+    candidate_euclidean_space: EuclideanSpace = None,
+    num_dimensions: int = None,
     point_sampler: Callable = None,
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
@@ -142,6 +162,17 @@ def euclidean_vcr(
             the position of the voter and the candidate of radius voter_radius and candidate_radius
             overlap. If a single value is given, it applies to all voters. Otherwise, it is assumed
             that one value per voter is provided.
+        euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the voters. If no
+            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
+            candidates as well. A number of dimension needs to be provided.
+        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
+            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
+            to be provided.
+        num_dimensions: int, default: :code:`None`
+            The number of dimensions to use. Using this argument is mandatory when passing a space
+            as argument.
         point_sampler : Callable, default: :code:`None`
             The sampler used to sample point in the space. It should be a function accepting
             arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
@@ -198,6 +229,9 @@ def euclidean_vcr(
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
+        euclidean_space,
+        candidate_euclidean_space,
+        num_dimensions,
         point_sampler,
         point_sampler_args,
         candidate_point_sampler,
@@ -223,6 +257,9 @@ def euclidean_constant_size(
     num_voters: int,
     num_candidates: int,
     rel_num_approvals: float,
+    euclidean_space: EuclideanSpace = None,
+    candidate_euclidean_space: EuclideanSpace = None,
+    num_dimensions: int = None,
     point_sampler: Callable = None,
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
@@ -251,6 +288,17 @@ def euclidean_constant_size(
             Number of Candidates.
         rel_num_approvals : float
             Proportion of approved candidates in a ballot.
+        euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the voters. If no
+            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
+            candidates as well. A number of dimension needs to be provided.
+        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
+            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
+            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
+            to be provided.
+        num_dimensions: int, default: :code:`None`
+            The number of dimensions to use. Using this argument is mandatory when passing a space
+            as argument.
         point_sampler : Callable, default: :code:`None`
             The sampler used to sample point in the space. It should be a function accepting
             arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
@@ -282,6 +330,9 @@ def euclidean_constant_size(
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
+        euclidean_space,
+        candidate_euclidean_space,
+        num_dimensions,
         point_sampler,
         point_sampler_args,
         candidate_point_sampler,

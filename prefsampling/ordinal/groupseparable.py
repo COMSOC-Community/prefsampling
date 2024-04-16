@@ -137,7 +137,6 @@ def group_separable(
         tree_root.rename_frontier()
     elif tree_sampler == TreeSampler.CATERPILLAR:
         tree_root = caterpillar_tree(num_candidates)
-
     elif tree_sampler == TreeSampler.BALANCED:
         tree_root = balanced_tree(num_candidates)
     else:

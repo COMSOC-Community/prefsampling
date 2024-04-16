@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=bf645af7"></script>
+    <script src="../../../_static/documentation_options.js?v=a4bead0a"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -285,10 +285,48 @@ document.write(`
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="n">cube</span><span class="p">,</span> <span class="n">ball_resampling</span><span class="p">,</span> <span class="n">gaussian</span>
+
+
+<div class="viewcode-block" id="EuclideanSpace">
+<a class="viewcode-back" href="../../../reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace">[docs]</a>
+<span class="k">class</span> <span class="nc">EuclideanSpace</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constants for some pre-defined Euclidean distributions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">UNIFORM_BALL</span> <span class="o">=</span> <span class="s2">&quot;uniform_ball&quot;</span>
+    <span class="n">UNIFORM_SPHERE</span> <span class="o">=</span> <span class="s2">&quot;uniform_sphere&quot;</span>
+    <span class="n">UNIFORM_CUBE</span> <span class="o">=</span> <span class="s2">&quot;uniform_cube&quot;</span>
+    <span class="n">GAUSSIAN_BALL</span> <span class="o">=</span> <span class="s2">&quot;gaussian_ball&quot;</span>
+    <span class="n">GAUSSIAN_CUBE</span> <span class="o">=</span> <span class="s2">&quot;gaussian_cube&quot;</span>
+    <span class="n">UNBOUNDED_GAUSSIAN</span> <span class="o">=</span> <span class="s2">&quot;unbounded_gaussian&quot;</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">euclidean_space_to_sampler</span><span class="p">(</span><span class="n">space</span><span class="p">:</span> <span class="n">EuclideanSpace</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_BALL</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_SPHERE</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;only_envelope&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_CUBE</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cube</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_BALL</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ball_resampling</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;inner_sampler&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">gaussian</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;inner_sampler_args&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;num_points&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+    <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_CUBE</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gaussian</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;widths&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">)])}</span>
+    <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNBOUNDED_GAUSSIAN</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">gaussian</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">}</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;The &#39;euclidean_space&#39; and/or the &#39;candidate_euclidean_space&#39; arguments need to be one of &quot;</span>
+        <span class="s2">&quot;the constant defined in the core.euclidean.EuclideanSpace enumeration. Choices are: &quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">EuclideanSpace</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
+    <span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_sample_points</span><span class="p">(</span>
@@ -323,6 +361,9 @@ document.write(`
 <span class="k">def</span> <span class="nf">sample_election_positions</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">candidate_euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">candidate_point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -339,11 +380,22 @@ document.write(`
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
-<span class="sd">        point_sampler : Callable</span>
+<span class="sd">        euclidean_space: EuclideanSpace, default: :code:`None`</span>
+<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the voters. If no</span>
+<span class="sd">            `candidate_euclidean_space` is provided, the value of &#39;euclidean_space&#39; is used for the</span>
+<span class="sd">            candidates as well. A number of dimension needs to be provided.</span>
+<span class="sd">        candidate_euclidean_space: EuclideanSpace, default: :code:`None`</span>
+<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the candidates. If no</span>
+<span class="sd">            value is provided, the value of &#39;euclidean_space&#39; is used. A number of dimension needs</span>
+<span class="sd">            to be provided.</span>
+<span class="sd">        num_dimensions: int, default: :code:`None`</span>
+<span class="sd">            The number of dimensions to use. Using this argument is mandatory when passing a space</span>
+<span class="sd">            as argument.</span>
+<span class="sd">        point_sampler : Callable, default: :code:`None`</span>
 <span class="sd">            The sampler used to sample point in the space. It should be a function accepting</span>
 <span class="sd">            arguments &#39;num_points&#39; and &#39;seed&#39;. Used for both voters and candidates unless a</span>
 <span class="sd">            `candidate_space` is provided.</span>
-<span class="sd">        point_sampler_args : dict</span>
+<span class="sd">        point_sampler_args : dict, default: :code:`None`</span>
 <span class="sd">            The arguments passed to the `point_sampler`. The argument `num_points` is ignored</span>
 <span class="sd">            and replaced by the number of voters or candidates.</span>
 <span class="sd">        candidate_point_sampler : Callable, default: :code:`None`</span>
@@ -367,6 +419,28 @@ document.write(`
 <span class="sd">            The positions of the voters and of the candidates.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">euclidean_space</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you are using the &#39;euclidean_space&#39; argument, you need to also &quot;</span>
+                             <span class="s2">&quot;provide a number of dimensions.&quot;</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;number of dimensions&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">euclidean_space</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+            <span class="n">euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">euclidean_space</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">euclidean_space</span><span class="p">)</span>
+
+        <span class="n">point_sampler</span><span class="p">,</span> <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span><span class="n">euclidean_space</span><span class="p">,</span>
+                                                                       <span class="n">num_dimensions</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">candidate_euclidean_space</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+                <span class="n">candidate_euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">candidate_euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">)</span>
+
+            <span class="n">candidate_point_sampler</span><span class="p">,</span> <span class="n">candidate_point_sampler_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span>
+                <span class="n">candidate_euclidean_space</span><span class="p">,</span>
+                <span class="n">num_dimensions</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">point_sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

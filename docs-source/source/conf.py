@@ -20,6 +20,7 @@ author = "Simon Rey and Stanisław Szufa"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
+    "sphinx.ext.doctest",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.autodoc",
@@ -32,6 +33,7 @@ autodoc_typehints_format = "short"
 python_use_unqualified_type_names = True
 
 napoleon_google_docstring = False
+napoleon_custom_sections = ['Validation']
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -45,6 +47,8 @@ language = "en"
 
 pygments_style = "sphinx"
 
+doctest_path = [".."]
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -55,5 +59,6 @@ html_title = "PrefSampling"
 html_theme_options = {
     "repository_url": "https://github.com/COMSOC-Community/prefsampling",
     "use_repository_button": True,
+    "navigation_with_keys": True,
 }
 html_context = {"default_mode": "light"}

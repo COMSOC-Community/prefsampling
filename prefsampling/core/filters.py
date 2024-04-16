@@ -99,6 +99,7 @@ def resample_as_central_vote(
         sampler_parameters: dict
             Dictionary passed as keyword parameters of the sampler. Number of voters or central vote
              of this dictionary are not taken into account.
+
     Returns
     -------
         list[set[int]] or np.ndarray

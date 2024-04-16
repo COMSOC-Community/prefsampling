@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=86f9da5d"></script>
+    <script src="../../../_static/documentation_options.js?v=a4bead0a"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -323,12 +323,93 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            The votes</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        The probability distribution governing an urn model is well documented.</span>
+
+<span class="sd">        When :code:`alpha = 1 / m!`, we fall back to the case of the impartial anonymous</span>
+<span class="sd">        culture. For other values of :code:`alpha`, different probability distributions are</span>
+<span class="sd">        obtained.</span>
+
+<span class="sd">        With the impartial anonymous culture, every multisets of votes--an anonymous profile---are</span>
+<span class="sd">        equally likely to be generated. Note here that we are discussing anonymous profiles and</span>
+<span class="sd">        not ranks.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/urn.png</span>
+<span class="sd">            :width: 600</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an urn model with alpha=0</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import urn</span>
+
+<span class="sd">            # Sample from an urn model with 2 voters and 3 candidate. Urn parameter is 0.5.</span>
+<span class="sd">            urn(2, 3, 0.5)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            urn(2, 3, 4, seed=1002)</span>
+
+<span class="sd">            # Passing a negative alpha will fail</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn(2, 3, -0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `Paradox of Voting under an Urn Model: The Effect of Homogeneity</span>
+<span class="sd">        &lt;https://www.jstor.org/stable/30024551&gt;`_,</span>
+<span class="sd">        *Sven Berg*,</span>
+<span class="sd">        Public Choice, Vol. 47, No. 2 (1985).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="n">votes</span> <span class="o">=</span> <span class="n">urn_scheme</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">),</span> <span class="n">rng</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">votes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span></div>
 
+
+
+<span class="k">def</span> <span class="nf">theoretical_distribution</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">ascending_factorial</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">increment</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">value</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">increment</span>
+            <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_candidates&quot;</span><span class="p">])</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="n">ascending_factorial</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increment</span><span class="p">)</span>
+
+    <span class="n">distribution</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">all_profiles</span><span class="p">():</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="n">profile</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rank</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">rank</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">rank</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">probability</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span>
+            <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_voters&quot;</span><span class="p">]</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="n">ascending_factorial</span><span class="p">(</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_candidates&quot;</span><span class="p">]),</span>
+            <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_voters&quot;</span><span class="p">],</span>
+            <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">probability</span> <span class="o">*=</span> <span class="n">ascending_factorial</span><span class="p">(</span>
+                <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">]</span>
+            <span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span> <span class="o">=</span> <span class="n">probability</span>
+    <span class="n">normaliser</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">distribution</span><span class="p">:</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">/=</span> <span class="n">normaliser</span>
+    <span class="k">return</span> <span class="n">distribution</span>
 </pre></div>
 
                 </article>
