@@ -48,7 +48,7 @@ def plackett_luce(
 
     rng = np.random.default_rng(seed)
 
-    alphas = np.array(alphas)
+    alphas = np.array(alphas, dtype=float)
 
     votes = np.zeros((num_voters, num_candidates), dtype=int)
 

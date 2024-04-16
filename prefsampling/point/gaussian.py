@@ -75,4 +75,4 @@ def gaussian(
                 point = rng.normal(loc=center_point, scale=sigmas, size=num_dimensions)
             points.append(point)
 
-        return np.array(points)
+        return np.array(points, dtype=float)
