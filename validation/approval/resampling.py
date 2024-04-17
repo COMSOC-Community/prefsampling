@@ -1,7 +1,6 @@
 import math
 
 from prefsampling.approval import resampling, disjoint_resampling
-from validation.utils import get_all_subsets
 from validation.validator import Validator
 
 

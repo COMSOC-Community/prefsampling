@@ -1,7 +1,8 @@
 import numpy as np
 
+from prefsampling.combinatorics import all_rankings
 from prefsampling.ordinal import plackett_luce
-from validation.utils import get_all_ranks
+from prefsampling.ordinal.plackettluce import theoretical_distribution
 from validation.validator import Validator
 
 
@@ -23,22 +24,10 @@ class PlackettLuceValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return get_all_ranks(sampler_parameters["num_candidates"])
+        return all_rankings(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        distribution = {}
-        norm_alphas = np.array(sampler_parameters["alphas"], dtype=float) / sum(
-            sampler_parameters["alphas"]
-        )
-        for rank in all_outcomes:
-            probability = 1
-            for j, alt in enumerate(rank):
-                probability *= norm_alphas[alt] / np.take(norm_alphas, rank[j:]).sum()
-            distribution[rank] = probability
-        normaliser = sum(distribution.values())
-        for r in distribution:
-            distribution[r] /= normaliser
-        return distribution
+        return theoretical_distribution(sampler_parameters["alphas"], rankings=all_outcomes)
 
     def sample_cast(self, sample):
         return tuple(sample[0])

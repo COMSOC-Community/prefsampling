@@ -86,13 +86,13 @@ Reference: :py:mod:`prefsampling.ordinal`
    * - :py:func:`~prefsampling.ordinal.stratification`
      - :code:`weight`
      - ---
-   * - :py:func:`~prefsampling.ordinal.single_peaked_conitzer`
+   * - :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_conitzer`
      - ---
      - ---
-   * - :py:func:`~prefsampling.ordinal.single_peaked_walsh`
+   * - :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_walsh`
      - ---
      - ---
-   * - :py:func:`~prefsampling.ordinal.single_peaked_circle`
+   * - :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_circle`
      - ---
      - ---
    * - :py:func:`~prefsampling.ordinal.single_crossing`

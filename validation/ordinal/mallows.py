@@ -1,6 +1,6 @@
+from prefsampling.combinatorics import all_rankings
 from prefsampling.ordinal import mallows
-from prefsampling.ordinal.mallows import phi_from_norm_phi
-from validation.utils import get_all_ranks
+from prefsampling.ordinal.mallows import theoretical_distribution
 from validation.validator import Validator
 
 
@@ -27,33 +27,10 @@ class OrdinalMallowsValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return get_all_ranks(sampler_parameters["num_candidates"])
+        return all_rankings(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        distribution = {}
-        if sampler_parameters["normalise_phi"]:
-            phi = phi_from_norm_phi(
-                sampler_parameters["num_candidates"], sampler_parameters["phi"]
-            )
-        else:
-            phi = sampler_parameters["phi"]
-        for rank in all_outcomes:
-            distribution[rank] = phi ** kendall_tau_distance(
-                tuple(range(sampler_parameters["num_candidates"])), rank
-            )
-        normaliser = sum(distribution.values())
-        for r in distribution:
-            distribution[r] /= normaliser
-        return distribution
+        return theoretical_distribution(sampler_parameters["num_candidates"], sampler_parameters["phi"], normalise_phi=sampler_parameters["normalise_phi"], rankings=all_outcomes)
 
     def sample_cast(self, sample):
         return tuple(sample[0])
-
-
-def kendall_tau_distance(rank1: tuple, rank2: tuple):
-    distance = 0
-    for k, alt1 in enumerate(rank1):
-        for alt2 in rank1[k + 1 :]:
-            if rank2.index(alt2) < rank2.index(alt1):
-                distance += 1
-    return distance

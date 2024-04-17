@@ -1,13 +1,26 @@
+"""
+Single-crossing preferences are such that the set of voters is one-dimensional: for a given
+ordering of the voters and any pair of alternatives a, b, the two sets of voters corresponding to
+the those preferring a over b and those preferring b over a form two segments of the ordering. In
+other words, following the ordering of the voters, there is single crossing point such that all
+voters to the left of this point prefer a over b and all voters to the right of this point prefer
+b over a (or the symmetric case).
+"""
+
 from __future__ import annotations
+
+from collections.abc import Iterable, Collection
 
 import numpy as np
 
-from prefsampling.inputvalidators import validate_num_voters_candidates
+from prefsampling.combinatorics import all_single_crossing_profiles, all_non_isomorphic_profiles, \
+    all_anonymous_profiles
+from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
 
 
 @validate_num_voters_candidates
 def single_crossing(
-    num_voters: int, num_candidates: int, seed: int = None
+        num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes that are single-crossing. See `Elkind, Lackner, Peters (2022)
@@ -60,6 +73,46 @@ def single_crossing(
     -------
         np.ndarray
             Ordinal votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import single_crossing
+
+            # Sample a single-crossing profile with 2 voters and 3 candidates.
+            single_crossing(2, 3)
+
+            # For reproducibility, you can set the seed.
+            single_crossing(2, 3, seed=1002)
+
+    Validation
+    ----------
+        The theoretical distribution of this sampler is unknown. We just plot the observed
+        frequencies.
+
+        .. image:: ../validation_plots/ordinal/single_crossing_None.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for impartial single-crossing model
+
+
+    References
+    ----------
+        `An exploration in the theory of optimal income taxation
+        <https://www.jstor.org/stable/2296779>`_,
+        *James Mirrlees*,
+        Review of Economic Studies, 38:175–208, 1971.
+
+        `Voting over income tax schedules
+        <https://www.sciencedirect.com/science/article/pii/0047272777900056>`_,
+        *Kevin W.S. Roberts*,
+        Journal of Public Economics, 8(3):329–340, 1977.
+
+        `Drawing a map of elections in the space of statistical cultures
+        <https://ifaamas.org/Proceedings/aamas2020/pdfs/p1341.pdf>`_,
+        *Stanisław Szufa, Piotr Faliszewski, Piotr Skowron, Arkadii Slinko and Nimrod Talmon*,
+        Proceedings of AAMAS-2020, pages 1341–1349, 2020.
     """
     rng = np.random.default_rng(seed)
 
@@ -182,11 +235,11 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
 
     This sampler can be very slow for large number of candidates. For efficient sampling---but
     without theoretical guarantees on the distribution of outcomes---consider using
-    :py:func:`~prefsampling.ordinal.single_crossing`.
+    :py:func:`~prefsampling.ordinal.singlecrossing.single_crossing`.
 
     Note that for a given number of voters, votes are not sampled independently.
 
-    This sampler was developed by Piotr Faliszewski.
+    This sampler was developed by `Piotr Faliszewski <https://home.agh.edu.pl/~faliszew/>`_.
 
     Parameters
     ----------
@@ -201,6 +254,45 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
     -------
         np.ndarray
             Ordinal votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import single_crossing_impartial
+
+            # Sample a single-crossing profile with 2 voters and 3 candidates.
+            single_crossing_impartial(2, 3)
+
+            # For reproducibility, you can set the seed.
+            single_crossing_impartial(2, 3, seed=1002)
+
+        .. code-block::
+
+            # This already takes a very long time... (10 candidates)
+            single_crossing_impartial(2, 10)
+
+    Validation
+    ----------
+        This sampler is meant to follow a uniform probability distribution over all non-isomorphic
+        and anonymous single-crossing profiles.
+
+        .. image:: ../validation_plots/ordinal/single_crossing_impartial_None.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for impartial single-crossing model
+
+    References
+    ----------
+        `An exploration in the theory of optimal income taxation
+        <https://www.jstor.org/stable/2296779>`_,
+        *James Mirrlees*,
+        Review of Economic Studies, 38:175–208, 1971.
+
+        `Voting over income tax schedules
+        <https://www.sciencedirect.com/science/article/pii/0047272777900056>`_,
+        *Kevin W.S. Roberts*,
+        Journal of Public Economics, 8(3):329–340, 1977.
     """
     top_vote = np.arange(num_candidates)
     top_node = SingleCrossingNode(top_vote, seed=seed)
@@ -227,3 +319,30 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
 
     votes = top_node.sample_votes(num_voters)
     return np.array(votes, dtype=int)
+
+
+def impartial_theoretical_distribution(num_voters: int = None, num_candidates: int = None,
+                                       sc_profiles: Iterable[
+                                           Collection[tuple[int]]] = None) -> dict:
+    if sc_profiles is None:
+        if num_candidates is None:
+            raise ValueError("If you do not provide the collection of single-crossing profiles, "
+                             "you need to provide the number of candidates.")
+        if num_voters is None:
+            raise ValueError("If you do not provide the collection of single-crossing profiles, "
+                             "you need to provide the number of voters.")
+        validate_int(num_candidates, lower_bound=1)
+        validate_int(num_voters, lower_bound=1)
+        sc_profiles = all_single_crossing_profiles(
+            num_voters,
+            num_candidates,
+            profiles=all_non_isomorphic_profiles(
+                num_voters,
+                num_candidates,
+                profiles=all_anonymous_profiles(
+                    num_voters,
+                    num_candidates, ),
+            ),
+            fix_order=True,
+        )
+    return {o: 1 / len(sc_profiles) for o in sc_profiles}

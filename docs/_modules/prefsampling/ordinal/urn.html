@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=a4bead0a"></script>
+    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -155,13 +155,22 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/constants.html">Constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/inputvalidators.html">Input Validators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
 </ul>
@@ -282,17 +291,26 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.ordinal.urn</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Urn processes are random processes based on the idea that rankings are drawn from an urn. The</span>
+<span class="sd">initial composition of the urn, the rules for drawing elements from it, and the evolution of the</span>
+<span class="sd">elements of the urn ar the characteristic of each specific urn process.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">all_profiles</span><span class="p">,</span> <span class="n">generalised_ascending_factorial</span>
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
 <span class="kn">from</span> <span class="nn">prefsampling.core.urn</span> <span class="kn">import</span> <span class="n">urn_scheme</span>
 
 
 <div class="viewcode-block" id="urn">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.urn">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/urn.html#prefsampling.ordinal.urn.urn">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">urn</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -324,23 +342,6 @@ document.write(`
 <span class="sd">        np.ndarray</span>
 <span class="sd">            The votes</span>
 
-<span class="sd">    Validation</span>
-<span class="sd">    ----------</span>
-
-<span class="sd">        The probability distribution governing an urn model is well documented.</span>
-
-<span class="sd">        When :code:`alpha = 1 / m!`, we fall back to the case of the impartial anonymous</span>
-<span class="sd">        culture. For other values of :code:`alpha`, different probability distributions are</span>
-<span class="sd">        obtained.</span>
-
-<span class="sd">        With the impartial anonymous culture, every multisets of votes--an anonymous profile---are</span>
-<span class="sd">        equally likely to be generated. Note here that we are discussing anonymous profiles and</span>
-<span class="sd">        not ranks.</span>
-
-<span class="sd">        .. image:: ../validation_plots/ordinal/urn.png</span>
-<span class="sd">            :width: 600</span>
-<span class="sd">            :alt: Observed versus theoretical frequencies for an urn model with alpha=0</span>
-
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 
@@ -348,7 +349,7 @@ document.write(`
 
 <span class="sd">            from prefsampling.ordinal import urn</span>
 
-<span class="sd">            # Sample from an urn model with 2 voters and 3 candidate. Urn parameter is 0.5.</span>
+<span class="sd">            # Sample from an urn model with 2 voters and 3 candidates, alpha parameter is 0.5.</span>
 <span class="sd">            urn(2, 3, 0.5)</span>
 
 <span class="sd">            # For reproducibility, you can set the seed.</span>
@@ -360,13 +361,62 @@ document.write(`
 <span class="sd">            except ValueError:</span>
 <span class="sd">                pass</span>
 
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        The probability distribution governing an urn model is well documented. Specifically, given</span>
+<span class="sd">        :math:`n` agents and :math:`m` candidates, the probability of observing a profile in which</span>
+<span class="sd">        a given ranking :math:`j` appears :math:`c_j` times is equal to:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\frac{n!}{\\text{asc\\_fact}(m!, n, \\alpha \\times m!)} \\times</span>
+<span class="sd">            \\prod_{j = 1}^{m!} \\frac{\\text{asc\\_fact}(1, c_j, \\alpha \\times m!)}{c_j!}</span>
+
+<span class="sd">        where :math:`\\text{asc\\_fact}` is the generalised ascending factorial, defined as:</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            \\text{asc\\_fact}(x, \\ell, \\sigma) = x \\times (x + \\sigma) \\times \\cdots \\times</span>
+<span class="sd">            (x + (\\ell - 1) \\times \\sigma).</span>
+
+<span class="sd">        Since the probability only depends on the number of times each ranking appears in the</span>
+<span class="sd">        profile, the space of outcome consists of all anonymous profiles, i.e., all representations</span>
+<span class="sd">        of any profile as a multiset (in which the order of the voters do not matter).</span>
+
+<span class="sd">        We test that the observed frequencies of anonymous profile is in line with the theoretical</span>
+<span class="sd">        probability distribution.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/urn_0_0.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an urn model with alpha=0</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/urn_0_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an urn model with alpha=0.5</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/urn_1_0.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an urn model with alpha=1</span>
+
+<span class="sd">        When :math:`\\alpha = \\frac{1}{m!}`, we are supposed to obtain a uniform distribution over</span>
+<span class="sd">        all anonymous profiles.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/urn_0_0416666666666666.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an urn model with alpha=1/m!</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
+<span class="sd">        `Über die statistik verketteter vorgänge</span>
+<span class="sd">        &lt;https://onlinelibrary.wiley.com/doi/abs/10.1002/zamm.19230030407&gt;`_,</span>
+<span class="sd">        *Florian Eggenberger and György Pólya*,</span>
+<span class="sd">        ZAMM-Journal of Applied Mathematics and Mechanics/Zeitschrift für Angewandte Mathematik und</span>
+<span class="sd">        Mechanik, 3(4):279–289, 1923.</span>
+
 <span class="sd">        `Paradox of Voting under an Urn Model: The Effect of Homogeneity</span>
 <span class="sd">        &lt;https://www.jstor.org/stable/30024551&gt;`_,</span>
 <span class="sd">        *Sven Berg*,</span>
-<span class="sd">        Public Choice, Vol. 47, No. 2 (1985).</span>
+<span class="sd">        Public Choice, Vol. 47, No. 2, 1985.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
@@ -375,35 +425,23 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">theoretical_distribution</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">ascending_factorial</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">increment</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">value</span>
-            <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">increment</span>
-            <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_candidates&quot;</span><span class="p">])</span>
-        <span class="p">)</span> <span class="o">*</span> <span class="n">ascending_factorial</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increment</span><span class="p">)</span>
-
+<span class="k">def</span> <span class="nf">theoretical_distribution</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">profiles</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">profiles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">profiles</span> <span class="o">=</span> <span class="n">all_profiles</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
+    <span class="n">factorial_num_candidates</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
     <span class="n">distribution</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">all_profiles</span><span class="p">():</span>
-        <span class="n">counts</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="n">profile</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">rank</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
-                <span class="n">counts</span><span class="p">[</span><span class="n">rank</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">counts</span><span class="p">[</span><span class="n">rank</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">profiles</span><span class="p">:</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
         <span class="n">probability</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span>
-            <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_voters&quot;</span><span class="p">]</span>
-        <span class="p">)</span> <span class="o">/</span> <span class="n">ascending_factorial</span><span class="p">(</span>
-            <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_candidates&quot;</span><span class="p">]),</span>
-            <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_voters&quot;</span><span class="p">],</span>
-            <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">],</span>
+            <span class="n">num_voters</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="n">generalised_ascending_factorial</span><span class="p">(</span>
+            <span class="n">factorial_num_candidates</span><span class="p">,</span>
+            <span class="n">num_voters</span><span class="p">,</span>
+            <span class="n">alpha</span> <span class="o">*</span> <span class="n">factorial_num_candidates</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">probability</span> <span class="o">*=</span> <span class="n">ascending_factorial</span><span class="p">(</span>
-                <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">]</span>
+            <span class="n">probability</span> <span class="o">*=</span> <span class="n">generalised_ascending_factorial</span><span class="p">(</span>
+                <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">factorial_num_candidates</span>
             <span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
         <span class="n">distribution</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span> <span class="o">=</span> <span class="n">probability</span>
     <span class="n">normaliser</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>

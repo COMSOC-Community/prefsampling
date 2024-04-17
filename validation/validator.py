@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import abc
 import os.path
+import re
 from collections import Counter
 from collections.abc import Callable
 from enum import Enum
@@ -10,7 +11,6 @@ from multiprocessing import Pool
 import pandas as pd
 import seaborn as sns
 
-# from matplotlib import pyplot as plt
 import matplotlib
 
 matplotlib.use("Agg")
@@ -166,6 +166,7 @@ class Validator(abc.ABC):
         df = pd.read_csv(
             os.path.join(csv_dir_path, f"{self.model_short_name}.csv"), delimiter=";"
         )
+        print("\tcsv file read.")
 
         plt.close("all")
         sns.set_context("paper")
@@ -191,7 +192,13 @@ class Validator(abc.ABC):
             )
         else:
             df.rename(columns={"observed_freq": "frequency"}, inplace=True)
+        print("\tdataframe ready for plotting")
 
+        # self.single_faceted_graph(df, plot_dir_path, theoretical)
+        self.multiple_graphs(df, plot_dir_path, theoretical)
+
+    def single_faceted_graph(self, df, plot_dir_path, theoretical=None):
+        print("\tplotting everything in a single graph")
         if not self.faceted_parameters:
             faceted_parameters = [None, None]
         elif len(self.faceted_parameters) == 1:
@@ -244,3 +251,85 @@ class Validator(abc.ABC):
             bbox_inches="tight",
         )
         print(f"\t...plotted!")
+
+    def multiple_graphs(self, df, plot_dir_path, theoretical=None):
+        print("\tcreating different graph for the different values of the parameters")
+        if not self.faceted_parameters:
+            faceted_parameters = [None, None]
+        elif len(self.faceted_parameters) == 1:
+            faceted_parameters = list(self.faceted_parameters)
+            faceted_parameters.append(None)
+        else:
+            faceted_parameters = self.faceted_parameters
+
+        unique_values = None
+        if faceted_parameters[0] is None:
+            all_dfs = [df]
+        else:
+            unique_values = sorted(df[faceted_parameters[0]].unique())
+            query_strings = []
+            for v in unique_values:
+                if type(v) == str:
+                    v = "'" + v + "'"
+                query_strings.append(f"`{faceted_parameters[0]}` == {v}")
+            all_dfs = [df.query(q) for q in query_strings]
+
+        for df_index, df in enumerate(all_dfs):
+            current_value = None
+            if unique_values:
+                current_value = unique_values[df_index]
+                print(f"\t\tPlotting for {faceted_parameters[0]} = {current_value}...")
+            g = sns.catplot(
+                data=df,
+                x="outcome",
+                y="frequency",
+                hue="freq_type" if theoretical else None,
+                col=faceted_parameters[1],
+                row=None,
+                kind="bar",
+                sharex=True,
+                sharey=True,
+                legend="full",
+            )
+
+            plt.rc('text', usetex=True)
+            plt.rc('font', **{'family': 'serif', 'serif': ['Palatino']})
+
+            if faceted_parameters[0] is not None:
+                if faceted_parameters[1] is not None:
+                    g.set_titles("{col_var} = {col_name}")
+                g.set_xticklabels()
+            g.set(xticklabels=[])
+            g.set_axis_labels("Outcome identifier", "Frequency")
+            title = f"{self.model_name} Model"
+            if faceted_parameters[0] is not None:
+                title += f" for {faceted_parameters[0]} = {current_value}"
+            title += f"\n\n\small num_samples = {df['num_samples'].unique()[0]}"
+            constant_params = None
+            if self.constant_parameters:
+                constant_params = [
+                    f"{k} = {self.parameters_list[0][k]}" for k in self.constant_parameters
+                ]
+            if constant_params:
+                title += " ~~|~~ " + " ~~|~~ ".join(constant_params)
+            title += "\n"
+            plt.suptitle(title)
+            g.figure.tight_layout()
+            if g._legend:
+                g._legend.set_title("")
+                new_labels = ["Observed", "Theoretical"]
+                for t, l in zip(g._legend.texts, new_labels):
+                    t.set_text(l)
+                sns.move_legend(g, "upper right", bbox_to_anchor=(1, 0.8), frameon=True)
+
+            file_name = f"{self.model_short_name}_{current_value}"
+            file_name = re.sub('[.,()\[\]]', '_', file_name)
+            file_name = file_name.replace(' ', '')
+            file_name += ".png"
+
+            plt.savefig(
+                os.path.join(plot_dir_path, file_name),
+                dpi=300,
+                bbox_inches="tight",
+            )
+            print(f"\t\t...plotted!")

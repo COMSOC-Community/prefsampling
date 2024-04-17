@@ -1,5 +1,4 @@
 from prefsampling.approval import impartial
-from validation.utils import get_all_subsets
 from validation.validator import Validator
 
 

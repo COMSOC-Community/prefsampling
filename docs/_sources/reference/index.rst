@@ -12,3 +12,4 @@ Reference
     core/index
     constants
     inputvalidators
+    combinatorics

@@ -95,8 +95,8 @@ if __name__ == "__main__":
         plot_dir_root = os.path.join("plots", nickname)
         os.makedirs(plot_dir_root, exist_ok=True)
 
-        for validator in validator_list:
-            validator.write_csv(num_observations, csv_dir_root)
+        # for validator in validator_list:
+        #     validator.write_csv(num_observations, csv_dir_root)
         for validator in validator_list:
             validator.plot_frequencies(
                 csv_dir_root, plot_dir_root, ordering="theoretical-observed"
@@ -105,4 +105,4 @@ if __name__ == "__main__":
     plot_dir_root = os.path.join("plots", "point")
     os.makedirs(plot_dir_root, exist_ok=True)
     #    plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
-    plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))
+    # plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))

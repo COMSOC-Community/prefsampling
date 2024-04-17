@@ -1,7 +1,16 @@
+"""
+Urn processes are random processes based on the idea that rankings are drawn from an urn. The
+initial composition of the urn, the rules for drawing elements from it, and the evolution of the
+elements of the urn ar the characteristic of each specific urn process.
+"""
 from __future__ import annotations
+
+import math
+from collections import Counter
 
 import numpy as np
 
+from prefsampling.combinatorics import all_profiles, generalised_ascending_factorial
 from prefsampling.inputvalidators import validate_num_voters_candidates
 
 from prefsampling.core.urn import urn_scheme
@@ -38,23 +47,6 @@ def urn(
         np.ndarray
             The votes
 
-    Validation
-    ----------
-
-        The probability distribution governing an urn model is well documented.
-
-        When :code:`alpha = 1 / m!`, we fall back to the case of the impartial anonymous
-        culture. For other values of :code:`alpha`, different probability distributions are
-        obtained.
-
-        With the impartial anonymous culture, every multisets of votes--an anonymous profile---are
-        equally likely to be generated. Note here that we are discussing anonymous profiles and
-        not ranks.
-
-        .. image:: ../validation_plots/ordinal/urn.png
-            :width: 600
-            :alt: Observed versus theoretical frequencies for an urn model with alpha=0
-
     Examples
     --------
 
@@ -62,7 +54,7 @@ def urn(
 
             from prefsampling.ordinal import urn
 
-            # Sample from an urn model with 2 voters and 3 candidate. Urn parameter is 0.5.
+            # Sample from an urn model with 2 voters and 3 candidates, alpha parameter is 0.5.
             urn(2, 3, 0.5)
 
             # For reproducibility, you can set the seed.
@@ -74,13 +66,62 @@ def urn(
             except ValueError:
                 pass
 
+    Validation
+    ----------
+
+        The probability distribution governing an urn model is well documented. Specifically, given
+        :math:`n` agents and :math:`m` candidates, the probability of observing a profile in which
+        a given ranking :math:`j` appears :math:`c_j` times is equal to:
+
+        .. math::
+
+            \\frac{n!}{\\text{asc\\_fact}(m!, n, \\alpha \\times m!)} \\times
+            \\prod_{j = 1}^{m!} \\frac{\\text{asc\\_fact}(1, c_j, \\alpha \\times m!)}{c_j!}
+
+        where :math:`\\text{asc\\_fact}` is the generalised ascending factorial, defined as:
+
+        .. math::
+            \\text{asc\\_fact}(x, \\ell, \\sigma) = x \\times (x + \\sigma) \\times \\cdots \\times
+            (x + (\\ell - 1) \\times \\sigma).
+
+        Since the probability only depends on the number of times each ranking appears in the
+        profile, the space of outcome consists of all anonymous profiles, i.e., all representations
+        of any profile as a multiset (in which the order of the voters do not matter).
+
+        We test that the observed frequencies of anonymous profile is in line with the theoretical
+        probability distribution.
+
+        .. image:: ../validation_plots/ordinal/urn_0_0.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an urn model with alpha=0
+
+        .. image:: ../validation_plots/ordinal/urn_0_5.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an urn model with alpha=0.5
+
+        .. image:: ../validation_plots/ordinal/urn_1_0.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an urn model with alpha=1
+
+        When :math:`\\alpha = \\frac{1}{m!}`, we are supposed to obtain a uniform distribution over
+        all anonymous profiles.
+
+        .. image:: ../validation_plots/ordinal/urn_0_0416666666666666.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an urn model with alpha=1/m!
 
     References
     ----------
+        `Über die statistik verketteter vorgänge
+        <https://onlinelibrary.wiley.com/doi/abs/10.1002/zamm.19230030407>`_,
+        *Florian Eggenberger and György Pólya*,
+        ZAMM-Journal of Applied Mathematics and Mechanics/Zeitschrift für Angewandte Mathematik und
+        Mechanik, 3(4):279–289, 1923.
+
         `Paradox of Voting under an Urn Model: The Effect of Homogeneity
         <https://www.jstor.org/stable/30024551>`_,
         *Sven Berg*,
-        Public Choice, Vol. 47, No. 2 (1985).
+        Public Choice, Vol. 47, No. 2, 1985.
     """
     rng = np.random.default_rng(seed)
 
@@ -88,35 +129,23 @@ def urn(
     return np.array(votes, dtype=int)
 
 
-def theoretical_distribution(num_voters, num_candidates, alpha) -> dict:
-    def ascending_factorial(value, length, increment):
-        if length == 0:
-            return 1
-        return (
-            value
-            + (length - 1)
-            * increment
-            * math.factorial(sampler_parameters["num_candidates"])
-        ) * ascending_factorial(value, length - 1, increment)
-
+def theoretical_distribution(num_voters, num_candidates, alpha, profiles=None) -> dict:
+    if profiles is None:
+        profiles = all_profiles(num_voters, num_candidates)
+    factorial_num_candidates = math.factorial(num_candidates)
     distribution = {}
-    for profile in all_profiles():
-        counts = {}
-        for rank in profile:
-            if rank in counts:
-                counts[rank] += 1
-            else:
-                counts[rank] = 1
+    for profile in profiles:
+        counts = Counter(profile)
         probability = math.factorial(
-            sampler_parameters["num_voters"]
-        ) / ascending_factorial(
-            math.factorial(sampler_parameters["num_candidates"]),
-            sampler_parameters["num_voters"],
-            sampler_parameters["alpha"],
+            num_voters
+        ) / generalised_ascending_factorial(
+            factorial_num_candidates,
+            num_voters,
+            alpha * factorial_num_candidates,
         )
         for c in counts.values():
-            probability *= ascending_factorial(
-                1, c, sampler_parameters["alpha"]
+            probability *= generalised_ascending_factorial(
+                1, c, alpha * factorial_num_candidates
             ) / math.factorial(c)
         distribution[profile] = probability
     normaliser = sum(distribution.values())

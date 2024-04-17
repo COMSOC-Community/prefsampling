@@ -6,7 +6,7 @@ from enum import Enum
 import numpy as np
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
-from prefsampling.utils import comb
+from prefsampling.combinatorics import comb
 
 
 class NoiseType(Enum):

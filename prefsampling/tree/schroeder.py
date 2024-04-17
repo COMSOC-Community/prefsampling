@@ -6,7 +6,7 @@ from itertools import permutations, combinations_with_replacement, product
 
 from prefsampling.inputvalidators import validate_int
 from prefsampling.tree.node import Node
-from prefsampling.utils import comb
+from prefsampling.combinatorics import comb
 
 
 def validate_num_leaves_nodes(num_leaves: int, num_internal_nodes: int | None):

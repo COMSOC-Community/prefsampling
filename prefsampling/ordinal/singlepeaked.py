@@ -1,8 +1,16 @@
+"""
+Single-peaked preferences capture the idea that there exists a societal axis on which the candidates
+can be placed in such a way that the preferences of the voters are decreasing along both sides of
+the axis from their most preferred candidate.
+"""
 from __future__ import annotations
+
+from collections.abc import Iterable
 
 import numpy as np
 
-from prefsampling.inputvalidators import validate_num_voters_candidates
+from prefsampling.combinatorics import all_single_peaked_rankings, all_single_peaked_circle_rankings
+from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
 
 
 @validate_num_voters_candidates
@@ -40,6 +48,51 @@ def single_peaked_conitzer(
     -------
         np.ndarray
             Ordinal votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import single_peaked_conitzer
+
+            # Sample a single-peaked profile via Conitzer's method with 2 voters and 3 candidates.
+            single_peaked_conitzer(2, 3)
+
+            # For reproducibility, you can set the seed.
+            single_peaked_conitzer(2, 3, seed=1002)
+
+    Validation
+    ----------
+        Following the method proposed by Contizer, the probability of observing a given
+        single-peaked ranking (for a fixed axis) with :math:`m` candidates is equal to:
+
+        .. math::
+
+            \\frac{1}{m} \\times \\left(\\frac{1}{2}\\right)^{\\text{dist\\_peak\\_to\\_end}}
+
+        where :math:`\\text{dist\\_peak\\_to\\_end}` is the minimum distance from the top candidate
+        to one of the end of the axis (i.e., candidates `0` or `m - 1`).
+
+        .. image:: ../validation_plots/ordinal/sp_conitzer_4.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for Conitzer's single-peaked model with m=4
+
+        .. image:: ../validation_plots/ordinal/sp_conitzer_5.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for Conitzer's single-peaked model with m=5
+
+        .. image:: ../validation_plots/ordinal/sp_conitzer_6.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for Conitzer's single-peaked model with m=6
+
+
+    References
+    ----------
+        `Eliciting single-peaked preferences using comparison queries
+        <https://arxiv.org/abs/1401.3449>`_,
+        *Vincent Conitzer*,
+        Journal of Artificial Intelligence Research, 35:161–191, 2009.
     """
     rng = np.random.default_rng(seed)
     votes = np.zeros([num_voters, num_candidates], dtype=int)
@@ -64,6 +117,21 @@ def single_peaked_conitzer(
                 left -= 1
 
     return votes
+
+
+def conitzer_theoretical_distribution(num_candidates: int, sp_rankings: Iterable[tuple[int]] = None) -> dict:
+    validate_int(num_candidates, lower_bound=1)
+    if sp_rankings is None:
+        sp_rankings = all_single_peaked_rankings(num_candidates)
+    distribution = {}
+    for ranking in sp_rankings:
+        probability = 1 / num_candidates
+        for alt in ranking:
+            if alt == 0 or alt == num_candidates - 1:
+                break
+            probability *= 1 / 2
+        distribution[ranking] = probability
+    return distribution
 
 
 @validate_num_voters_candidates
@@ -95,6 +163,44 @@ def single_peaked_circle(
     -------
         np.ndarray
             Ordinal votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import single_peaked_circle
+
+            # Sample a single-peaked on a circle profile with 2 voters and 3 candidates.
+            single_peaked_circle(2, 3)
+
+            # For reproducibility, you can set the seed.
+            single_peaked_circle(2, 3, seed=1002)
+
+    Validation
+    ----------
+        The sampler for single-peaked on a circle is such that all single-peaked on a circle
+        rankings are equally likely to be generated.
+
+        .. image:: ../validation_plots/ordinal/sp_circle_4.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for single-peaked on a circle model with m=4
+
+        .. image:: ../validation_plots/ordinal/sp_circle_5.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for single-peaked on a circle model with m=5
+
+        .. image:: ../validation_plots/ordinal/sp_circle_6.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for single-peaked on a circle model with m=6
+
+
+    References
+    ----------
+        `Preferences Single-Peaked on a Circle
+        <https://www.jair.org/index.php/jair/article/view/11732>`_,
+        *Dominik Peters and Martin Lackner*,
+        Journal of Artificial Intelligence Research, 68:463–502, 2020.
     """
     rng = np.random.default_rng(seed)
     votes = np.zeros([num_voters, num_candidates], dtype=int)
@@ -114,6 +220,16 @@ def single_peaked_circle(
                 right += 1
                 right = np.mod(right, num_candidates)
     return votes
+
+
+def circle_theoretical_distribution(num_candidates: int = None, sp_circ_rankings: Iterable[tuple[int]] = None) -> dict:
+    if sp_circ_rankings is None:
+        if num_candidates is None:
+            raise ValueError("If you do not provide the collection of single-peaked on a circle "
+                             "rankings, you need to provide the number of candidates.")
+        validate_int(num_candidates, lower_bound=1)
+        sp_circ_rankings = all_single_peaked_circle_rankings(num_candidates)
+    return {r: 1 / len(sp_circ_rankings) for r in sp_circ_rankings}
 
 
 @validate_num_voters_candidates
@@ -143,6 +259,45 @@ def single_peaked_walsh(
     -------
         np.ndarray
             Ordinal votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import single_peaked_walsh
+
+            # Sample a single-peaked profile via Walsh's method with 2 voters and 3 candidates.
+            single_peaked_walsh(2, 3)
+
+            # For reproducibility, you can set the seed.
+            single_peaked_walsh(2, 3, seed=1002)
+
+    Validation
+    ----------
+        The method proposed by Walsh ensures that for a given axis, all single-peaked rankings
+        are equally likely to be generated.
+
+        .. image:: ../validation_plots/ordinal/sp_walsh_4.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for Walsh's single-peaked model with m=4
+
+        .. image:: ../validation_plots/ordinal/sp_walsh_5.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for Walsh's single-peaked model with m=5
+
+        .. image:: ../validation_plots/ordinal/sp_walsh_6.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for Walsh's single-peaked model with m=6
+
+
+    References
+    ----------
+        `Generating Single Peaked Votes
+        <https://arxiv.org/abs/1503.02766>`_,
+        *Toby Walsh*,
+        ArXiV preprint, 2015.
+
     """
     rng = np.random.default_rng(seed)
     votes = np.zeros([num_voters, num_candidates], dtype=int)
@@ -161,3 +316,13 @@ def single_peaked_walsh(
             position -= 1
 
     return votes
+
+
+def walsh_theoretical_distribution(num_candidates: int = None, sp_rankings: Iterable[tuple[int]] = None) -> dict:
+    if sp_rankings is None:
+        if num_candidates is None:
+            raise ValueError("If you do not provide the collection of single-peaked rankings, you "
+                             "need to provide the number of candidates.")
+        validate_int(num_candidates, lower_bound=1)
+        sp_rankings = all_single_peaked_rankings(num_candidates)
+    return {r: 1 / len(sp_rankings) for r in sp_rankings}

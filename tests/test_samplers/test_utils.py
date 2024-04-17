@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from prefsampling.utils import comb, _comb
+from prefsampling.combinatorics import comb, _comb
 
 
 class TestUtils(TestCase):

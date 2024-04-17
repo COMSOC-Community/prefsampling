@@ -14,7 +14,7 @@ from prefsampling.tree.schroeder import (
 from prefsampling.tree.caterpillar import caterpillar_tree
 from prefsampling.tree.balanced import balanced_tree
 from prefsampling.inputvalidators import validate_num_voters_candidates
-from prefsampling.utils import comb
+from prefsampling.combinatorics import comb
 
 
 class TreeSampler(Enum):

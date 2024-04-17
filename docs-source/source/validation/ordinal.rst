@@ -48,23 +48,6 @@ the ranks.
   :width: 800
   :alt: Observed versus theoretical frequencies for the stratification culture with weight=0.2, 0.4, 0.8
 
-Urn
----
-
-:py:func:`prefsampling.ordinal.urn`
-
-The probability distribution governing an urn model is well documented.
-See https://www.jstor.org/stable/30024551 for instance.
-
-Once again, we are here discussing anonymous profiles and not ranks.
-
-When `alpha` is equal to `1 / m!`, we fall back to the case of the impartial anonymous
-culture. For other values of `alpha`, different probability distributions are obtained.
-
-.. image:: validation_plots/ordinal/urn.png
-  :width: 800
-  :alt: Observed versus theoretical frequencies for Mallow's model with alpha=0
-
 Mallows
 -------
 
@@ -139,7 +122,7 @@ rank are equally likely to be generated.
 :py:func:`prefsampling.ordinal.single_peaked_conitzer`
 
 The model proposed by `Conitzer (2009) <https://arxiv.org/abs/1401.3449>`_ yields
-a different probability distribution.In this distribution, the probability of observing
+a different probability distribution. In this distribution, the probability of observing
 a given single-peaked rank is equal to  `1/m * (1/2)**dist_peak_to_end` where `m` is the
 number of candidates and `dist_peak_to_end` is the minimum distance from to peak
 to an end of the axis (i.e., candidates `0` or `m - 1`).

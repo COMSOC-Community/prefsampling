@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=a4bead0a"></script>
+    <script src="_static/documentation_options.js?v=537bb3bf"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -155,13 +155,22 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/mallows.html">Mallows’ Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/constants.html">Constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/inputvalidators.html">Input Validators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
 </ul>
@@ -292,7 +301,9 @@ document.write(`
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
@@ -306,7 +317,27 @@ document.write(`
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_anonymous_profiles">all_anonymous_profiles() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_group_separable_profiles">all_group_separable_profiles() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_gs_structure">all_gs_structure() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_non_isomorphic_profiles">all_non_isomorphic_profiles() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_profiles">all_profiles() (in module prefsampling.combinatorics)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_rankings">all_rankings() (in module prefsampling.combinatorics)</a>
+</li>
       <li><a href="reference/tree/index.html#prefsampling.tree.all_schroeder_tree">all_schroeder_tree() (in module prefsampling.tree)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_single_crossing_profiles">all_single_crossing_profiles() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_single_peaked_circle_rankings">all_single_peaked_circle_rankings() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.all_single_peaked_rankings">all_single_peaked_rankings() (in module prefsampling.combinatorics)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -332,11 +363,15 @@ document.write(`
 </li>
       <li><a href="reference/tree/index.html#prefsampling.tree.caterpillar_tree">caterpillar_tree() (in module prefsampling.tree)</a>
 </li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.comb">comb() (in module prefsampling.combinatorics)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/core/index.html#prefsampling.core.composition.concatenation">concatenation() (in module prefsampling.core.composition)</a>
 </li>
       <li><a href="reference/constants.html#prefsampling.CONSTANTS">CONSTANTS (class in prefsampling)</a>
+</li>
+      <li><a href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.SingleCrossingNode.count_elections">count_elections() (SingleCrossingNode method)</a>
 </li>
       <li><a href="reference/point/index.html#prefsampling.point.cube">cube() (in module prefsampling.point)</a>
 </li>
@@ -388,9 +423,25 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/point/index.html#prefsampling.point.gaussian">gaussian() (in module prefsampling.point)</a>
 </li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.generalised_ascending_factorial">generalised_ascending_factorial() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.SingleCrossingNode.generate_all_next">generate_all_next() (SingleCrossingNode method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.group_separable">group_separable() (in module prefsampling.ordinal)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.gs_structure">gs_structure() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.GSNode">GSNode (class in prefsampling.combinatorics)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.hamming_distance">hamming_distance() (in module prefsampling.combinatorics)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -407,14 +458,24 @@ document.write(`
       <li><a href="reference/approval/index.html#prefsampling.approval.impartial">impartial() (in module prefsampling.approval)</a>
 
       <ul>
-        <li><a href="reference/ordinal/index.html#prefsampling.ordinal.impartial">(in module prefsampling.ordinal)</a>
+        <li><a href="reference/ordinal/impartial.html#prefsampling.ordinal.impartial.impartial">(in module prefsampling.ordinal.impartial)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.impartial_anonymous">impartial_anonymous() (in module prefsampling.ordinal)</a>
+      <li><a href="reference/ordinal/impartial.html#prefsampling.ordinal.impartial.impartial_anonymous">impartial_anonymous() (in module prefsampling.ordinal.impartial)</a>
 </li>
       <li><a href="reference/approval/index.html#prefsampling.approval.impartial_constant_size">impartial_constant_size() (in module prefsampling.approval)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.is_single_crossing">is_single_crossing() (in module prefsampling.combinatorics)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.kendall_tau_distance">kendall_tau_distance() (in module prefsampling.combinatorics)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -422,7 +483,7 @@ document.write(`
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.mallows">mallows() (in module prefsampling.ordinal)</a>
+      <li><a href="reference/ordinal/mallows.html#prefsampling.ordinal.mallows.mallows">mallows() (in module prefsampling.ordinal.mallows)</a>
 </li>
       <li><a href="reference/core/index.html#prefsampling.core.composition.mixture">mixture() (in module prefsampling.core.composition)</a>
 </li>
@@ -431,6 +492,8 @@ document.write(`
 
       <ul>
         <li><a href="reference/approval/index.html#module-prefsampling.approval">prefsampling.approval</a>
+</li>
+        <li><a href="reference/combinatorics.html#module-prefsampling.combinatorics">prefsampling.combinatorics</a>
 </li>
         <li><a href="reference/core/index.html#module-prefsampling.core">prefsampling.core</a>
 </li>
@@ -443,6 +506,18 @@ document.write(`
         <li><a href="reference/inputvalidators.html#module-prefsampling.inputvalidators">prefsampling.inputvalidators</a>
 </li>
         <li><a href="reference/ordinal/index.html#module-prefsampling.ordinal">prefsampling.ordinal</a>
+</li>
+        <li><a href="reference/ordinal/impartial.html#module-prefsampling.ordinal.impartial">prefsampling.ordinal.impartial</a>
+</li>
+        <li><a href="reference/ordinal/mallows.html#module-prefsampling.ordinal.mallows">prefsampling.ordinal.mallows</a>
+</li>
+        <li><a href="reference/ordinal/plackettluce.html#module-prefsampling.ordinal.plackettluce">prefsampling.ordinal.plackettluce</a>
+</li>
+        <li><a href="reference/ordinal/singlecrossing.html#module-prefsampling.ordinal.singlecrossing">prefsampling.ordinal.singlecrossing</a>
+</li>
+        <li><a href="reference/ordinal/singlepeaked.html#module-prefsampling.ordinal.singlepeaked">prefsampling.ordinal.singlepeaked</a>
+</li>
+        <li><a href="reference/ordinal/urn.html#module-prefsampling.ordinal.urn">prefsampling.ordinal.urn</a>
 </li>
         <li><a href="reference/point/index.html#module-prefsampling.point">prefsampling.point</a>
 </li>
@@ -463,7 +538,7 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.norm_mallows">norm_mallows() (in module prefsampling.ordinal)</a>
+      <li><a href="reference/ordinal/mallows.html#prefsampling.ordinal.mallows.norm_mallows">norm_mallows() (in module prefsampling.ordinal.mallows)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -473,13 +548,26 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/core/index.html#prefsampling.core.filters.permute_voters">permute_voters() (in module prefsampling.core.filters)</a>
 </li>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.plackett_luce">plackett_luce() (in module prefsampling.ordinal)</a>
+      <li><a href="reference/ordinal/mallows.html#prefsampling.ordinal.mallows.phi_from_norm_phi">phi_from_norm_phi() (in module prefsampling.ordinal.mallows)</a>
+</li>
+      <li><a href="reference/ordinal/plackettluce.html#prefsampling.ordinal.plackettluce.plackett_luce">plackett_luce() (in module prefsampling.ordinal.plackettluce)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.powerset">powerset() (in module prefsampling.combinatorics)</a>
+</li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.powerset_as_sets">powerset_as_sets() (in module prefsampling.combinatorics)</a>
 </li>
       <li>
     prefsampling.approval
 
       <ul>
         <li><a href="reference/approval/index.html#module-prefsampling.approval">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.combinatorics
+
+      <ul>
+        <li><a href="reference/combinatorics.html#module-prefsampling.combinatorics">module</a>
 </li>
       </ul></li>
       <li>
@@ -503,8 +591,6 @@ document.write(`
         <li><a href="reference/core/index.html#module-prefsampling.core.euclidean">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prefsampling.core.filters
 
@@ -519,11 +605,55 @@ document.write(`
         <li><a href="reference/inputvalidators.html#module-prefsampling.inputvalidators">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prefsampling.ordinal
 
       <ul>
         <li><a href="reference/ordinal/index.html#module-prefsampling.ordinal">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.ordinal.impartial
+
+      <ul>
+        <li><a href="reference/ordinal/impartial.html#module-prefsampling.ordinal.impartial">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.ordinal.mallows
+
+      <ul>
+        <li><a href="reference/ordinal/mallows.html#module-prefsampling.ordinal.mallows">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.ordinal.plackettluce
+
+      <ul>
+        <li><a href="reference/ordinal/plackettluce.html#module-prefsampling.ordinal.plackettluce">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.ordinal.singlecrossing
+
+      <ul>
+        <li><a href="reference/ordinal/singlecrossing.html#module-prefsampling.ordinal.singlecrossing">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.ordinal.singlepeaked
+
+      <ul>
+        <li><a href="reference/ordinal/singlepeaked.html#module-prefsampling.ordinal.singlepeaked">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.ordinal.urn
+
+      <ul>
+        <li><a href="reference/ordinal/urn.html#module-prefsampling.ordinal.urn">module</a>
 </li>
       </ul></li>
       <li>
@@ -540,6 +670,8 @@ document.write(`
         <li><a href="reference/tree/index.html#module-prefsampling.tree">module</a>
 </li>
       </ul></li>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.proper_powerset">proper_powerset() (in module prefsampling.combinatorics)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -562,6 +694,8 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/core/index.html#prefsampling.core.euclidean.sample_election_positions">sample_election_positions() (in module prefsampling.core.euclidean)</a>
 </li>
+      <li><a href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.SingleCrossingNode.sample_votes">sample_votes() (SingleCrossingNode method)</a>
+</li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER">SCHROEDER (TreeSampler attribute)</a>
 </li>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER_LESCANNE">SCHROEDER_LESCANNE (TreeSampler attribute)</a>
@@ -572,21 +706,25 @@ document.write(`
 </li>
       <li><a href="reference/tree/index.html#prefsampling.tree.schroeder_tree_lescanne">schroeder_tree_lescanne() (in module prefsampling.tree)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER_UNIFORM">SCHROEDER_UNIFORM (TreeSampler attribute)</a>
 </li>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_crossing">single_crossing() (in module prefsampling.ordinal)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.single_crossing">single_crossing() (in module prefsampling.ordinal.singlecrossing)</a>
 </li>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_circle">single_peaked_circle() (in module prefsampling.ordinal)</a>
+      <li><a href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.single_crossing_impartial">single_crossing_impartial() (in module prefsampling.ordinal.singlecrossing)</a>
 </li>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_conitzer">single_peaked_conitzer() (in module prefsampling.ordinal)</a>
+      <li><a href="reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_circle">single_peaked_circle() (in module prefsampling.ordinal.singlepeaked)</a>
 </li>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.single_peaked_walsh">single_peaked_walsh() (in module prefsampling.ordinal)</a>
+      <li><a href="reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_conitzer">single_peaked_conitzer() (in module prefsampling.ordinal.singlepeaked)</a>
+</li>
+      <li><a href="reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_walsh">single_peaked_walsh() (in module prefsampling.ordinal.singlepeaked)</a>
+</li>
+      <li><a href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.SingleCrossingNode">SingleCrossingNode (class in prefsampling.ordinal.singlecrossing)</a>
 </li>
       <li><a href="reference/point/index.html#prefsampling.point.sphere_uniform">sphere_uniform() (in module prefsampling.point)</a>
 </li>
-      <li><a href="reference/ordinal/index.html#prefsampling.ordinal.stratification">stratification() (in module prefsampling.ordinal)</a>
+      <li><a href="reference/ordinal/impartial.html#prefsampling.ordinal.impartial.stratification">stratification() (in module prefsampling.ordinal.impartial)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -609,7 +747,7 @@ document.write(`
       <li><a href="reference/approval/index.html#prefsampling.approval.urn">urn() (in module prefsampling.approval)</a>
 
       <ul>
-        <li><a href="reference/ordinal/index.html#prefsampling.ordinal.urn">(in module prefsampling.ordinal)</a>
+        <li><a href="reference/ordinal/urn.html#prefsampling.ordinal.urn.urn">(in module prefsampling.ordinal.urn)</a>
 </li>
       </ul></li>
   </ul></td>

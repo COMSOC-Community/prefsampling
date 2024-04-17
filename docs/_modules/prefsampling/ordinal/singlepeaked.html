@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=86f9da5d"></script>
+    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -155,13 +155,22 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/constants.html">Constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/inputvalidators.html">Input Validators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
 </ul>
@@ -282,15 +291,23 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.ordinal.singlepeaked</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Single-peaked preferences capture the idea that there exists a societal axis on which the candidates</span>
+<span class="sd">can be placed in such a way that the preferences of the voters are decreasing along both sides of</span>
+<span class="sd">the axis from their most preferred candidate.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">all_single_peaked_rankings</span><span class="p">,</span> <span class="n">all_single_peaked_circle_rankings</span>
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 
 
 <div class="viewcode-block" id="single_peaked_conitzer">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_conitzer">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_conitzer">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_peaked_conitzer</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -326,6 +343,51 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import single_peaked_conitzer</span>
+
+<span class="sd">            # Sample a single-peaked profile via Conitzer&#39;s method with 2 voters and 3 candidates.</span>
+<span class="sd">            single_peaked_conitzer(2, 3)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            single_peaked_conitzer(2, 3, seed=1002)</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+<span class="sd">        Following the method proposed by Contizer, the probability of observing a given</span>
+<span class="sd">        single-peaked ranking (for a fixed axis) with :math:`m` candidates is equal to:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\frac{1}{m} \\times \\left(\\frac{1}{2}\\right)^{\\text{dist\\_peak\\_to\\_end}}</span>
+
+<span class="sd">        where :math:`\\text{dist\\_peak\\_to\\_end}` is the minimum distance from the top candidate</span>
+<span class="sd">        to one of the end of the axis (i.e., candidates `0` or `m - 1`).</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_conitzer_4.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for Conitzer&#39;s single-peaked model with m=4</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_conitzer_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for Conitzer&#39;s single-peaked model with m=5</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_conitzer_6.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for Conitzer&#39;s single-peaked model with m=6</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `Eliciting single-peaked preferences using comparison queries</span>
+<span class="sd">        &lt;https://arxiv.org/abs/1401.3449&gt;`_,</span>
+<span class="sd">        *Vincent Conitzer*,</span>
+<span class="sd">        Journal of Artificial Intelligence Research, 35:161–191, 2009.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -353,8 +415,23 @@ document.write(`
 
 
 
+<span class="k">def</span> <span class="nf">conitzer_theoretical_distribution</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sp_rankings</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sp_rankings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sp_rankings</span> <span class="o">=</span> <span class="n">all_single_peaked_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">ranking</span> <span class="ow">in</span> <span class="n">sp_rankings</span><span class="p">:</span>
+        <span class="n">probability</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">num_candidates</span>
+        <span class="k">for</span> <span class="n">alt</span> <span class="ow">in</span> <span class="n">ranking</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">alt</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">alt</span> <span class="o">==</span> <span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">probability</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">ranking</span><span class="p">]</span> <span class="o">=</span> <span class="n">probability</span>
+    <span class="k">return</span> <span class="n">distribution</span>
+
+
 <div class="viewcode-block" id="single_peaked_circle">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_circle">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_circle">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_peaked_circle</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -384,6 +461,44 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import single_peaked_circle</span>
+
+<span class="sd">            # Sample a single-peaked on a circle profile with 2 voters and 3 candidates.</span>
+<span class="sd">            single_peaked_circle(2, 3)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            single_peaked_circle(2, 3, seed=1002)</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+<span class="sd">        The sampler for single-peaked on a circle is such that all single-peaked on a circle</span>
+<span class="sd">        rankings are equally likely to be generated.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_circle_4.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for single-peaked on a circle model with m=4</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_circle_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for single-peaked on a circle model with m=5</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_circle_6.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for single-peaked on a circle model with m=6</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `Preferences Single-Peaked on a Circle</span>
+<span class="sd">        &lt;https://www.jair.org/index.php/jair/article/view/11732&gt;`_,</span>
+<span class="sd">        *Dominik Peters and Martin Lackner*,</span>
+<span class="sd">        Journal of Artificial Intelligence Research, 68:463–502, 2020.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -406,8 +521,18 @@ document.write(`
 
 
 
+<span class="k">def</span> <span class="nf">circle_theoretical_distribution</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sp_circ_rankings</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sp_circ_rankings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of single-peaked on a circle &quot;</span>
+                             <span class="s2">&quot;rankings, you need to provide the number of candidates.&quot;</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">sp_circ_rankings</span> <span class="o">=</span> <span class="n">all_single_peaked_circle_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">r</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">sp_circ_rankings</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">sp_circ_rankings</span><span class="p">}</span>
+
+
 <div class="viewcode-block" id="single_peaked_walsh">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_peaked_walsh">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_walsh">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_peaked_walsh</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -435,6 +560,45 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import single_peaked_walsh</span>
+
+<span class="sd">            # Sample a single-peaked profile via Walsh&#39;s method with 2 voters and 3 candidates.</span>
+<span class="sd">            single_peaked_walsh(2, 3)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            single_peaked_walsh(2, 3, seed=1002)</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+<span class="sd">        The method proposed by Walsh ensures that for a given axis, all single-peaked rankings</span>
+<span class="sd">        are equally likely to be generated.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_walsh_4.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for Walsh&#39;s single-peaked model with m=4</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_walsh_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for Walsh&#39;s single-peaked model with m=5</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/sp_walsh_6.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for Walsh&#39;s single-peaked model with m=6</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `Generating Single Peaked Votes</span>
+<span class="sd">        &lt;https://arxiv.org/abs/1503.02766&gt;`_,</span>
+<span class="sd">        *Toby Walsh*,</span>
+<span class="sd">        ArXiV preprint, 2015.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -454,6 +618,16 @@ document.write(`
 
     <span class="k">return</span> <span class="n">votes</span></div>
 
+
+
+<span class="k">def</span> <span class="nf">walsh_theoretical_distribution</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sp_rankings</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sp_rankings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of single-peaked rankings, you &quot;</span>
+                             <span class="s2">&quot;need to provide the number of candidates.&quot;</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">sp_rankings</span> <span class="o">=</span> <span class="n">all_single_peaked_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">r</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">sp_rankings</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">sp_rankings</span><span class="p">}</span>
 </pre></div>
 
                 </article>

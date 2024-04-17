@@ -1,14 +1,11 @@
-import numpy as np
-
+from prefsampling.combinatorics import all_single_peaked_rankings, all_single_peaked_circle_rankings
 from prefsampling.ordinal import (
     single_peaked_walsh,
     single_peaked_conitzer,
     single_peaked_circle,
 )
-from validation.utils import (
-    get_all_single_peaked_ranks,
-    get_all_single_peaked_circle_ranks,
-)
+from prefsampling.ordinal.singlepeaked import walsh_theoretical_distribution, \
+    conitzer_theoretical_distribution, circle_theoretical_distribution
 from validation.validator import Validator
 
 
@@ -30,10 +27,10 @@ class SPWalshValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return get_all_single_peaked_ranks(sampler_parameters["num_candidates"])
+        return all_single_peaked_rankings(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        return {o: 1 / len(all_outcomes) for o in all_outcomes}
+        return walsh_theoretical_distribution(sp_rankings=all_outcomes)
 
     def sample_cast(self, sample):
         return tuple(sample[0])
@@ -57,18 +54,10 @@ class SPConitzerValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return get_all_single_peaked_ranks(sampler_parameters["num_candidates"])
+        return all_single_peaked_rankings(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        distribution = {}
-        for rank in all_outcomes:
-            probability = 1 / sampler_parameters["num_candidates"]
-            for alt in rank:
-                if alt == 0 or alt == sampler_parameters["num_candidates"] - 1:
-                    break
-                probability *= 1 / 2
-            distribution[rank] = probability
-        return distribution
+        return conitzer_theoretical_distribution(sampler_parameters["num_candidates"], sp_rankings=all_outcomes)
 
     def sample_cast(self, sample):
         return tuple(sample[0])
@@ -92,10 +81,10 @@ class SPCircleValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return get_all_single_peaked_circle_ranks(sampler_parameters["num_candidates"])
+        return all_single_peaked_circle_rankings(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        return {o: 1 / len(all_outcomes) for o in all_outcomes}
+        return circle_theoretical_distribution(sp_circ_rankings=all_outcomes)
 
     def sample_cast(self, sample):
         return tuple(sample[0])

@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=86f9da5d"></script>
+    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -155,13 +155,22 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/constants.html">Constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/inputvalidators.html">Input Validators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
 </ul>
@@ -282,18 +291,31 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.ordinal.singlecrossing</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Single-crossing preferences are such that the set of voters is one-dimensional: for a given</span>
+<span class="sd">ordering of the voters and any pair of alternatives a, b, the two sets of voters corresponding to</span>
+<span class="sd">the those preferring a over b and those preferring b over a form two segments of the ordering. In</span>
+<span class="sd">other words, following the ordering of the voters, there is single crossing point such that all</span>
+<span class="sd">voters to the left of this point prefer a over b and all voters to the right of this point prefer</span>
+<span class="sd">b over a (or the symmetric case).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Collection</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">all_single_crossing_profiles</span><span class="p">,</span> <span class="n">all_non_isomorphic_profiles</span><span class="p">,</span> \
+    <span class="n">all_anonymous_profiles</span>
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 
 
 <div class="viewcode-block" id="single_crossing">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.single_crossing">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.single_crossing">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_crossing</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates ordinal votes that are single-crossing. See `Elkind, Lackner, Peters (2022)</span>
@@ -346,6 +368,46 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import single_crossing</span>
+
+<span class="sd">            # Sample a single-crossing profile with 2 voters and 3 candidates.</span>
+<span class="sd">            single_crossing(2, 3)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            single_crossing(2, 3, seed=1002)</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+<span class="sd">        The theoretical distribution of this sampler is unknown. We just plot the observed</span>
+<span class="sd">        frequencies.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/single_crossing_None.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for impartial single-crossing model</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `An exploration in the theory of optimal income taxation</span>
+<span class="sd">        &lt;https://www.jstor.org/stable/2296779&gt;`_,</span>
+<span class="sd">        *James Mirrlees*,</span>
+<span class="sd">        Review of Economic Studies, 38:175–208, 1971.</span>
+
+<span class="sd">        `Voting over income tax schedules</span>
+<span class="sd">        &lt;https://www.sciencedirect.com/science/article/pii/0047272777900056&gt;`_,</span>
+<span class="sd">        *Kevin W.S. Roberts*,</span>
+<span class="sd">        Journal of Public Economics, 8(3):329–340, 1977.</span>
+
+<span class="sd">        `Drawing a map of elections in the space of statistical cultures</span>
+<span class="sd">        &lt;https://ifaamas.org/Proceedings/aamas2020/pdfs/p1341.pdf&gt;`_,</span>
+<span class="sd">        *Stanisław Szufa, Piotr Faliszewski, Piotr Skowron, Arkadii Slinko and Nimrod Talmon*,</span>
+<span class="sd">        Proceedings of AAMAS-2020, pages 1341–1349, 2020.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
@@ -380,6 +442,8 @@ document.write(`
 
 
 
+<div class="viewcode-block" id="SingleCrossingNode">
+<a class="viewcode-back" href="../../../reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.SingleCrossingNode">[docs]</a>
 <span class="k">class</span> <span class="nc">SingleCrossingNode</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Node in the graph of all the single-crossing set of votes. A node represents a vote and is</span>
@@ -395,6 +459,8 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">election_count</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># memoization of the count</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>  <span class="c1"># the random number generator used</span>
 
+<div class="viewcode-block" id="SingleCrossingNode.generate_all_next">
+<a class="viewcode-back" href="../../../reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.SingleCrossingNode.generate_all_next">[docs]</a>
     <span class="k">def</span> <span class="nf">generate_all_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unravels the graph and populate the set of nodes that are accessible from the current node.</span>
@@ -404,8 +470,11 @@ document.write(`
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">:</span>
             <span class="n">node</span><span class="o">.</span><span class="n">generate_all_next</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">all_next</span> <span class="o">|=</span> <span class="n">node</span><span class="o">.</span><span class="n">all_next</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">all_next</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_next</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="SingleCrossingNode.count_elections">
+<a class="viewcode-back" href="../../../reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.SingleCrossingNode.count_elections">[docs]</a>
     <span class="k">def</span> <span class="nf">count_elections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Counts the number of elections. This number is used to define the probability distribution</span>
@@ -419,8 +488,11 @@ document.write(`
         <span class="k">if</span> <span class="n">count</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">count_elections</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_next</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">election_count</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
-        <span class="k">return</span> <span class="n">count</span>
+        <span class="k">return</span> <span class="n">count</span></div>
 
+
+<div class="viewcode-block" id="SingleCrossingNode.sample_votes">
+<a class="viewcode-back" href="../../../reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.SingleCrossingNode.sample_votes">[docs]</a>
     <span class="k">def</span> <span class="nf">sample_votes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Samples a collection of votes by selecting with the correct probability distribution the</span>
@@ -437,7 +509,8 @@ document.write(`
         <span class="n">nodes_distribution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nodes_distribution</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
         <span class="n">nodes_distribution</span> <span class="o">/=</span> <span class="n">nodes_distribution</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="n">random_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">next_nodes</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">nodes_distribution</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">election</span> <span class="o">+</span> <span class="n">random_node</span><span class="o">.</span><span class="n">sample_votes</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">election</span> <span class="o">+</span> <span class="n">random_node</span><span class="o">.</span><span class="n">sample_votes</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vote_as_tuple</span><span class="p">)</span>
@@ -446,9 +519,12 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vote_as_tuple</span> <span class="o">==</span> <span class="n">other</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vote_as_tuple</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Node</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vote_as_tuple</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
+
+<div class="viewcode-block" id="single_crossing_impartial">
+<a class="viewcode-back" href="../../../reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.single_crossing_impartial">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_crossing_impartial</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -469,11 +545,11 @@ document.write(`
 
 <span class="sd">    This sampler can be very slow for large number of candidates. For efficient sampling---but</span>
 <span class="sd">    without theoretical guarantees on the distribution of outcomes---consider using</span>
-<span class="sd">    :py:func:`~prefsampling.ordinal.single_crossing`.</span>
+<span class="sd">    :py:func:`~prefsampling.ordinal.singlecrossing.single_crossing`.</span>
 
 <span class="sd">    Note that for a given number of voters, votes are not sampled independently.</span>
 
-<span class="sd">    This sampler was developed by Piotr Faliszewski.</span>
+<span class="sd">    This sampler was developed by `Piotr Faliszewski &lt;https://home.agh.edu.pl/~faliszew/&gt;`_.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -488,13 +564,52 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import single_crossing_impartial</span>
+
+<span class="sd">            # Sample a single-crossing profile with 2 voters and 3 candidates.</span>
+<span class="sd">            single_crossing_impartial(2, 3)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            single_crossing_impartial(2, 3, seed=1002)</span>
+
+<span class="sd">        .. code-block::</span>
+
+<span class="sd">            # This already takes a very long time... (10 candidates)</span>
+<span class="sd">            single_crossing_impartial(2, 10)</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+<span class="sd">        This sampler is meant to follow a uniform probability distribution over all non-isomorphic</span>
+<span class="sd">        and anonymous single-crossing profiles.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/single_crossing_impartial_None.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for impartial single-crossing model</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `An exploration in the theory of optimal income taxation</span>
+<span class="sd">        &lt;https://www.jstor.org/stable/2296779&gt;`_,</span>
+<span class="sd">        *James Mirrlees*,</span>
+<span class="sd">        Review of Economic Studies, 38:175–208, 1971.</span>
+
+<span class="sd">        `Voting over income tax schedules</span>
+<span class="sd">        &lt;https://www.sciencedirect.com/science/article/pii/0047272777900056&gt;`_,</span>
+<span class="sd">        *Kevin W.S. Roberts*,</span>
+<span class="sd">        Journal of Public Economics, 8(3):329–340, 1977.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">top_vote</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
     <span class="n">top_node</span> <span class="o">=</span> <span class="n">SingleCrossingNode</span><span class="p">(</span><span class="n">top_vote</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">vote_node_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">top_node</span><span class="o">.</span><span class="n">vote_as_tuple</span><span class="p">:</span> <span class="n">top_node</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">graph_builder</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-        <span class="n">vote</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">vote</span><span class="p">)</span>
+        <span class="n">vote</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">vote</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">vote</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">vote</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
                 <span class="n">new_vote</span> <span class="o">=</span> <span class="n">vote</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -513,7 +628,35 @@ document.write(`
     <span class="n">top_node</span><span class="o">.</span><span class="n">count_elections</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
 
     <span class="n">votes</span> <span class="o">=</span> <span class="n">top_node</span><span class="o">.</span><span class="n">sample_votes</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">votes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">votes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">impartial_theoretical_distribution</span><span class="p">(</span><span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                       <span class="n">sc_profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span>
+                                           <span class="n">Collection</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sc_profiles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of single-crossing profiles, &quot;</span>
+                             <span class="s2">&quot;you need to provide the number of candidates.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_voters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of single-crossing profiles, &quot;</span>
+                             <span class="s2">&quot;you need to provide the number of voters.&quot;</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">sc_profiles</span> <span class="o">=</span> <span class="n">all_single_crossing_profiles</span><span class="p">(</span>
+            <span class="n">num_voters</span><span class="p">,</span>
+            <span class="n">num_candidates</span><span class="p">,</span>
+            <span class="n">profiles</span><span class="o">=</span><span class="n">all_non_isomorphic_profiles</span><span class="p">(</span>
+                <span class="n">num_voters</span><span class="p">,</span>
+                <span class="n">num_candidates</span><span class="p">,</span>
+                <span class="n">profiles</span><span class="o">=</span><span class="n">all_anonymous_profiles</span><span class="p">(</span>
+                    <span class="n">num_voters</span><span class="p">,</span>
+                    <span class="n">num_candidates</span><span class="p">,</span> <span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">fix_order</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">o</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">sc_profiles</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">sc_profiles</span><span class="p">}</span>
 </pre></div>
 
                 </article>

@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=a4bead0a"></script>
+    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -155,13 +155,22 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/constants.html">Constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/inputvalidators.html">Input Validators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
 </ul>
@@ -282,18 +291,24 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.ordinal.impartial</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Impartial cultures are statistical cultures in which all outcomes are equally likely to be</span>
+<span class="sd">generated. Such cultures are known for rankings, profiles etc...</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Collection</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">all_rankings</span><span class="p">,</span> <span class="n">all_anonymous_profiles</span>
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 <span class="kn">from</span> <span class="nn">prefsampling.ordinal.urn</span> <span class="kn">import</span> <span class="n">urn</span>
 
 
 <div class="viewcode-block" id="impartial">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.impartial">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/impartial.html#prefsampling.ordinal.impartial.impartial">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">impartial</span><span class="p">(</span><span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -318,6 +333,36 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import impartial</span>
+
+<span class="sd">            # Sample from an impartial culture with 2 voters and 3 candidates</span>
+<span class="sd">            impartial(2, 3)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            impartial(2, 3, seed=1002)</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        Under the impartial culture, all rankings are supposed to be equally likely to be generated.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/impartial_4.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture with m=4</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/impartial_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture with m=5</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/impartial_6.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture with m=6</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -327,8 +372,19 @@ document.write(`
 
 
 
+<span class="k">def</span> <span class="nf">impartial_theoretical_distribution</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                       <span class="n">rankings</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">rankings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of rankings, you need to &quot;</span>
+                             <span class="s2">&quot;provide the number of candidates.&quot;</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">rankings</span> <span class="o">=</span> <span class="n">all_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">r</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">rankings</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rankings</span><span class="p">}</span>
+
+
 <div class="viewcode-block" id="impartial_anonymous">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.impartial_anonymous">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/impartial.html#prefsampling.ordinal.impartial.impartial_anonymous">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">impartial_anonymous</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -358,6 +414,33 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import impartial_anonymous</span>
+
+<span class="sd">            # Sample from an impartial culture with 2 voters and 3 candidates</span>
+<span class="sd">            impartial_anonymous(2, 3)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            impartial_anonymous(2, 3, seed=1002)</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        Under the impartial anonymous culture, all anonymous profiles are supposed to be equally</span>
+<span class="sd">        likely to be generated.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/impartial_anonymous_2.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial anonymous culture with n=2</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/impartial_anonymous_3.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial anonymous culture with n=3</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">urn</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">),</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
@@ -365,8 +448,24 @@ document.write(`
 
 
 
+<span class="k">def</span> <span class="nf">impartial_anonymous_theoretical_distribution</span><span class="p">(</span><span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                       <span class="n">anonymous_profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span>
+                                           <span class="n">Collection</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">anonymous_profiles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of anonymous profiles, &quot;</span>
+                             <span class="s2">&quot;you need to provide the number of candidates.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_voters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of anonymous profiles, &quot;</span>
+                             <span class="s2">&quot;you need to provide the number of voters.&quot;</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">anonymous_profiles</span> <span class="o">=</span> <span class="n">all_anonymous_profiles</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">r</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">anonymous_profiles</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">anonymous_profiles</span><span class="p">}</span>
+
+
 <div class="viewcode-block" id="stratification">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.stratification">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/impartial.html#prefsampling.ordinal.impartial.stratification">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">stratification</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -396,6 +495,59 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import stratification</span>
+
+<span class="sd">            # Sample from a stratification culture with 2 voters and 3 candidates</span>
+<span class="sd">            stratification(2, 3, 0.5)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            stratification(2, 3, 0.2, seed=1002)</span>
+
+<span class="sd">            # Parameter weight should be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                stratification(2, 3, -0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                stratification(2, 3, 1.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        Consider the stratification culture with weight :math:`w` and let</span>
+<span class="sd">        :math:`m_{\\text{cut}} = \\lfloor w * m \\rfloor`. Then, the probability of generating a</span>
+<span class="sd">        ranking :math:`\\succ` is 0 if the top :math:`m_{\\text{cut}}` are not</span>
+<span class="sd">        :math:`0, 1, \\ldots, m_{\\text{cut}}` and otherwise :math:`\\frac{1}{m_{\\text{cut}}!}`.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/stratification_0_2.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a stratification culture with w=0.2</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/stratification_0_4.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a stratification culture with w=0.4</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/stratification_0_6.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a stratification culture with w=0.6</span>
+
+<span class="sd">        Whenever :math:`w=0` or :math:`w=1`, all rankings should be equally likely to be generated.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/stratification_uniform_0.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a stratification culture with w=0.6</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/stratification_uniform_1.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a stratification culture with w=0.6</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">weight</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">weight</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -410,6 +562,24 @@ document.write(`
         <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">upper_class_size</span><span class="p">:]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">upper_class_candidates</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
+
+
+<span class="k">def</span> <span class="nf">stratification_theoretical_distribution</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rankings</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rankings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rankings</span> <span class="o">=</span> <span class="n">all_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="n">upper_class_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">weight</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
+    <span class="n">upper_class_candidates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">upper_class_size</span><span class="p">))</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">rankings</span> <span class="ow">in</span> <span class="n">rankings</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">rankings</span><span class="p">[:</span><span class="n">upper_class_size</span><span class="p">])</span> <span class="o">==</span> <span class="n">upper_class_candidates</span><span class="p">:</span>
+            <span class="n">distribution</span><span class="p">[</span><span class="n">rankings</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">distribution</span><span class="p">[</span><span class="n">rankings</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">normaliser</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">distribution</span><span class="p">:</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">/=</span> <span class="n">normaliser</span>
+    <span class="k">return</span> <span class="n">distribution</span>
 </pre></div>
 
                 </article>

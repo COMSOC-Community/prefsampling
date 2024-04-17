@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=86f9da5d"></script>
+    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -155,13 +155,22 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/constants.html">Constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/inputvalidators.html">Input Validators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../reference/combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
 </ul>
@@ -282,15 +291,22 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.ordinal.plackettluce</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Plackett-Luce models are parameterised by a vector of quality for the candidates. The higher the</span>
+<span class="sd">quality of a candidate, the higher the change that they show up high in the rankings.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">all_rankings</span>
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 
 
 <div class="viewcode-block" id="plackett_luce">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.plackett_luce">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/plackettluce.html#prefsampling.ordinal.plackettluce.plackett_luce">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">plackett_luce</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alphas</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -325,6 +341,80 @@ document.write(`
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
 
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import plackett_luce</span>
+
+<span class="sd">            # Sample from a Plackett-Luce model with 2 voters and 3 candidates, the qualities of</span>
+<span class="sd">            # candidates are 0.5, 0.2, and 0.1.</span>
+<span class="sd">            plackett_luce(2, 3, (0.5, 0.2, 0.1))</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            plackett_luce(2, 3, (5, 2, 0.1), seed=1002)</span>
+
+<span class="sd">            # Don&#39;t forget to provide a quality for all candidates</span>
+<span class="sd">            try:</span>
+<span class="sd">                plackett_luce(2, 3, (0.5, 0.2))</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # And all alphas need to be non-negatives</span>
+<span class="sd">            try:</span>
+<span class="sd">                plackett_luce(2, 3, (0.5, 0.2, -0.4))</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        The probability distribution governing the Plackett-Luce model is well documented.</span>
+<span class="sd">        Specifically, given :math:`n` agents and :math:`m` candidates and a vector of candidates</span>
+<span class="sd">        qualities :math:`\\mathbf{\\alpha} = (\\alpha_1, \\ldots, \\alpha_m)`, the probability of</span>
+<span class="sd">        generating a ranking :math:`a_{i_1} \\succ a_{i_2} \\succ \\cdots \\succ a_{i_m}`</span>
+<span class="sd">        is equal to:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\frac{\\alpha_{i_1}}{1} \\times \\frac{\\alpha_{i_2}}{\\sum_{p &gt; 1}\\alpha_{i_p}}</span>
+<span class="sd">            \\times \\cdots \\times \\frac{\\alpha_{i_{m-1}}}{\\alpha_{i_{m-1}} + \\alpha_{i_m}}.</span>
+
+<span class="sd">        We test that the observed frequencies of rankings aligns with the theoretical probability</span>
+<span class="sd">        distribution.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/plackett_luce__0_629359640_236676380_031727720_969677880_83727159_.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a Plackett-Luce model with alpha=[0.62935964 0.23667638 0.03172772 0.96967788 0.83727159]</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/plackett_luce__1_0_0_3_0_3_0_3_0_3_.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a Plackett-Luce model with alpha=[1.0, 0.3, 0.3, 0.3, 0.3]</span>
+
+<span class="sd">        When all values in :code:`alphas` are equal, we are supposed to observe a uniform</span>
+<span class="sd">        distribution over all rankings.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/plackett_luce__0_1_0_1_0_1_0_1_0_1_.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a Plackett-Luce model with alpha=[0.1, 0.1, 0.1, 0.1, 0.1]</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `Individual Choice Behavior: A Theoretical Analysis</span>
+<span class="sd">        &lt;https://psycnet.apa.org/record/1960-03588-000&gt;`_,</span>
+<span class="sd">        *R. Duncan Luce*,</span>
+<span class="sd">        New York: Wiley, 1959.</span>
+
+<span class="sd">        `The Analysis of Permutations</span>
+<span class="sd">        &lt;https://www.jstor.org/stable/2346567&gt;`_,</span>
+<span class="sd">        *Robert L. Plackett*,</span>
+<span class="sd">        Applied Statistics 24 (2): 193–202, 1975.</span>
+
+<span class="sd">        `Learning Mixtures of Plackett-Luce Models</span>
+<span class="sd">        &lt;https://proceedings.mlr.press/v48/zhaob16.pdf&gt;`_,</span>
+<span class="sd">        *Zhibing Zhao, Peter Piech and Lirong Xia*,</span>
+<span class="sd">        Proceedings of the International Conference on Machine Learning (pp. 2906-2914), 2016.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphas</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_candidates</span><span class="p">:</span>
@@ -334,7 +424,7 @@ document.write(`
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">alphas</span><span class="p">)</span>
+    <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
@@ -352,6 +442,26 @@ document.write(`
 
     <span class="k">return</span> <span class="n">votes</span></div>
 
+
+
+<span class="k">def</span> <span class="nf">theoretical_distribution</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">rankings</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">rankings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of rankings, you need to &quot;</span>
+                             <span class="s2">&quot;provide the number of candidates.&quot;</span><span class="p">)</span>
+        <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">rankings</span> <span class="o">=</span> <span class="n">all_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">norm_alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">alphas</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ranking</span> <span class="ow">in</span> <span class="n">rankings</span><span class="p">:</span>
+        <span class="n">probability</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">alt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ranking</span><span class="p">):</span>
+            <span class="n">probability</span> <span class="o">*=</span> <span class="n">norm_alphas</span><span class="p">[</span><span class="n">alt</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">norm_alphas</span><span class="p">,</span> <span class="n">ranking</span><span class="p">[</span><span class="n">j</span><span class="p">:])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">ranking</span><span class="p">]</span> <span class="o">=</span> <span class="n">probability</span>
+    <span class="n">normaliser</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">distribution</span><span class="p">:</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">/=</span> <span class="n">normaliser</span>
+    <span class="k">return</span> <span class="n">distribution</span>
 </pre></div>
 
                 </article>

@@ -1,8 +1,15 @@
+"""
+Mallows's model is a sampling model parameterised by a central ranking. The probability of generating
+a given ranking is then exponential in the distance between the ranking and the central ranking.
+"""
 from __future__ import annotations
+
+from collections.abc import Iterable
 
 import numpy as np
 
-from prefsampling.inputvalidators import validate_num_voters_candidates
+from prefsampling.combinatorics import kendall_tau_distance, all_rankings
+from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
 from prefsampling.ordinal import impartial
 
 
@@ -56,6 +63,82 @@ def mallows(
     -------
         np.ndarray
             Ordinal votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import mallows
+
+            # Sample from a Mallows' model with 2 voters and 3 candidates, the parameter phi is 0.6
+            mallows(2, 3, 0.6)
+
+            # For reproducibility, you can set the seed.
+            mallows(2, 3, 1, seed=1002)
+
+            # Parameter phi should be in [0, 1]
+            try:
+                mallows(2, 3, -0.5)
+            except ValueError:
+                pass
+            try:
+                mallows(2, 3, 1.2)
+            except ValueError:
+                pass
+
+    Validation
+    ----------
+
+        The probability distribution derived from Mallows' model is well known.
+        Specifically, given :math:`n` agents and :math:`m` candidates, a parameter :math:`\\phi`
+        and a central ranking :math:`\\succ_c`, the probability of generating a ranking
+        :math:`\\succ` is equal to:
+
+        .. math::
+
+            \\phi^{d(\\succ, \\succ_c)} \\times
+            \\frac{1}{\\prod_{j=1}^m \\frac{1 - \\phi^j}{1 - \\phi}}
+
+        where :math:`d(\\succ, \\succ_c)` is the kendall-tau distance between the ranking and the
+        central ranking.
+
+        We test that the observed frequencies of rankings aligns with the theoretical probability
+        distribution. The fact that the normalisation of phi does not seem to impact the figure
+        is due to the small number of candidates that reduces the distance between phi and its
+        normalised value.
+
+        .. image:: ../validation_plots/ordinal/mallows_0_1.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Mallows model with phi=0.1
+
+        .. image:: ../validation_plots/ordinal/mallows_0_5.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Mallows model with phi=0.5
+
+        .. image:: ../validation_plots/ordinal/mallows_0_8.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Mallows model with phi=0.8
+
+        When :code:`phi` is equal to 1, we are supposed to observe a uniform distribution over all
+        rankings.
+
+        .. image:: ../validation_plots/ordinal/mallows_1_0.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Mallows model with phi=1.0
+
+    References
+    ----------
+        `Non-null ranking models
+        <https://www.jstor.org/stable/2333244>`_,
+        *Colin Lingwood Mallows*,
+        Biometrica, 44:114–130, 1957.
+
+        `Properties of the Mallows model depending on the number of alternatives: A warning for an
+        experimentalist.
+        <https://proceedings.mlr.press/v202/boehmer23b/boehmer23b.pdf>`_,
+        *Niclas Boehmer, Piotr Faliszewski and Sonja Kraiczy*,
+        Proceedings of the International Conference on Machine Learning, 2023.
     """
     if phi < 0 or 1 < phi:
         raise ValueError(f"Incorrect value of phi: {phi}. Value should be in [0, 1]")
@@ -230,3 +313,23 @@ def phi_from_norm_phi(num_candidates: int, norm_phi: float) -> float:
     raise ValueError(
         "Something went wrong when computing phi, we should not have ended up here."
     )
+
+
+def theoretical_distribution(num_candidates: int, phi: float, normalise_phi: bool = False, rankings: Iterable[tuple[int]] = None) -> dict:
+    validate_int(num_candidates, lower_bound=0)
+    if rankings is None:
+        rankings = all_rankings(num_candidates)
+    distribution = {}
+    if normalise_phi:
+        phi = phi_from_norm_phi(
+            num_candidates, phi
+        )
+    central_ranking = tuple(range(num_candidates))
+    for ranking in rankings:
+        distribution[ranking] = phi ** kendall_tau_distance(
+            central_ranking, ranking
+        )
+    normaliser = sum(distribution.values())
+    for r in distribution:
+        distribution[r] /= normaliser
+    return distribution

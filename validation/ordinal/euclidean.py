@@ -1,5 +1,4 @@
 from prefsampling.ordinal import euclidean
-from validation.utils import get_all_ranks
 from validation.validator import Validator
 
 
