@@ -64,14 +64,14 @@ ALL_ORDINAL_VALIDATORS = [
     # PlackettLuceValidator(),
     # DidiValidator(),
     # OrdinalUrnValidator(),
-    OrdinalEuclideanValidator(),
-    OrdinalEuclideanValidatorUniform(),
+    # OrdinalEuclideanValidator(),
+    # OrdinalEuclideanValidatorUniform(),
     # SPWalshValidator(),
     # SPConitzerValidator(),
     # SPCircleValidator(),
     # SingleCrossingValidator(),
     # SingleCrossingImpartialValidator(),
-    # GroupSeparableValidator()
+    GroupSeparableValidator()
 ]
 
 ALL_TREE_VALIDATORS = [
@@ -83,7 +83,7 @@ ALL_TREE_VALIDATORS = [
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-    num_observations = 1000#000
+    num_observations = 100000
 
     for validator_list, nickname in [
         (ALL_APPROVAL_VALIDATORS, "approval"),
@@ -95,8 +95,8 @@ if __name__ == "__main__":
         plot_dir_root = os.path.join("plots", nickname)
         os.makedirs(plot_dir_root, exist_ok=True)
 
-        # for validator in validator_list:
-        #     validator.write_csv(num_observations, csv_dir_root)
+        for validator in validator_list:
+            validator.write_csv(num_observations, csv_dir_root)
         for validator in validator_list:
             validator.plot_frequencies(
                 csv_dir_root, plot_dir_root, ordering="theoretical-observed"
@@ -104,5 +104,5 @@ if __name__ == "__main__":
 
     plot_dir_root = os.path.join("plots", "point")
     os.makedirs(plot_dir_root, exist_ok=True)
-    #    plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
+    # plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
     # plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))

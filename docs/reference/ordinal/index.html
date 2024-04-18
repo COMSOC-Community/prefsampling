@@ -158,11 +158,15 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Ordinal</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../approval/index.html">Approval</a></li>
@@ -314,9 +318,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -332,25 +334,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.didi"><code class="docutils literal notranslate"><span class="pre">didi()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.group_separable"><code class="docutils literal notranslate"><span class="pre">group_separable()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler"><code class="docutils literal notranslate"><span class="pre">TreeSampler</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.BALANCED"><code class="docutils literal notranslate"><span class="pre">TreeSampler.BALANCED</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.CATERPILLAR"><code class="docutils literal notranslate"><span class="pre">TreeSampler.CATERPILLAR</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.SCHROEDER"><code class="docutils literal notranslate"><span class="pre">TreeSampler.SCHROEDER</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.SCHROEDER_LESCANNE"><code class="docutils literal notranslate"><span class="pre">TreeSampler.SCHROEDER_LESCANNE</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.SCHROEDER_UNIFORM"><code class="docutils literal notranslate"><span class="pre">TreeSampler.SCHROEDER_UNIFORM</span></code></a></li>
-</ul>
-</li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -360,206 +343,24 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="ordinal">
-<h1>Ordinal<a class="headerlink" href="#ordinal" title="Link to this heading">#</a></h1>
+  <section id="module-prefsampling.ordinal">
+<span id="ordinal"></span><h1>Ordinal<a class="headerlink" href="#module-prefsampling.ordinal" title="Link to this heading">#</a></h1>
+<p>Module for sampling ordinal preferences: preferences in which a voter ranks the candidates by
+order of preference.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identity.html">Impartial Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="urn.html">Urn Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </div>
-<p id="module-prefsampling.ordinal">Module for sampling ordinal preferences: preferences in which a voter ranks the candidates by
-order of preference.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.ordinal.identity">
-<span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/identity.html#identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.identity" title="Link to this definition">#</a></dt>
-<dd><p>Generates unanimous ordinal votes, all votes being <cite>0, 1, 2, …</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Ordinal votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.ordinal.euclidean">
-<span class="sig-name descname"><span class="pre">euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">euclidean_space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><span class="pre">EuclideanSpace</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate_euclidean_space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><span class="pre">EuclideanSpace</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_dimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_sampler_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate_point_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate_point_sampler_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voters_positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates_positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/euclidean.html#euclidean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.euclidean" title="Link to this definition">#</a></dt>
-<dd><p>Generates approval votes according to the Euclidean model.</p>
-<p>In this model voters and candidates are assigned random positions in a Euclidean space
-(positions can also be provided as argument to the function).
-A voter then ranks the candidates in increasing order of distance: their most preferred
-candidate is the closest one to them, etc.</p>
-<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
-process described above (as long as the point distribution is independent and identical).
-Generates ordinal votes according to the Euclidean model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>euclidean_space</strong> (EuclideanSpace, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Use a pre-defined Euclidean space for sampling the position of the voters. If no
-<cite>candidate_euclidean_space</cite> is provided, the value of ‘euclidean_space’ is used for the
-candidates as well. A number of dimension needs to be provided.</p></li>
-<li><p><strong>candidate_euclidean_space</strong> (EuclideanSpace, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Use a pre-defined Euclidean space for sampling the position of the candidates. If no
-value is provided, the value of ‘euclidean_space’ is used. A number of dimension needs
-to be provided.</p></li>
-<li><p><strong>num_dimensions</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The number of dimensions to use. Using this argument is mandatory when passing a space
-as argument.</p></li>
-<li><p><strong>point_sampler</strong> (Callable, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The sampler used to sample point in the space. It should be a function accepting
-arguments ‘num_points’ and ‘seed’. Used for both voters and candidates unless a
-<cite>candidate_space</cite> is provided.</p></li>
-<li><p><strong>point_sampler_args</strong> (dict, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The arguments passed to the <cite>point_sampler</cite>. The argument <cite>num_points</cite> is ignored
-and replaced by the number of voters or candidates.</p></li>
-<li><p><strong>candidate_point_sampler</strong> (Callable, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The sampler used to sample the points of the candidates. It should be a function
-accepting  arguments ‘num_points’ and ‘seed’. If a value is provided, then the
-<cite>point_sampler_args</cite> argument is only used for voters.</p></li>
-<li><p><strong>candidate_point_sampler_args</strong> (<em>dict</em>) – The arguments passed to the <cite>candidate_point_sampler</cite>. The argument <cite>num_points</cite>
-is ignored and replaced by the number of candidates.</p></li>
-<li><p><strong>voters_positions</strong> (<em>Iterable</em><em>[</em><em>float</em><em>]</em>) – Position of the voters.</p></li>
-<li><p><strong>candidates_positions</strong> (<em>Iterable</em><em>[</em><em>float</em><em>]</em>) – Position of the candidates.</p></li>
-<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator. Also passed to the point samplers if
-a value is provided.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Ordinal votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-</dl>
-<p class="rubric">References</p>
-<p><em>How to Sample Approval Elections?</em>
-Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,
-Krzysztof Sornat, Nimrod Talmon.
-<a class="reference external" href="https://arxiv.org/abs/2207.01140">https://arxiv.org/abs/2207.01140</a></p>
-<p class="rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lala.sad</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.ordinal.didi">
-<span class="sig-name descname"><span class="pre">didi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/didi.html#didi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.didi" title="Link to this definition">#</a></dt>
-<dd><p>Generates ordinal votes from the DiDi (Dirichlet Distribution) model.</p>
-<p>This model is parameterised by a vector <cite>alphas</cite> intuitively indicating a quality for each
-candidate. Moreover, the higher the sum of the <cite>alphas</cite>, the more correlated the votes are
-(the more concentrated the Dirichlet distribution is). To sample a vote, we sample a set of
-points—one per candidate—from a Dirichlet distribution parameterised by <cite>alphas</cite>. The
-vote then corresponds to the candidates ordered by decreasing order of points.</p>
-<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
-process described above.</p>
-<p>This model is very similar in spirit to the <code class="xref py py-func docutils literal notranslate"><span class="pre">plackett_luce()</span></code>
-model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>alphas</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – List of model params, one value per candidate.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Ordinal votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When len(<cite>alphas</cite>) not equal num_candidates.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.ordinal.group_separable">
-<span class="sig-name descname"><span class="pre">group_separable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tree_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#prefsampling.ordinal.TreeSampler" title="prefsampling.ordinal.groupseparable.TreeSampler"><span class="pre">TreeSampler</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">TreeSampler.SCHROEDER</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/ordinal/groupseparable.html#group_separable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.group_separable" title="Link to this definition">#</a></dt>
-<dd><p>Samplers for group separable votes. For the definition of group-seprable preferences, see
-<a class="reference external" href="https://arxiv.org/abs/2205.09092">Elkind, Lackner, Peters (2022)</a>.</p>
-<p>This sampler implements the algorithm presented by <a class="reference external" href="https://link.springer.com/article/10.1007/s10458-022-09549-7">Faliszewski, Karpov, Obraztsova (2022)</a>. The implementation follows
-these general steps. First, a decomposition tree is sampled at random. Then, for each internal
-node of the tree the order of its children is reversed with probability 0.5. The vote then
-corresponds to the label of the leaves of the tree read from left to right.</p>
-<p>This sampler only generates neutral collections of votes. This means that the first vote is
-always <cite>0 &gt; 1 &gt; 2 &gt; …</cite>.</p>
-<p>When used with a uniform sampler over all decomposition trees it is meant to yield a uniform
-distribution over neutral group separable collections of votes. However, our analysis indicates
-that it is not the case: collections of vote containing only <cite>0 &lt; 1 &lt; 2 &lt; … ` or
-`m-1 &lt; m-2 &lt; m-3 &lt; …</cite> are over-represented.</p>
-<p>Note that for a given number of voters, votes are sampled independently but the number of voters
-can impact the sampling of the decomposition tree.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>tree_sampler</strong> (TreeSampler, default: <code class="xref py py-class docutils literal notranslate"><span class="pre">SCHROEDER</span></code>) – Sampler used to sample the tree. Should be one of the constants defined in the
-<a class="reference internal" href="#prefsampling.ordinal.TreeSampler" title="prefsampling.ordinal.groupseparable.TreeSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">TreeSampler</span></code></a> enumeration.</p></li>
-<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Ordinal votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="prefsampling.ordinal.TreeSampler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TreeSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/ordinal/groupseparable.html#TreeSampler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.TreeSampler" title="Link to this definition">#</a></dt>
-<dd><p>Constants use to represent different samplers for trees that can be used for group separable
-preferences.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.ordinal.TreeSampler.BALANCED">
-<span class="sig-name descname"><span class="pre">BALANCED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Balanced</span> <span class="pre">Tree'</span></em><a class="headerlink" href="#prefsampling.ordinal.TreeSampler.BALANCED" title="Link to this definition">#</a></dt>
-<dd><p>Balanced trees</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.ordinal.TreeSampler.CATERPILLAR">
-<span class="sig-name descname"><span class="pre">CATERPILLAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Caterpillar</span> <span class="pre">Tree'</span></em><a class="headerlink" href="#prefsampling.ordinal.TreeSampler.CATERPILLAR" title="Link to this definition">#</a></dt>
-<dd><p>Caterpillar trees</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.ordinal.TreeSampler.SCHROEDER">
-<span class="sig-name descname"><span class="pre">SCHROEDER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scröder</span> <span class="pre">Tree</span> <span class="pre">by</span> <span class="pre">Alsonso,</span> <span class="pre">Rémy,</span> <span class="pre">Schott'</span></em><a class="headerlink" href="#prefsampling.ordinal.TreeSampler.SCHROEDER" title="Link to this definition">#</a></dt>
-<dd><p>Random Schröder trees sampled following Alonso, Rémy, Schott (1997)</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.ordinal.TreeSampler.SCHROEDER_LESCANNE">
-<span class="sig-name descname"><span class="pre">SCHROEDER_LESCANNE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scröder</span> <span class="pre">Tree</span> <span class="pre">by</span> <span class="pre">Lescanne'</span></em><a class="headerlink" href="#prefsampling.ordinal.TreeSampler.SCHROEDER_LESCANNE" title="Link to this definition">#</a></dt>
-<dd><p>Random Schröder trees sampled following Lescanne (2022)</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="prefsampling.ordinal.TreeSampler.SCHROEDER_UNIFORM">
-<span class="sig-name descname"><span class="pre">SCHROEDER_UNIFORM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scröder</span> <span class="pre">Tree</span> <span class="pre">by</span> <span class="pre">brute-force'</span></em><a class="headerlink" href="#prefsampling.ordinal.TreeSampler.SCHROEDER_UNIFORM" title="Link to this definition">#</a></dt>
-<dd><p>Random Schröder sampled uniformly via complete enumeration algorithm</p>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 
 
@@ -598,31 +399,7 @@ preferences.</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.didi"><code class="docutils literal notranslate"><span class="pre">didi()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.group_separable"><code class="docutils literal notranslate"><span class="pre">group_separable()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler"><code class="docutils literal notranslate"><span class="pre">TreeSampler</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.BALANCED"><code class="docutils literal notranslate"><span class="pre">TreeSampler.BALANCED</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.CATERPILLAR"><code class="docutils literal notranslate"><span class="pre">TreeSampler.CATERPILLAR</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.SCHROEDER"><code class="docutils literal notranslate"><span class="pre">TreeSampler.SCHROEDER</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.SCHROEDER_LESCANNE"><code class="docutils literal notranslate"><span class="pre">TreeSampler.SCHROEDER_LESCANNE</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.TreeSampler.SCHROEDER_UNIFORM"><code class="docutils literal notranslate"><span class="pre">TreeSampler.SCHROEDER_UNIFORM</span></code></a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
+                <div class="bd-sidebar-secondary bd-toc"></div>
               
             
           </div>

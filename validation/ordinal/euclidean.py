@@ -14,7 +14,7 @@ class OrdinalEuclideanValidatorUniform(Validator):
                         "num_voters": 1,
                         "num_candidates": 5,
                         "euclidean_space": space,
-                        "num_dimensions": dimension,
+                        "num_dimensions": dimension
                     },
                 )
         super(OrdinalEuclideanValidatorUniform, self).__init__(

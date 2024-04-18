@@ -158,11 +158,15 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
@@ -403,19 +407,19 @@ Other parameters are specific to the samplers.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.identity" title="prefsampling.ordinal.identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">identity()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/identity.html#prefsampling.ordinal.identity.identity" title="prefsampling.ordinal.identity.identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">identity()</span></code></a></p></td>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/impartial.html#module-prefsampling.ordinal.impartial" title="prefsampling.ordinal.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/impartial.html#prefsampling.ordinal.impartial.impartial" title="prefsampling.ordinal.impartial.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a></p></td>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_anonymous()</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/impartial.html#prefsampling.ordinal.impartial.impartial_anonymous" title="prefsampling.ordinal.impartial.impartial_anonymous"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_anonymous()</span></code></a></p></td>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/mallows.html#module-prefsampling.ordinal.mallows" title="prefsampling.ordinal.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/mallows.html#prefsampling.ordinal.mallows.mallows" title="prefsampling.ordinal.mallows.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">phi</span></code></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">central_vote</span></code> (defaults to <cite>0, 1, 2, …</cite>)</div>
@@ -424,14 +428,14 @@ Other parameters are specific to the samplers.</p>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">norm_mallows()</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/mallows.html#prefsampling.ordinal.mallows.norm_mallows" title="prefsampling.ordinal.mallows.norm_mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">norm_mallows()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">norm_phi</span></code></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">central_vote</span></code> (defaults to <cite>0, 1, 2, …</cite>)</div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.euclidean" title="prefsampling.ordinal.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/euclidean.html#prefsampling.ordinal.euclidean.euclidean" title="prefsampling.ordinal.euclidean.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean()</span></code></a></p></td>
 <td><p>—</p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
@@ -443,19 +447,19 @@ Other parameters are specific to the samplers.</p>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">plackett_luce()</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/plackettluce.html#prefsampling.ordinal.plackettluce.plackett_luce" title="prefsampling.ordinal.plackettluce.plackett_luce"><code class="xref py py-func docutils literal notranslate"><span class="pre">plackett_luce()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">alphas</span></code></p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.didi" title="prefsampling.ordinal.didi"><code class="xref py py-func docutils literal notranslate"><span class="pre">didi()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/didi.html#prefsampling.ordinal.didi.didi" title="prefsampling.ordinal.didi.didi"><code class="xref py py-func docutils literal notranslate"><span class="pre">didi()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">alphas</span></code></p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/urn.html#module-prefsampling.ordinal.urn" title="prefsampling.ordinal.urn"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/urn.html#prefsampling.ordinal.urn.urn" title="prefsampling.ordinal.urn.urn"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">stratification()</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/impartial.html#prefsampling.ordinal.impartial.stratification" title="prefsampling.ordinal.impartial.stratification"><code class="xref py py-func docutils literal notranslate"><span class="pre">stratification()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">weight</span></code></p></td>
 <td><p>—</p></td>
 </tr>
@@ -471,13 +475,13 @@ Other parameters are specific to the samplers.</p>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">single_crossing()</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.single_crossing" title="prefsampling.ordinal.singlecrossing.single_crossing"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_crossing()</span></code></a></p></td>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.group_separable" title="prefsampling.ordinal.group_separable"><code class="xref py py-func docutils literal notranslate"><span class="pre">group_separable()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/groupseparable.html#prefsampling.ordinal.groupseparable.group_separable" title="prefsampling.ordinal.groupseparable.group_separable"><code class="xref py py-func docutils literal notranslate"><span class="pre">group_separable()</span></code></a></p></td>
 <td><p>—</p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">tree_sampler</span></code> (defaults to <a class="reference internal" href="reference/ordinal/index.html#prefsampling.ordinal.TreeSampler.SCHROEDER" title="prefsampling.ordinal.TreeSampler.SCHROEDER"><code class="xref py py-const docutils literal notranslate"><span class="pre">SCHROEDER</span></code></a>)</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">tree_sampler</span></code> (defaults to <code class="xref py py-const docutils literal notranslate"><span class="pre">SCHROEDER</span></code>)</p></td>
 </tr>
 </tbody>
 </table>

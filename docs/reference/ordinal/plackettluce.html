@@ -43,8 +43,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/ordinal/plackettluce';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Single-Peaked Models" href="singlepeaked.html" />
-    <link rel="prev" title="Urn Models" href="urn.html" />
+    <link rel="next" title="Dirichlet Distribution Models" href="didi.html" />
+    <link rel="prev" title="Euclidean Models" href="euclidean.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -158,11 +158,15 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Ordinal</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../approval/index.html">Approval</a></li>
@@ -364,7 +368,7 @@ probability of selecting a candidate is equal to its quality (normalised). Then,
 is removed and the quality are re-normalised.</p>
 <p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
 process described above.</p>
-<p>For a similar model, see the <a class="reference internal" href="index.html#prefsampling.ordinal.didi" title="prefsampling.ordinal.didi"><code class="xref py py-func docutils literal notranslate"><span class="pre">didi()</span></code></a> model.</p>
+<p>For a similar model, see the <a class="reference internal" href="didi.html#prefsampling.ordinal.didi.didi" title="prefsampling.ordinal.didi.didi"><code class="xref py py-func docutils literal notranslate"><span class="pre">didi()</span></code></a> model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -389,7 +393,7 @@ process described above.</p>
 <span class="n">plackett_luce</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
 
 <span class="c1"># For reproducibility, you can set the seed.</span>
-<span class="n">plackett_luce</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1002</span><span class="p">)</span>
+<span class="n">plackett_luce</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">),</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1002</span><span class="p">)</span>
 
 <span class="c1"># Don&#39;t forget to provide a quality for all candidates</span>
 <span class="k">try</span><span class="p">:</span>
@@ -397,9 +401,13 @@ process described above.</p>
 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
     <span class="k">pass</span>
 
-<span class="c1"># And all alphas need to be non-negatives</span>
+<span class="c1"># And all quality scores need to be strictly positive</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">plackett_luce</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">plackett_luce</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
     <span class="k">pass</span>
 </pre></div>
@@ -446,20 +454,20 @@ Proceedings of the International Conference on Machine Learning (pp. 2906-2914),
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="urn.html"
+       href="euclidean.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Urn Models</p>
+        <p class="prev-next-title">Euclidean Models</p>
       </div>
     </a>
     <a class="right-next"
-       href="singlepeaked.html"
+       href="didi.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Single-Peaked Models</p>
+        <p class="prev-next-title">Dirichlet Distribution Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

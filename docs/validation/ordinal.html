@@ -158,11 +158,15 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../reference/approval/index.html">Approval</a></li>
@@ -406,13 +410,13 @@ can be observed.</p>
 </section>
 <section id="didi">
 <h2>Didi<a class="headerlink" href="#didi" title="Link to this heading">#</a></h2>
-<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.didi" title="prefsampling.ordinal.didi"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.didi()</span></code></a></p>
+<p><a class="reference internal" href="../reference/ordinal/didi.html#module-prefsampling.ordinal.didi" title="prefsampling.ordinal.didi"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.didi()</span></code></a></p>
 <p>For the didi model, there is no know probability distribution over the outcomes.</p>
 <a class="reference internal image-reference" href="../_images/didi.png"><img alt="Observed versus theoretical frequencies for the Didi model" src="../_images/didi.png" style="width: 800px;" /></a>
 </section>
 <section id="euclidean">
 <h2>Euclidean<a class="headerlink" href="#euclidean" title="Link to this heading">#</a></h2>
-<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.euclidean" title="prefsampling.ordinal.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.euclidean()</span></code></a></p>
+<p><a class="reference internal" href="../reference/ordinal/euclidean.html#module-prefsampling.ordinal.euclidean" title="prefsampling.ordinal.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.euclidean()</span></code></a></p>
 <p>In the case of the Euclidean model, little is known about the distribution over
 ranks that they generate.</p>
 <a class="reference internal image-reference" href="../_images/euclidean.png"><img alt="Observed versus theoretical frequencies for the Euclidean model" src="../_images/euclidean.png" style="width: 800px;" /></a>
@@ -449,7 +453,7 @@ distribution over all non-isomorphic single-crossing profiles.</p>
 </section>
 <section id="group-separable">
 <h2>Group-Separable<a class="headerlink" href="#group-separable" title="Link to this heading">#</a></h2>
-<p><a class="reference internal" href="../reference/ordinal/index.html#prefsampling.ordinal.group_separable" title="prefsampling.ordinal.group_separable"><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.group_separable()</span></code></a></p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">prefsampling.ordinal.group_separable()</span></code></p>
 <p>The sampler is supposed to produce a uniform distribution when used with a tree sampler
 that yields a uniform distribution. This does not appear to be the case however.</p>
 <a class="reference internal image-reference" href="../_images/group_separable.png"><img alt="Observed versus theoretical frequencies for the group separable culture" src="../_images/group_separable.png" style="width: 800px;" /></a>

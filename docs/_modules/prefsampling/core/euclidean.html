@@ -157,11 +157,15 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
@@ -377,8 +381,8 @@ document.write(`
     <span class="n">point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">candidate_point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">candidate_point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -399,7 +403,8 @@ document.write(`
 <span class="sd">            to be provided.</span>
 <span class="sd">        num_dimensions: int, default: :code:`None`</span>
 <span class="sd">            The number of dimensions to use. Using this argument is mandatory when passing a space</span>
-<span class="sd">            as argument.</span>
+<span class="sd">            as argument. If you pass samplers as arguments and use the num_dimensions, then, the</span>
+<span class="sd">            value of num_dimensions is passed as a kwarg to the samplers.</span>
 <span class="sd">        point_sampler : Callable, default: :code:`None`</span>
 <span class="sd">            The sampler used to sample point in the space. It should be a function accepting</span>
 <span class="sd">            arguments &#39;num_points&#39; and &#39;seed&#39;. Used for both voters and candidates unless a</span>
@@ -414,9 +419,9 @@ document.write(`
 <span class="sd">        candidate_point_sampler_args : dict</span>
 <span class="sd">            The arguments passed to the `candidate_point_sampler`. The argument `num_points`</span>
 <span class="sd">            is ignored and replaced by the number of candidates.</span>
-<span class="sd">        voters_positions : Iterable[float]</span>
+<span class="sd">        voters_positions : Iterable[Iterable[float]]</span>
 <span class="sd">            Position of the voters.</span>
-<span class="sd">        candidates_positions : Iterable[float]</span>
+<span class="sd">        candidates_positions : Iterable[Iterable[float]]</span>
 <span class="sd">            Position of the candidates.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator. Also passed to the point samplers if</span>
@@ -440,15 +445,18 @@ document.write(`
 
         <span class="n">point_sampler</span><span class="p">,</span> <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span><span class="n">euclidean_space</span><span class="p">,</span>
                                                                        <span class="n">num_dimensions</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">candidate_euclidean_space</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
-                <span class="n">candidate_euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">candidate_euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">candidate_euclidean_space</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you are using the &#39;candidate_euclidean_space&#39; argument, you need &quot;</span>
+                             <span class="s2">&quot;to also provide a number of dimensions.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+            <span class="n">candidate_euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">candidate_euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">)</span>
 
-            <span class="n">candidate_point_sampler</span><span class="p">,</span> <span class="n">candidate_point_sampler_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span>
-                <span class="n">candidate_euclidean_space</span><span class="p">,</span>
-                <span class="n">num_dimensions</span><span class="p">)</span>
+        <span class="n">candidate_point_sampler</span><span class="p">,</span> <span class="n">candidate_point_sampler_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span>
+            <span class="n">candidate_euclidean_space</span><span class="p">,</span>
+            <span class="n">num_dimensions</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">point_sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -456,6 +464,10 @@ document.write(`
         <span class="n">point_sampler_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
         <span class="k">if</span> <span class="n">candidate_point_sampler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">candidate_point_sampler_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+    <span class="k">if</span> <span class="n">num_dimensions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">point_sampler_args</span><span class="p">[</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_dimensions</span>
+        <span class="k">if</span> <span class="n">candidate_point_sampler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">candidate_point_sampler_args</span><span class="p">[</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_dimensions</span>
 
     <span class="n">voters_pos</span> <span class="o">=</span> <span class="n">_sample_points</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span> <span class="n">point_sampler</span><span class="p">,</span> <span class="n">point_sampler_args</span><span class="p">,</span> <span class="n">voters_positions</span><span class="p">,</span> <span class="s2">&quot;voters&quot;</span>

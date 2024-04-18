@@ -43,7 +43,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/ordinal/singlecrossing';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Approval" href="../approval/index.html" />
+    <link rel="next" title="Group-Separable Models" href="groupseparable.html" />
     <link rel="prev" title="Single-Peaked Models" href="singlepeaked.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -158,11 +158,15 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Ordinal</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../approval/index.html">Approval</a></li>
@@ -480,7 +484,7 @@ without theoretical guarantees on the distribution of outcomes—consider using
 <span class="n">single_crossing_impartial</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1002</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This already takes a very long time... (10 candidates)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This already takes a very long time... (only 10 candidates)</span>
 <span class="n">single_crossing_impartial</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -548,11 +552,11 @@ next vote to select based on the current node (moving down the graph).</p>
       </div>
     </a>
     <a class="right-next"
-       href="../approval/index.html"
+       href="groupseparable.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Approval</p>
+        <p class="prev-next-title">Group-Separable Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

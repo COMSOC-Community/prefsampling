@@ -157,11 +157,15 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
@@ -299,6 +303,7 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">rename_candidates</span><span class="p">,</span> <span class="n">permute_voters</span>
 <span class="kn">from</span> <span class="nn">prefsampling.tree.schroeder</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">schroeder_tree</span><span class="p">,</span>
     <span class="n">schroeder_tree_brute_force</span><span class="p">,</span>
@@ -311,7 +316,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="TreeSampler">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.TreeSampler">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/groupseparable.html#prefsampling.ordinal.groupseparable.TreeSampler">[docs]</a>
 <span class="k">class</span> <span class="nc">TreeSampler</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constants use to represent different samplers for trees that can be used for group separable</span>
@@ -346,7 +351,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="group_separable">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.group_separable">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/groupseparable.html#prefsampling.ordinal.groupseparable.group_separable">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">group_separable</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -391,6 +396,35 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import group_separable, TreeSampler</span>
+
+<span class="sd">            # Sample a group-separable profile model with 2 voters and 3 candidates using the</span>
+<span class="sd">            # sampler for Schröder trees proposed by Alonso, Rémy, Schott (1997)</span>
+<span class="sd">            group_separable(2, 3, tree_sampler=TreeSampler.SCHROEDER)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            group_separable(2, 3, tree_sampler=TreeSampler.SCHROEDER_UNIFORM, seed=1002)</span>
+
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        When using a sampler for trees that is uniform, the probability distribution over</span>
+<span class="sd">        group-separable profiles generated by this sampler should be uniform too.</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `The complexity of election problems with group-separable preferences</span>
+<span class="sd">        &lt;https://link.springer.com/article/10.1007/s10458-022-09549-7&gt;`_,</span>
+<span class="sd">        *Faliszewski, Piotr, Alexander Karpov, and Svetlana Obraztsova*,</span>
+<span class="sd">        Autonomous Agents and Multi-Agent Systems 36:18, 2022.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
@@ -432,7 +466,6 @@ document.write(`
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;There is something weird with the tree_sampler value...&quot;</span><span class="p">)</span>
-        <span class="n">tree_root</span><span class="o">.</span><span class="n">rename_frontier</span><span class="p">()</span>
     <span class="k">elif</span> <span class="n">tree_sampler</span> <span class="o">==</span> <span class="n">TreeSampler</span><span class="o">.</span><span class="n">CATERPILLAR</span><span class="p">:</span>
         <span class="n">tree_root</span> <span class="o">=</span> <span class="n">caterpillar_tree</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">tree_sampler</span> <span class="o">==</span> <span class="n">TreeSampler</span><span class="o">.</span><span class="n">BALANCED</span><span class="p">:</span>
@@ -445,13 +478,25 @@ document.write(`
         <span class="p">)</span>
 
     <span class="n">all_inner_nodes</span> <span class="o">=</span> <span class="n">tree_root</span><span class="o">.</span><span class="n">internal_nodes</span><span class="p">()</span>
+    <span class="n">num_internal_nodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_inner_nodes</span><span class="p">)</span>
 
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">frontier</span> <span class="o">=</span> <span class="n">_sample_a_vote</span><span class="p">(</span><span class="n">tree_root</span><span class="p">)</span>
-    <span class="n">vote_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="n">j</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frontier</span><span class="p">)}</span>
-    <span class="n">votes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">vote_map</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">frontier</span><span class="p">]</span>
+    <span class="n">first_vote</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))</span>
+    <span class="n">vote_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="n">first_vote</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frontier</span><span class="p">)}</span>
+    <span class="n">votes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">first_vote</span>
+
+    <span class="c1"># We sample the signatures, ensuring that there is always at least one &quot;True&quot; per position</span>
+    <span class="n">signatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_internal_nodes</span><span class="p">):</span>
+        <span class="n">values_at_pos</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">num_voters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">values_at_pos</span><span class="p">):</span>
+            <span class="n">values_at_pos</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">num_voters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">signatures</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">values_at_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_voters</span><span class="p">):</span>
-        <span class="n">signature</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">all_inner_nodes</span><span class="p">))</span>
+        <span class="n">signature</span> <span class="o">=</span> <span class="n">signatures</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_inner_nodes</span><span class="p">):</span>
             <span class="n">node</span><span class="o">.</span><span class="n">reverse</span> <span class="o">=</span> <span class="n">signature</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
@@ -459,18 +504,16 @@ document.write(`
         <span class="n">raw_vote</span> <span class="o">=</span> <span class="n">_sample_a_vote</span><span class="p">(</span><span class="n">tree_root</span><span class="p">)</span>
         <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">vote_map</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">raw_vote</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_inner_nodes</span><span class="p">):</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">reverse</span> <span class="o">=</span> <span class="kc">False</span>
-
+    <span class="c1"># if tuple(first_vote) == (0, 2, 1) and tree_root.anonymous_tree_representation() == &quot;2(2(_, _), _)&quot;:</span>
+    <span class="c1">#     print(f&quot;t: {tree_root.anonymous_tree_representation()}\nf = {frontier}\nv = {first_vote}\nmap = {vote_map}\nsig:{signatures}\nvotes:\n{votes}\n&quot;)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
 
 <span class="k">def</span> <span class="nf">_number_group_separable_profiles</span><span class="p">(</span><span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns the number of decomposition trees given the number of candidates `m` and the number</span>
-<span class="sd">    of internal nodes `r` based on the formula from `Karpov (2019)</span>
-<span class="sd">    &lt;https://link.springer.com/article/10.1007/s10726-019-09621-w&gt;`_</span>
+<span class="sd">    Returns the number of group separable profiles given the number of candidates `m`, the number</span>
+<span class="sd">    of voters `n` and the number of internal nodes `r`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">comb</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">comb</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 

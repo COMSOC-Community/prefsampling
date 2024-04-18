@@ -58,7 +58,7 @@ def plackett_luce(
             plackett_luce(2, 3, (0.5, 0.2, 0.1))
 
             # For reproducibility, you can set the seed.
-            plackett_luce(2, 3, (5, 2, 0), seed=1002)
+            plackett_luce(2, 3, (5, 2, 0.7), seed=1002)
 
             # Don't forget to provide a quality for all candidates
             try:
@@ -66,9 +66,13 @@ def plackett_luce(
             except ValueError:
                 pass
 
-            # And all quality scores need to be non-negatives
+            # And all quality scores need to be strictly positive
             try:
                 plackett_luce(2, 3, (0.5, 0.2, -0.4))
+            except ValueError:
+                pass
+            try:
+                plackett_luce(2, 3, (0.5, 0.2, 0))
             except ValueError:
                 pass
 

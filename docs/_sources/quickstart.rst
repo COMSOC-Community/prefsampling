@@ -49,24 +49,24 @@ Reference: :py:mod:`prefsampling.ordinal`
    * - Sampler
      - \*\*args
      - \*\*kwargs
-   * - :py:func:`~prefsampling.ordinal.identity`
+   * - :py:func:`~prefsampling.ordinal.identity.identity`
      - ---
      - ---
-   * - :py:func:`~prefsampling.ordinal.impartial`
+   * - :py:func:`~prefsampling.ordinal.impartial.impartial`
      - ---
      - ---
-   * - :py:func:`~prefsampling.ordinal.impartial_anonymous`
+   * - :py:func:`~prefsampling.ordinal.impartial.impartial_anonymous`
      - ---
      - ---
-   * - :py:func:`~prefsampling.ordinal.mallows`
+   * - :py:func:`~prefsampling.ordinal.mallows.mallows`
      - :code:`phi`
      - | :code:`central_vote` (defaults to `0, 1, 2, ...`)
        | :code:`normalise_phi` (defaults to :code:`False`)
        | :code:`impartial_central_vote` (defaults to :code:`False`)
-   * - :py:func:`~prefsampling.ordinal.norm_mallows`
+   * - :py:func:`~prefsampling.ordinal.mallows.norm_mallows`
      - :code:`norm_phi`
      - | :code:`central_vote` (defaults to `0, 1, 2, ...`)
-   * - :py:func:`~prefsampling.ordinal.euclidean`
+   * - :py:func:`~prefsampling.ordinal.euclidean.euclidean`
      - ---
      - | :code:`point_sampler` (defaults to :code:`None`)
        | :code:`point_sampler_args` (defaults to :code:`None`)
@@ -74,16 +74,16 @@ Reference: :py:mod:`prefsampling.ordinal`
        | :code:`candidate_point_sampler_args` (defaults to :code:`None`)
        | :code:`voters_positions` (defaults to :code:`None`)
        | :code:`candidates_positions` (defaults to :code:`None`)
-   * - :py:func:`~prefsampling.ordinal.plackett_luce`
+   * - :py:func:`~prefsampling.ordinal.plackettluce.plackett_luce`
      - :code:`alphas`
      - ---
-   * - :py:func:`~prefsampling.ordinal.didi`
+   * - :py:func:`~prefsampling.ordinal.didi.didi`
      - :code:`alphas`
      - ---
-   * - :py:func:`~prefsampling.ordinal.urn`
+   * - :py:func:`~prefsampling.ordinal.urn.urn`
      - :code:`alpha`
      - ---
-   * - :py:func:`~prefsampling.ordinal.stratification`
+   * - :py:func:`~prefsampling.ordinal.impartial.stratification`
      - :code:`weight`
      - ---
    * - :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_conitzer`
@@ -95,10 +95,10 @@ Reference: :py:mod:`prefsampling.ordinal`
    * - :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_circle`
      - ---
      - ---
-   * - :py:func:`~prefsampling.ordinal.single_crossing`
+   * - :py:func:`~prefsampling.ordinal.singlecrossing.single_crossing`
      - ---
      - ---
-   * - :py:func:`~prefsampling.ordinal.group_separable`
+   * - :py:func:`~prefsampling.ordinal.groupseparable.group_separable`
      - ---
      - :code:`tree_sampler` (defaults to :py:const:`~prefsampling.ordinal.TreeSampler.SCHROEDER`)
 

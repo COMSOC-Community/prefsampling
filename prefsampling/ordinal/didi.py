@@ -118,7 +118,6 @@ def didi(
             :width: 800
             :alt: Observed versus theoretical frequencies for a DiDi model with alpha=[0.2, 0.5, 0.3, 0.7, 0.2]
 
-
         .. image:: ../validation_plots/ordinal/didi__1_0_0_3_0_3_0_3_0_3_.png
             :width: 800
             :alt: Observed versus theoretical frequencies for a DiDi model with alpha=[1, 0.3, 0.3, 0.3, 0.3]

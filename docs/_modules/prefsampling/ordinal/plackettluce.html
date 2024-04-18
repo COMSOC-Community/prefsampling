@@ -157,11 +157,15 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
@@ -323,7 +327,7 @@ document.write(`
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>
 
-<span class="sd">    For a similar model, see the :py:func:`~prefsampling.ordinal.didi` model.</span>
+<span class="sd">    For a similar model, see the :py:func:`~prefsampling.ordinal.didi.didi` model.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -353,7 +357,7 @@ document.write(`
 <span class="sd">            plackett_luce(2, 3, (0.5, 0.2, 0.1))</span>
 
 <span class="sd">            # For reproducibility, you can set the seed.</span>
-<span class="sd">            plackett_luce(2, 3, (5, 2, 0.1), seed=1002)</span>
+<span class="sd">            plackett_luce(2, 3, (5, 2, 0.7), seed=1002)</span>
 
 <span class="sd">            # Don&#39;t forget to provide a quality for all candidates</span>
 <span class="sd">            try:</span>
@@ -361,9 +365,13 @@ document.write(`
 <span class="sd">            except ValueError:</span>
 <span class="sd">                pass</span>
 
-<span class="sd">            # And all alphas need to be non-negatives</span>
+<span class="sd">            # And all quality scores need to be strictly positive</span>
 <span class="sd">            try:</span>
 <span class="sd">                plackett_luce(2, 3, (0.5, 0.2, -0.4))</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                plackett_luce(2, 3, (0.5, 0.2, 0))</span>
 <span class="sd">            except ValueError:</span>
 <span class="sd">                pass</span>
 

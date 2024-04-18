@@ -1,27 +1,18 @@
 Ordinal
 =======
 
+.. automodule:: prefsampling.ordinal
 
 .. toctree::
     :maxdepth: 1
 
     impartial
+    identity
     mallows
     urn
+    euclidean
     plackettluce
+    didi
     singlepeaked
     singlecrossing
-
-
-.. automodule:: prefsampling.ordinal
-
-.. autofunction:: prefsampling.ordinal.identity
-
-.. autofunction:: prefsampling.ordinal.euclidean
-
-.. autofunction:: prefsampling.ordinal.didi
-
-.. autofunction:: prefsampling.ordinal.group_separable
-
-.. autoclass:: prefsampling.ordinal.TreeSampler
-    :members:
+    groupseparable

@@ -1,3 +1,8 @@
+"""
+In Euclidean models, the voters and the candidates are assigned random positions in a given space.
+The preferences of a voter are then defined based on the distance between the voter and the
+candidates.
+"""
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
@@ -83,6 +88,8 @@ def euclidean(
     Examples
     --------
 
+        **Using** :py:class:`~prefsampling.core.euclidean.EuclideanSpace`
+
         The easiest is to use one of the Euclidean spaces defined in
         :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
 
@@ -92,15 +99,15 @@ def euclidean(
             from prefsampling.core.euclidean import EuclideanSpace
 
             # Here for 2 voters and 3 candidates with uniform ball
-            euclidean(2, 3, euclidean_space = EuclideanSpace.UNIFORM_BALL, num_dimensions=3)
+            euclidean(2, 3, num_dimensions = 3, euclidean_space = EuclideanSpace.UNIFORM_BALL)
 
             # You can use different spaces for the voters and the candidates
             euclidean(
                 2,
                 3,
-                num_dimensions=3
+                num_dimensions = 3,
                 euclidean_space = EuclideanSpace.UNIFORM_SPHERE,
-                euclidean_space = EuclideanSpace.GAUSSIAN_CUBE,
+                candidate_euclidean_space = EuclideanSpace.GAUSSIAN_CUBE,
                 )
 
             # Don't forget to pass the number of dimensions
@@ -108,6 +115,8 @@ def euclidean(
                 euclidean(2, 3, euclidean_space = EuclideanSpace.UNBOUNDED_GAUSSIAN)
             except ValueError:
                 pass
+
+        **Using** :py:mod:`prefsampling.point`
 
         If you need more flexibility, you can also pass the point samplers directly.
 
@@ -137,8 +146,8 @@ def euclidean(
                 num_dimensions=2,
                 point_sampler = ball_uniform,
                 point_sampler_args = {'widths': (3, 1), 'only_envelope': True},
-                point_sampler_candidates = cube,
-                point_sampler_candidates_args = {'center_point': (0.5, 1)}
+                candidate_point_sampler = cube,
+                candidate_point_sampler_args = {'center_point': (0.5, 1)}
             )
 
             # You can also mix the two methods.
@@ -150,8 +159,10 @@ def euclidean(
                 num_dimensions=2,
                 point_sampler = ball_uniform,
                 point_sampler_args = {'widths': (3, 1), 'only_envelope': True},
-                euclidean_space_candidates = EuclideanSpace.UNIFORM_CUBE,
+                candidate_euclidean_space = EuclideanSpace.UNIFORM_CUBE,
             )
+
+        **Using already known-positions**
 
         If you already have positions for the voters or the candidates, you can also pass them to
         the sampler.
@@ -171,13 +182,66 @@ def euclidean(
                 3,
                 num_dimensions=2,
                 euclidean_space=EuclideanSpace.GAUSSIAN_BALL,
-                candidates_positions=candidates_positions  # use voters_positions for voters
+                candidates_positions=candidates_positions  # use voters_positions for the voters
             )
 
     Validation
     ----------
 
         There is no known expression for the probability distribution governing Euclidean models.
+
+        Still, if there is a single voter, we know that we should obtain a uniform distribution
+        over all rankings.
+
+        .. image:: ../validation_plots/ordinal/euclidean_uniform_UNIFORM_BALL.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a ball Euclidean model with n=1
+
+        .. image:: ../validation_plots/ordinal/euclidean_uniform_UNIFORM_SPHERE.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a sphere Euclidean model with n=1
+
+        .. image:: ../validation_plots/ordinal/euclidean_uniform_UNIFORM_CUBE.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a cube Euclidean model with n=1
+
+        .. image:: ../validation_plots/ordinal/euclidean_uniform_GAUSSIAN_BALL.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Gaussian ball Euclidean model with n=1
+
+        .. image:: ../validation_plots/ordinal/euclidean_uniform_GAUSSIAN_CUBE.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Gaussian cube Euclidean model with n=1
+
+        .. image:: ../validation_plots/ordinal/euclidean_uniform_UNBOUNDED_GAUSSIAN.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Gaussian Euclidean model with n=1
+
+        In the general case, we obtain the following distribution of frequencies.
+
+        .. image:: ../validation_plots/ordinal/euclidean_UNIFORM_BALL.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a ball Euclidean model with n=3
+
+        .. image:: ../validation_plots/ordinal/euclidean_UNIFORM_SPHERE.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a sphere Euclidean model with n=3
+
+        .. image:: ../validation_plots/ordinal/euclidean_UNIFORM_CUBE.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a cube Euclidean model with n=3
+
+        .. image:: ../validation_plots/ordinal/euclidean_GAUSSIAN_BALL.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Gaussian ball Euclidean model with n=3
+
+        .. image:: ../validation_plots/ordinal/euclidean_GAUSSIAN_CUBE.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Gaussian cube Euclidean model with n=3
+
+        .. image:: ../validation_plots/ordinal/euclidean_UNBOUNDED_GAUSSIAN.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Gaussian Euclidean model with n=3
 
     References
     ----------

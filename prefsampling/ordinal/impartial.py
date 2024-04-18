@@ -269,10 +269,11 @@ def stratification(
 
     References
     ----------
+
         `Putting a compass on the map of elections
-         <https://www.ijcai.org/proceedings/2021/9>`_,
-         *Boehmer, Niclas, Robert Bredereck, Piotr Faliszewski, Rolf Niedermeier, and Stanisław Szufa*,
-         Proceedings of the International Joint Conference on Artificial Intelligence, 2021.
+        <https://www.ijcai.org/proceedings/2021/9>`_,
+        *Boehmer, Niclas, Robert Bredereck, Piotr Faliszewski, Rolf Niedermeier, and Stanisław Szufa*,
+        Proceedings of the International Joint Conference on Artificial Intelligence, 2021.
     """
     if weight < 0 or 1 < weight:
         raise ValueError(

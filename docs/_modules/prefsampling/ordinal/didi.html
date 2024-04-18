@@ -157,11 +157,15 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
@@ -291,7 +295,13 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.ordinal.didi</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The Dirichlet distribution model is a model parameterised by a vector of candidate quality.</span>
+<span class="sd">A quality score is associated to each candidate. When sampling a ranking, the quality scores</span>
+<span class="sd">are used to sample a number of points for each candidate (using a Dirichlet distribution).</span>
+<span class="sd">The ranking corresponds then to the candidates ordered by number of points.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -299,7 +309,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="didi">
-<a class="viewcode-back" href="../../../reference/ordinal/index.html#prefsampling.ordinal.didi">[docs]</a>
+<a class="viewcode-back" href="../../../reference/ordinal/didi.html#prefsampling.ordinal.didi.didi">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">didi</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">alphas</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
@@ -316,8 +326,8 @@ document.write(`
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>
 
-<span class="sd">    This model is very similar in spirit to the :py:func:`~prefsampling.ordinal.plackett_luce`</span>
-<span class="sd">    model.</span>
+<span class="sd">    This model is very similar in spirit to the</span>
+<span class="sd">    :py:func:`~prefsampling.ordinal.plackettluce.plackett_luce` model.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -335,10 +345,90 @@ document.write(`
 <span class="sd">        np.ndarray</span>
 <span class="sd">            Ordinal votes.</span>
 
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            When len(`alphas`) not equal num_candidates.</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import didi</span>
+
+<span class="sd">            # Sample from a DiDi model with 2 voters and 3 candidates, the qualities of</span>
+<span class="sd">            # candidates are 0.5, 0.2, and 0.1.</span>
+<span class="sd">            didi(2, 3, (0.5, 0.2, 0.1))</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            didi(2, 3, (5, 2, 0.1), seed=1002)</span>
+
+<span class="sd">            # Don&#39;t forget to provide a quality for all candidates</span>
+<span class="sd">            try:</span>
+<span class="sd">                didi(2, 3, (0.5, 0.2))</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # And all quality scores need to be strictly positive</span>
+<span class="sd">            try:</span>
+<span class="sd">                didi(2, 3, (0.5, 0.2, -0.4))</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                didi(2, 3, (0.5, 0.2, 0))</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        The probability distribution guiding the DiDi model is not known in general. Since it</span>
+<span class="sd">        depends on the order of the values in a Dirichlet sample, the general computation is</span>
+<span class="sd">        involved. Still, we can check some special cases.</span>
+
+<span class="sd">        First, when all qualities are the same, we are supposed to obtain a uniform distribution</span>
+<span class="sd">        over all rankings.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/didi__0_1_0_1_0_1_0_1_0_1_.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a DiDi model with alpha=[0.1, 0.1, 0.1, 0.1, 0.1]</span>
+
+<span class="sd">        Second, in the special case of 2 candidates, we can easily compute an expression for the</span>
+<span class="sd">        probability distribution of the model. Assume we have two candidates with quality</span>
+<span class="sd">        :math:`\\alpha_0` and :math:`\\alpha_1`. Then, the probability of observing the ranking</span>
+<span class="sd">        :math:`0 \\succ 1` is that of the probability to sample two values :math:`x_0`, :math:`x_1`</span>
+<span class="sd">        from a Dirichlet distribution with parameters :math:`\\alpha_0` and :math:`\\alpha_1` such</span>
+<span class="sd">        that :math:`x_0 &gt; x_1`. We have thus:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\mathbb{P}(x_0 &gt; x_1) = \\mathbb{P}(x_0 &gt; 0.5) = \\int_{0.5}^1 x_0^{\\alpha_0 - 1}</span>
+<span class="sd">            \\times (1 - x_0)^{\\alpha_1 - 1} dx_0.</span>
+
+<span class="sd">        We can compute an approximate value for of this integral using scipy.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/didi__1_0_0_3_.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a DiDi model with alpha=[0.1, 0.1]</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/didi__0_1_0_1_.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a DiDi model with alpha=[1, 0.3]</span>
+
+<span class="sd">        In the general case, we obtain the following frequencies.</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/didi__0_2_0_5_0_3_0_7_0_2_.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a DiDi model with alpha=[0.2, 0.5, 0.3, 0.7, 0.2]</span>
+
+<span class="sd">        .. image:: ../validation_plots/ordinal/didi__1_0_0_3_0_3_0_3_0_3_.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a DiDi model with alpha=[1, 0.3, 0.3, 0.3, 0.3]</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        The DiDi model has not been references in any publications. Stanisław Szufa introduced out</span>
+<span class="sd">        of curiosity.</span>
+
+<span class="sd">        See the `wikipedia page &lt;https://en.wikipedia.org/wiki/Dirichlet_distribution&gt;`_ of the</span>
+<span class="sd">        Dirichlet distribution for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphas</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_candidates</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>

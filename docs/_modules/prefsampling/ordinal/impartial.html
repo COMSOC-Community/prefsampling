@@ -157,11 +157,15 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/didi.html">Dirichlet Distribution Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlepeaked.html">Single-Peaked Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
@@ -363,6 +367,13 @@ document.write(`
 <span class="sd">        .. image:: ../validation_plots/ordinal/impartial_6.png</span>
 <span class="sd">            :width: 800</span>
 <span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture with m=6</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `Les théories de l’intérêt général et le problème logique de l’agrégation</span>
+<span class="sd">        &lt;https://www.persee.fr/doc/ecoap_0013-0494_1952_num_5_4_3831&gt;`_,</span>
+<span class="sd">        *Georges-Théodule Guilbaud*,</span>
+<span class="sd">        Economie Appliquée, 5:501–584, 1952.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -441,6 +452,18 @@ document.write(`
 <span class="sd">        .. image:: ../validation_plots/ordinal/impartial_anonymous_3.png</span>
 <span class="sd">            :width: 800</span>
 <span class="sd">            :alt: Observed versus theoretical frequencies for an impartial anonymous culture with n=3</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        ` Voter antagonism and the paradox of voting</span>
+<span class="sd">        &lt;https://www.jstor.org/stable/1914217&gt;`_,</span>
+<span class="sd">        *Kiyoshi Kuga and Hiroaki Nagatani*,</span>
+<span class="sd">        Econometrica, 42(6):1045–1067, 1974.</span>
+
+<span class="sd">        `Condorcet paradox and anonymous preference profiles</span>
+<span class="sd">        &lt;https://www.jstor.org/stable/30022874&gt;`_,</span>
+<span class="sd">        *William V. Gehrlein and Peter C. Fishburn*,</span>
+<span class="sd">        Public Choice, 26:1–18, 1978.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">urn</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">),</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
@@ -548,6 +571,14 @@ document.write(`
 <span class="sd">        .. image:: ../validation_plots/ordinal/stratification_uniform_1.png</span>
 <span class="sd">            :width: 800</span>
 <span class="sd">            :alt: Observed versus theoretical frequencies for a stratification culture with w=0.6</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        `Putting a compass on the map of elections</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2021/9&gt;`_,</span>
+<span class="sd">        *Boehmer, Niclas, Robert Bredereck, Piotr Faliszewski, Rolf Niedermeier, and Stanisław Szufa*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2021.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">weight</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">weight</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>

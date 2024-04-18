@@ -1,6 +1,8 @@
 """
 A collection of functions used to the number of different entities: rankings, profiles, etc...
 """
+from __future__ import annotations
+
 import math
 from collections.abc import Iterable, Sequence
 from copy import deepcopy
@@ -400,6 +402,7 @@ class GSNode:
         print(f"{indent}{self.cand_set}")
         for child in self.children:
             child.print_tree(indent + " ")
+
 
 def gs_structure(profile: Sequence[Sequence[int]], verbose: bool = False) -> str:
     """
