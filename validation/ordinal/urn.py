@@ -1,5 +1,6 @@
 import math
 
+from prefsampling.combinatorics import all_anonymous_profiles
 from prefsampling.ordinal import urn
 from prefsampling.ordinal.urn import theoretical_distribution
 from validation.validator import Validator
@@ -24,7 +25,7 @@ class OrdinalUrnValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return get_all_anonymous_profiles(
+        return all_anonymous_profiles(
             sampler_parameters["num_voters"], sampler_parameters["num_candidates"]
         )
 

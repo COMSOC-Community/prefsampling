@@ -1,6 +1,7 @@
 import math
 
 from prefsampling.approval import noise
+from prefsampling.combinatorics import powerset_as_sets, hamming_distance
 from validation.validator import Validator
 
 
@@ -27,7 +28,7 @@ class ApprovalNoiseValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return get_all_subsets(sampler_parameters["num_candidates"])
+        return powerset_as_sets(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
         m = sampler_parameters["num_candidates"]
@@ -35,7 +36,7 @@ class ApprovalNoiseValidator(Validator):
         phi = sampler_parameters["phi"]
         k = math.floor(p * m)
         central_vote = {i for i in range(k)}
-        tmp_dict = {str(o): phi ** hamming(central_vote, o) for o in all_outcomes}
+        tmp_dict = {str(o): phi ** hamming_distance(central_vote, o) for o in all_outcomes}
         denom = sum(tmp_dict.values())
         return {tuple(sorted(o)): tmp_dict[str(o)] / denom for o in all_outcomes}
 
