@@ -79,8 +79,8 @@ def sample_election_positions(
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
     candidate_point_sampler_args: dict = None,
-    voters_positions: Iterable[float] = None,
-    candidates_positions: Iterable[float] = None,
+    voters_positions: Iterable[Iterable[float]] = None,
+    candidates_positions: Iterable[Iterable[float]] = None,
     seed: int = None,
 ) -> tuple[np.ndarray, np.ndarray]:
     """
@@ -101,7 +101,8 @@ def sample_election_positions(
             to be provided.
         num_dimensions: int, default: :code:`None`
             The number of dimensions to use. Using this argument is mandatory when passing a space
-            as argument.
+            as argument. If you pass samplers as arguments and use the num_dimensions, then, the
+            value of num_dimensions is passed as a kwarg to the samplers.
         point_sampler : Callable, default: :code:`None`
             The sampler used to sample point in the space. It should be a function accepting
             arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
@@ -116,9 +117,9 @@ def sample_election_positions(
         candidate_point_sampler_args : dict
             The arguments passed to the `candidate_point_sampler`. The argument `num_points`
             is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[float]
+        voters_positions : Iterable[Iterable[float]]
             Position of the voters.
-        candidates_positions : Iterable[float]
+        candidates_positions : Iterable[Iterable[float]]
             Position of the candidates.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
@@ -142,15 +143,18 @@ def sample_election_positions(
 
         point_sampler, point_sampler_args = euclidean_space_to_sampler(euclidean_space,
                                                                        num_dimensions)
-        if candidate_euclidean_space:
-            if isinstance(candidate_euclidean_space, Enum):
-                candidate_euclidean_space = EuclideanSpace(candidate_euclidean_space.value)
-            else:
-                candidate_euclidean_space = EuclideanSpace(candidate_euclidean_space)
+    if candidate_euclidean_space:
+        if num_dimensions is None:
+            raise ValueError("If you are using the 'candidate_euclidean_space' argument, you need "
+                             "to also provide a number of dimensions.")
+        if isinstance(candidate_euclidean_space, Enum):
+            candidate_euclidean_space = EuclideanSpace(candidate_euclidean_space.value)
+        else:
+            candidate_euclidean_space = EuclideanSpace(candidate_euclidean_space)
 
-            candidate_point_sampler, candidate_point_sampler_args = euclidean_space_to_sampler(
-                candidate_euclidean_space,
-                num_dimensions)
+        candidate_point_sampler, candidate_point_sampler_args = euclidean_space_to_sampler(
+            candidate_euclidean_space,
+            num_dimensions)
 
     if point_sampler_args is None:
         point_sampler_args = dict()
@@ -158,6 +162,10 @@ def sample_election_positions(
         point_sampler_args["seed"] = seed
         if candidate_point_sampler is not None:
             candidate_point_sampler_args["seed"] = seed
+    if num_dimensions is not None:
+        point_sampler_args["num_dimensions"] = num_dimensions
+        if candidate_point_sampler is not None:
+            candidate_point_sampler_args["num_dimensions"] = num_dimensions
 
     voters_pos = _sample_points(
         num_voters, point_sampler, point_sampler_args, voters_positions, "voters"

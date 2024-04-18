@@ -64,8 +64,8 @@ ALL_ORDINAL_VALIDATORS = [
     # PlackettLuceValidator(),
     # DidiValidator(),
     # OrdinalUrnValidator(),
-    # OrdinalEuclideanValidator(),
-    # OrdinalEuclideanValidatorUniform(),
+    OrdinalEuclideanValidator(),
+    OrdinalEuclideanValidatorUniform(),
     # SPWalshValidator(),
     # SPConitzerValidator(),
     # SPCircleValidator(),
@@ -83,7 +83,7 @@ ALL_TREE_VALIDATORS = [
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-    num_observations = 1000000
+    num_observations = 1000#000
 
     for validator_list, nickname in [
         (ALL_APPROVAL_VALIDATORS, "approval"),

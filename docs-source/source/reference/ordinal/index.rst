@@ -6,6 +6,7 @@ Ordinal
     :maxdepth: 1
 
     impartial
+    identity
     mallows
     urn
     plackettluce
@@ -14,8 +15,6 @@ Ordinal
 
 
 .. automodule:: prefsampling.ordinal
-
-.. autofunction:: prefsampling.ordinal.identity
 
 .. autofunction:: prefsampling.ordinal.euclidean
 

@@ -68,6 +68,13 @@ def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndar
         .. image:: ../validation_plots/ordinal/impartial_6.png
             :width: 800
             :alt: Observed versus theoretical frequencies for an impartial culture with m=6
+
+    References
+    ----------
+        `Les théories de l’intérêt général et le problème logique de l’agrégation
+        <https://www.persee.fr/doc/ecoap_0013-0494_1952_num_5_4_3831>`_,
+        *Georges-Théodule Guilbaud*,
+        Economie Appliquée, 5:501–584, 1952.
     """
     rng = np.random.default_rng(seed)
     votes = np.zeros([num_voters, num_candidates], dtype=int)
@@ -143,6 +150,18 @@ def impartial_anonymous(
         .. image:: ../validation_plots/ordinal/impartial_anonymous_3.png
             :width: 800
             :alt: Observed versus theoretical frequencies for an impartial anonymous culture with n=3
+
+    References
+    ----------
+        ` Voter antagonism and the paradox of voting
+        <https://www.jstor.org/stable/1914217>`_,
+        *Kiyoshi Kuga and Hiroaki Nagatani*,
+        Econometrica, 42(6):1045–1067, 1974.
+
+        `Condorcet paradox and anonymous preference profiles
+        <https://www.jstor.org/stable/30022874>`_,
+        *William V. Gehrlein and Peter C. Fishburn*,
+        Public Choice, 26:1–18, 1978.
     """
     return urn(
         num_voters, num_candidates, alpha=1 / math.factorial(num_candidates), seed=seed
@@ -247,6 +266,13 @@ def stratification(
         .. image:: ../validation_plots/ordinal/stratification_uniform_1.png
             :width: 800
             :alt: Observed versus theoretical frequencies for a stratification culture with w=0.6
+
+    References
+    ----------
+        `Putting a compass on the map of elections
+         <https://www.ijcai.org/proceedings/2021/9>`_,
+         *Boehmer, Niclas, Robert Bredereck, Piotr Faliszewski, Rolf Niedermeier, and Stanisław Szufa*,
+         Proceedings of the International Joint Conference on Artificial Intelligence, 2021.
     """
     if weight < 0 or 1 < weight:
         raise ValueError(

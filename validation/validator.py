@@ -140,7 +140,10 @@ class Validator(abc.ABC):
                 samples = sample_collections[i]
                 if distributions:
                     distribution = distributions[i]
-                    main_source = distribution
+                    if distribution is None:
+                        main_source = samples
+                    else:
+                        main_source = distribution
                 else:
                     distribution = None
                     main_source = samples
@@ -279,11 +282,15 @@ class Validator(abc.ABC):
             if unique_values:
                 current_value = unique_values[df_index]
                 print(f"\t\tPlotting for {faceted_parameters[0]} = {current_value}...")
+            if theoretical:
+                apply_hue = not df.loc[df["freq_type"] == "theoretical_freq"]["frequency"].isnull().all()
+            else:
+                apply_hue = False
             g = sns.catplot(
                 data=df,
                 x="outcome",
                 y="frequency",
-                hue="freq_type" if theoretical else None,
+                hue="freq_type" if apply_hue else None,
                 col=faceted_parameters[1],
                 row=None,
                 kind="bar",
@@ -315,7 +322,7 @@ class Validator(abc.ABC):
             title += "\n"
             plt.suptitle(title)
             g.figure.tight_layout()
-            if g._legend:
+            if apply_hue:
                 g._legend.set_title("")
                 new_labels = ["Observed", "Theoretical"]
                 for t, l in zip(g._legend.texts, new_labels):

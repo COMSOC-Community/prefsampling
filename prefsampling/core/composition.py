@@ -31,9 +31,9 @@ def mixture(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        samplers: list
+        samplers: list[Callable]
             List of samplers.
-        weights: list
+        weights: list[float]
             Probability distribution over the samplers, the sampler in position k has weight
             :code:`weights[k]`.
         sampler_parameters: list[dict]

@@ -28,7 +28,7 @@ def plackett_luce(
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
 
-    For a similar model, see the :py:func:`~prefsampling.ordinal.didi` model.
+    For a similar model, see the :py:func:`~prefsampling.ordinal.didi.didi` model.
 
     Parameters
     ----------
@@ -58,7 +58,7 @@ def plackett_luce(
             plackett_luce(2, 3, (0.5, 0.2, 0.1))
 
             # For reproducibility, you can set the seed.
-            plackett_luce(2, 3, (5, 2, 0.1), seed=1002)
+            plackett_luce(2, 3, (5, 2, 0), seed=1002)
 
             # Don't forget to provide a quality for all candidates
             try:
@@ -66,7 +66,7 @@ def plackett_luce(
             except ValueError:
                 pass
 
-            # And all alphas need to be non-negatives
+            # And all quality scores need to be non-negatives
             try:
                 plackett_luce(2, 3, (0.5, 0.2, -0.4))
             except ValueError:

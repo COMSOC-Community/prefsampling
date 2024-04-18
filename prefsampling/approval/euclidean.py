@@ -70,9 +70,9 @@ def euclidean_threshold(
         candidate_point_sampler_args : dict
             The arguments passed to the `candidate_point_sampler`. The argument `num_points`
             is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[float]
+        voters_positions : Iterable[Iterable[float]]
             Position of the voters.
-        candidates_positions : Iterable[float]
+        candidates_positions : Iterable[Iterable[float]]
             Position of the candidates.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
@@ -128,8 +128,8 @@ def euclidean_vcr(
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
     candidate_point_sampler_args: dict = None,
-    voters_positions: Iterable[float] = None,
-    candidates_positions: Iterable[float] = None,
+    voters_positions: Iterable[Iterable[float]] = None,
+    candidates_positions: Iterable[Iterable[float]] = None,
     seed: int = None,
 ) -> list[set[int]]:
     """
@@ -187,9 +187,9 @@ def euclidean_vcr(
         candidate_point_sampler_args : dict
             The arguments passed to the `candidate_point_sampler`. The argument `num_points`
             is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[float]
+        voters_positions : Iterable[Iterable[float]]
             Position of the voters.
-        candidates_positions : Iterable[float]
+        candidates_positions : Iterable[Iterable[float]]
             Position of the candidates.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
@@ -264,8 +264,8 @@ def euclidean_constant_size(
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
     candidate_point_sampler_args: dict = None,
-    voters_positions: Iterable[float] = None,
-    candidates_positions: Iterable[float] = None,
+    voters_positions: Iterable[Iterable[float]] = None,
+    candidates_positions: Iterable[Iterable[float]] = None,
     seed: int = None,
 ) -> list[set[int]]:
     """
@@ -313,9 +313,9 @@ def euclidean_constant_size(
         candidate_point_sampler_args : dict
             The arguments passed to the `candidate_point_sampler`. The argument `num_points`
             is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[float]
+        voters_positions : Iterable[Iterable[float]]
             Position of the voters.
-        candidates_positions : Iterable[float]
+        candidates_positions : Iterable[Iterable[float]]
             Position of the candidates.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if

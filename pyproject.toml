@@ -37,7 +37,8 @@ dev = [
     "unittest2",
     "matplotlib",
     "pandas",
-    "seaborn"
+    "seaborn",
+    "scipy"
 ]
 
 [project.urls]

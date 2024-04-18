@@ -28,13 +28,14 @@ REM Put it first so that "make" without argument is like "make help".
 :help
     %SPHINXBUILD% -M help "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
 
-:github
+:githubc
     echo. > "%GITHUBBUILDDIR%\.nojekyll"
     %SPHINXBUILD% -b html "%SOURCEDIR%" "%GITHUBBUILDDIR%" %SPHINXOPTS% %O%
 :githubclean
     %SPHINXBUILD% -M clean "%SOURCEDIR%" "%GITHUBBUILDDIR%" %SPHINXOPTS% %O%
 
 :html
+    make doctest
     %SPHINXBUILD% -b html "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
 
 REM Catch-all target: route all unknown targets to Sphinx using the new

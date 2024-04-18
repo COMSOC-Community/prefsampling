@@ -270,7 +270,7 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
 
         .. code-block::
 
-            # This already takes a very long time... (10 candidates)
+            # This already takes a very long time... (only 10 candidates)
             single_crossing_impartial(2, 10)
 
     Validation

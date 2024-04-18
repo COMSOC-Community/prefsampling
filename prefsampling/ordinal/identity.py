@@ -1,3 +1,8 @@
+"""
+Identity samplers are not fascinating per se as all voters have the same preferences. There are useful tools however,
+for instance when using them in mixtures.
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -23,6 +28,24 @@ def identity(num_voters: int, num_candidates: int, seed: int = None) -> np.ndarr
     -------
         np.ndarray
             Ordinal votes.
+
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import identity
+
+            # Sample from a unanimous profile with 2 voters and 3 candidates
+            identity(2, 3)
+
+            # The seed will not change anything here, but you can still set it.
+            identity(2, 3, seed=1002)
+
+    Validation
+    ----------
+        Validation is trivial here, we thus omit it.
     """
 
     return np.array([np.arange(num_candidates) for _ in range(num_voters)], dtype=int)

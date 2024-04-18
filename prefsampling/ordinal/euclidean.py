@@ -20,8 +20,8 @@ def euclidean(
     point_sampler_args: dict = None,
     candidate_point_sampler: Callable = None,
     candidate_point_sampler_args: dict = None,
-    voters_positions: Iterable[float] = None,
-    candidates_positions: Iterable[float] = None,
+    voters_positions: Iterable[Iterable[float]] = None,
+    candidates_positions: Iterable[Iterable[float]] = None,
     seed: int = None,
 ) -> np.ndarray:
     """
@@ -42,11 +42,11 @@ def euclidean(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        euclidean_space: EuclideanSpace, default: :code:`None`
+        euclidean_space: :py:class:`~prefsampling.core.euclidean.EuclideanSpace`, default: :code:`None`
             Use a pre-defined Euclidean space for sampling the position of the voters. If no
             `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
             candidates as well. A number of dimension needs to be provided.
-        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
+        candidate_euclidean_space: :py:class:`~prefsampling.core.euclidean.EuclideanSpace`, default: :code:`None`
             Use a pre-defined Euclidean space for sampling the position of the candidates. If no
             value is provided, the value of 'euclidean_space' is used. A number of dimension needs
             to be provided.
@@ -67,9 +67,9 @@ def euclidean(
         candidate_point_sampler_args : dict
             The arguments passed to the `candidate_point_sampler`. The argument `num_points`
             is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[float]
+        voters_positions : Iterable[Iterable[float]]
             Position of the voters.
-        candidates_positions : Iterable[float]
+        candidates_positions : Iterable[Iterable[float]]
             Position of the candidates.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
@@ -80,19 +80,111 @@ def euclidean(
         np.ndarray
             Ordinal votes.
 
+    Examples
+    --------
+
+        The easiest is to use one of the Euclidean spaces defined in
+        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
+
+        .. testcode::
+
+            from prefsampling.ordinal import euclidean
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            # Here for 2 voters and 3 candidates with uniform ball
+            euclidean(2, 3, euclidean_space = EuclideanSpace.UNIFORM_BALL, num_dimensions=3)
+
+            # You can use different spaces for the voters and the candidates
+            euclidean(
+                2,
+                3,
+                num_dimensions=3
+                euclidean_space = EuclideanSpace.UNIFORM_SPHERE,
+                euclidean_space = EuclideanSpace.GAUSSIAN_CUBE,
+                )
+
+            # Don't forget to pass the number of dimensions
+            try:
+                euclidean(2, 3, euclidean_space = EuclideanSpace.UNBOUNDED_GAUSSIAN)
+            except ValueError:
+                pass
+
+        If you need more flexibility, you can also pass the point samplers directly.
+
+        .. testcode::
+
+            from prefsampling.ordinal import euclidean
+            from prefsampling.point import ball_uniform
+
+            # Here for 2 voters and 3 candidates with uniform ball
+            euclidean(2, 3, num_dimensions=5, point_sampler = ball_uniform)
+
+            # You can specify additional arguments to the point sampler
+            euclidean(
+                2,
+                3,
+                num_dimensions=5,  # can be here or in the point_sampler_args
+                point_sampler = ball_uniform,
+                point_sampler_args = {'widths': (1, 3, 2, 4, 2)}
+            )
+
+            # You can also specify different point samplers for voters and candidates
+            from prefsampling.point import cube
+
+            euclidean(
+                2,
+                3,
+                num_dimensions=2,
+                point_sampler = ball_uniform,
+                point_sampler_args = {'widths': (3, 1), 'only_envelope': True},
+                point_sampler_candidates = cube,
+                point_sampler_candidates_args = {'center_point': (0.5, 1)}
+            )
+
+            # You can also mix the two methods.
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            euclidean(
+                2,
+                3,
+                num_dimensions=2,
+                point_sampler = ball_uniform,
+                point_sampler_args = {'widths': (3, 1), 'only_envelope': True},
+                euclidean_space_candidates = EuclideanSpace.UNIFORM_CUBE,
+            )
+
+        If you already have positions for the voters or the candidates, you can also pass them to
+        the sampler.
+
+        .. testcode::
+
+            from prefsampling.ordinal import euclidean
+            from prefsampling.point import gaussian
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            # First sampler positions of the 3 candidates in 2 dimensions
+            candidates_positions = gaussian(3, 2, sigmas=(0.4, 0.8), widths=(5, 1))
+
+            # Then sample preferences for 2 voters based on the candidates positions
+            euclidean(
+                2,
+                3,
+                num_dimensions=2,
+                euclidean_space=EuclideanSpace.GAUSSIAN_BALL,
+                candidates_positions=candidates_positions  # use voters_positions for voters
+            )
+
+    Validation
+    ----------
+
+        There is no known expression for the probability distribution governing Euclidean models.
 
     References
     ----------
-        *How to Sample Approval Elections?*
-        Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,
-        Krzysztof Sornat, Nimrod Talmon.
-        https://arxiv.org/abs/2207.01140
-
-    Examples
-    --------
-        .. code-block:: python
-
-            from lala.sad
+        `The spatial theory of voting: An introduction
+        <https://www.cambridge.org/nl/universitypress/subjects/politics-international-relations/political-theory/spatial-theory-voting-introduction>`_,
+        *Enelow, James M., and Melvin J. Hinich*,
+        Cambridge University Press, 1984.
     """
 
     voters_pos, candidates_pos = sample_election_positions(
