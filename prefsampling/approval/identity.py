@@ -28,10 +28,20 @@ def identity(
         list[set[int]]
             Approval votes.
 
-    Raises
-    ------
-        ValueError
-            When `rel_num_approvals` is not in the [0, 1] interval.
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.approval import identity
+
+            # Sample a unanimous profile with 2 voters and 3 candidates.
+            # Voters approve 60% of the candidates (1 in this case).
+            identity(2, 3, 0.6)
+
+            # The seed will not change anything here, but you can still set it.
+            identity(2, 3, seed=1002)
+
     """
 
     if rel_num_approvals < 0 or 1 < rel_num_approvals:

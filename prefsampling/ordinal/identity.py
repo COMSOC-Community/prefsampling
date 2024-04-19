@@ -37,7 +37,7 @@ def identity(num_voters: int, num_candidates: int, seed: int = None) -> np.ndarr
 
             from prefsampling.ordinal import identity
 
-            # Sample from a unanimous profile with 2 voters and 3 candidates
+            # Sample a unanimous profile with 2 voters and 3 candidates
             identity(2, 3)
 
             # The seed will not change anything here, but you can still set it.

@@ -44,6 +44,45 @@ def mixture(
             Note that this is only the seed for this function.
             If you want to use particular seed for the functions generating votes,
             you should pass it as parameter within the :code:`sampler_parameters` list.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.core import mixture
+            from prefsampling.ordinal import mallows
+
+            # A mixture of two Mallows' models with different phi and central votes.
+            # The first model has weight 0.7 and the second 0.3.
+            # There are 10 voters and 5 candidates.
+
+            mixture(
+                10,
+                5,
+                [mallows, mallows],
+                [0.7, 0.3],
+                [
+                    {'phi': 0.2, 'central_vote': range(5)},
+                    {'phi': 0.9, 'central_vote': [4, 3, 2, 1, 0]}
+                ],
+            )
+
+            # The weights are re-normalised if they don't add up to one.
+            # The real weights here would be 3/4, 1/4.
+
+            from prefsampling.approval import noise, identity
+
+            mixture(
+                10,
+                5,
+                [noise, identity],
+                [0.3, 0.1],
+                [
+                    {'p': 0.2, 'phi': 0.4},
+                    {'rel_num_approvals': 0.6}
+                ],
+            )
     """
     if len(samplers) != len(weights):
         raise ValueError(
@@ -103,10 +142,28 @@ def concatenation(
             List of dictionaries passed as keyword parameters of the samplers. Number of voters and
             number of candidates of these dictionaries are not taken into account.
 
-    Returns
-    -------
-        np.ndarray
-            Ordinal votes.
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.core import concatenation
+            from prefsampling.ordinal import mallows
+
+            # A concatenation of two Mallows' models with different phi and central votes.
+            # 4 votes are sampled from the first model and 6 votes from the second.
+            # There are 5 candidates
+
+            mixture(
+                [4, 6],
+                5,
+                [mallows, mallows],
+                [0.7, 0.3],
+                [
+                    {'phi': 0.2, 'central_vote': range(5)},
+                    {'phi': 0.9, 'central_vote': [4, 3, 2, 1, 0]}
+                ],
+            )
     """
 
     if len(num_voters_per_sampler) != len(samplers):

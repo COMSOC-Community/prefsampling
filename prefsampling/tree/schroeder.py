@@ -172,7 +172,7 @@ def schroeder_tree_lescanne(
 ) -> Node:
     """
     Samples a random Schröder tree following the algorithm provided by `Lescanne (2022)
-    <https://arxiv.org/abs/2205.11982>`_. The sampler is directcly taken from the `corresponding
+    <https://arxiv.org/abs/2205.11982>`_. The sampler is directly taken from the `corresponding
     GitHub repository <https://github.com/PierreLescanne/Motzkin>`_ (no licence available).
 
     If a specific number of internal nodes is given, trees are sampled at random until the required
@@ -308,7 +308,9 @@ def schroeder_tree_brute_force(
     """
     all_trees = all_schroeder_tree(num_leaves, num_internal_nodes=num_internal_nodes)
     rng = np.random.default_rng(seed)
-    return rng.choice(all_trees)
+    res = rng.choice(all_trees)
+    res.rename_frontier()
+    return res
 
 
 def _partition_schroeder_nodes(num_nodes: int, num_leaves: int) -> list[list[int]]:

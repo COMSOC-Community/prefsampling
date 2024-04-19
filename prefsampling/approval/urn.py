@@ -11,7 +11,6 @@ def urn(
     num_voters: int, num_candidates: int, p: float, alpha: float, seed: int = None
 ) -> list[set]:
     """
-
     Generates votes following the Pólya-Eggenberger urn culture. The process is as follows. The urn
     is initially empty and votes are generated one after the other, in turns. When generating a
     vote, the following happens. With a probability of 1/(urn_size + 1),an approval ballots in

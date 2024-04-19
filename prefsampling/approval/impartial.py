@@ -19,6 +19,9 @@ def impartial(
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
 
+    See :py:func:`prefsampling.approval.impartial.impartial_constant_size` for a version in which
+    all voters approve of the same number of candidates.
+
     Parameters
     ----------
         num_voters : int
@@ -35,10 +38,19 @@ def impartial(
         list[set]
             Approval votes.
 
-    Raises
-    ------
-        ValueError
-            When `p` not in [0,1] interval.
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.approval import impartial
+
+            # Sample from an impartial culture with 2 voters and 3 candidates where
+            # a candidate is approved with 60% probability.
+            impartial(2, 3, 0.6)
+
+            # For reproducibility, you can set the seed.
+            impartial(2, 3, 0.6, seed=1002)
     """
 
     if p < 0 or 1 < p:
@@ -67,6 +79,9 @@ def impartial_constant_size(
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
 
+    See :py:func:`prefsampling.approval.impartial.impartial` for a version in the probability of
+    approving any candidate is constant and independent.
+
     Parameters
     ----------
         num_voters : int
@@ -83,10 +98,19 @@ def impartial_constant_size(
         list[set]
             Approval votes.
 
-    Raises
-    ------
-        ValueError
-            When `rel_num_approvals` is not in [0, 1] interval.
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.approval import impartial_constant_size
+
+            # Sample from an impartial culture with 2 voters and 3 candidates where
+            # all voters approve of 60% of the candidates (in this case 1).
+            impartial_constant_size(2, 3, 0.6)
+
+            # For reproducibility, you can set the seed.
+            impartial_constant_size(2, 3, 0.6, seed=1002)
     """
 
     if rel_num_approvals < 0 or 1 < rel_num_approvals:

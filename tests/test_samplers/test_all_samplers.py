@@ -5,8 +5,8 @@ from tests.test_samplers.ordinal.test_all_ordinal_samplers import all_test_sampl
 
 
 def all_random_samplers():
-    samplers = all_test_samplers_approval()
-    samplers += all_test_samplers_ordinal()
+    samplers = all_test_samplers_ordinal()
+    samplers += all_test_samplers_approval()
     return samplers
 
 

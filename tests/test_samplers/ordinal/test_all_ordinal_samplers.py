@@ -2,12 +2,6 @@ from unittest import TestCase
 
 import numpy as np
 
-from prefsampling.core import (
-    permute_voters,
-    rename_candidates,
-    resample_as_central_vote,
-    mixture,
-)
 from prefsampling.ordinal import mallows
 from tests.test_samplers.ordinal.test_ordinal_didi import (
     all_test_samplers_ordinal_didi,
