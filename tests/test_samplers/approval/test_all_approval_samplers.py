@@ -56,7 +56,7 @@ def all_test_samplers_approval():
             {
                 "main_test_sampler": test_sampler,
                 "resampler": resampling,
-                "resampler_params": {"phi": 0.9684, "p": 0.1345},
+                "resampler_params": {"phi": 0.9684, "rel_size_central_vote": 0.1345},
             },
         )
         for test_sampler in np.random.choice(test_samplers, size=20)

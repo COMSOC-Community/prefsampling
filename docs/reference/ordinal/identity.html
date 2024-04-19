@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Impartial Models &#8212; PrefSampling</title>
+    <title>Unanimous Models &#8212; PrefSampling</title>
   
   
   
@@ -158,7 +158,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Ordinal</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Impartial Models</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="euclidean.html">Euclidean Models</a></li>
@@ -169,7 +169,12 @@
 <li class="toctree-l3"><a class="reference internal" href="groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core</a></li>
@@ -331,7 +336,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Impartial Models</h1>
+    <h1>Unanimous Models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -354,9 +359,9 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="module-prefsampling.ordinal.identity">
-<span id="impartial-models"></span><h1>Impartial Models<a class="headerlink" href="#module-prefsampling.ordinal.identity" title="Link to this heading">#</a></h1>
-<p>Identity samplers are not fascinating per se as all voters have the same preferences. There are useful tools however,
-for instance when using them in mixtures.</p>
+<span id="unanimous-models"></span><h1>Unanimous Models<a class="headerlink" href="#module-prefsampling.ordinal.identity" title="Link to this heading">#</a></h1>
+<p>Identity samplers are not fascinating per se as all voters have the same preferences. There are
+useful tools however, for instance when using them in mixtures.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.identity.identity">
 <span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/identity.html#identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.identity.identity" title="Link to this definition">#</a></dt>
@@ -379,7 +384,7 @@ for instance when using them in mixtures.</p>
 <p class="rubric">Examples</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">identity</span>
 
-<span class="c1"># Sample from a unanimous profile with 2 voters and 3 candidates</span>
+<span class="c1"># Sample a unanimous profile with 2 voters and 3 candidates</span>
 <span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
 <span class="c1"># The seed will not change anything here, but you can still set it.</span>

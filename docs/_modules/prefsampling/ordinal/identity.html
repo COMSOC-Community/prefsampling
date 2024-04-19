@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
@@ -296,8 +301,8 @@ document.write(`
                   
   <h1>Source code for prefsampling.ordinal.identity</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Identity samplers are not fascinating per se as all voters have the same preferences. There are useful tools however,</span>
-<span class="sd">for instance when using them in mixtures.</span>
+<span class="sd">Identity samplers are not fascinating per se as all voters have the same preferences. There are</span>
+<span class="sd">useful tools however, for instance when using them in mixtures.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
@@ -336,7 +341,7 @@ document.write(`
 
 <span class="sd">            from prefsampling.ordinal import identity</span>
 
-<span class="sd">            # Sample from a unanimous profile with 2 voters and 3 candidates</span>
+<span class="sd">            # Sample a unanimous profile with 2 voters and 3 candidates</span>
 <span class="sd">            identity(2, 3)</span>
 
 <span class="sd">            # The seed will not change anything here, but you can still set it.</span>

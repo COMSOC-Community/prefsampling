@@ -1,7 +1,8 @@
 """
 Impartial cultures are statistical cultures in which all outcomes are equally likely to be
-generated. Such cultures are known for rankings, profiles etc...
+generated.
 """
+
 from __future__ import annotations
 
 import math
@@ -83,12 +84,15 @@ def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndar
     return votes
 
 
-def impartial_theoretical_distribution(num_candidates: int = None,
-                                       rankings: Iterable[tuple[int]] = None) -> dict:
+def impartial_theoretical_distribution(
+    num_candidates: int = None, rankings: Iterable[tuple[int]] = None
+) -> dict:
     if rankings is None:
         if num_candidates is None:
-            raise ValueError("If you do not provide the collection of rankings, you need to "
-                             "provide the number of candidates.")
+            raise ValueError(
+                "If you do not provide the collection of rankings, you need to "
+                "provide the number of candidates."
+            )
         validate_int(num_candidates, lower_bound=1)
         rankings = all_rankings(num_candidates)
     return {r: 1 / len(rankings) for r in rankings}
@@ -168,16 +172,22 @@ def impartial_anonymous(
     )
 
 
-def impartial_anonymous_theoretical_distribution(num_voters: int = None, num_candidates: int = None,
-                                       anonymous_profiles: Iterable[
-                                           Collection[tuple[int]]] = None) -> dict:
+def impartial_anonymous_theoretical_distribution(
+    num_voters: int = None,
+    num_candidates: int = None,
+    anonymous_profiles: Iterable[Collection[tuple[int]]] = None,
+) -> dict:
     if anonymous_profiles is None:
         if num_candidates is None:
-            raise ValueError("If you do not provide the collection of anonymous profiles, "
-                             "you need to provide the number of candidates.")
+            raise ValueError(
+                "If you do not provide the collection of anonymous profiles, "
+                "you need to provide the number of candidates."
+            )
         if num_voters is None:
-            raise ValueError("If you do not provide the collection of anonymous profiles, "
-                             "you need to provide the number of voters.")
+            raise ValueError(
+                "If you do not provide the collection of anonymous profiles, "
+                "you need to provide the number of voters."
+            )
         validate_int(num_candidates, lower_bound=1)
         validate_int(num_voters, lower_bound=1)
         anonymous_profiles = all_anonymous_profiles(num_voters, num_candidates)
@@ -289,7 +299,9 @@ def stratification(
     return votes
 
 
-def stratification_theoretical_distribution(num_candidates: int, weight: float, rankings) -> dict:
+def stratification_theoretical_distribution(
+    num_candidates: int, weight: float, rankings
+) -> dict:
     validate_int(num_candidates, lower_bound=0)
     if rankings is None:
         rankings = all_rankings(num_candidates)

@@ -14,7 +14,7 @@ from tests.utils import (
 
 def all_test_samplers_approval_resampling():
     samplers = [
-        TestSampler(resampling, {"p": random_p, "phi": random_phi})
+        TestSampler(resampling, {"rel_size_central_vote": random_p, "phi": random_phi})
         for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)
     ]
@@ -28,7 +28,10 @@ def all_test_samplers_approval_resampling():
         if random_g * random_p <= 1
     ]
     samplers += [
-        TestSampler(moving_resampling, {"p": random_p, "phi": random_phi, "num_legs": random_num_legs})
+        TestSampler(
+            moving_resampling,
+            {"p": random_p, "phi": random_phi, "num_legs": random_num_legs},
+        )
         for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)
         for random_num_legs in int_parameter_test_values(1, 4, 1)
@@ -39,18 +42,24 @@ def all_test_samplers_approval_resampling():
 class TestApprovalResampling(TestCase):
     def test_approval_resampling(self):
         with self.assertRaises(ValueError):
-            resampling(4, 5, p=0.5, phi=-0.4)
+            resampling(4, 5, rel_size_central_vote=0.5, phi=-0.4)
         with self.assertRaises(ValueError):
-            resampling(4, 5, p=0.5, phi=4)
+            resampling(4, 5, rel_size_central_vote=0.5, phi=4)
         with self.assertRaises(ValueError):
-            resampling(4, 5, p=-0.4, phi=0.5)
+            resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5)
         with self.assertRaises(ValueError):
-            resampling(4, 5, p=-0.4, phi=0.5)
+            resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5)
 
         with self.assertRaises(ValueError):
-            resampling(4, 5, p=0.5, phi=0.4, central_vote="1234")
+            resampling(4, 5, rel_size_central_vote=0.5, phi=0.4, central_vote="1234")
         with self.assertRaises(ValueError):
-            resampling(4, 5, p=0.5, phi=0.4, central_vote={1, 2, 3, 4, 5, 6, 7})
+            resampling(
+                4,
+                5,
+                rel_size_central_vote=0.5,
+                phi=0.4,
+                central_vote={1, 2, 3, 4, 5, 6, 7},
+            )
 
     def test_approval_disjoint_resampling(self):
         with self.assertRaises(ValueError):
@@ -65,4 +74,6 @@ class TestApprovalResampling(TestCase):
             disjoint_resampling(4, 5, p=0.4, phi=0.5, g=10)
 
     def test_impartial_central_vote(self):
-        resampling(4, 5, p=0.5, phi=0.4, impartial_central_vote=True)
+        resampling(
+            4, 5, rel_size_central_vote=0.5, phi=0.4, impartial_central_vote=True
+        )

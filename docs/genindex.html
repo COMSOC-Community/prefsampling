@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/core/index.html">Core</a></li>
@@ -307,6 +312,7 @@ document.write(`
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
  | <a href="#K"><strong>K</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
@@ -316,6 +322,7 @@ document.write(`
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -351,11 +358,13 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/ordinal/groupseparable.html#prefsampling.ordinal.groupseparable.TreeSampler.BALANCED">BALANCED (TreeSampler attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/point/index.html#prefsampling.point.ball_resampling">ball_resampling() (in module prefsampling.point)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/point/index.html#prefsampling.point.ball_uniform">ball_uniform() (in module prefsampling.point)</a>
+</li>
+      <li><a href="reference/approval/noise.html#prefsampling.approval.noise.SetDistance.BUNKE_SHEARER">BUNKE_SHEARER (SetDistance attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -397,7 +406,7 @@ document.write(`
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.empty">empty() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/identity.html#prefsampling.approval.identity.empty">empty() (in module prefsampling.approval.identity)</a>
 </li>
       <li><a href="reference/ordinal/euclidean.html#prefsampling.ordinal.euclidean.euclidean">euclidean() (in module prefsampling.ordinal.euclidean)</a>
 </li>
@@ -417,7 +426,7 @@ document.write(`
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.full">full() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/identity.html#prefsampling.approval.identity.full">full() (in module prefsampling.approval.identity)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -445,7 +454,7 @@ document.write(`
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.hamming_distance">hamming_distance() (in module prefsampling.combinatorics)</a>
+      <li><a href="reference/approval/noise.html#prefsampling.approval.noise.SetDistance.HAMMING">HAMMING (SetDistance attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -453,13 +462,13 @@ document.write(`
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.identity">identity() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/identity.html#prefsampling.approval.identity.identity">identity() (in module prefsampling.approval.identity)</a>
 
       <ul>
         <li><a href="reference/ordinal/identity.html#prefsampling.ordinal.identity.identity">(in module prefsampling.ordinal.identity)</a>
 </li>
       </ul></li>
-      <li><a href="reference/approval/index.html#prefsampling.approval.impartial">impartial() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/impartial.html#prefsampling.approval.impartial.impartial">impartial() (in module prefsampling.approval.impartial)</a>
 
       <ul>
         <li><a href="reference/ordinal/impartial.html#prefsampling.ordinal.impartial.impartial">(in module prefsampling.ordinal.impartial)</a>
@@ -469,9 +478,17 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/ordinal/impartial.html#prefsampling.ordinal.impartial.impartial_anonymous">impartial_anonymous() (in module prefsampling.ordinal.impartial)</a>
 </li>
-      <li><a href="reference/approval/index.html#prefsampling.approval.impartial_constant_size">impartial_constant_size() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/impartial.html#prefsampling.approval.impartial.impartial_constant_size">impartial_constant_size() (in module prefsampling.approval.impartial)</a>
 </li>
       <li><a href="reference/combinatorics.html#prefsampling.combinatorics.is_single_crossing">is_single_crossing() (in module prefsampling.combinatorics)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/approval/noise.html#prefsampling.approval.noise.SetDistance.JACCARD">JACCARD (SetDistance attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -496,6 +513,12 @@ document.write(`
 
       <ul>
         <li><a href="reference/approval/index.html#module-prefsampling.approval">prefsampling.approval</a>
+</li>
+        <li><a href="reference/approval/identity.html#module-prefsampling.approval.identity">prefsampling.approval.identity</a>
+</li>
+        <li><a href="reference/approval/impartial.html#module-prefsampling.approval.impartial">prefsampling.approval.impartial</a>
+</li>
+        <li><a href="reference/approval/noise.html#module-prefsampling.approval.noise">prefsampling.approval.noise</a>
 </li>
         <li><a href="reference/combinatorics.html#module-prefsampling.combinatorics">prefsampling.combinatorics</a>
 </li>
@@ -546,7 +569,7 @@ document.write(`
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.noise">noise() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/noise.html#prefsampling.approval.noise.noise">noise() (in module prefsampling.approval.noise)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -566,13 +589,32 @@ document.write(`
 </li>
       <li><a href="reference/combinatorics.html#prefsampling.combinatorics.powerset">powerset() (in module prefsampling.combinatorics)</a>
 </li>
-      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.powerset_as_sets">powerset_as_sets() (in module prefsampling.combinatorics)</a>
-</li>
       <li>
     prefsampling.approval
 
       <ul>
         <li><a href="reference/approval/index.html#module-prefsampling.approval">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.approval.identity
+
+      <ul>
+        <li><a href="reference/approval/identity.html#module-prefsampling.approval.identity">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.approval.impartial
+
+      <ul>
+        <li><a href="reference/approval/impartial.html#module-prefsampling.approval.impartial">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.approval.noise
+
+      <ul>
+        <li><a href="reference/approval/noise.html#module-prefsampling.approval.noise">module</a>
 </li>
       </ul></li>
       <li>
@@ -624,6 +666,8 @@ document.write(`
         <li><a href="reference/ordinal/index.html#module-prefsampling.ordinal">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prefsampling.ordinal.didi
 
@@ -631,8 +675,6 @@ document.write(`
         <li><a href="reference/ordinal/didi.html#module-prefsampling.ordinal.didi">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prefsampling.ordinal.euclidean
 
@@ -750,6 +792,8 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/approval/noise.html#prefsampling.approval.noise.SetDistance">SetDistance (class in prefsampling.approval.noise)</a>
+</li>
       <li><a href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.single_crossing">single_crossing() (in module prefsampling.ordinal.singlecrossing)</a>
 </li>
       <li><a href="reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.single_crossing_impartial">single_crossing_impartial() (in module prefsampling.ordinal.singlecrossing)</a>
@@ -807,6 +851,14 @@ document.write(`
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/inputvalidators.html#prefsampling.inputvalidators.validate_num_voters_candidates">validate_num_voters_candidates() (in module prefsampling.inputvalidators)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/approval/noise.html#prefsampling.approval.noise.SetDistance.ZELINKA">ZELINKA (SetDistance attribute)</a>
 </li>
   </ul></td>
 </tr></table>

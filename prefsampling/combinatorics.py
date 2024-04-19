@@ -1,6 +1,7 @@
 """
 A collection of functions used to the number of different entities: rankings, profiles, etc...
 """
+
 from __future__ import annotations
 
 import math
@@ -72,11 +73,9 @@ def generalised_ascending_factorial(value, length, increment):
     """
     if length == 0:
         return 1
-    return (
-        value
-        + (length - 1)
-        * increment
-    ) * generalised_ascending_factorial(value, length - 1, increment)
+    return (value + (length - 1) * increment) * generalised_ascending_factorial(
+        value, length - 1, increment
+    )
 
 
 def powerset(iterable: Iterable, min_size: int = 1, max_size: int = None) -> Iterable:
@@ -100,7 +99,12 @@ def powerset(iterable: Iterable, min_size: int = 1, max_size: int = None) -> Ite
     s = list(iterable)
     if max_size is None:
         max_size = len(s) + 1
-    return chain.from_iterable(combinations(s, r) for r in range(min_size, max_size))
+    return tuple(
+        tuple(sorted(s))
+        for s in chain.from_iterable(
+            combinations(s, r) for r in range(min_size, max_size)
+        )
+    )
 
 
 def proper_powerset(iterable, min_size: int = 1):
@@ -123,25 +127,6 @@ def proper_powerset(iterable, min_size: int = 1):
     return powerset(s, min_size=min_size, max_size=len(s))
 
 
-def powerset_as_sets(num_candidates: int) -> list[set[int]]:
-    """
-    Returns all the subsets of the set `{0, 1, .., num_candidates}`, each subset being typed as a
-    Python set.
-
-    Parameters
-    ----------
-        num_candidates: int
-            The number of candidates.
-
-    Returns
-    -------
-        list[set[int]]
-            A list containing all the subsets.
-
-    """
-    return [set(subset) for subset in powerset(range(num_candidates), min_size=0)]
-
-
 def all_rankings(num_elements: int) -> list[tuple[int]]:
     """
     Returns a list of all the rankings with `num_elements`.
@@ -162,7 +147,7 @@ def all_rankings(num_elements: int) -> list[tuple[int]]:
 
 
 def all_anonymous_profiles(
-        num_voters: int, num_candidates: int
+    num_voters: int, num_candidates: int
 ) -> list[tuple[tuple[int]]]:
     """
     Returns a list of all the anonymous profiles for a given number of voters and candidates. An
@@ -182,9 +167,7 @@ def all_anonymous_profiles(
         list[tuple[tuple[int]]]
             A list containing all the anonymous profiles
     """
-    return list(
-        combinations_with_replacement(all_rankings(num_candidates), num_voters)
-    )
+    return list(combinations_with_replacement(all_rankings(num_candidates), num_voters))
 
 
 def all_profiles(num_voters: int, num_candidates: int) -> list[tuple[tuple[int]]]:
@@ -212,7 +195,9 @@ def all_profiles(num_voters: int, num_candidates: int) -> list[tuple[tuple[int]]
 
 
 def all_non_isomorphic_profiles(
-        num_voters: int, num_candidates: int, profiles: Iterable[Sequence[Sequence[int]]] = None
+    num_voters: int,
+    num_candidates: int,
+    profiles: Iterable[Sequence[Sequence[int]]] = None,
 ) -> list[tuple[tuple[int]]]:
     """
     Returns a maximal collection of profiles that are not isomorphic. Two profiles are isomorphic
@@ -328,7 +313,7 @@ def is_single_crossing(profile: Sequence[Sequence[int]]) -> bool:
             True if the profile is single-crossing and false otherwise.
     """
     for j, cand1 in enumerate(profile[0]):
-        for cand2 in profile[0][j + 1:]:
+        for cand2 in profile[0][j + 1 :]:
             cand1_over_cand2 = True
             for vote in profile:
                 if vote.index(cand1) < vote.index(cand2) and not cand1_over_cand2:
@@ -339,10 +324,10 @@ def is_single_crossing(profile: Sequence[Sequence[int]]) -> bool:
 
 
 def all_single_crossing_profiles(
-        num_voters: int,
-        num_candidates: int,
-        profiles: Iterable[Sequence[Sequence[int]]] = None,
-        fix_order: bool = False,
+    num_voters: int,
+    num_candidates: int,
+    profiles: Iterable[Sequence[Sequence[int]]] = None,
+    fix_order: bool = False,
 ) -> list[tuple[tuple[int]]]:
     """
     Returns all profiles that are single-crossing.
@@ -421,6 +406,7 @@ def gs_structure(profile: Sequence[Sequence[int]], verbose: bool = False) -> str
             A string representing the structure.
 
     """
+
     def aux(prof, cands, node):
         if len(cands) == 2:
             new_node = GSNode(tuple(cands))
@@ -468,7 +454,7 @@ def gs_structure(profile: Sequence[Sequence[int]], verbose: bool = False) -> str
                 if verbose:
                     print("\t\tAll votes separate")
                 if j == len(cands) - 1 and (
-                        all_voters_separate_below or all_voters_separate_above
+                    all_voters_separate_below or all_voters_separate_above
                 ):
                     new_node = GSNode(tuple(cands))
                     node.children.append(new_node)
@@ -495,8 +481,9 @@ def gs_structure(profile: Sequence[Sequence[int]], verbose: bool = False) -> str
 
 
 def all_group_separable_profiles(
-        num_voters: int, num_candidates: int, profiles: Iterable[Sequence[Sequence[int]]] = None
-
+    num_voters: int,
+    num_candidates: int,
+    profiles: Iterable[Sequence[Sequence[int]]] = None,
 ) -> list[tuple[tuple[int]]]:
     """
     Returns all profiles that are group-separable.
@@ -568,7 +555,11 @@ def all_group_separable_profiles(
     return res
 
 
-def all_gs_structure(num_voters: int = None, num_candidates: int = None, gs_profiles: Iterable[Sequence[Sequence[int]]] = None) -> list[str]:
+def all_gs_structure(
+    num_voters: int = None,
+    num_candidates: int = None,
+    gs_profiles: Iterable[Sequence[Sequence[int]]] = None,
+) -> list[str]:
     """
     Returns the group-separable structures for which at least one profile is group-separable.
 
@@ -598,25 +589,6 @@ def all_gs_structure(num_voters: int = None, num_candidates: int = None, gs_prof
     return list(set(gs_structure(p) for p in gs_profiles))
 
 
-def hamming_distance(set_1: set, set_2: set) -> int:
-    """
-    Computes the Hamming distance between two sets.
-
-    Parameters
-    ----------
-        set_1: set
-            The first set
-        set_2: set
-            The second set
-
-    Returns
-    -------
-        int
-            The Hamming distance between the two sets.
-    """
-    return len(set_1.symmetric_difference(set_2))
-
-
 def kendall_tau_distance(ranking_1: Iterable, ranking_2: Sequence) -> int:
     """
     Computes the Kendall-Tau distance between two rankings.
@@ -635,7 +607,7 @@ def kendall_tau_distance(ranking_1: Iterable, ranking_2: Sequence) -> int:
     """
     distance = 0
     for k, alt1 in enumerate(ranking_1):
-        for alt2 in ranking_1[k + 1:]:
+        for alt2 in ranking_1[k + 1 :]:
             if ranking_2.index(alt2) < ranking_2.index(alt1):
                 distance += 1
     return distance

@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../reference/core/index.html">Core</a></li>
@@ -302,7 +307,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">NoiseType</span>
+<span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">SetDistance</span>
 <span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">TreeSampler</span>
 
 
@@ -313,7 +318,7 @@ document.write(`
 
     <span class="n">_ignore_</span> <span class="o">=</span> <span class="s2">&quot;member cls&quot;</span>
     <span class="bp">cls</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TreeSampler</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">NoiseType</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TreeSampler</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">SetDistance</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The name </span><span class="si">{</span><span class="n">member</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is used in more than one enumeration. The&quot;</span>

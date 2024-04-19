@@ -4,6 +4,7 @@ A quality score is associated to each candidate. When sampling a ranking, the qu
 are used to sample a number of points for each candidate (using a Dirichlet distribution).
 The ranking corresponds then to the candidates ordered by number of points.
 """
+
 from __future__ import annotations
 
 import numpy as np

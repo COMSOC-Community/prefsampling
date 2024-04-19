@@ -14,7 +14,7 @@ class OrdinalEuclideanValidatorUniform(Validator):
                         "num_voters": 1,
                         "num_candidates": 5,
                         "euclidean_space": space,
-                        "num_dimensions": dimension
+                        "num_dimensions": dimension,
                     },
                 )
         super(OrdinalEuclideanValidatorUniform, self).__init__(
@@ -43,7 +43,7 @@ class OrdinalEuclideanValidator(Validator):
         for space in EuclideanSpace:
             for dimension in [2, 3]:
                 parameters_list.append(
-                     {
+                    {
                         "num_voters": 3,
                         "num_candidates": 3,
                         "euclidean_space": space,

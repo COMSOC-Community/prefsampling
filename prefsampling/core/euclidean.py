@@ -30,15 +30,23 @@ def euclidean_space_to_sampler(space: EuclideanSpace, num_dimensions: int):
     if space == EuclideanSpace.UNIFORM_CUBE:
         return cube, {"num_dimensions": num_dimensions}
     if space == EuclideanSpace.GAUSSIAN_BALL:
-        return ball_resampling, {"num_dimensions": num_dimensions, "inner_sampler": lambda **kwargs: gaussian(**kwargs)[0], "inner_sampler_args": {"num_dimensions": num_dimensions, "num_points": 1}}
+        return ball_resampling, {
+            "num_dimensions": num_dimensions,
+            "inner_sampler": lambda **kwargs: gaussian(**kwargs)[0],
+            "inner_sampler_args": {"num_dimensions": num_dimensions, "num_points": 1},
+        }
     if space == EuclideanSpace.GAUSSIAN_CUBE:
-        return gaussian, {"num_dimensions": num_dimensions, "widths": np.array([1 for _ in range(num_dimensions)])}
+        return gaussian, {
+            "num_dimensions": num_dimensions,
+            "widths": np.array([1 for _ in range(num_dimensions)]),
+        }
     if space == EuclideanSpace.UNBOUNDED_GAUSSIAN:
         return gaussian, {"num_dimensions": num_dimensions}
     raise ValueError(
         "The 'euclidean_space' and/or the 'candidate_euclidean_space' arguments need to be one of "
         "the constant defined in the core.euclidean.EuclideanSpace enumeration. Choices are: "
-        + ", ".join(str(s) for s in EuclideanSpace) + "."
+        + ", ".join(str(s) for s in EuclideanSpace)
+        + "."
     )
 
 
@@ -51,8 +59,10 @@ def _sample_points(
 ) -> np.ndarray:
     if positions is None:
         if sampler is None:
-            raise ValueError(f"You need to either provide a sampler for the {sampled_object_name} "
-                             f"or their positions.")
+            raise ValueError(
+                f"You need to either provide a sampler for the {sampled_object_name} "
+                f"or their positions."
+            )
         if sampler_args is None:
             sampler_args = dict()
         sampler_args["num_points"] = num_points
@@ -133,28 +143,33 @@ def sample_election_positions(
     """
     if euclidean_space:
         if num_dimensions is None:
-            raise ValueError("If you are using the 'euclidean_space' argument, you need to also "
-                             "provide a number of dimensions.")
+            raise ValueError(
+                "If you are using the 'euclidean_space' argument, you need to also "
+                "provide a number of dimensions."
+            )
         validate_int(num_dimensions, "number of dimensions", 1)
         if isinstance(euclidean_space, Enum):
             euclidean_space = EuclideanSpace(euclidean_space.value)
         else:
             euclidean_space = EuclideanSpace(euclidean_space)
 
-        point_sampler, point_sampler_args = euclidean_space_to_sampler(euclidean_space,
-                                                                       num_dimensions)
+        point_sampler, point_sampler_args = euclidean_space_to_sampler(
+            euclidean_space, num_dimensions
+        )
     if candidate_euclidean_space:
         if num_dimensions is None:
-            raise ValueError("If you are using the 'candidate_euclidean_space' argument, you need "
-                             "to also provide a number of dimensions.")
+            raise ValueError(
+                "If you are using the 'candidate_euclidean_space' argument, you need "
+                "to also provide a number of dimensions."
+            )
         if isinstance(candidate_euclidean_space, Enum):
             candidate_euclidean_space = EuclideanSpace(candidate_euclidean_space.value)
         else:
             candidate_euclidean_space = EuclideanSpace(candidate_euclidean_space)
 
-        candidate_point_sampler, candidate_point_sampler_args = euclidean_space_to_sampler(
-            candidate_euclidean_space,
-            num_dimensions)
+        candidate_point_sampler, candidate_point_sampler_args = (
+            euclidean_space_to_sampler(candidate_euclidean_space, num_dimensions)
+        )
 
     if point_sampler_args is None:
         point_sampler_args = dict()

@@ -158,7 +158,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -169,7 +169,12 @@
 <li class="toctree-l3"><a class="reference internal" href="reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/core/index.html">Core</a></li>
@@ -502,23 +507,23 @@ Other parameters are specific to the samplers.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.identity" title="prefsampling.approval.identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">identity()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/identity.html#module-prefsampling.approval.identity" title="prefsampling.approval.identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">identity()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.empty" title="prefsampling.approval.empty"><code class="xref py py-func docutils literal notranslate"><span class="pre">empty()</span></code></a></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">empty()</span></code></p></td>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.full" title="prefsampling.approval.full"><code class="xref py py-func docutils literal notranslate"><span class="pre">full()</span></code></a></p></td>
+<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">full()</span></code></p></td>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/impartial.html#module-prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">p</span></code></p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.impartial_constant_size" title="prefsampling.approval.impartial_constant_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></a></p></td>
+<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></p></td>
 <td><p>—</p></td>
 </tr>
@@ -614,7 +619,7 @@ Other parameters are specific to the samplers.</p>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.noise" title="prefsampling.approval.noise"><code class="xref py py-func docutils literal notranslate"><span class="pre">noise()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/noise.html#module-prefsampling.approval.noise" title="prefsampling.approval.noise"><code class="xref py py-func docutils literal notranslate"><span class="pre">noise()</span></code></a></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code></div>

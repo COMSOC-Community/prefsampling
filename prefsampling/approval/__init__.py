@@ -10,7 +10,7 @@ from prefsampling.approval.resampling import (
     disjoint_resampling,
     moving_resampling,
 )
-from prefsampling.approval.noise import noise, NoiseType
+from prefsampling.approval.noise import noise, SetDistance
 from prefsampling.approval.euclidean import (
     euclidean_threshold,
     euclidean_vcr,
@@ -30,7 +30,7 @@ __all__ = [
     "disjoint_resampling",
     "moving_resampling",
     "noise",
-    "NoiseType",
+    "SetDistance",
     "euclidean_threshold",
     "euclidean_vcr",
     "euclidean_constant_size",

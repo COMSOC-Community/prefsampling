@@ -3,13 +3,17 @@ Single-peaked preferences capture the idea that there exists a societal axis on 
 can be placed in such a way that the preferences of the voters are decreasing along both sides of
 the axis from their most preferred candidate.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
 
 import numpy as np
 
-from prefsampling.combinatorics import all_single_peaked_rankings, all_single_peaked_circle_rankings
+from prefsampling.combinatorics import (
+    all_single_peaked_rankings,
+    all_single_peaked_circle_rankings,
+)
 from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
 
 
@@ -119,7 +123,9 @@ def single_peaked_conitzer(
     return votes
 
 
-def conitzer_theoretical_distribution(num_candidates: int, sp_rankings: Iterable[tuple[int]] = None) -> dict:
+def conitzer_theoretical_distribution(
+    num_candidates: int, sp_rankings: Iterable[tuple[int]] = None
+) -> dict:
     validate_int(num_candidates, lower_bound=1)
     if sp_rankings is None:
         sp_rankings = all_single_peaked_rankings(num_candidates)
@@ -222,11 +228,15 @@ def single_peaked_circle(
     return votes
 
 
-def circle_theoretical_distribution(num_candidates: int = None, sp_circ_rankings: Iterable[tuple[int]] = None) -> dict:
+def circle_theoretical_distribution(
+    num_candidates: int = None, sp_circ_rankings: Iterable[tuple[int]] = None
+) -> dict:
     if sp_circ_rankings is None:
         if num_candidates is None:
-            raise ValueError("If you do not provide the collection of single-peaked on a circle "
-                             "rankings, you need to provide the number of candidates.")
+            raise ValueError(
+                "If you do not provide the collection of single-peaked on a circle "
+                "rankings, you need to provide the number of candidates."
+            )
         validate_int(num_candidates, lower_bound=1)
         sp_circ_rankings = all_single_peaked_circle_rankings(num_candidates)
     return {r: 1 / len(sp_circ_rankings) for r in sp_circ_rankings}
@@ -318,11 +328,15 @@ def single_peaked_walsh(
     return votes
 
 
-def walsh_theoretical_distribution(num_candidates: int = None, sp_rankings: Iterable[tuple[int]] = None) -> dict:
+def walsh_theoretical_distribution(
+    num_candidates: int = None, sp_rankings: Iterable[tuple[int]] = None
+) -> dict:
     if sp_rankings is None:
         if num_candidates is None:
-            raise ValueError("If you do not provide the collection of single-peaked rankings, you "
-                             "need to provide the number of candidates.")
+            raise ValueError(
+                "If you do not provide the collection of single-peaked rankings, you "
+                "need to provide the number of candidates."
+            )
         validate_int(num_candidates, lower_bound=1)
         sp_rankings = all_single_peaked_rankings(num_candidates)
     return {r: 1 / len(sp_rankings) for r in sp_rankings}

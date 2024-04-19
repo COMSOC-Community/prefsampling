@@ -79,7 +79,7 @@ def mixture(
                 [noise, identity],
                 [0.3, 0.1],
                 [
-                    {'p': 0.2, 'phi': 0.4},
+                    {'rel_size_central_vote': 0.2, 'phi': 0.4},
                     {'rel_num_approvals': 0.6}
                 ],
             )
@@ -154,11 +154,10 @@ def concatenation(
             # 4 votes are sampled from the first model and 6 votes from the second.
             # There are 5 candidates
 
-            mixture(
+            concatenation(
                 [4, 6],
                 5,
                 [mallows, mallows],
-                [0.7, 0.3],
                 [
                     {'phi': 0.2, 'central_vote': range(5)},
                     {'phi': 0.9, 'central_vote': [4, 3, 2, 1, 0]}

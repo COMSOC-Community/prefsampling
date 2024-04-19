@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
@@ -295,7 +300,14 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.approval.impartial</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Impartial cultures are statistical cultures in which all outcomes are equally likely to be</span>
+<span class="sd">generated.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -303,10 +315,10 @@ document.write(`
 
 
 <div class="viewcode-block" id="impartial">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.impartial">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/impartial.html#prefsampling.approval.impartial.impartial">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">impartial</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates approval votes from impartial culture.</span>
@@ -318,14 +330,18 @@ document.write(`
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>
 
+<span class="sd">    See :py:func:`~prefsampling.approval.impartial.impartial_constant_size` for a version in which</span>
+<span class="sd">    all voters approve of the same number of candidates.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">        num_voters : int</span>
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
-<span class="sd">        p : float</span>
-<span class="sd">            Probability of approving of any given candidates.</span>
+<span class="sd">        p : float | Sequence[float]</span>
+<span class="sd">            Probability of approving of any given candidates. If a sequence is passed, there is one</span>
+<span class="sd">            such probability per voter.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -334,20 +350,110 @@ document.write(`
 <span class="sd">        list[set]</span>
 <span class="sd">            Approval votes.</span>
 
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            When `p` not in [0,1] interval.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 
-    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
+<span class="sd">        **Use a global** :code:`p` **for all voters**</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import impartial</span>
+
+<span class="sd">            # Sample from an impartial culture with 2 voters and 3 candidates where</span>
+<span class="sd">            # a candidate is approved with 60% probability.</span>
+<span class="sd">            impartial(2, 3, 0.6)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            impartial(2, 3, 0.6, seed=1002)</span>
+
+<span class="sd">            # Parameter p needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial(2, 3, 1.6)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial(2, 3, -0.6)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        **Use an individual** :code:`p` **per voter**</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import impartial</span>
+
+<span class="sd">            # Sample from an impartial culture with 2 voters and 3 candidates with</span>
+<span class="sd">            # p=0.6 for the first voter and p=0.2 for the second.</span>
+<span class="sd">            impartial(2, 3, [0.6, 0.2])</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            impartial(2, 3, [0.6, 0.2], seed=1002)</span>
+
+<span class="sd">            # There need to be one p per voter (and no more)</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial(2, 3, [0.6, 0.2, 0.9])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial(2, 3, [0.6])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # All individual p&#39;s need to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial(2, 3, [0.6, -0.2])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial(2, 3, [1.6, 0.2])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        `An Experimental View on Committees Providing Justified Representation</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2019/16&gt;`_,</span>
+<span class="sd">        *Robert Bredereck, Piotr Faliszewski, Andrzej Kaczmarczyk and Rolf Niedermeier*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2019.</span>
+
+<span class="sd">        `How to Sample Approval Elections?</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2022/71&gt;`_,</span>
+<span class="sd">        *Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,</span>
+<span class="sd">        Krzysztof Sornat and Nimrod Talmon*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2022.</span>
+
+<span class="sd">        `Price of Fairness in Budget Division and Probabilistic Social Choice</span>
+<span class="sd">        &lt;https://ojs.aaai.org/index.php/AAAI/article/view/5594&gt;`_,</span>
+<span class="sd">        * Marcin Michorzewski, Dominik Peters and Piotr Skowron*,</span>
+<span class="sd">        Proceedings of the AAAI Conference on Artificial Intelligence, 2020.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unique_p</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+        <span class="n">unique_p</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_voters</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;In the impartial model, if parameter p is a sequence, it needs to&quot;</span>
+                <span class="s2">&quot;have as many elements as there are voters&quot;</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">prob</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">prob</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">prob</span><span class="si">}</span><span class="s2">. All value of the sequence &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;should be in [0, 1]&quot;</span>
+                <span class="p">)</span>
+    <span class="k">if</span> <span class="n">unique_p</span> <span class="ow">and</span> <span class="p">(</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0, 1]&quot;</span><span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="nb">set</span><span class="p">(</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span> <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
+        <span class="nb">set</span><span class="p">(</span>
+            <span class="n">j</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">p</span> <span class="k">if</span> <span class="n">unique_p</span> <span class="k">else</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
     <span class="p">]</span>
 
     <span class="k">return</span> <span class="n">votes</span></div>
@@ -355,10 +461,13 @@ document.write(`
 
 
 <div class="viewcode-block" id="impartial_constant_size">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.impartial_constant_size">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/impartial.html#prefsampling.approval.impartial.impartial_constant_size">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">impartial_constant_size</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rel_num_approvals</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">rel_num_approvals</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates approval votes from impartial culture with constant size.</span>
@@ -369,14 +478,18 @@ document.write(`
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>
 
+<span class="sd">    See :py:func:`~prefsampling.approval.impartial.impartial` for a version in the probability of</span>
+<span class="sd">    approving any candidate is constant and independent.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">        num_voters : int</span>
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
-<span class="sd">        rel_num_approvals : float</span>
-<span class="sd">            Proportion of approved candidates in a ballot.</span>
+<span class="sd">        rel_num_approvals : float | Sequence[float]</span>
+<span class="sd">            Proportion of approved candidates in a ballot. If a sequence is passed, there is one</span>
+<span class="sd">            such proportion per voter.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -385,24 +498,110 @@ document.write(`
 <span class="sd">        list[set]</span>
 <span class="sd">            Approval votes.</span>
 
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            When `rel_num_approvals` is not in [0, 1] interval.</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        **Use a global** :code:`rel_num_approvals` **for all voters**</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import impartial_constant_size</span>
+
+<span class="sd">            # Sample from an impartial culture with 2 voters and 3 candidates where</span>
+<span class="sd">            # all voters approve of 60% of the candidates (in this case 1).</span>
+<span class="sd">            impartial_constant_size(2, 3, 0.6)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            impartial_constant_size(2, 3, 0.6, seed=1002)</span>
+
+<span class="sd">            # Parameter rel_num_approvals needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial_constant_size(2, 3, 1.6)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial_constant_size(2, 3, -0.6)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">        **Use an individual** :code:`rel_num_approvals` **per voter**</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import impartial_constant_size</span>
+
+<span class="sd">            # Sample from a constant size impartial culture with 2 voters and 3 candidates with</span>
+<span class="sd">            # p=0.6 for the first voter and p=0.2 for the second.</span>
+<span class="sd">            impartial_constant_size(2, 3, [0.6, 0.2])</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            impartial_constant_size(2, 3, [0.6, 0.2], seed=1002)</span>
+
+<span class="sd">            # There need to be one rel_num_approvals per voter (and no more)</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial_constant_size(2, 3, [0.6, 0.2, 0.9])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial_constant_size(2, 3, [0.6])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # All individual rel_num_approvals&#39; need to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial_constant_size(2, 3, [0.6, -0.2])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                impartial_constant_size(2, 3, [1.6, 0.2])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        `A Quantitative Analysis of Multi-Winner Rules</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2019/58&gt;`_,</span>
+<span class="sd">        *Martin Lackner and Piotr Skowron*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2019.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_num_approvals: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot; be in [0,1]&quot;</span>
-        <span class="p">)</span>
+    <span class="n">unique_rel_num_approvals</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rel_num_approvals</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+        <span class="n">unique_rel_num_approvals</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rel_num_approvals</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_voters</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;In the impartial model with constant size, if parameter &quot;</span>
+                <span class="s2">&quot;rel_num_approvals is a sequence, it needs to have as many elements &quot;</span>
+                <span class="s2">&quot;as there are voters.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">prop</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">prop</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_num_approvals: </span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">. All value of the &quot;</span>
+                    <span class="s2">&quot;sequence should be in [0, 1]&quot;</span>
+                <span class="p">)</span>
+        <span class="n">num_approvals</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">prop</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">rel_num_approvals</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_num_approvals: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; be in [0,1]&quot;</span>
+            <span class="p">)</span>
+        <span class="n">num_approvals</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_num_approvals</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
 
-    <span class="n">num_approvals</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_num_approvals</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">candidate_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="nb">set</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidate_range</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_approvals</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
+        <span class="nb">set</span><span class="p">(</span>
+            <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+                <span class="n">candidate_range</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="n">num_approvals</span> <span class="k">if</span> <span class="n">unique_rel_num_approvals</span> <span class="k">else</span> <span class="n">num_approvals</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)</span>
     <span class="p">]</span>
 
     <span class="k">return</span> <span class="n">votes</span></div>

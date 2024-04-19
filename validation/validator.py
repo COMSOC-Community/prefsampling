@@ -283,7 +283,11 @@ class Validator(abc.ABC):
                 current_value = unique_values[df_index]
                 print(f"\t\tPlotting for {faceted_parameters[0]} = {current_value}...")
             if theoretical:
-                apply_hue = not df.loc[df["freq_type"] == "theoretical_freq"]["frequency"].isnull().all()
+                apply_hue = (
+                    not df.loc[df["freq_type"] == "theoretical_freq"]["frequency"]
+                    .isnull()
+                    .all()
+                )
             else:
                 apply_hue = False
             g = sns.catplot(
@@ -298,15 +302,15 @@ class Validator(abc.ABC):
                 legend="full",
             )
 
-            plt.rc('text', usetex=True)
-            plt.rc('font', **{'family': 'serif', 'serif': ['Palatino']})
+            plt.rc("text", usetex=True)
+            plt.rc("font", **{"family": "serif", "serif": ["Palatino"]})
 
             if faceted_parameters[0] is not None:
                 if faceted_parameters[1] is not None:
                     g.set_titles("{col_var} = {col_name}")
                 g.set_xticklabels()
-            # g.set(xticklabels=[])
-            plt.xticks(rotation='vertical')
+            g.set(xticklabels=[])
+            # plt.xticks(rotation='vertical')
             g.set_axis_labels("Outcome identifier", "Frequency")
             title = f"{self.model_name} Model"
             if faceted_parameters[0] is not None:
@@ -315,7 +319,8 @@ class Validator(abc.ABC):
             constant_params = None
             if self.constant_parameters:
                 constant_params = [
-                    f"{k} = {self.parameters_list[0][k]}" for k in self.constant_parameters
+                    f"{k} = {self.parameters_list[0][k]}"
+                    for k in self.constant_parameters
                 ]
             if constant_params:
                 title += " ~~|~~ " + " ~~|~~ ".join(constant_params)
@@ -330,8 +335,8 @@ class Validator(abc.ABC):
                 sns.move_legend(g, "upper right", bbox_to_anchor=(1, 0.8), frameon=True)
 
             file_name = f"{self.model_short_name}_{current_value}"
-            file_name = re.sub('[.,()\[\]]', '_', file_name)
-            file_name = file_name.replace(' ', '')
+            file_name = re.sub("[.,()\[\]]", "_", file_name)
+            file_name = file_name.replace(" ", "")
             file_name += ".png"
 
             plt.savefig(

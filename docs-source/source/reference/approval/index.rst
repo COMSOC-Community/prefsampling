@@ -3,15 +3,12 @@ Approval
 
 .. automodule:: prefsampling.approval
 
-.. autofunction:: prefsampling.approval.identity
+.. toctree::
+    :maxdepth: 1
 
-.. autofunction:: prefsampling.approval.empty
-
-.. autofunction:: prefsampling.approval.full
-
-.. autofunction:: prefsampling.approval.impartial
-
-.. autofunction:: prefsampling.approval.impartial_constant_size
+    impartial
+    identity
+    noise
 
 .. autofunction:: prefsampling.approval.urn
 
@@ -30,7 +27,5 @@ Approval
 .. autofunction:: prefsampling.approval.euclidean_vcr
 
 .. autofunction:: prefsampling.approval.euclidean_constant_size
-
-.. autofunction:: prefsampling.approval.noise
 
 .. autofunction:: prefsampling.approval.truncated_ordinal

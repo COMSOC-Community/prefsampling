@@ -1,5 +1,5 @@
 from prefsampling.approval import identity
-from prefsampling.combinatorics import powerset_as_sets
+from prefsampling.combinatorics import powerset
 from validation.validator import Validator
 
 
@@ -20,7 +20,7 @@ class ApprovalIdentityValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return powerset_as_sets(sampler_parameters["num_candidates"])
+        return powerset(range(sampler_parameters["num_candidates"]))
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
         k = int(sampler_parameters["p"] * sampler_parameters["num_candidates"])

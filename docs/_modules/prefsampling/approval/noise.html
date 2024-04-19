@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
@@ -295,56 +300,103 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.approval.noise</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Noise models are sampling procedures parameterised on a central vote and in which the probability</span>
+<span class="sd">of generating a given vote is dependant on its distance to the central vote.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">prefsampling.approval.utils</span> <span class="kn">import</span> <span class="n">validate_or_generate_central_vote</span>
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
-<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">comb</span>
+<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">comb</span><span class="p">,</span> <span class="n">powerset</span>
 
 
-<span class="k">class</span> <span class="nc">NoiseType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="SetDistance">
+<a class="viewcode-back" href="../../../reference/approval/noise.html#prefsampling.approval.noise.SetDistance">[docs]</a>
+<span class="k">class</span> <span class="nc">SetDistance</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constants representing the different types of noise that can be applied to the noise sampler.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">HAMMING</span> <span class="o">=</span> <span class="s2">&quot;Hamming noise&quot;</span>
+    <span class="n">HAMMING</span> <span class="o">=</span> <span class="s2">&quot;Hamming distance&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Hamming noise.</span>
+<span class="sd">    Hamming distance between s1 and s2, i.e., the number of elements that are either only in s1 or</span>
+<span class="sd">    only in s2.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">JACCARD</span> <span class="o">=</span> <span class="s2">&quot;Jaccard noise&quot;</span>
+    <span class="n">JACCARD</span> <span class="o">=</span> <span class="s2">&quot;Jaccard distance&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Jaccard noise.</span>
+<span class="sd">    Jaccard distance between s1 and s2, i.e., the Hamming distance divided by the size of the union</span>
+<span class="sd">    of s1 and s2.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">ZELINKA</span> <span class="o">=</span> <span class="s2">&quot;Zelinka noise&quot;</span>
+    <span class="n">ZELINKA</span> <span class="o">=</span> <span class="s2">&quot;Zelinka distance&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Zelinka noise.</span>
+<span class="sd">    Zelinka distance between s1 and s2, i.e., size of the largest set between s1 and s2 minus the</span>
+<span class="sd">    size of the intersection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">BUNKE_SHEARER</span> <span class="o">=</span> <span class="s2">&quot;Bunke-Shearer noise&quot;</span>
+    <span class="n">BUNKE_SHEARER</span> <span class="o">=</span> <span class="s2">&quot;Bunke-Shearer distance&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Bunke-Shearer noise.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    Bunke-Shearer distance between s1 and s2, i.e., the Zelinka distance divided by size of the</span>
+<span class="sd">    largest set between s1 and s2.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<span class="k">class</span> <span class="nc">DistanceInfiniteError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_distance</span><span class="p">(</span>
+    <span class="n">distance</span><span class="p">:</span> <span class="n">SetDistance</span><span class="p">,</span> <span class="n">size_1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">size_2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">size_intersection</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">distance</span><span class="o">.</span><span class="n">HAMMING</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">size_1</span> <span class="o">+</span> <span class="n">size_2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">size_intersection</span>
+    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">distance</span><span class="o">.</span><span class="n">JACCARD</span><span class="p">:</span>
+        <span class="n">size_union</span> <span class="o">=</span> <span class="n">size_1</span> <span class="o">+</span> <span class="n">size_2</span> <span class="o">-</span> <span class="n">size_intersection</span>
+        <span class="k">if</span> <span class="n">size_union</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DistanceInfiniteError</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">size_intersection</span> <span class="o">/</span> <span class="n">size_union</span>
+    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">distance</span><span class="o">.</span><span class="n">ZELINKA</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">size_1</span><span class="p">,</span> <span class="n">size_2</span><span class="p">)</span> <span class="o">-</span> <span class="n">size_intersection</span>
+    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">distance</span><span class="o">.</span><span class="n">BUNKE_SHEARER</span><span class="p">:</span>
+        <span class="n">largest_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">size_1</span><span class="p">,</span> <span class="n">size_2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">largest_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DistanceInfiniteError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">size_intersection</span> <span class="o">/</span> <span class="n">largest_size</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;The `distance` argument needs to be one of the constant defined in the &quot;</span>
+        <span class="s2">&quot;approval.SetDistance enumeration. Choices are: &quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">SetDistance</span><span class="p">)</span>
+    <span class="p">)</span>
 
 
 <div class="viewcode-block" id="noise">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.noise">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/noise.html#prefsampling.approval.noise.noise">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">noise</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">noise_type</span><span class="p">:</span> <span class="n">NoiseType</span> <span class="o">=</span> <span class="n">NoiseType</span><span class="o">.</span><span class="n">HAMMING</span><span class="p">,</span>
+    <span class="n">rel_size_central_vote</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">distance</span><span class="p">:</span> <span class="n">SetDistance</span> <span class="o">=</span> <span class="n">SetDistance</span><span class="o">.</span><span class="n">HAMMING</span><span class="p">,</span>
+    <span class="n">central_vote</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">impartial_central_vote</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes under the noise model.</span>
+<span class="sd">    Generates approval votes under the noise model. This model is parameterised by a central</span>
+<span class="sd">    vote. Approval ballots are then generated based on their distance to the central vote.</span>
+<span class="sd">    Specifically, a vote is generated with probability :code:`phi` to the power distance between</span>
+<span class="sd">    the vote and the central vote.</span>
 
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>
@@ -357,10 +409,17 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        phi : float</span>
 <span class="sd">            Noise model parameter, denoting the noise.</span>
-<span class="sd">        p : float</span>
-<span class="sd">            Noise model parameter, denoting the length of central vote.</span>
-<span class="sd">        noise_type : NoiseType, default: :py:const:`~prefsampling.approval.NoiseType.HAMMING`</span>
-<span class="sd">            Type of noise.</span>
+<span class="sd">        rel_size_central_vote: float</span>
+<span class="sd">            The relative size of the central vote, if no central vote is provided, the central</span>
+<span class="sd">            vote is selected uniformly at random among all subsets of candidates of size</span>
+<span class="sd">            `⌊rel_size_central_vote * num_candidates⌋`.</span>
+<span class="sd">        distance : SetDistance, default: :py:const:`~prefsampling.approval.SetDistance.HAMMING`</span>
+<span class="sd">           Distance used to compare a given vote to the central vote.</span>
+<span class="sd">        central_vote : set</span>
+<span class="sd">            The central vote. Ignored if :code:`impartial_central_vote = True`.</span>
+<span class="sd">        impartial_central_vote: bool, default: :code:`False`</span>
+<span class="sd">            If true, the central vote is sampled from :py:func:`~prefsampling.approval.impartial`</span>
+<span class="sd">            with the same value for the parameter :code:`p` as passed to this sampler.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -369,63 +428,135 @@ document.write(`
 <span class="sd">        list[set]</span>
 <span class="sd">            Approval votes.</span>
 
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            When `phi` not in [0,1] interval.</span>
-<span class="sd">            When `p` not in [0,1] interval.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import noise, SetDistance</span>
+
+<span class="sd">            # Sample a profile from the noise model with 2 voters and 3 candidates and parameters</span>
+<span class="sd">            # phi = 0.5, p = 0.2, default distance is SetDistance.HAMMING</span>
+<span class="sd">            noise(2, 3, 0.5, 0.2)</span>
+
+<span class="sd">            # You can give a specific distance</span>
+<span class="sd">            noise(2, 3, 0.5, 0.2, distance=SetDistance.JACCARD)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            noise(2, 3, 0.5, 0.2, seed=157)</span>
+
+<span class="sd">            # Parameter phi needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                noise(2, 3, 1.2, 0.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                noise(2, 3, -0.2, 0.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # Parameter p needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                noise(2, 3, 0.5, 1.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                noise(2, 3, 0.5, -0.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/noise_0_25.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a noise model with phi=0.25</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/noise_0_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a noise model with phi=0.5</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/noise_0_75.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a noise model with phi=0.75</span>
+
+<span class="sd">        When :code:`phi` is equal to 1, then we are supposed to obtain a uniform distribution over</span>
+<span class="sd">        all approval ballots.</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/noise_0_0.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a noise model with phi=0</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/noise_1_0.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a noise model with phi=1</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        `Evaluating Approval-Based Multiwinner Voting in Terms of Robustness to Noise</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2020/11&gt;`_,</span>
+<span class="sd">        *Ioannis Caragiannis, Christos Kaklamanis, Nikos Karanikolas and George A. Krimpas*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2020.</span>
+
+<span class="sd">        `How to Sample Approval Elections?</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2022/71&gt;`_,</span>
+<span class="sd">        *Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,</span>
+<span class="sd">        Krzysztof Sornat and Nimrod Talmon*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2022.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">phi</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of phi: </span><span class="si">{</span><span class="n">phi</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rel_size_central_vote</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">rel_size_central_vote</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">SetDistance</span><span class="p">(</span><span class="n">distance</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">SetDistance</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="n">k</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
-
-    <span class="n">A</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
-    <span class="n">B</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">))</span>
+    <span class="n">central_vote</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+        <span class="n">validate_or_generate_central_vote</span><span class="p">(</span>
+            <span class="n">num_candidates</span><span class="p">,</span>
+            <span class="n">rel_size_central_vote</span><span class="p">,</span>
+            <span class="n">central_vote</span><span class="p">,</span>
+            <span class="n">impartial_central_vote</span><span class="p">,</span>
+            <span class="n">seed</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">size_central_vote</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)</span>
+    <span class="n">central_non_vote</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span> <span class="k">if</span> <span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">)</span>
+    <span class="n">size_central_non_vote</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">central_non_vote</span><span class="p">)</span>
 
     <span class="n">choices</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">noise_type</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
-        <span class="n">noise_type</span> <span class="o">=</span> <span class="n">NoiseType</span><span class="p">(</span><span class="n">noise_type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">noise_type</span> <span class="o">=</span> <span class="n">NoiseType</span><span class="p">(</span><span class="n">noise_type</span><span class="p">)</span>
     <span class="c1"># Prepare buckets</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">num_options_in</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">num_options_out</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">num_central</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size_central_vote</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">num_options_in</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">size_central_vote</span><span class="p">,</span> <span class="n">num_central</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">num_non_central</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size_central_non_vote</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">num_options_out</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">size_central_non_vote</span><span class="p">,</span> <span class="n">num_non_central</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">noise_type</span> <span class="o">==</span> <span class="n">NoiseType</span><span class="o">.</span><span class="n">HAMMING</span><span class="p">:</span>
-                <span class="n">factor</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">**</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">noise_type</span> <span class="o">==</span> <span class="n">NoiseType</span><span class="o">.</span><span class="n">JACCARD</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">phi</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">factor</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">**</span> <span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span><span class="p">))</span>
-            <span class="k">elif</span> <span class="n">noise_type</span> <span class="o">==</span> <span class="n">NoiseType</span><span class="o">.</span><span class="n">ZELINKA</span><span class="p">:</span>
-                <span class="n">factor</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">**</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">noise_type</span> <span class="o">==</span> <span class="n">NoiseType</span><span class="o">.</span><span class="n">BUNKE_SHEARER</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">phi</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">factor</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">**</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;The `noise_type` argument needs to be one of the constant defined in the &quot;</span>
-                    <span class="s2">&quot;approval.NoiseType enumeration. Choices are: &quot;</span>
-                    <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">NoiseType</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">exponent</span> <span class="o">=</span> <span class="n">_compute_distance</span><span class="p">(</span>
+                    <span class="n">distance</span><span class="p">,</span>
+                    <span class="n">size_central_vote</span><span class="p">,</span>
+                    <span class="n">num_central</span> <span class="o">+</span> <span class="n">num_non_central</span><span class="p">,</span>
+                    <span class="n">num_central</span><span class="p">,</span>
                 <span class="p">)</span>
+                <span class="n">factor</span> <span class="o">=</span> <span class="n">phi</span><span class="o">**</span><span class="n">exponent</span>
+            <span class="k">except</span> <span class="n">DistanceInfiniteError</span><span class="p">:</span>
+                <span class="n">factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">phi</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 
             <span class="n">num_options</span> <span class="o">=</span> <span class="n">num_options_in</span> <span class="o">*</span> <span class="n">num_options_out</span> <span class="o">*</span> <span class="n">factor</span>
 
-            <span class="n">choices</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+            <span class="n">choices</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">num_central</span><span class="p">,</span> <span class="n">num_non_central</span><span class="p">))</span>
             <span class="n">probabilities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_options</span><span class="p">)</span>
     <span class="n">denominator</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span>
     <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="o">/</span> <span class="n">denominator</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">probabilities</span><span class="p">]</span>
@@ -433,13 +564,39 @@ document.write(`
     <span class="c1"># Sample Votes</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">choices</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probabilities</span><span class="p">)</span>
-        <span class="n">vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-        <span class="n">vote</span> <span class="o">=</span> <span class="n">vote</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">B</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
+        <span class="n">num_central</span><span class="p">,</span> <span class="n">num_non_central</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">choices</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probabilities</span><span class="p">)</span>
+        <span class="n">vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">central_vote</span><span class="p">,</span> <span class="n">num_central</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="n">vote</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">central_non_vote</span><span class="p">,</span> <span class="n">num_non_central</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
         <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">votes</span></div>
 
+
+
+<span class="k">def</span> <span class="nf">theoretical_distribution</span><span class="p">(</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">distance</span><span class="p">:</span> <span class="n">SetDistance</span><span class="p">,</span>
+    <span class="n">rel_size_central_vote</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">central_vote</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">subsets</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">subsets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">subsets</span> <span class="o">=</span> <span class="n">powerset</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))</span>
+    <span class="n">central_vote</span> <span class="o">=</span> <span class="n">validate_or_generate_central_vote</span><span class="p">(</span>
+        <span class="n">num_candidates</span><span class="p">,</span> <span class="n">rel_size_central_vote</span><span class="p">,</span> <span class="n">central_vote</span><span class="p">,</span> <span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">o</span><span class="p">:</span> <span class="n">phi</span>
+        <span class="o">**</span> <span class="n">_compute_distance</span><span class="p">(</span>
+            <span class="n">distance</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">central_vote</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">o</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">central_vote</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">o</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">subsets</span>
+    <span class="p">}</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">o</span><span class="p">]</span> <span class="o">/=</span> <span class="n">denominator</span>
+    <span class="k">return</span> <span class="n">res</span>
 </pre></div>
 
                 </article>

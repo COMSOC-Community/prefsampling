@@ -158,7 +158,7 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ordinal/euclidean.html">Euclidean Models</a></li>
@@ -169,7 +169,12 @@
 <li class="toctree-l3"><a class="reference internal" href="ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core/index.html">Core</a></li>
@@ -349,7 +354,7 @@ document.write(`
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ordinal/index.html">Ordinal</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ordinal/euclidean.html">Euclidean Models</a></li>
@@ -361,11 +366,9 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="approval/index.html">Approval</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.empty"><code class="docutils literal notranslate"><span class="pre">empty()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.impartial"><code class="docutils literal notranslate"><span class="pre">impartial()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.impartial_constant_size"><code class="docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="approval/noise.html">Noise Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.urn"><code class="docutils literal notranslate"><span class="pre">urn()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.urn_constant_size"><code class="docutils literal notranslate"><span class="pre">urn_constant_size()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.urn_partylist"><code class="docutils literal notranslate"><span class="pre">urn_partylist()</span></code></a></li>
@@ -375,7 +378,6 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.euclidean_threshold"><code class="docutils literal notranslate"><span class="pre">euclidean_threshold()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.euclidean_vcr"><code class="docutils literal notranslate"><span class="pre">euclidean_vcr()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.euclidean_constant_size"><code class="docutils literal notranslate"><span class="pre">euclidean_constant_size()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.noise"><code class="docutils literal notranslate"><span class="pre">noise()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.truncated_ordinal"><code class="docutils literal notranslate"><span class="pre">truncated_ordinal()</span></code></a></li>
 </ul>
 </li>
@@ -424,11 +426,9 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.comb"><code class="docutils literal notranslate"><span class="pre">comb()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.generalised_ascending_factorial"><code class="docutils literal notranslate"><span class="pre">generalised_ascending_factorial()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.gs_structure"><code class="docutils literal notranslate"><span class="pre">gs_structure()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.hamming_distance"><code class="docutils literal notranslate"><span class="pre">hamming_distance()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.is_single_crossing"><code class="docutils literal notranslate"><span class="pre">is_single_crossing()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.kendall_tau_distance"><code class="docutils literal notranslate"><span class="pre">kendall_tau_distance()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.powerset"><code class="docutils literal notranslate"><span class="pre">powerset()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.powerset_as_sets"><code class="docutils literal notranslate"><span class="pre">powerset_as_sets()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.proper_powerset"><code class="docutils literal notranslate"><span class="pre">proper_powerset()</span></code></a></li>
 </ul>
 </li>

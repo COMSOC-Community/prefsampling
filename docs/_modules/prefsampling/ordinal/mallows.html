@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
@@ -299,6 +304,7 @@ document.write(`
 <span class="sd">Mallows&#39;s model is a sampling model parameterised by a central ranking. The probability of generating</span>
 <span class="sd">a given ranking is then exponential in the distance between the ranking and the central ranking.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
@@ -621,20 +627,21 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">theoretical_distribution</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">normalise_phi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rankings</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">theoretical_distribution</span><span class="p">(</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">normalise_phi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">rankings</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">rankings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">rankings</span> <span class="o">=</span> <span class="n">all_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
     <span class="n">distribution</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">normalise_phi</span><span class="p">:</span>
-        <span class="n">phi</span> <span class="o">=</span> <span class="n">phi_from_norm_phi</span><span class="p">(</span>
-            <span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span>
-        <span class="p">)</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">phi_from_norm_phi</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
     <span class="n">central_ranking</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">ranking</span> <span class="ow">in</span> <span class="n">rankings</span><span class="p">:</span>
-        <span class="n">distribution</span><span class="p">[</span><span class="n">ranking</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">**</span> <span class="n">kendall_tau_distance</span><span class="p">(</span>
-            <span class="n">central_ranking</span><span class="p">,</span> <span class="n">ranking</span>
-        <span class="p">)</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">ranking</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">**</span> <span class="n">kendall_tau_distance</span><span class="p">(</span><span class="n">central_ranking</span><span class="p">,</span> <span class="n">ranking</span><span class="p">)</span>
     <span class="n">normaliser</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distribution</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">distribution</span><span class="p">:</span>
         <span class="n">distribution</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">/=</span> <span class="n">normaliser</span>

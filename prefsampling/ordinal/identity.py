@@ -1,6 +1,6 @@
 """
-Identity samplers are not fascinating per se as all voters have the same preferences. There are useful tools however,
-for instance when using them in mixtures.
+Identity samplers are not fascinating per se as all voters have the same preferences. There are
+useful tools however, for instance when using them in mixtures.
 """
 
 from __future__ import annotations

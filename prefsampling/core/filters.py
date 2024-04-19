@@ -68,7 +68,7 @@ def rename_candidates(
     """
     Renames the candidates in approval or ordinal votes.
 
-    Note that if the votes can be incomplete (in the case of approval voting), you need to
+    Note that if the votes can be incomplete (e.g., in the case of approval voting), you need to
     provide the number of candidates as input. If it is not provided, it is assumed to be the
     largest integer appearing in the ballots (candidates are represented as int).
 
@@ -109,7 +109,7 @@ def rename_candidates(
 
             # You can set the seed for reproducibility
 
-            permute_voters(approval_votes, num_candidates=3, seed=234)
+            rename_candidates(approval_votes, num_candidates=3, seed=234)
     """
     rng = np.random.default_rng(seed)
 
@@ -133,7 +133,10 @@ def rename_candidates(
 
 
 def resample_as_central_vote(
-    votes: np.ndarray | list[set[int]], sampler: Callable, sampler_parameters: dict
+    votes: np.ndarray | list[set[int]],
+    sampler: Callable,
+    sampler_parameters: dict,
+    num_candidates: int = None,
 ) -> np.ndarray | list[set[int]]:
     """
     Resamples the votes by using them as the central vote of a given sampler. The outcome is
@@ -141,6 +144,10 @@ def resample_as_central_vote(
     vote is then resampled and added to the outcome.
 
     Only samplers that accept a :code:`central_vote` argument can be used.
+
+    Note that if the votes can be incomplete (e.g., in the case of approval voting), you need to
+    provide the number of candidates as input. If it is not provided, it is assumed to be the
+    largest integer appearing in the ballots (candidates are represented as int).
 
     Votes are copied before being returned to avoid loss of data.
 
@@ -165,7 +172,7 @@ def resample_as_central_vote(
         .. testcode::
 
             from prefsampling.ordinal import urn, mallows
-            from prefsampling.core import rename_candidates
+            from prefsampling.core import resample_as_central_vote
 
             # Get some votes
             ordinal_votes = urn(2, 3, 0.2)
@@ -178,7 +185,11 @@ def resample_as_central_vote(
             from prefsampling.approval import urn, resampling
 
             approval_votes = urn(2, 3, 0.5, 0.2)
-            resample_as_central_vote(approval_votes, resampling, {'phi': 0.4, 'p': 0.8})
+            resample_as_central_vote(
+                approval_votes,
+                resampling,
+                {'phi': 0.4, 'rel_size_central_vote': 0.8}
+            )
 
             # To ensure reproducibility, you need to pass the seed everywhere
             seed = 4234
@@ -186,11 +197,15 @@ def resample_as_central_vote(
             resample_as_central_vote(
                 approval_votes,
                 resampling,
-                {'phi': 0.4, 'p': 0.8, 'seed':seed}
+                {'phi': 0.4, 'rel_size_central_vote': 0.8, 'seed':seed}
             )
     """
     res = deepcopy(votes)
     sampler_parameters["num_voters"] = 1
+    if num_candidates is None:
+        num_candidates = max(max(vote, default=0) for vote in votes) + 1
+    sampler_parameters["num_candidates"] = 1
+    sampler_parameters["num_candidates"] = num_candidates
     for i, vote in enumerate(votes):
         sampler_parameters["central_vote"] = vote
         res[i] = sampler(**sampler_parameters)[0]

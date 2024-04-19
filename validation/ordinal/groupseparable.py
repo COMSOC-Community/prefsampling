@@ -59,11 +59,12 @@ class GroupSeparableValidator(Validator):
 
     def all_outcomes(self, sampler_parameters):
         return all_group_separable_profiles(
-            sampler_parameters["num_voters"], sampler_parameters["num_candidates"],
+            sampler_parameters["num_voters"],
+            sampler_parameters["num_candidates"],
         )
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        return {o: 1/len(all_outcomes) for o in all_outcomes}
+        return {o: 1 / len(all_outcomes) for o in all_outcomes}
 
     def sample_cast(self, sample):
         return tuple(tuple(s) for s in sample)

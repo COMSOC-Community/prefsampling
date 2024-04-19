@@ -1,4 +1,4 @@
-Impartial Models
+Unanimous Models
 ================
 
 .. automodule:: prefsampling.ordinal.identity

@@ -43,7 +43,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/approval/index';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Point" href="../point/index.html" />
+    <link rel="next" title="Impartial Cultures" href="impartial.html" />
     <link rel="prev" title="Group-Separable Models" href="../ordinal/groupseparable.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -158,7 +158,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="../ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/euclidean.html">Euclidean Models</a></li>
@@ -169,7 +169,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Approval</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Approval</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core</a></li>
@@ -341,11 +346,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.empty"><code class="docutils literal notranslate"><span class="pre">empty()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial"><code class="docutils literal notranslate"><span class="pre">impartial()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial_constant_size"><code class="docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.urn"><code class="docutils literal notranslate"><span class="pre">urn()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.urn_constant_size"><code class="docutils literal notranslate"><span class="pre">urn_constant_size()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.urn_partylist"><code class="docutils literal notranslate"><span class="pre">urn_partylist()</span></code></a></li>
@@ -355,7 +355,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.euclidean_threshold"><code class="docutils literal notranslate"><span class="pre">euclidean_threshold()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.euclidean_vcr"><code class="docutils literal notranslate"><span class="pre">euclidean_vcr()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.euclidean_constant_size"><code class="docutils literal notranslate"><span class="pre">euclidean_constant_size()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.noise"><code class="docutils literal notranslate"><span class="pre">noise()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.truncated_ordinal"><code class="docutils literal notranslate"><span class="pre">truncated_ordinal()</span></code></a></li>
 </ul>
             </nav>
@@ -372,134 +371,13 @@ document.write(`
 <span id="approval"></span><h1>Approval<a class="headerlink" href="#module-prefsampling.approval" title="Link to this heading">#</a></h1>
 <p>Module for sampling approval preferences: preferences in which a voter either approves or
 disapprove each candidate.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.approval.identity">
-<span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_num_approvals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/identity.html#identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.identity" title="Link to this definition">#</a></dt>
-<dd><p>Generates approval votes from the identity culture. These votes are simples: all voters
-approves of the candidates <cite>0, 1, 2, …,  ⌊rel_num_approvals * num_candidates⌋</cite> and only these
-ones.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>rel_num_approvals</strong> (<em>float</em>) – Proportion of approved candidates in a ballot.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identity.html">Unanimous Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="noise.html">Noise Models</a></li>
 </ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Approval votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When <cite>rel_num_approvals</cite> is not in the [0, 1] interval.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.approval.empty">
-<span class="sig-name descname"><span class="pre">empty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/identity.html#empty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.empty" title="Link to this definition">#</a></dt>
-<dd><p>Generates approval votes where each vote is empty.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Approval votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.approval.full">
-<span class="sig-name descname"><span class="pre">full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/identity.html#full"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.full" title="Link to this definition">#</a></dt>
-<dd><p>Generates approval votes where all voters approve of all the candidates.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Approval votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.approval.impartial">
-<span class="sig-name descname"><span class="pre">impartial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/impartial.html#impartial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.impartial" title="Link to this definition">#</a></dt>
-<dd><p>Generates approval votes from impartial culture.</p>
-<p>Under the approval culture, when generating a single vote, each candidate has the same
-probability <code class="code docutils literal notranslate"><span class="pre">p</span></code> of being approved. This models ensures that the average number of
-approved candidate per voter is <cite>p * num_candidate</cite>.</p>
-<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
-process described above.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>p</strong> (<em>float</em>) – Probability of approving of any given candidates.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Approval votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>list</em>[<em>set</em>]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When <cite>p</cite> not in [0,1] interval.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.approval.impartial_constant_size">
-<span class="sig-name descname"><span class="pre">impartial_constant_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_num_approvals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/impartial.html#impartial_constant_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.impartial_constant_size" title="Link to this definition">#</a></dt>
-<dd><p>Generates approval votes from impartial culture with constant size.</p>
-<p>Under this culture, all ballots are of size <cite>⌊rel_num_approvals * num_candidates⌋</cite>. The ballot
-is selected uniformly at random over all ballots of size <cite>⌊rel_num_approvals * num_candidates⌋</cite>.</p>
-<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
-process described above.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>rel_num_approvals</strong> (<em>float</em>) – Proportion of approved candidates in a ballot.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Approval votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>list</em>[<em>set</em>]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When <cite>rel_num_approvals</cite> is not in [0, 1] interval.</p>
-</dd>
-</dl>
-</dd></dl>
-
+</div>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.urn">
 <span class="sig-name descname"><span class="pre">urn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/urn.html#urn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.urn" title="Link to this definition">#</a></dt>
@@ -508,7 +386,7 @@ is initially empty and votes are generated one after the other, in turns. When g
 vote, the following happens. With a probability of 1/(urn_size + 1),an approval ballots in
 which all candidates have the same probability <cite>p</cite> of being approved is selected at random
 (following an impartial culture as in the
-<a class="reference internal" href="#prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a> function). With probability
+<a class="reference internal" href="impartial.html#module-prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a> function). With probability
 <cite>1/urn_size</cite> a vote from the urn is selected uniformly at random. In both cases, the vote is
 put back in the urn together with <cite>alpha * (2**m)</cite> copies of the vote (where <cite>m</cite> is the number
 of candidates).</p>
@@ -541,7 +419,7 @@ is initially empty and votes are generated one after the other, in turns. When g
 vote, the following happens. With a probability of 1/(urn_size + 1), an approval ballots of
 size <cite>⌊rel_num_approvals * num_candidates⌋</cite> is selected uniformly at random
 (following an impartial culture as in the
-<a class="reference internal" href="#prefsampling.approval.impartial_constant_size" title="prefsampling.approval.impartial_constant_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></a> function). With probability
+<code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code> function). With probability
 <cite>1/urn_size</cite> a vote from the urn is selected uniformly at random. In both cases, the vote is
 put back in the urn together with <cite>alpha * (m choose ⌊rel_num_approvals * num_candidates⌋)</cite>
 copies of the vote (where <cite>m</cite> is the number of candidates).</p>
@@ -591,7 +469,7 @@ a draw). Must be non-negative.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.resampling">
-<span class="sig-name descname"><span class="pre">resampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impartial_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/resampling.html#resampling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.resampling" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">resampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_size_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impartial_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/resampling.html#resampling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.resampling" title="Link to this definition">#</a></dt>
 <dd><p>Generates approval votes from the resampling model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -599,9 +477,9 @@ a draw). Must be non-negative.</p></li>
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
 <li><p><strong>phi</strong> (<em>float</em>) – Resampling model parameter, denoting the noise.</p></li>
-<li><p><strong>p</strong> (<em>float</em>) – Resampling model parameter, denoting the average vote length.</p></li>
+<li><p><strong>rel_size_central_vote</strong> (<em>float</em>) – Resampling model parameter, denoting the average vote length.</p></li>
 <li><p><strong>central_vote</strong> (<em>set</em>) – The central vote. Ignored if <code class="code docutils literal notranslate"><span class="pre">impartial_central_vote</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p></li>
-<li><p><strong>impartial_central_vote</strong> (bool, default: <code class="code docutils literal notranslate"><span class="pre">False</span></code>) – If true, the central vote is sampled from <a class="reference internal" href="#prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a>
+<li><p><strong>impartial_central_vote</strong> (bool, default: <code class="code docutils literal notranslate"><span class="pre">False</span></code>) – If true, the central vote is sampled from <a class="reference internal" href="impartial.html#module-prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a>
 with the same value for the parameter <code class="code docutils literal notranslate"><span class="pre">p</span></code> as passed to this sampler.</p></li>
 <li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
 </ul>
@@ -836,36 +714,6 @@ a value is provided.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="prefsampling.approval.noise">
-<span class="sig-name descname"><span class="pre">noise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NoiseType</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">NoiseType.HAMMING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/noise.html#noise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.noise" title="Link to this definition">#</a></dt>
-<dd><p>Generates approval votes under the noise model.</p>
-<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
-process described above.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
-<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
-<li><p><strong>phi</strong> (<em>float</em>) – Noise model parameter, denoting the noise.</p></li>
-<li><p><strong>p</strong> (<em>float</em>) – Noise model parameter, denoting the length of central vote.</p></li>
-<li><p><strong>noise_type</strong> (NoiseType, default: <code class="xref py py-const docutils literal notranslate"><span class="pre">HAMMING</span></code>) – Type of noise.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Approval votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>list</em>[<em>set</em>]</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When <cite>phi</cite> not in [0,1] interval.
-    When <cite>p</cite> not in [0,1] interval.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.truncated_ordinal">
 <span class="sig-name descname"><span class="pre">truncated_ordinal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_num_approvals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordinal_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordinal_sampler_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/truncated_ordinal.html#truncated_ordinal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.truncated_ordinal" title="Link to this definition">#</a></dt>
 <dd><p>Generates approval votes by truncating ordinal votes sampled from a given ordinal sampler.</p>
@@ -916,11 +764,11 @@ parameters are overridden by those passed to this function.</p></li>
       </div>
     </a>
     <a class="right-next"
-       href="../point/index.html"
+       href="impartial.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Point</p>
+        <p class="prev-next-title">Impartial Cultures</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -940,11 +788,6 @@ parameters are overridden by those passed to this function.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.identity"><code class="docutils literal notranslate"><span class="pre">identity()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.empty"><code class="docutils literal notranslate"><span class="pre">empty()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.full"><code class="docutils literal notranslate"><span class="pre">full()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial"><code class="docutils literal notranslate"><span class="pre">impartial()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.impartial_constant_size"><code class="docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.urn"><code class="docutils literal notranslate"><span class="pre">urn()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.urn_constant_size"><code class="docutils literal notranslate"><span class="pre">urn_constant_size()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.urn_partylist"><code class="docutils literal notranslate"><span class="pre">urn_partylist()</span></code></a></li>
@@ -954,7 +797,6 @@ parameters are overridden by those passed to this function.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.euclidean_threshold"><code class="docutils literal notranslate"><span class="pre">euclidean_threshold()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.euclidean_vcr"><code class="docutils literal notranslate"><span class="pre">euclidean_vcr()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.euclidean_constant_size"><code class="docutils literal notranslate"><span class="pre">euclidean_constant_size()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.noise"><code class="docutils literal notranslate"><span class="pre">noise()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.truncated_ordinal"><code class="docutils literal notranslate"><span class="pre">truncated_ordinal()</span></code></a></li>
 </ul>
   </nav></div>

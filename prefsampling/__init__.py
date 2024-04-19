@@ -5,7 +5,7 @@ __version__ = "0.1.15"
 from enum import Enum
 from itertools import chain
 
-from prefsampling.approval import NoiseType
+from prefsampling.approval import SetDistance
 from prefsampling.ordinal import TreeSampler
 
 
@@ -14,7 +14,7 @@ class CONSTANTS(Enum):
 
     _ignore_ = "member cls"
     cls = vars()
-    for member in chain(list(TreeSampler), list(NoiseType)):
+    for member in chain(list(TreeSampler), list(SetDistance)):
         if member.name in cls:
             raise ValueError(
                 f"The name {member.name} is used in more than one enumeration. The"

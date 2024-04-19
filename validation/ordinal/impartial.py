@@ -1,7 +1,10 @@
 from prefsampling.combinatorics import all_rankings, all_anonymous_profiles
 from prefsampling.ordinal import impartial, impartial_anonymous, stratification
-from prefsampling.ordinal.impartial import stratification_theoretical_distribution, \
-    impartial_theoretical_distribution, impartial_anonymous_theoretical_distribution
+from prefsampling.ordinal.impartial import (
+    stratification_theoretical_distribution,
+    impartial_theoretical_distribution,
+    impartial_anonymous_theoretical_distribution,
+)
 from validation.validator import Validator
 
 
@@ -54,7 +57,9 @@ class OrdinalImpartialAnonymousValidator(Validator):
         )
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        return impartial_anonymous_theoretical_distribution(anonymous_profiles=all_outcomes)
+        return impartial_anonymous_theoretical_distribution(
+            anonymous_profiles=all_outcomes
+        )
 
     def sample_cast(self, sample):
         return tuple(sorted(tuple(s) for s in sample))
@@ -81,7 +86,11 @@ class OrdinalStratificationValidator(Validator):
         return all_rankings(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        return stratification_theoretical_distribution(sampler_parameters["weight"], sampler_parameters["num_candidates"], rankings=all_outcomes)
+        return stratification_theoretical_distribution(
+            sampler_parameters["weight"],
+            sampler_parameters["num_candidates"],
+            rankings=all_outcomes,
+        )
 
     def sample_cast(self, sample):
         return tuple(sample[0])

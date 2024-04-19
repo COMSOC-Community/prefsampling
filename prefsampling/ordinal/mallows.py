@@ -2,6 +2,7 @@
 Mallows's model is a sampling model parameterised by a central ranking. The probability of generating
 a given ranking is then exponential in the distance between the ranking and the central ranking.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -315,20 +316,21 @@ def phi_from_norm_phi(num_candidates: int, norm_phi: float) -> float:
     )
 
 
-def theoretical_distribution(num_candidates: int, phi: float, normalise_phi: bool = False, rankings: Iterable[tuple[int]] = None) -> dict:
+def theoretical_distribution(
+    num_candidates: int,
+    phi: float,
+    normalise_phi: bool = False,
+    rankings: Iterable[tuple[int]] = None,
+) -> dict:
     validate_int(num_candidates, lower_bound=0)
     if rankings is None:
         rankings = all_rankings(num_candidates)
     distribution = {}
     if normalise_phi:
-        phi = phi_from_norm_phi(
-            num_candidates, phi
-        )
+        phi = phi_from_norm_phi(num_candidates, phi)
     central_ranking = tuple(range(num_candidates))
     for ranking in rankings:
-        distribution[ranking] = phi ** kendall_tau_distance(
-            central_ranking, ranking
-        )
+        distribution[ranking] = phi ** kendall_tau_distance(central_ranking, ranking)
     normaliser = sum(distribution.values())
     for r in distribution:
         distribution[r] /= normaliser

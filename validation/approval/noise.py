@@ -1,44 +1,49 @@
-import math
-
 from prefsampling.approval import noise
-from prefsampling.combinatorics import powerset_as_sets, hamming_distance
+from prefsampling.approval.noise import theoretical_distribution, SetDistance
+from prefsampling.combinatorics import powerset
 from validation.validator import Validator
 
 
 class ApprovalNoiseValidator(Validator):
     def __init__(self):
-        parameters_list = [
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 1.0, "p": 0.5},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.25, "p": 1 / 3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.5, "p": 1 / 3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 0.75, "p": 1 / 3},
-            {"num_voters": 1, "num_candidates": 6, "phi": 1.0, "p": 1 / 3},
-        ]
+        parameters_list = []
+        for distance in SetDistance:
+            for phi in [0, 0.25, 0.5, 0.75, 1]:
+                parameters_list.append(
+                    {
+                        "num_voters": 1,
+                        "num_candidates": 6,
+                        "phi": phi,
+                        "rel_size_central_vote": 0.5,
+                        "distance": distance,
+                        "central_vote": None,
+                    }
+                )
         super(ApprovalNoiseValidator, self).__init__(
             parameters_list,
             "Noise",
             "noise",
             True,
             sampler_func=noise,
-            constant_parameters=("num_voters", "num_candidates"),
-            faceted_parameters=("phi", "p"),
+            constant_parameters=(
+                "num_voters",
+                "num_candidates",
+                "rel_size_central_vote",
+            ),
+            faceted_parameters=("phi", "distance"),
         )
 
     def all_outcomes(self, sampler_parameters):
-        return powerset_as_sets(sampler_parameters["num_candidates"])
+        return powerset(range(sampler_parameters["num_candidates"]))
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        m = sampler_parameters["num_candidates"]
-        p = sampler_parameters["p"]
-        phi = sampler_parameters["phi"]
-        k = math.floor(p * m)
-        central_vote = {i for i in range(k)}
-        tmp_dict = {str(o): phi ** hamming_distance(central_vote, o) for o in all_outcomes}
-        denom = sum(tmp_dict.values())
-        return {tuple(sorted(o)): tmp_dict[str(o)] / denom for o in all_outcomes}
+        return theoretical_distribution(
+            sampler_parameters["num_candidates"],
+            sampler_parameters["phi"],
+            sampler_parameters["distance"],
+            sampler_parameters["rel_size_central_vote"],
+            sampler_parameters["central_vote"],
+        )
 
     def sample_cast(self, sample):
         return tuple(sorted(sample[0]))

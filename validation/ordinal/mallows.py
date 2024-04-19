@@ -30,7 +30,12 @@ class OrdinalMallowsValidator(Validator):
         return all_rankings(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        return theoretical_distribution(sampler_parameters["num_candidates"], sampler_parameters["phi"], normalise_phi=sampler_parameters["normalise_phi"], rankings=all_outcomes)
+        return theoretical_distribution(
+            sampler_parameters["num_candidates"],
+            sampler_parameters["phi"],
+            normalise_phi=sampler_parameters["normalise_phi"],
+            rankings=all_outcomes,
+        )
 
     def sample_cast(self, sample):
         return tuple(sample[0])

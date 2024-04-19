@@ -1,5 +1,5 @@
 from prefsampling.approval import impartial
-from prefsampling.combinatorics import powerset_as_sets
+from prefsampling.combinatorics import powerset
 from validation.validator import Validator
 
 
@@ -24,7 +24,7 @@ class ApprovalImpartialValidator(Validator):
         )
 
     def all_outcomes(self, sampler_parameters):
-        return powerset_as_sets(sampler_parameters["num_candidates"])
+        return powerset(range(sampler_parameters["num_candidates"]))
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
         m = sampler_parameters["num_candidates"]

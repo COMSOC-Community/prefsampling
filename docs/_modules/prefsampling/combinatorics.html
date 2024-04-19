@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../reference/core/index.html">Core</a></li>
@@ -298,6 +303,7 @@ document.write(`
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A collection of functions used to the number of different entities: rankings, profiles, etc...</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">math</span>
@@ -374,11 +380,9 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">value</span>
-        <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="o">*</span> <span class="n">increment</span>
-    <span class="p">)</span> <span class="o">*</span> <span class="n">generalised_ascending_factorial</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increment</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">increment</span><span class="p">)</span> <span class="o">*</span> <span class="n">generalised_ascending_factorial</span><span class="p">(</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increment</span>
+    <span class="p">)</span></div>
 
 
 
@@ -405,7 +409,12 @@ document.write(`
     <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">max_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">max_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
+        <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+            <span class="n">combinations</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
 
 
 
@@ -429,28 +438,6 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">powerset</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div>
-
-
-
-<div class="viewcode-block" id="powerset_as_sets">
-<a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.powerset_as_sets">[docs]</a>
-<span class="k">def</span> <span class="nf">powerset_as_sets</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns all the subsets of the set `{0, 1, .., num_candidates}`, each subset being typed as a</span>
-<span class="sd">    Python set.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">        num_candidates: int</span>
-<span class="sd">            The number of candidates.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">        list[set[int]]</span>
-<span class="sd">            A list containing all the subsets.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span> <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">powerset</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">),</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span></div>
 
 
 
@@ -479,7 +466,7 @@ document.write(`
 <div class="viewcode-block" id="all_anonymous_profiles">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.all_anonymous_profiles">[docs]</a>
 <span class="k">def</span> <span class="nf">all_anonymous_profiles</span><span class="p">(</span>
-        <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a list of all the anonymous profiles for a given number of voters and candidates. An</span>
@@ -499,9 +486,7 @@ document.write(`
 <span class="sd">        list[tuple[tuple[int]]]</span>
 <span class="sd">            A list containing all the anonymous profiles</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
-        <span class="n">combinations_with_replacement</span><span class="p">(</span><span class="n">all_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">),</span> <span class="n">num_voters</span><span class="p">)</span>
-    <span class="p">)</span></div>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations_with_replacement</span><span class="p">(</span><span class="n">all_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">),</span> <span class="n">num_voters</span><span class="p">))</span></div>
 
 
 
@@ -535,7 +520,9 @@ document.write(`
 <div class="viewcode-block" id="all_non_isomorphic_profiles">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.all_non_isomorphic_profiles">[docs]</a>
 <span class="k">def</span> <span class="nf">all_non_isomorphic_profiles</span><span class="p">(</span>
-        <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a maximal collection of profiles that are not isomorphic. Two profiles are isomorphic</span>
@@ -660,7 +647,7 @@ document.write(`
 <span class="sd">            True if the profile is single-crossing and false otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">cand1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-        <span class="k">for</span> <span class="n">cand2</span> <span class="ow">in</span> <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">for</span> <span class="n">cand2</span> <span class="ow">in</span> <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]:</span>
             <span class="n">cand1_over_cand2</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">profile</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">vote</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cand1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">vote</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cand2</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">cand1_over_cand2</span><span class="p">:</span>
@@ -674,10 +661,10 @@ document.write(`
 <div class="viewcode-block" id="all_single_crossing_profiles">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.all_single_crossing_profiles">[docs]</a>
 <span class="k">def</span> <span class="nf">all_single_crossing_profiles</span><span class="p">(</span>
-        <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">fix_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fix_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns all profiles that are single-crossing.</span>
@@ -762,6 +749,7 @@ document.write(`
 <span class="sd">            A string representing the structure.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">aux</span><span class="p">(</span><span class="n">prof</span><span class="p">,</span> <span class="n">cands</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cands</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">new_node</span> <span class="o">=</span> <span class="n">GSNode</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">cands</span><span class="p">))</span>
@@ -809,7 +797,7 @@ document.write(`
                 <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">All votes separate&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">cands</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="p">(</span>
-                        <span class="n">all_voters_separate_below</span> <span class="ow">or</span> <span class="n">all_voters_separate_above</span>
+                    <span class="n">all_voters_separate_below</span> <span class="ow">or</span> <span class="n">all_voters_separate_above</span>
                 <span class="p">):</span>
                     <span class="n">new_node</span> <span class="o">=</span> <span class="n">GSNode</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">cands</span><span class="p">))</span>
                     <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
@@ -839,8 +827,9 @@ document.write(`
 <div class="viewcode-block" id="all_group_separable_profiles">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.all_group_separable_profiles">[docs]</a>
 <span class="k">def</span> <span class="nf">all_group_separable_profiles</span><span class="p">(</span>
-        <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>
-
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns all profiles that are group-separable.</span>
@@ -915,7 +904,11 @@ document.write(`
 
 <div class="viewcode-block" id="all_gs_structure">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.all_gs_structure">[docs]</a>
-<span class="k">def</span> <span class="nf">all_gs_structure</span><span class="p">(</span><span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gs_profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">all_gs_structure</span><span class="p">(</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">gs_profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the group-separable structures for which at least one profile is group-separable.</span>
 
@@ -946,28 +939,6 @@ document.write(`
 
 
 
-<div class="viewcode-block" id="hamming_distance">
-<a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.hamming_distance">[docs]</a>
-<span class="k">def</span> <span class="nf">hamming_distance</span><span class="p">(</span><span class="n">set_1</span><span class="p">:</span> <span class="nb">set</span><span class="p">,</span> <span class="n">set_2</span><span class="p">:</span> <span class="nb">set</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Computes the Hamming distance between two sets.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">        set_1: set</span>
-<span class="sd">            The first set</span>
-<span class="sd">        set_2: set</span>
-<span class="sd">            The second set</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">        int</span>
-<span class="sd">            The Hamming distance between the two sets.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">set_1</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">set_2</span><span class="p">))</span></div>
-
-
-
 <div class="viewcode-block" id="kendall_tau_distance">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.kendall_tau_distance">[docs]</a>
 <span class="k">def</span> <span class="nf">kendall_tau_distance</span><span class="p">(</span><span class="n">ranking_1</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">ranking_2</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -988,7 +959,7 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">alt1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ranking_1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">alt2</span> <span class="ow">in</span> <span class="n">ranking_1</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">for</span> <span class="n">alt2</span> <span class="ow">in</span> <span class="n">ranking_1</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]:</span>
             <span class="k">if</span> <span class="n">ranking_2</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">alt2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ranking_2</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">alt1</span><span class="p">):</span>
                 <span class="n">distance</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">distance</span></div>

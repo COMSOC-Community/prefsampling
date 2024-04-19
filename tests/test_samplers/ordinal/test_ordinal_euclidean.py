@@ -9,7 +9,9 @@ def all_test_samplers_euclidean():
         return ball_uniform(num_points, 1, seed=seed)
 
     def test_ball_resampling_2d(num_points, seed=None):
-        return ball_resampling(num_points, 2, lambda seed=None: gaussian(1, 2, seed=seed)[0], {}, seed=seed)
+        return ball_resampling(
+            num_points, 2, lambda seed=None: gaussian(1, 2, seed=seed)[0], {}, seed=seed
+        )
 
     def test_cube_3d(num_points, seed=None):
         return cube(num_points, 3, seed=seed)

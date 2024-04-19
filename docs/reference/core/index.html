@@ -158,7 +158,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="../ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/euclidean.html">Euclidean Models</a></li>
@@ -169,7 +169,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tree/index.html">Tree</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Core</a></li>
@@ -392,13 +397,26 @@ or only approval for instance). If you don’t, the code will probably fail.</p>
 number of candidates of these dictionaries are not taken into account.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Ordinal votes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">concatenation</span>
+<span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">mallows</span>
+
+<span class="c1"># A concatenation of two Mallows&#39; models with different phi and central votes.</span>
+<span class="c1"># 4 votes are sampled from the first model and 6 votes from the second.</span>
+<span class="c1"># There are 5 candidates</span>
+
+<span class="n">concatenation</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">mallows</span><span class="p">,</span> <span class="n">mallows</span><span class="p">],</span>
+    <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;central_vote&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)},</span>
+        <span class="p">{</span><span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s1">&#39;central_vote&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -429,6 +447,42 @@ you should pass it as parameter within the <code class="code docutils literal no
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">mixture</span>
+<span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">mallows</span>
+
+<span class="c1"># A mixture of two Mallows&#39; models with different phi and central votes.</span>
+<span class="c1"># The first model has weight 0.7 and the second 0.3.</span>
+<span class="c1"># There are 10 voters and 5 candidates.</span>
+
+<span class="n">mixture</span><span class="p">(</span>
+    <span class="mi">10</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">mallows</span><span class="p">,</span> <span class="n">mallows</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+    <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;central_vote&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)},</span>
+        <span class="p">{</span><span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span> <span class="s1">&#39;central_vote&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+
+<span class="c1"># The weights are re-normalised if they don&#39;t add up to one.</span>
+<span class="c1"># The real weights here would be 3/4, 1/4.</span>
+
+<span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">noise</span><span class="p">,</span> <span class="n">identity</span>
+
+<span class="n">mixture</span><span class="p">(</span>
+    <span class="mi">10</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">noise</span><span class="p">,</span> <span class="n">identity</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+    <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;rel_size_central_vote&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;rel_num_approvals&#39;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">}</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
@@ -453,13 +507,35 @@ you should pass it as parameter within the <code class="code docutils literal no
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">didi</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">permute_voters</span>
+
+<span class="c1"># Get some votes</span>
+<span class="n">ordinal_votes</span> <span class="o">=</span> <span class="n">didi</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+
+<span class="c1"># Randomly permute the voters</span>
+<span class="n">permute_voters</span><span class="p">(</span><span class="n">ordinal_votes</span><span class="p">)</span>
+
+<span class="c1"># The syntax is the same with approval votes</span>
+
+<span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">resampling</span>
+
+<span class="n">approval_votes</span> <span class="o">=</span> <span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">permute_voters</span><span class="p">(</span><span class="n">approval_votes</span><span class="p">)</span>
+
+<span class="c1"># You can set the seed for reproducibility</span>
+
+<span class="n">permute_voters</span><span class="p">(</span><span class="n">approval_votes</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">234</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.core.filters.rename_candidates">
 <span class="sig-name descname"><span class="pre">rename_candidates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/core/filters.html#rename_candidates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.filters.rename_candidates" title="Link to this definition">#</a></dt>
 <dd><p>Renames the candidates in approval or ordinal votes.</p>
-<p>Note that if the votes can be incomplete (in the case of approval voting), you need to
+<p>Note that if the votes can be incomplete (e.g., in the case of approval voting), you need to
 provide the number of candidates as input. If it is not provided, it is assumed to be the
 largest integer appearing in the ballots (candidates are represented as int).</p>
 <dl class="field-list simple">
@@ -477,13 +553,40 @@ largest integer appearing in the ballots (candidates are represented as int).</p
 <dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]] or np.ndarray</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">didi</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">rename_candidates</span>
+
+<span class="c1"># Get some votes</span>
+<span class="n">ordinal_votes</span> <span class="o">=</span> <span class="n">didi</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+
+<span class="c1"># Randomly permute the voters</span>
+<span class="n">rename_candidates</span><span class="p">(</span><span class="n">ordinal_votes</span><span class="p">)</span>
+
+<span class="c1"># With approval votes, you need to give the number of candidates</span>
+
+<span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">resampling</span>
+
+<span class="n">approval_votes</span> <span class="o">=</span> <span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">rename_candidates</span><span class="p">(</span><span class="n">approval_votes</span><span class="p">,</span> <span class="n">num_candidates</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># You can set the seed for reproducibility</span>
+
+<span class="n">rename_candidates</span><span class="p">(</span><span class="n">approval_votes</span><span class="p">,</span> <span class="n">num_candidates</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">234</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.core.filters.resample_as_central_vote">
-<span class="sig-name descname"><span class="pre">resample_as_central_vote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/core/filters.html#resample_as_central_vote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.filters.resample_as_central_vote" title="Link to this definition">#</a></dt>
-<dd><p>Resamples the votes by using them as the central vote of a given sampler. Only samplers that
-accept a <code class="code docutils literal notranslate"><span class="pre">central_vote</span></code> argument can be used.</p>
+<span class="sig-name descname"><span class="pre">resample_as_central_vote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampler_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/core/filters.html#resample_as_central_vote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.filters.resample_as_central_vote" title="Link to this definition">#</a></dt>
+<dd><p>Resamples the votes by using them as the central vote of a given sampler. The outcome is
+obtained as follows: for each input vote, we pass it to the sampler as central vote; a single
+vote is then resampled and added to the outcome.</p>
+<p>Only samplers that accept a <code class="code docutils literal notranslate"><span class="pre">central_vote</span></code> argument can be used.</p>
+<p>Note that if the votes can be incomplete (e.g., in the case of approval voting), you need to
+provide the number of candidates as input. If it is not provided, it is assumed to be the
+largest integer appearing in the ballots (candidates are represented as int).</p>
 <p>Votes are copied before being returned to avoid loss of data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -504,6 +607,37 @@ accept a <code class="code docutils literal notranslate"><span class="pre">centr
 <dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]] or np.ndarray</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">urn</span><span class="p">,</span> <span class="n">mallows</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">resample_as_central_vote</span>
+
+<span class="c1"># Get some votes</span>
+<span class="n">ordinal_votes</span> <span class="o">=</span> <span class="n">urn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># We resample them by passing them as central vote to a Mallows&#39; model</span>
+<span class="n">resample_as_central_vote</span><span class="p">(</span><span class="n">ordinal_votes</span><span class="p">,</span> <span class="n">mallows</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">})</span>
+
+<span class="c1"># The syntax is the same with approval votes</span>
+
+<span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">urn</span><span class="p">,</span> <span class="n">resampling</span>
+
+<span class="n">approval_votes</span> <span class="o">=</span> <span class="n">urn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">resample_as_central_vote</span><span class="p">(</span>
+    <span class="n">approval_votes</span><span class="p">,</span>
+    <span class="n">resampling</span><span class="p">,</span>
+    <span class="p">{</span><span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s1">&#39;rel_size_central_vote&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># To ensure reproducibility, you need to pass the seed everywhere</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">4234</span>
+<span class="n">approval_votes</span> <span class="o">=</span> <span class="n">urn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">resample_as_central_vote</span><span class="p">(</span>
+    <span class="n">approval_votes</span><span class="p">,</span>
+    <span class="n">resampling</span><span class="p">,</span>
+    <span class="p">{</span><span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s1">&#39;rel_size_central_vote&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s1">&#39;seed&#39;</span><span class="p">:</span><span class="n">seed</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

@@ -5,7 +5,7 @@ import copy
 import math
 import numpy as np
 
-from prefsampling.approval import impartial
+from prefsampling.approval.utils import validate_or_generate_central_vote
 from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
 
 
@@ -14,7 +14,7 @@ def resampling(
     num_voters: int,
     num_candidates: int,
     phi: float,
-    p: float,
+    rel_size_central_vote: float,
     central_vote: set = None,
     impartial_central_vote: bool = False,
     seed: int = None,
@@ -30,7 +30,7 @@ def resampling(
             Number of Candidates.
         phi : float
             Resampling model parameter, denoting the noise.
-        p : float
+        rel_size_central_vote : float
             Resampling model parameter, denoting the average vote length.
         central_vote : set
             The central vote. Ignored if :code:`impartial_central_vote = True`.
@@ -55,39 +55,27 @@ def resampling(
     if phi < 0 or 1 < phi:
         raise ValueError(f"Incorrect value of phi: {phi}. Value should be in [0,1]")
 
-    if p < 0 or 1 < p:
-        raise ValueError(f"Incorrect value of p: {p}. Value should be in [0,1]")
+    if rel_size_central_vote < 0 or 1 < rel_size_central_vote:
+        raise ValueError(
+            f"Incorrect value of p: {rel_size_central_vote}. Value should be in [0,1]"
+        )
 
     rng = np.random.default_rng(seed)
 
-    k = math.floor(p * num_candidates)
-    if impartial_central_vote:
-        central_vote = impartial(1, num_candidates, p, seed=seed)[0]
-    else:
-        if central_vote:
-            if not all(int(c) == c for c in central_vote):
-                raise ValueError(
-                    f"The central vote needs to be a set of int (current value is"
-                    f" {central_vote} of type {type(central_vote)}["
-                    f"{type(next(iter(central_vote)))}])."
-                )
-            if max(central_vote) > num_candidates - 1 or min(central_vote) < 0:
-                raise ValueError(
-                    "The elements of the central vote cannot be smaller than 0 "
-                    f"(min is currently {min(central_vote)}) and cannot be larger "
-                    f"than {num_candidates - 1} (max is currently "
-                    f"{max(central_vote)})."
-                )
-            central_vote = set(int(c) for c in central_vote)
-        else:
-            central_vote = set(range(k))
+    central_vote = validate_or_generate_central_vote(
+        num_candidates,
+        rel_size_central_vote,
+        central_vote,
+        impartial_central_vote,
+        seed,
+    )
 
     votes = [set() for _ in range(num_voters)]
     for v in range(num_voters):
         vote = set()
         for c in range(num_candidates):
             if rng.random() <= phi:
-                if rng.random() <= p:
+                if rng.random() <= rel_size_central_vote:
                     vote.add(c)
             else:
                 if c in central_vote:

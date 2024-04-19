@@ -2,6 +2,7 @@
 Plackett-Luce models are parameterised by a vector of quality for the candidates. The higher the
 quality of a candidate, the higher the change that they show up high in the rankings.
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -152,11 +153,15 @@ def plackett_luce(
     return votes
 
 
-def theoretical_distribution(alphas, num_candidates: int = None, rankings: Iterable[tuple[int]] = None) -> dict:
+def theoretical_distribution(
+    alphas, num_candidates: int = None, rankings: Iterable[tuple[int]] = None
+) -> dict:
     if rankings is None:
         if num_candidates is None:
-            raise ValueError("If you do not provide the collection of rankings, you need to "
-                             "provide the number of candidates.")
+            raise ValueError(
+                "If you do not provide the collection of rankings, you need to "
+                "provide the number of candidates."
+            )
         validate_int(num_candidates, lower_bound=0)
         rankings = all_rankings(num_candidates)
     distribution = {}

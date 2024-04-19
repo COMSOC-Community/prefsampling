@@ -1,8 +1,13 @@
 from prefsampling.ordinal import single_crossing
-from prefsampling.ordinal.singlecrossing import single_crossing_impartial, \
-    impartial_theoretical_distribution
-from prefsampling.combinatorics import all_single_crossing_profiles, all_non_isomorphic_profiles, \
-    all_anonymous_profiles
+from prefsampling.ordinal.singlecrossing import (
+    single_crossing_impartial,
+    impartial_theoretical_distribution,
+)
+from prefsampling.combinatorics import (
+    all_single_crossing_profiles,
+    all_non_isomorphic_profiles,
+    all_anonymous_profiles,
+)
 from validation.validator import Validator
 
 
@@ -29,7 +34,8 @@ class SingleCrossingValidator(Validator):
                 sampler_parameters["num_candidates"],
                 profiles=all_anonymous_profiles(
                     sampler_parameters["num_voters"],
-                    sampler_parameters["num_candidates"], ),
+                    sampler_parameters["num_candidates"],
+                ),
             ),
             fix_order=True,
         )

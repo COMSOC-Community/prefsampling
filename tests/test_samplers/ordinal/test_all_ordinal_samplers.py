@@ -12,7 +12,9 @@ from tests.test_samplers.ordinal.test_ordinal_euclidean import (
 from tests.test_samplers.ordinal.test_ordinal_group_separable import (
     all_test_samplers_ordinal_group_separable,
 )
-from tests.test_samplers.ordinal.test_ordinal_identity import all_test_samplers_ordinal_identity
+from tests.test_samplers.ordinal.test_ordinal_identity import (
+    all_test_samplers_ordinal_identity,
+)
 from tests.test_samplers.ordinal.test_ordinal_impartial import (
     all_test_samplers_ordinal_impartial,
 )

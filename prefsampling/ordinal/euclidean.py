@@ -3,6 +3,7 @@ In Euclidean models, the voters and the candidates are assigned random positions
 The preferences of a voter are then defined based on the distance between the voter and the
 candidates.
 """
+
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable

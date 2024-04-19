@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
@@ -330,15 +335,23 @@ document.write(`
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_CUBE</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cube</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_BALL</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ball_resampling</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;inner_sampler&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">gaussian</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;inner_sampler_args&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;num_points&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+        <span class="k">return</span> <span class="n">ball_resampling</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span>
+            <span class="s2">&quot;inner_sampler&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">gaussian</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;inner_sampler_args&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;num_points&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+        <span class="p">}</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_CUBE</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">gaussian</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;widths&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">)])}</span>
+        <span class="k">return</span> <span class="n">gaussian</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span>
+            <span class="s2">&quot;widths&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">)]),</span>
+        <span class="p">}</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNBOUNDED_GAUSSIAN</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">gaussian</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">}</span>
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
         <span class="s2">&quot;The &#39;euclidean_space&#39; and/or the &#39;candidate_euclidean_space&#39; arguments need to be one of &quot;</span>
         <span class="s2">&quot;the constant defined in the core.euclidean.EuclideanSpace enumeration. Choices are: &quot;</span>
-        <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">EuclideanSpace</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">EuclideanSpace</span><span class="p">)</span>
+        <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
     <span class="p">)</span>
 
 
@@ -351,8 +364,10 @@ document.write(`
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">sampler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You need to either provide a sampler for the </span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2"> &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;or their positions.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;You need to either provide a sampler for the </span><span class="si">{</span><span class="n">sampled_object_name</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;or their positions.&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">sampler_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">sampler_args</span><span class="p">[</span><span class="s2">&quot;num_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_points</span>
@@ -435,28 +450,33 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">euclidean_space</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">num_dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you are using the &#39;euclidean_space&#39; argument, you need to also &quot;</span>
-                             <span class="s2">&quot;provide a number of dimensions.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If you are using the &#39;euclidean_space&#39; argument, you need to also &quot;</span>
+                <span class="s2">&quot;provide a number of dimensions.&quot;</span>
+            <span class="p">)</span>
         <span class="n">validate_int</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;number of dimensions&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">euclidean_space</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
             <span class="n">euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">euclidean_space</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">euclidean_space</span><span class="p">)</span>
 
-        <span class="n">point_sampler</span><span class="p">,</span> <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span><span class="n">euclidean_space</span><span class="p">,</span>
-                                                                       <span class="n">num_dimensions</span><span class="p">)</span>
+        <span class="n">point_sampler</span><span class="p">,</span> <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span>
+            <span class="n">euclidean_space</span><span class="p">,</span> <span class="n">num_dimensions</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="n">candidate_euclidean_space</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">num_dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you are using the &#39;candidate_euclidean_space&#39; argument, you need &quot;</span>
-                             <span class="s2">&quot;to also provide a number of dimensions.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If you are using the &#39;candidate_euclidean_space&#39; argument, you need &quot;</span>
+                <span class="s2">&quot;to also provide a number of dimensions.&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
             <span class="n">candidate_euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">candidate_euclidean_space</span> <span class="o">=</span> <span class="n">EuclideanSpace</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">)</span>
 
-        <span class="n">candidate_point_sampler</span><span class="p">,</span> <span class="n">candidate_point_sampler_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span>
-            <span class="n">candidate_euclidean_space</span><span class="p">,</span>
-            <span class="n">num_dimensions</span><span class="p">)</span>
+        <span class="n">candidate_point_sampler</span><span class="p">,</span> <span class="n">candidate_point_sampler_args</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">euclidean_space_to_sampler</span><span class="p">(</span><span class="n">candidate_euclidean_space</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">point_sampler_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">point_sampler_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>

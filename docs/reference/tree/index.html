@@ -158,7 +158,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="../ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/euclidean.html">Euclidean Models</a></li>
@@ -169,7 +169,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core</a></li>
@@ -445,7 +450,7 @@ ensures uniformity.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.tree.schroeder_tree_lescanne">
 <span class="sig-name descname"><span class="pre">schroeder_tree_lescanne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_internal_nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/schroeder.html#schroeder_tree_lescanne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.schroeder_tree_lescanne" title="Link to this definition">#</a></dt>
-<dd><p>Samples a random Schröder tree following the algorithm provided by <a class="reference external" href="https://arxiv.org/abs/2205.11982">Lescanne (2022)</a>. The sampler is directcly taken from the <a class="reference external" href="https://github.com/PierreLescanne/Motzkin">corresponding
+<dd><p>Samples a random Schröder tree following the algorithm provided by <a class="reference external" href="https://arxiv.org/abs/2205.11982">Lescanne (2022)</a>. The sampler is directly taken from the <a class="reference external" href="https://github.com/PierreLescanne/Motzkin">corresponding
 GitHub repository</a> (no licence available).</p>
 <p>If a specific number of internal nodes is given, trees are sampled at random until the required
 number of internal nodes is achieved (rejection sampling).</p>

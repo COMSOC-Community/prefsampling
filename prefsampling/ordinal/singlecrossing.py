@@ -13,14 +13,17 @@ from collections.abc import Iterable, Collection
 
 import numpy as np
 
-from prefsampling.combinatorics import all_single_crossing_profiles, all_non_isomorphic_profiles, \
-    all_anonymous_profiles
+from prefsampling.combinatorics import (
+    all_single_crossing_profiles,
+    all_non_isomorphic_profiles,
+    all_anonymous_profiles,
+)
 from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
 
 
 @validate_num_voters_candidates
 def single_crossing(
-        num_voters: int, num_candidates: int, seed: int = None
+    num_voters: int, num_candidates: int, seed: int = None
 ) -> np.ndarray:
     """
     Generates ordinal votes that are single-crossing. See `Elkind, Lackner, Peters (2022)
@@ -321,16 +324,22 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
     return np.array(votes, dtype=int)
 
 
-def impartial_theoretical_distribution(num_voters: int = None, num_candidates: int = None,
-                                       sc_profiles: Iterable[
-                                           Collection[tuple[int]]] = None) -> dict:
+def impartial_theoretical_distribution(
+    num_voters: int = None,
+    num_candidates: int = None,
+    sc_profiles: Iterable[Collection[tuple[int]]] = None,
+) -> dict:
     if sc_profiles is None:
         if num_candidates is None:
-            raise ValueError("If you do not provide the collection of single-crossing profiles, "
-                             "you need to provide the number of candidates.")
+            raise ValueError(
+                "If you do not provide the collection of single-crossing profiles, "
+                "you need to provide the number of candidates."
+            )
         if num_voters is None:
-            raise ValueError("If you do not provide the collection of single-crossing profiles, "
-                             "you need to provide the number of voters.")
+            raise ValueError(
+                "If you do not provide the collection of single-crossing profiles, "
+                "you need to provide the number of voters."
+            )
         validate_int(num_candidates, lower_bound=1)
         validate_int(num_voters, lower_bound=1)
         sc_profiles = all_single_crossing_profiles(
@@ -341,7 +350,8 @@ def impartial_theoretical_distribution(num_voters: int = None, num_candidates: i
                 num_candidates,
                 profiles=all_anonymous_profiles(
                     num_voters,
-                    num_candidates, ),
+                    num_candidates,
+                ),
             ),
             fix_order=True,
         )

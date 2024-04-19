@@ -33,7 +33,7 @@ autodoc_typehints_format = "short"
 python_use_unqualified_type_names = True
 
 napoleon_google_docstring = False
-napoleon_custom_sections = ['Validation']
+napoleon_custom_sections = ["Validation"]
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]

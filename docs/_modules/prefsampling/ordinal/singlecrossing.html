@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
@@ -310,8 +315,11 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">all_single_crossing_profiles</span><span class="p">,</span> <span class="n">all_non_isomorphic_profiles</span><span class="p">,</span> \
-    <span class="n">all_anonymous_profiles</span>
+<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">all_single_crossing_profiles</span><span class="p">,</span>
+    <span class="n">all_non_isomorphic_profiles</span><span class="p">,</span>
+    <span class="n">all_anonymous_profiles</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 
 
@@ -319,7 +327,7 @@ document.write(`
 <a class="viewcode-back" href="../../../reference/ordinal/singlecrossing.html#prefsampling.ordinal.singlecrossing.single_crossing">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_crossing</span><span class="p">(</span>
-        <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates ordinal votes that are single-crossing. See `Elkind, Lackner, Peters (2022)</span>
@@ -636,16 +644,22 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">impartial_theoretical_distribution</span><span class="p">(</span><span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                                       <span class="n">sc_profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span>
-                                           <span class="n">Collection</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">impartial_theoretical_distribution</span><span class="p">(</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">sc_profiles</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Collection</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">sc_profiles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">num_candidates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of single-crossing profiles, &quot;</span>
-                             <span class="s2">&quot;you need to provide the number of candidates.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If you do not provide the collection of single-crossing profiles, &quot;</span>
+                <span class="s2">&quot;you need to provide the number of candidates.&quot;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">num_voters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If you do not provide the collection of single-crossing profiles, &quot;</span>
-                             <span class="s2">&quot;you need to provide the number of voters.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If you do not provide the collection of single-crossing profiles, &quot;</span>
+                <span class="s2">&quot;you need to provide the number of voters.&quot;</span>
+            <span class="p">)</span>
         <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">validate_int</span><span class="p">(</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">sc_profiles</span> <span class="o">=</span> <span class="n">all_single_crossing_profiles</span><span class="p">(</span>
@@ -656,7 +670,8 @@ document.write(`
                 <span class="n">num_candidates</span><span class="p">,</span>
                 <span class="n">profiles</span><span class="o">=</span><span class="n">all_anonymous_profiles</span><span class="p">(</span>
                     <span class="n">num_voters</span><span class="p">,</span>
-                    <span class="n">num_candidates</span><span class="p">,</span> <span class="p">),</span>
+                    <span class="n">num_candidates</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">),</span>
             <span class="n">fix_order</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>

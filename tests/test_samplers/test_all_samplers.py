@@ -1,7 +1,11 @@
 from unittest import TestCase
 
-from tests.test_samplers.approval.test_all_approval_samplers import all_test_samplers_approval
-from tests.test_samplers.ordinal.test_all_ordinal_samplers import all_test_samplers_ordinal
+from tests.test_samplers.approval.test_all_approval_samplers import (
+    all_test_samplers_approval,
+)
+from tests.test_samplers.ordinal.test_all_ordinal_samplers import (
+    all_test_samplers_ordinal,
+)
 
 
 def all_random_samplers():

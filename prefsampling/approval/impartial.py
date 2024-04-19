@@ -1,4 +1,11 @@
+"""
+Impartial cultures are statistical cultures in which all outcomes are equally likely to be
+generated.
+"""
+
 from __future__ import annotations
+
+from collections.abc import Sequence
 
 import numpy as np
 
@@ -7,7 +14,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def impartial(
-    num_voters: int, num_candidates: int, p: float, seed: int = None
+    num_voters: int, num_candidates: int, p: float | Sequence[float], seed: int = None
 ) -> list[set]:
     """
     Generates approval votes from impartial culture.
@@ -19,7 +26,7 @@ def impartial(
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
 
-    See :py:func:`prefsampling.approval.impartial.impartial_constant_size` for a version in which
+    See :py:func:`~prefsampling.approval.impartial.impartial_constant_size` for a version in which
     all voters approve of the same number of candidates.
 
     Parameters
@@ -28,8 +35,9 @@ def impartial(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        p : float
-            Probability of approving of any given candidates.
+        p : float | Sequence[float]
+            Probability of approving of any given candidates. If a sequence is passed, there is one
+            such probability per voter.
         seed : int
             Seed for numpy random number generator.
 
@@ -40,6 +48,8 @@ def impartial(
 
     Examples
     --------
+
+        **Use a global** :code:`p` **for all voters**
 
         .. testcode::
 
@@ -51,16 +61,95 @@ def impartial(
 
             # For reproducibility, you can set the seed.
             impartial(2, 3, 0.6, seed=1002)
-    """
 
-    if p < 0 or 1 < p:
+            # Parameter p needs to be in [0, 1]
+            try:
+                impartial(2, 3, 1.6)
+            except ValueError:
+                pass
+            try:
+                impartial(2, 3, -0.6)
+            except ValueError:
+                pass
+
+        **Use an individual** :code:`p` **per voter**
+
+        .. testcode::
+
+            from prefsampling.approval import impartial
+
+            # Sample from an impartial culture with 2 voters and 3 candidates with
+            # p=0.6 for the first voter and p=0.2 for the second.
+            impartial(2, 3, [0.6, 0.2])
+
+            # For reproducibility, you can set the seed.
+            impartial(2, 3, [0.6, 0.2], seed=1002)
+
+            # There need to be one p per voter (and no more)
+            try:
+                impartial(2, 3, [0.6, 0.2, 0.9])
+            except ValueError:
+                pass
+            try:
+                impartial(2, 3, [0.6])
+            except ValueError:
+                pass
+
+            # All individual p's need to be in [0, 1]
+            try:
+                impartial(2, 3, [0.6, -0.2])
+            except ValueError:
+                pass
+            try:
+                impartial(2, 3, [1.6, 0.2])
+            except ValueError:
+                pass
+
+    References
+    ----------
+
+        `An Experimental View on Committees Providing Justified Representation
+        <https://www.ijcai.org/proceedings/2019/16>`_,
+        *Robert Bredereck, Piotr Faliszewski, Andrzej Kaczmarczyk and Rolf Niedermeier*,
+        Proceedings of the International Joint Conference on Artificial Intelligence, 2019.
+
+        `How to Sample Approval Elections?
+        <https://www.ijcai.org/proceedings/2022/71>`_,
+        *Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,
+        Krzysztof Sornat and Nimrod Talmon*,
+        Proceedings of the International Joint Conference on Artificial Intelligence, 2022.
+
+        `Price of Fairness in Budget Division and Probabilistic Social Choice
+        <https://ojs.aaai.org/index.php/AAAI/article/view/5594>`_,
+        * Marcin Michorzewski, Dominik Peters and Piotr Skowron*,
+        Proceedings of the AAAI Conference on Artificial Intelligence, 2020.
+    """
+    unique_p = True
+    if isinstance(p, Sequence):
+        unique_p = False
+        if len(p) != num_voters:
+            raise ValueError(
+                "In the impartial model, if parameter p is a sequence, it needs to"
+                "have as many elements as there are voters"
+            )
+        for prob in p:
+            if prob < 0 or 1 < prob:
+                raise ValueError(
+                    f"Incorrect value of p: {prob}. All value of the sequence "
+                    f"should be in [0, 1]"
+                )
+    if unique_p and (p < 0 or 1 < p):
         raise ValueError(f"Incorrect value of p: {p}. Value should be in [0, 1]")
 
     rng = np.random.default_rng(seed)
 
     votes = [
-        set(j for j in range(num_candidates) if rng.random() <= p)
-        for _ in range(num_voters)
+        set(
+            j
+            for j in range(num_candidates)
+            if rng.random() <= (p if unique_p else p[i])
+        )
+        for i in range(num_voters)
     ]
 
     return votes
@@ -68,7 +157,10 @@ def impartial(
 
 @validate_num_voters_candidates
 def impartial_constant_size(
-    num_voters: int, num_candidates: int, rel_num_approvals: float, seed: int = None
+    num_voters: int,
+    num_candidates: int,
+    rel_num_approvals: float | Sequence[float],
+    seed: int = None,
 ) -> list[set]:
     """
     Generates approval votes from impartial culture with constant size.
@@ -79,7 +171,7 @@ def impartial_constant_size(
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
 
-    See :py:func:`prefsampling.approval.impartial.impartial` for a version in the probability of
+    See :py:func:`~prefsampling.approval.impartial.impartial` for a version in the probability of
     approving any candidate is constant and independent.
 
     Parameters
@@ -88,8 +180,9 @@ def impartial_constant_size(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        rel_num_approvals : float
-            Proportion of approved candidates in a ballot.
+        rel_num_approvals : float | Sequence[float]
+            Proportion of approved candidates in a ballot. If a sequence is passed, there is one
+            such proportion per voter.
         seed : int
             Seed for numpy random number generator.
 
@@ -101,6 +194,8 @@ def impartial_constant_size(
     Examples
     --------
 
+        **Use a global** :code:`rel_num_approvals` **for all voters**
+
         .. testcode::
 
             from prefsampling.approval import impartial_constant_size
@@ -111,20 +206,95 @@ def impartial_constant_size(
 
             # For reproducibility, you can set the seed.
             impartial_constant_size(2, 3, 0.6, seed=1002)
+
+            # Parameter rel_num_approvals needs to be in [0, 1]
+            try:
+                impartial_constant_size(2, 3, 1.6)
+            except ValueError:
+                pass
+            try:
+                impartial_constant_size(2, 3, -0.6)
+            except ValueError:
+                pass
+
+        **Use an individual** :code:`rel_num_approvals` **per voter**
+
+        .. testcode::
+
+            from prefsampling.approval import impartial_constant_size
+
+            # Sample from a constant size impartial culture with 2 voters and 3 candidates with
+            # p=0.6 for the first voter and p=0.2 for the second.
+            impartial_constant_size(2, 3, [0.6, 0.2])
+
+            # For reproducibility, you can set the seed.
+            impartial_constant_size(2, 3, [0.6, 0.2], seed=1002)
+
+            # There need to be one rel_num_approvals per voter (and no more)
+            try:
+                impartial_constant_size(2, 3, [0.6, 0.2, 0.9])
+            except ValueError:
+                pass
+            try:
+                impartial_constant_size(2, 3, [0.6])
+            except ValueError:
+                pass
+
+            # All individual rel_num_approvals' need to be in [0, 1]
+            try:
+                impartial_constant_size(2, 3, [0.6, -0.2])
+            except ValueError:
+                pass
+            try:
+                impartial_constant_size(2, 3, [1.6, 0.2])
+            except ValueError:
+                pass
+
+    References
+    ----------
+
+        `A Quantitative Analysis of Multi-Winner Rules
+        <https://www.ijcai.org/proceedings/2019/58>`_,
+        *Martin Lackner and Piotr Skowron*,
+        Proceedings of the International Joint Conference on Artificial Intelligence, 2019.
+
     """
 
-    if rel_num_approvals < 0 or 1 < rel_num_approvals:
-        raise ValueError(
-            f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
-            f" be in [0,1]"
-        )
+    unique_rel_num_approvals = True
+    if isinstance(rel_num_approvals, Sequence):
+        unique_rel_num_approvals = False
+        if len(rel_num_approvals) != num_voters:
+            raise ValueError(
+                "In the impartial model with constant size, if parameter "
+                "rel_num_approvals is a sequence, it needs to have as many elements "
+                "as there are voters."
+            )
+        for prop in rel_num_approvals:
+            if prop < 0 or 1 < prop:
+                raise ValueError(
+                    f"Incorrect value of rel_num_approvals: {prop}. All value of the "
+                    "sequence should be in [0, 1]"
+                )
+        num_approvals = tuple(int(prop * num_candidates) for prop in rel_num_approvals)
+    else:
+        if rel_num_approvals < 0 or 1 < rel_num_approvals:
+            raise ValueError(
+                f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should"
+                f" be in [0,1]"
+            )
+        num_approvals = int(rel_num_approvals * num_candidates)
 
-    num_approvals = int(rel_num_approvals * num_candidates)
     rng = np.random.default_rng(seed)
     candidate_range = range(num_candidates)
     votes = [
-        set(rng.choice(candidate_range, size=num_approvals, replace=False))
-        for _ in range(num_voters)
+        set(
+            rng.choice(
+                candidate_range,
+                size=num_approvals if unique_rel_num_approvals else num_approvals[i],
+                replace=False,
+            )
+        )
+        for i in range(num_voters)
     ]
 
     return votes

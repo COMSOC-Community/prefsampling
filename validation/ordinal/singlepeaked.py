@@ -1,11 +1,17 @@
-from prefsampling.combinatorics import all_single_peaked_rankings, all_single_peaked_circle_rankings
+from prefsampling.combinatorics import (
+    all_single_peaked_rankings,
+    all_single_peaked_circle_rankings,
+)
 from prefsampling.ordinal import (
     single_peaked_walsh,
     single_peaked_conitzer,
     single_peaked_circle,
 )
-from prefsampling.ordinal.singlepeaked import walsh_theoretical_distribution, \
-    conitzer_theoretical_distribution, circle_theoretical_distribution
+from prefsampling.ordinal.singlepeaked import (
+    walsh_theoretical_distribution,
+    conitzer_theoretical_distribution,
+    circle_theoretical_distribution,
+)
 from validation.validator import Validator
 
 
@@ -57,7 +63,9 @@ class SPConitzerValidator(Validator):
         return all_single_peaked_rankings(sampler_parameters["num_candidates"])
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        return conitzer_theoretical_distribution(sampler_parameters["num_candidates"], sp_rankings=all_outcomes)
+        return conitzer_theoretical_distribution(
+            sampler_parameters["num_candidates"], sp_rankings=all_outcomes
+        )
 
     def sample_cast(self, sample):
         return tuple(sample[0])

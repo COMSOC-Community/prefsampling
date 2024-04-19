@@ -3,6 +3,7 @@ Urn processes are random processes based on the idea that rankings are drawn fro
 initial composition of the urn, the rules for drawing elements from it, and the evolution of the
 elements of the urn ar the characteristic of each specific urn process.
 """
+
 from __future__ import annotations
 
 import math
@@ -136,9 +137,7 @@ def theoretical_distribution(num_voters, num_candidates, alpha, profiles=None) -
     distribution = {}
     for profile in profiles:
         counts = Counter(profile)
-        probability = math.factorial(
-            num_voters
-        ) / generalised_ascending_factorial(
+        probability = math.factorial(num_voters) / generalised_ascending_factorial(
             factorial_num_candidates,
             num_voters,
             alpha * factorial_num_candidates,

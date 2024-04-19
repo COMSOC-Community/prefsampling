@@ -30,7 +30,12 @@ class OrdinalUrnValidator(Validator):
         )
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
-        return theoretical_distribution(sampler_parameters["num_voters"], sampler_parameters["num_candidates"], sampler_parameters["alpha"], profiles=all_outcomes)
+        return theoretical_distribution(
+            sampler_parameters["num_voters"],
+            sampler_parameters["num_candidates"],
+            sampler_parameters["alpha"],
+            profiles=all_outcomes,
+        )
 
     def sample_cast(self, sample):
         return tuple(sorted(tuple(s) for s in sample))

@@ -1,3 +1,8 @@
+"""
+Identity samplers are not fascinating per se as all voters have the same preferences. There are
+useful tools however, for instance when using them in mixtures.
+"""
+
 from __future__ import annotations
 
 from prefsampling.inputvalidators import validate_num_voters_candidates
@@ -40,7 +45,21 @@ def identity(
             identity(2, 3, 0.6)
 
             # The seed will not change anything here, but you can still set it.
-            identity(2, 3, seed=1002)
+            identity(2, 3, 0.6, seed=1002)
+
+            # Parameter rel_num_approvals needs to be in [0, 1]
+            try:
+                identity(2, 3, 1.6)
+            except ValueError:
+                pass
+            try:
+                identity(2, 3, -0.6)
+            except ValueError:
+                pass
+
+    Validation
+    ----------
+        Validation is trivial here, we thus omit it.
 
     """
 
@@ -72,6 +91,23 @@ def full(num_voters: int, num_candidates: int, seed: int = None) -> list[set[int
     -------
     list[set[int]]
         Approval votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.approval import full
+
+            # "Sample" a profile of 2 voters approving all candidates.
+            full(2, 3)
+
+            # The seed will not change anything here, but you can still set it.
+            full(2, 3, seed=1002)
+
+    Validation
+    ----------
+        Validation is trivial here, we thus omit it.
     """
     return [set(range(num_candidates)) for _ in range(num_voters)]
 
@@ -94,5 +130,24 @@ def empty(num_voters: int, num_candidates: int, seed: int = None) -> list[set[in
     -------
     list[set[int]]
         Approval votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.approval import empty
+
+            # "Sample" a profile of 2 voters approving of no candidates.
+            # The number of candidates is not used but must be given to keep
+            # the samplers' signatures consistent.
+            empty(2, 3)
+
+            # The seed will not change anything here, but you can still set it.
+            empty(2, 3, seed=1002)
+
+    Validation
+    ----------
+        Validation is trivial here, we thus omit it.
     """
     return [set() for _ in range(num_voters)]

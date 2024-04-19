@@ -157,7 +157,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Impartial Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/euclidean.html">Euclidean Models</a></li>
@@ -168,7 +168,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/tree/index.html">Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/core/index.html">Core</a></li>
@@ -302,7 +307,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">impartial</span>
+<span class="kn">from</span> <span class="nn">prefsampling.approval.utils</span> <span class="kn">import</span> <span class="n">validate_or_generate_central_vote</span>
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 
 
@@ -313,7 +318,7 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">rel_size_central_vote</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">central_vote</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">impartial_central_vote</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -329,7 +334,7 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        phi : float</span>
 <span class="sd">            Resampling model parameter, denoting the noise.</span>
-<span class="sd">        p : float</span>
+<span class="sd">        rel_size_central_vote : float</span>
 <span class="sd">            Resampling model parameter, denoting the average vote length.</span>
 <span class="sd">        central_vote : set</span>
 <span class="sd">            The central vote. Ignored if :code:`impartial_central_vote = True`.</span>
@@ -354,39 +359,27 @@ document.write(`
     <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">phi</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of phi: </span><span class="si">{</span><span class="n">phi</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rel_size_central_vote</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">rel_size_central_vote</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span>
+        <span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="n">k</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">impartial_central_vote</span><span class="p">:</span>
-        <span class="n">central_vote</span> <span class="o">=</span> <span class="n">impartial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">central_vote</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">==</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;The central vote needs to be a set of int (current value is&quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">central_vote</span><span class="si">}</span><span class="s2"> of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)</span><span class="si">}</span><span class="s2">[&quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)))</span><span class="si">}</span><span class="s2">]).&quot;</span>
-                <span class="p">)</span>
-            <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">num_candidates</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">min</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;The elements of the central vote cannot be smaller than 0 &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;(min is currently </span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)</span><span class="si">}</span><span class="s2">) and cannot be larger &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;than </span><span class="si">{</span><span class="n">num_candidates</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> (max is currently &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)</span><span class="si">}</span><span class="s2">).&quot;</span>
-                <span class="p">)</span>
-            <span class="n">central_vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">central_vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+    <span class="n">central_vote</span> <span class="o">=</span> <span class="n">validate_or_generate_central_vote</span><span class="p">(</span>
+        <span class="n">num_candidates</span><span class="p">,</span>
+        <span class="n">rel_size_central_vote</span><span class="p">,</span>
+        <span class="n">central_vote</span><span class="p">,</span>
+        <span class="n">impartial_central_vote</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)]</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
         <span class="n">vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">phi</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
                     <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">:</span>
