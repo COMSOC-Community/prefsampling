@@ -19,15 +19,11 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 def euclidean(
     num_voters: int,
     num_candidates: int,
-    euclidean_space: EuclideanSpace = None,
-    candidate_euclidean_space: EuclideanSpace = None,
-    num_dimensions: int = None,
-    point_sampler: Callable = None,
-    point_sampler_args: dict = None,
-    candidate_point_sampler: Callable = None,
-    candidate_point_sampler_args: dict = None,
-    voters_positions: Iterable[Iterable[float]] = None,
-    candidates_positions: Iterable[Iterable[float]] = None,
+    num_dimensions: int,
+    voters_positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
+    candidates_positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
+    voters_positions_args: dict = None,
+    candidates_positions_args: dict = None,
     seed: int = None,
 ) -> np.ndarray:
     """
@@ -48,35 +44,32 @@ def euclidean(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        euclidean_space: :py:class:`~prefsampling.core.euclidean.EuclideanSpace`, default: :code:`None`
-            Use a pre-defined Euclidean space for sampling the position of the voters. If no
-            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
-            candidates as well. A number of dimension needs to be provided.
-        candidate_euclidean_space: :py:class:`~prefsampling.core.euclidean.EuclideanSpace`, default: :code:`None`
-            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
-            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
-            to be provided.
-        num_dimensions: int, default: :code:`None`
+        num_dimensions: int
             The number of dimensions to use. Using this argument is mandatory when passing a space
-            as argument.
-        point_sampler : Callable, default: :code:`None`
-            The sampler used to sample point in the space. It should be a function accepting
-            arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
-            `candidate_space` is provided.
-        point_sampler_args : dict, default: :code:`None`
-            The arguments passed to the `point_sampler`. The argument `num_points` is ignored
-            and replaced by the number of voters or candidates.
-        candidate_point_sampler : Callable, default: :code:`None`
-            The sampler used to sample the points of the candidates. It should be a function
-            accepting  arguments 'num_points' and 'seed'. If a value is provided, then the
-            `point_sampler_args` argument is only used for voters.
-        candidate_point_sampler_args : dict
-            The arguments passed to the `candidate_point_sampler`. The argument `num_points`
-            is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[Iterable[float]]
-            Position of the voters.
-        candidates_positions : Iterable[Iterable[float]]
-            Position of the candidates.
+            as argument. If you pass samplers as arguments and use the num_dimensions, then, the
+            value of num_dimensions is passed as a kwarg to the samplers.
+        voters_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+            The positions of the voters, or a way to determine them. If an Iterable is passed,
+            then it is assumed to be the positions themselves. Otherwise, it is assumed that a
+            sampler for the positions is passed. It can be either the nickname of a sampler---when
+            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            A sampler is a function that takes as keywords arguments: 'num_points',
+            'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
+            :code:`voters_positions_args` argument.
+        candidates_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+            The positions of the candidates, or a way to determine them. If an Iterable is passed,
+            then it is assumed to be the positions themselves. Otherwise, it is assumed that a
+            sampler for the positions is passed. It can be either the nickname of a sampler---when
+            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            A sampler is a function that takes as keywords arguments: 'num_points',
+            'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
+            :code:`candidates_positions_args` argument.
+        voters_positions_args: dict, default: :code:`dict()`
+            Additional keyword arguments passed to the :code:`voters_positions` sampler when the
+            latter is a Callable.
+        candidates_positions_args: dict, default: :code:`dict()`
+            Additional keyword arguments passed to the :code:`candidates_positions` sampler when the
+            latter is a Callable.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
             a value is provided.
@@ -99,23 +92,17 @@ def euclidean(
             from prefsampling.ordinal import euclidean
             from prefsampling.core.euclidean import EuclideanSpace
 
-            # Here for 2 voters and 3 candidates with uniform ball
-            euclidean(2, 3, num_dimensions = 3, euclidean_space = EuclideanSpace.UNIFORM_BALL)
+            # Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates
+            euclidean(2, 3, 5, EuclideanSpace.UNIFORM_BALL, EuclideanSpace.UNIFORM_BALL)
 
             # You can use different spaces for the voters and the candidates
             euclidean(
                 2,
                 3,
-                num_dimensions = 3,
-                euclidean_space = EuclideanSpace.UNIFORM_SPHERE,
-                candidate_euclidean_space = EuclideanSpace.GAUSSIAN_CUBE,
+                5,
+                EuclideanSpace.UNIFORM_SPHERE,
+                EuclideanSpace.GAUSSIAN_CUBE,
                 )
-
-            # Don't forget to pass the number of dimensions
-            try:
-                euclidean(2, 3, euclidean_space = EuclideanSpace.UNBOUNDED_GAUSSIAN)
-            except ValueError:
-                pass
 
         **Using** :py:mod:`prefsampling.point`
 
@@ -126,16 +113,17 @@ def euclidean(
             from prefsampling.ordinal import euclidean
             from prefsampling.point import ball_uniform
 
-            # Here for 2 voters and 3 candidates with uniform ball
-            euclidean(2, 3, num_dimensions=5, point_sampler = ball_uniform)
+            # Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates
+            euclidean(2, 3, 5, ball_uniform, ball_uniform)
 
             # You can specify additional arguments to the point sampler
             euclidean(
                 2,
                 3,
-                num_dimensions=5,  # can be here or in the point_sampler_args
-                point_sampler = ball_uniform,
-                point_sampler_args = {'widths': (1, 3, 2, 4, 2)}
+                5,
+                ball_uniform,
+                ball_uniform,
+                voters_positions_args = {'widths': (1, 3, 2, 4, 2)}
             )
 
             # You can also specify different point samplers for voters and candidates
@@ -144,23 +132,11 @@ def euclidean(
             euclidean(
                 2,
                 3,
-                num_dimensions=2,
-                point_sampler = ball_uniform,
-                point_sampler_args = {'widths': (3, 1), 'only_envelope': True},
-                candidate_point_sampler = cube,
-                candidate_point_sampler_args = {'center_point': (0.5, 1)}
-            )
-
-            # You can also mix the two methods.
-            from prefsampling.core.euclidean import EuclideanSpace
-
-            euclidean(
-                2,
-                3,
-                num_dimensions=2,
-                point_sampler = ball_uniform,
-                point_sampler_args = {'widths': (3, 1), 'only_envelope': True},
-                candidate_euclidean_space = EuclideanSpace.UNIFORM_CUBE,
+                5,
+                ball_uniform,
+                ball_uniform,
+                voters_positions_args = {'widths': (4, 7, 3, 3, 1), 'only_envelope': True},
+                candidates_positions_args = {'center_point': (0.5, 1, 0, 0, 0)}
             )
 
         **Using already known-positions**
@@ -181,15 +157,17 @@ def euclidean(
             euclidean(
                 2,
                 3,
-                num_dimensions=2,
-                euclidean_space=EuclideanSpace.GAUSSIAN_BALL,
-                candidates_positions=candidates_positions  # use voters_positions for the voters
+                2,
+                EuclideanSpace.GAUSSIAN_BALL,
+                candidates_positions
             )
 
     Validation
     ----------
 
         There is no known expression for the probability distribution governing Euclidean models.
+
+        **With a Single Voter**
 
         Still, if there is a single voter, we know that we should obtain a uniform distribution
         over all rankings.
@@ -217,6 +195,18 @@ def euclidean(
         .. image:: ../validation_plots/ordinal/euclidean_uniform_UNBOUNDED_GAUSSIAN.png
             :width: 800
             :alt: Observed versus theoretical frequencies for a Gaussian Euclidean model with n=1
+
+        **With Fixed Candidates Positions on the Line**
+
+        If the positions of the candidates are fixed, the probability distribution can be computed
+        by considering the size of the hyperplanes separating two candidates. We apply this method
+        in one dimension to validate the sampler.
+
+        .. image:: ../validation_plots/ordinal/euclidean_UNIFORM_BALL.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a ball Euclidean model with n=3
+
+        **In General**
 
         In the general case, we obtain the following distribution of frequencies.
 
@@ -255,15 +245,11 @@ def euclidean(
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
-        euclidean_space,
-        candidate_euclidean_space,
         num_dimensions,
-        point_sampler,
-        point_sampler_args,
-        candidate_point_sampler,
-        candidate_point_sampler_args,
         voters_positions,
         candidates_positions,
+        voters_positions_args,
+        candidates_positions_args,
         seed,
     )
 

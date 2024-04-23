@@ -309,8 +309,8 @@ class Validator(abc.ABC):
                 if faceted_parameters[1] is not None:
                     g.set_titles("{col_var} = {col_name}")
                 g.set_xticklabels()
-            g.set(xticklabels=[])
-            # plt.xticks(rotation='vertical')
+            # g.set(xticklabels=[])
+            plt.xticks(rotation='vertical')
             g.set_axis_labels("Outcome identifier", "Frequency")
             title = f"{self.model_name} Model"
             if faceted_parameters[0] is not None:
@@ -318,10 +318,15 @@ class Validator(abc.ABC):
             title += f"\n\n\small num_samples = {df['num_samples'].unique()[0]}"
             constant_params = None
             if self.constant_parameters:
-                constant_params = [
-                    f"{k} = {self.parameters_list[0][k]}"
-                    for k in self.constant_parameters
-                ]
+                constant_params = []
+                for k in self.constant_parameters:
+                    name = k
+                    parameter = self.parameters_list[0][k]
+                    if isinstance(parameter, Callable):
+                        value = parameter.__name__
+                    else:
+                        value = parameter
+                    constant_params.append(f"{name} = {value}")
             if constant_params:
                 title += " ~~|~~ " + " ~~|~~ ".join(constant_params)
             title += "\n"

@@ -1,5 +1,3 @@
-from unittest import TestCase
-
 from prefsampling.ordinal.singlepeaked import (
     single_peaked_walsh,
     single_peaked_conitzer,

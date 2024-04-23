@@ -22,7 +22,7 @@ from prefsampling.ordinal.mallows import (
     mallows,
     norm_mallows,
 )
-from prefsampling.ordinal.euclidean import euclidean
+from prefsampling.ordinal.euclidean import euclidean, EuclideanSpace
 from prefsampling.ordinal.plackettluce import plackett_luce
 from prefsampling.ordinal.groupseparable import group_separable, TreeSampler
 from prefsampling.ordinal.identity import identity
@@ -42,6 +42,7 @@ __all__ = [
     "mallows",
     "norm_mallows",
     "euclidean",
+    "EuclideanSpace",
     "plackett_luce",
     "group_separable",
     "TreeSampler",

@@ -115,6 +115,9 @@ def ball_resampling(
     Uses another point sampler and reject all points that do not fall inside the ball described
     as parameter.
 
+    Be careful, if not set properly, this can run until the end of time (if always resampling for
+    instance).
+
     Parameters
     ----------
         num_points: int

@@ -15,6 +15,7 @@ from prefsampling.approval.euclidean import (
     euclidean_threshold,
     euclidean_vcr,
     euclidean_constant_size,
+    EuclideanSpace,
 )
 from prefsampling.approval.truncated_ordinal import truncated_ordinal
 from prefsampling.approval.urn import urn, urn_constant_size, urn_partylist
@@ -34,6 +35,7 @@ __all__ = [
     "euclidean_threshold",
     "euclidean_vcr",
     "euclidean_constant_size",
+    "EuclideanSpace",
     "urn_partylist",
     "truncated_ordinal",
     "urn",

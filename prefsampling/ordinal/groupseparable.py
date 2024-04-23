@@ -6,7 +6,6 @@ from itertools import chain
 
 import numpy as np
 
-from prefsampling.core import rename_candidates, permute_voters
 from prefsampling.tree.schroeder import (
     schroeder_tree,
     schroeder_tree_brute_force,

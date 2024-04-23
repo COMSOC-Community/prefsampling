@@ -13,15 +13,11 @@ def euclidean_threshold(
     num_voters: int,
     num_candidates: int,
     threshold: float,
-    euclidean_space: EuclideanSpace = None,
-    candidate_euclidean_space: EuclideanSpace = None,
-    num_dimensions: int = None,
-    point_sampler: Callable = None,
-    point_sampler_args: dict = None,
-    candidate_point_sampler: Callable = None,
-    candidate_point_sampler_args: dict = None,
-    voters_positions: Iterable[float] = None,
-    candidates_positions: Iterable[float] = None,
+    num_dimensions: int,
+    voters_positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
+    candidates_positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
+    voters_positions_args: dict = None,
+    candidates_positions_args: dict = None,
     seed: int = None,
 ) -> list[set[int]]:
     """
@@ -45,35 +41,32 @@ def euclidean_threshold(
             Threshold of approval. Voters approve all candidates that are at distance threshold
             times minimum distance between the voter and any candidates. This value should be 1 or
             more.
-        euclidean_space: EuclideanSpace, default: :code:`None`
-            Use a pre-defined Euclidean space for sampling the position of the voters. If no
-            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
-            candidates as well. A number of dimension needs to be provided.
-        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
-            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
-            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
-            to be provided.
-        num_dimensions: int, default: :code:`None`
+        num_dimensions: int
             The number of dimensions to use. Using this argument is mandatory when passing a space
-            as argument.
-        point_sampler : Callable, default: :code:`None`
-            The sampler used to sample point in the space. It should be a function accepting
-            arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
-            `candidate_space` is provided.
-        point_sampler_args : dict, default: :code:`None`
-            The arguments passed to the `point_sampler`. The argument `num_points` is ignored
-            and replaced by the number of voters or candidates.
-        candidate_point_sampler : Callable, default: :code:`None`
-            The sampler used to sample the points of the candidates. It should be a function
-            accepting  arguments 'num_points' and 'seed'. If a value is provided, then the
-            `point_sampler_args` argument is only used for voters.
-        candidate_point_sampler_args : dict
-            The arguments passed to the `candidate_point_sampler`. The argument `num_points`
-            is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[Iterable[float]]
-            Position of the voters.
-        candidates_positions : Iterable[Iterable[float]]
-            Position of the candidates.
+            as argument. If you pass samplers as arguments and use the num_dimensions, then, the
+            value of num_dimensions is passed as a kwarg to the samplers.
+        voters_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+            The positions of the voters, or a way to determine them. If an Iterable is passed,
+            then it is assumed to be the positions themselves. Otherwise, it is assumed that a
+            sampler for the positions is passed. It can be either the nickname of a sampler---when
+            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            A sampler is a function that takes as keywords arguments: 'num_points',
+            'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
+            :code:`voters_positions_args` argument.
+        candidates_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+            The positions of the candidates, or a way to determine them. If an Iterable is passed,
+            then it is assumed to be the positions themselves. Otherwise, it is assumed that a
+            sampler for the positions is passed. It can be either the nickname of a sampler---when
+            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            A sampler is a function that takes as keywords arguments: 'num_points',
+            'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
+            :code:`candidates_positions_args` argument.
+        voters_positions_args: dict, default: :code:`dict()`
+            Additional keyword arguments passed to the :code:`voters_positions` sampler when the
+            latter is a Callable.
+        candidates_positions_args: dict, default: :code:`dict()`
+            Additional keyword arguments passed to the :code:`candidates_positions` sampler when the
+            latter is a Callable.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
             a value is provided.
@@ -91,15 +84,11 @@ def euclidean_threshold(
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
-        euclidean_space,
-        candidate_euclidean_space,
         num_dimensions,
-        point_sampler,
-        point_sampler_args,
-        candidate_point_sampler,
-        candidate_point_sampler_args,
         voters_positions,
         candidates_positions,
+        voters_positions_args,
+        candidates_positions_args,
         seed,
     )
 
@@ -121,15 +110,11 @@ def euclidean_vcr(
     num_candidates: int,
     voters_radius: float | Iterable[float],
     candidates_radius: float | Iterable[float],
-    euclidean_space: EuclideanSpace = None,
-    candidate_euclidean_space: EuclideanSpace = None,
-    num_dimensions: int = None,
-    point_sampler: Callable = None,
-    point_sampler_args: dict = None,
-    candidate_point_sampler: Callable = None,
-    candidate_point_sampler_args: dict = None,
-    voters_positions: Iterable[Iterable[float]] = None,
-    candidates_positions: Iterable[Iterable[float]] = None,
+    num_dimensions: int,
+    voters_positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
+    candidates_positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
+    voters_positions_args: dict = None,
+    candidates_positions_args: dict = None,
     seed: int = None,
 ) -> list[set[int]]:
     """
@@ -162,35 +147,32 @@ def euclidean_vcr(
             the position of the voter and the candidate of radius voter_radius and candidate_radius
             overlap. If a single value is given, it applies to all voters. Otherwise, it is assumed
             that one value per voter is provided.
-        euclidean_space: EuclideanSpace, default: :code:`None`
-            Use a pre-defined Euclidean space for sampling the position of the voters. If no
-            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
-            candidates as well. A number of dimension needs to be provided.
-        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
-            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
-            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
-            to be provided.
-        num_dimensions: int, default: :code:`None`
+        num_dimensions: int
             The number of dimensions to use. Using this argument is mandatory when passing a space
-            as argument.
-        point_sampler : Callable, default: :code:`None`
-            The sampler used to sample point in the space. It should be a function accepting
-            arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
-            `candidate_space` is provided.
-        point_sampler_args : dict, default: :code:`None`
-            The arguments passed to the `point_sampler`. The argument `num_points` is ignored
-            and replaced by the number of voters or candidates.
-        candidate_point_sampler : Callable, default: :code:`None`
-            The sampler used to sample the points of the candidates. It should be a function
-            accepting  arguments 'num_points' and 'seed'. If a value is provided, then the
-            `point_sampler_args` argument is only used for voters.
-        candidate_point_sampler_args : dict
-            The arguments passed to the `candidate_point_sampler`. The argument `num_points`
-            is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[Iterable[float]]
-            Position of the voters.
-        candidates_positions : Iterable[Iterable[float]]
-            Position of the candidates.
+            as argument. If you pass samplers as arguments and use the num_dimensions, then, the
+            value of num_dimensions is passed as a kwarg to the samplers.
+        voters_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+            The positions of the voters, or a way to determine them. If an Iterable is passed,
+            then it is assumed to be the positions themselves. Otherwise, it is assumed that a
+            sampler for the positions is passed. It can be either the nickname of a sampler---when
+            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            A sampler is a function that takes as keywords arguments: 'num_points',
+            'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
+            :code:`voters_positions_args` argument.
+        candidates_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+            The positions of the candidates, or a way to determine them. If an Iterable is passed,
+            then it is assumed to be the positions themselves. Otherwise, it is assumed that a
+            sampler for the positions is passed. It can be either the nickname of a sampler---when
+            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            A sampler is a function that takes as keywords arguments: 'num_points',
+            'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
+            :code:`candidates_positions_args` argument.
+        voters_positions_args: dict, default: :code:`dict()`
+            Additional keyword arguments passed to the :code:`voters_positions` sampler when the
+            latter is a Callable.
+        candidates_positions_args: dict, default: :code:`dict()`
+            Additional keyword arguments passed to the :code:`candidates_positions` sampler when the
+            latter is a Callable.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
             a value is provided.
@@ -229,17 +211,14 @@ def euclidean_vcr(
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
-        euclidean_space,
-        candidate_euclidean_space,
         num_dimensions,
-        point_sampler,
-        point_sampler_args,
-        candidate_point_sampler,
-        candidate_point_sampler_args,
         voters_positions,
         candidates_positions,
+        voters_positions_args,
+        candidates_positions_args,
         seed,
     )
+
     votes = []
     for v, voter_pos in enumerate(voters_pos):
         ballot = set()
@@ -257,15 +236,11 @@ def euclidean_constant_size(
     num_voters: int,
     num_candidates: int,
     rel_num_approvals: float,
-    euclidean_space: EuclideanSpace = None,
-    candidate_euclidean_space: EuclideanSpace = None,
-    num_dimensions: int = None,
-    point_sampler: Callable = None,
-    point_sampler_args: dict = None,
-    candidate_point_sampler: Callable = None,
-    candidate_point_sampler_args: dict = None,
-    voters_positions: Iterable[Iterable[float]] = None,
-    candidates_positions: Iterable[Iterable[float]] = None,
+    num_dimensions: int,
+    voters_positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
+    candidates_positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
+    voters_positions_args: dict = None,
+    candidates_positions_args: dict = None,
     seed: int = None,
 ) -> list[set[int]]:
     """
@@ -288,35 +263,32 @@ def euclidean_constant_size(
             Number of Candidates.
         rel_num_approvals : float
             Proportion of approved candidates in a ballot.
-        euclidean_space: EuclideanSpace, default: :code:`None`
-            Use a pre-defined Euclidean space for sampling the position of the voters. If no
-            `candidate_euclidean_space` is provided, the value of 'euclidean_space' is used for the
-            candidates as well. A number of dimension needs to be provided.
-        candidate_euclidean_space: EuclideanSpace, default: :code:`None`
-            Use a pre-defined Euclidean space for sampling the position of the candidates. If no
-            value is provided, the value of 'euclidean_space' is used. A number of dimension needs
-            to be provided.
-        num_dimensions: int, default: :code:`None`
+        num_dimensions: int
             The number of dimensions to use. Using this argument is mandatory when passing a space
-            as argument.
-        point_sampler : Callable, default: :code:`None`
-            The sampler used to sample point in the space. It should be a function accepting
-            arguments 'num_points' and 'seed'. Used for both voters and candidates unless a
-            `candidate_space` is provided.
-        point_sampler_args : dict, default: :code:`None`
-            The arguments passed to the `point_sampler`. The argument `num_points` is ignored
-            and replaced by the number of voters or candidates.
-        candidate_point_sampler : Callable, default: :code:`None`
-            The sampler used to sample the points of the candidates. It should be a function
-            accepting  arguments 'num_points' and 'seed'. If a value is provided, then the
-            `point_sampler_args` argument is only used for voters.
-        candidate_point_sampler_args : dict
-            The arguments passed to the `candidate_point_sampler`. The argument `num_points`
-            is ignored and replaced by the number of candidates.
-        voters_positions : Iterable[Iterable[float]]
-            Position of the voters.
-        candidates_positions : Iterable[Iterable[float]]
-            Position of the candidates.
+            as argument. If you pass samplers as arguments and use the num_dimensions, then, the
+            value of num_dimensions is passed as a kwarg to the samplers.
+        voters_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+            The positions of the voters, or a way to determine them. If an Iterable is passed,
+            then it is assumed to be the positions themselves. Otherwise, it is assumed that a
+            sampler for the positions is passed. It can be either the nickname of a sampler---when
+            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            A sampler is a function that takes as keywords arguments: 'num_points',
+            'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
+            :code:`voters_positions_args` argument.
+        candidates_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+            The positions of the candidates, or a way to determine them. If an Iterable is passed,
+            then it is assumed to be the positions themselves. Otherwise, it is assumed that a
+            sampler for the positions is passed. It can be either the nickname of a sampler---when
+            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            A sampler is a function that takes as keywords arguments: 'num_points',
+            'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
+            :code:`candidates_positions_args` argument.
+        voters_positions_args: dict, default: :code:`dict()`
+            Additional keyword arguments passed to the :code:`voters_positions` sampler when the
+            latter is a Callable.
+        candidates_positions_args: dict, default: :code:`dict()`
+            Additional keyword arguments passed to the :code:`candidates_positions` sampler when the
+            latter is a Callable.
         seed : int, default: :code:`None`
             Seed for numpy random number generator. Also passed to the point samplers if
             a value is provided.
@@ -327,18 +299,20 @@ def euclidean_constant_size(
             Approval votes.
     """
 
+    if rel_num_approvals < 0 or 1 < rel_num_approvals:
+        raise ValueError(
+            f"Incorrect value of rel_num_approvals: {rel_num_approvals}. Value should "
+            f"be in [0, 1]"
+        )
+
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
-        euclidean_space,
-        candidate_euclidean_space,
         num_dimensions,
-        point_sampler,
-        point_sampler_args,
-        candidate_point_sampler,
-        candidate_point_sampler_args,
         voters_positions,
         candidates_positions,
+        voters_positions_args,
+        candidates_positions_args,
         seed,
     )
 
