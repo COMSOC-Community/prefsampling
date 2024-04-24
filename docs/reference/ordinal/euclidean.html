@@ -351,7 +351,15 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.GAUSSIAN_BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN_BALL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.GAUSSIAN_CUBE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN_CUBE</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNBOUNDED_GAUSSIAN"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNBOUNDED_GAUSSIAN</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM_BALL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_CUBE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM_CUBE</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_SPHERE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM_SPHERE</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -524,6 +532,48 @@ Cambridge University Press, 1984.</p>
 <dt class="sig sig-object py" id="prefsampling.ordinal.euclidean.EuclideanSpace">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EuclideanSpace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/prefsampling/core/euclidean.html#EuclideanSpace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.euclidean.EuclideanSpace" title="Link to this definition">#</a></dt>
 <dd><p>Constants for some pre-defined Euclidean distributions.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prefsampling.ordinal.euclidean.EuclideanSpace.GAUSSIAN_BALL">
+<span class="sig-name descname"><span class="pre">GAUSSIAN_BALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gaussian_ball'</span></em><a class="headerlink" href="#prefsampling.ordinal.euclidean.EuclideanSpace.GAUSSIAN_BALL" title="Link to this definition">#</a></dt>
+<dd><p>Constants representing a Gaussian ball with center point at the origin and width of 1 for all
+dimensions. The inner Gaussian sampler has mean 0 and standard deviation 0.33.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prefsampling.ordinal.euclidean.EuclideanSpace.GAUSSIAN_CUBE">
+<span class="sig-name descname"><span class="pre">GAUSSIAN_CUBE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gaussian_cube'</span></em><a class="headerlink" href="#prefsampling.ordinal.euclidean.EuclideanSpace.GAUSSIAN_CUBE" title="Link to this definition">#</a></dt>
+<dd><p>Constants representing a Gaussian ball with center point at the origin and width of 1 for all
+dimensions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prefsampling.ordinal.euclidean.EuclideanSpace.UNBOUNDED_GAUSSIAN">
+<span class="sig-name descname"><span class="pre">UNBOUNDED_GAUSSIAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'unbounded_gaussian'</span></em><a class="headerlink" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNBOUNDED_GAUSSIAN" title="Link to this definition">#</a></dt>
+<dd><p>Constants representing an unbounded Gaussian space.The inner Gaussian sampler has mean 0 and
+standard deviation 1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_BALL">
+<span class="sig-name descname"><span class="pre">UNIFORM_BALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'uniform_ball'</span></em><a class="headerlink" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_BALL" title="Link to this definition">#</a></dt>
+<dd><p>Constants representing a uniform ball with center point at the origin and width of 1 for all
+dimensions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_CUBE">
+<span class="sig-name descname"><span class="pre">UNIFORM_CUBE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'uniform_cube'</span></em><a class="headerlink" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_CUBE" title="Link to this definition">#</a></dt>
+<dd><p>Constants representing a uniform cube with center point at the origin and width of 1 for all
+dimensions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_SPHERE">
+<span class="sig-name descname"><span class="pre">UNIFORM_SPHERE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'uniform_sphere'</span></em><a class="headerlink" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_SPHERE" title="Link to this definition">#</a></dt>
+<dd><p>Constants representing a uniform sphere with center point at the origin and width of 1 for all
+dimensions. This is the envelope of the uniform ball.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -574,7 +624,15 @@ Cambridge University Press, 1984.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.GAUSSIAN_BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN_BALL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.GAUSSIAN_CUBE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.GAUSSIAN_CUBE</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNBOUNDED_GAUSSIAN"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNBOUNDED_GAUSSIAN</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_BALL"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM_BALL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_CUBE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM_CUBE</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.ordinal.euclidean.EuclideanSpace.UNIFORM_SPHERE"><code class="docutils literal notranslate"><span class="pre">EuclideanSpace.UNIFORM_SPHERE</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

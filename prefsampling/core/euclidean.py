@@ -15,11 +15,35 @@ class EuclideanSpace(Enum):
     """
 
     UNIFORM_BALL = "uniform_ball"
+    """
+    Constants representing a uniform ball with center point at the origin and width of 1 for all
+    dimensions.
+    """
     UNIFORM_SPHERE = "uniform_sphere"
+    """
+    Constants representing a uniform sphere with center point at the origin and width of 1 for all
+    dimensions. This is the envelope of the uniform ball.
+    """
     UNIFORM_CUBE = "uniform_cube"
+    """
+    Constants representing a uniform cube with center point at the origin and width of 1 for all
+    dimensions.
+    """
     GAUSSIAN_BALL = "gaussian_ball"
+    """
+    Constants representing a Gaussian ball with center point at the origin and width of 1 for all
+    dimensions. The inner Gaussian sampler has mean 0 and standard deviation 0.33.
+    """
     GAUSSIAN_CUBE = "gaussian_cube"
+    """
+    Constants representing a Gaussian ball with center point at the origin and width of 1 for all
+    dimensions.
+    """
     UNBOUNDED_GAUSSIAN = "unbounded_gaussian"
+    """
+    Constants representing an unbounded Gaussian space.The inner Gaussian sampler has mean 0 and 
+    standard deviation 1.
+    """
 
 
 def euclidean_space_to_sampler(
