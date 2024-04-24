@@ -309,8 +309,8 @@ class Validator(abc.ABC):
                 if faceted_parameters[1] is not None:
                     g.set_titles("{col_var} = {col_name}")
                 g.set_xticklabels()
-            # g.set(xticklabels=[])
-            plt.xticks(rotation='vertical')
+            g.set(xticklabels=[])
+            # plt.xticks(rotation='vertical')
             g.set_axis_labels("Outcome identifier", "Frequency")
             title = f"{self.model_name} Model"
             if faceted_parameters[0] is not None:

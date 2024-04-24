@@ -46,6 +46,11 @@ class SetDistance(Enum):
 
 
 class DistanceInfiniteError(ValueError):
+    """
+    Exception thrown when the distance between two points is infinite., typically when dividing by 0 for the
+    Bunke-Shearer or the Jaccard distances.
+    """
+
     pass
 
 
@@ -93,6 +98,8 @@ def noise(
 
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
+
+    For an analogous sampler generating ordinal ballots, see :py:func:`~prefsampling.ordinal.mallows.mallows`.
 
     Parameters
     ----------

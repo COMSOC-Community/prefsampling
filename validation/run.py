@@ -1,8 +1,10 @@
 import logging
 import os
 
-from validation.approval.impartial import ApprovalImpartialValidator
-from validation.approval.identity import ApprovalIdentityValidator
+from validation.approval.impartial import (
+    ApprovalImpartialValidator,
+    ApprovalImpartialConstantSizeValidator,
+)
 from validation.approval.noise import ApprovalNoiseValidator
 from validation.approval.resampling import (
     ApprovalResamplingValidator,
@@ -50,10 +52,10 @@ from validation.tree.schroeder import (
 
 ALL_APPROVAL_VALIDATORS = [
     # ApprovalImpartialValidator(),
-    # ApprovalIdentityValidator(),
+    # ApprovalImpartialConstantSizeValidator(),
     # ApprovalNoiseValidator(),
     # ApprovalResamplingValidator(),
-    # ApprovalDisjointResamplingValidator(),
+    ApprovalDisjointResamplingValidator(),
 ]
 
 ALL_ORDINAL_VALIDATORS = [
@@ -67,7 +69,7 @@ ALL_ORDINAL_VALIDATORS = [
     # OrdinalUrnValidator(),
     # OrdinalEuclideanValidator(),
     # OrdinalEuclideanValidatorUniform(),
-    OrdinalEuclideanValidatorLine(),
+    # OrdinalEuclideanValidatorLine(),
     # SPWalshValidator(),
     # SPConitzerValidator(),
     # SPCircleValidator(),
@@ -85,7 +87,7 @@ ALL_TREE_VALIDATORS = [
 if __name__ == "__main__":
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-    num_observations = 10000#00
+    num_observations = 1000000
 
     for validator_list, nickname in [
         (ALL_APPROVAL_VALIDATORS, "approval"),

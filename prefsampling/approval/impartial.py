@@ -105,6 +105,18 @@ def impartial(
             except ValueError:
                 pass
 
+    Validation
+    ----------
+
+        We only validate the model with a single voter thus the distinction between individual and global does not
+        matter here. Call :math:`p` the probability of approving any candidate, then the probability of generating a
+        given approval ballot of size :math:`k` is:
+
+        .. math::
+            p^k \\times (1 - p)^{m - k},
+
+        where :math:`m` is the number of candidates.
+
     References
     ----------
 
@@ -249,6 +261,15 @@ def impartial_constant_size(
                 impartial_constant_size(2, 3, [1.6, 0.2])
             except ValueError:
                 pass
+
+    Validation
+    ----------
+
+        We only validate the model with a single voter thus the distinction between individual and global does not
+        matter here. For a given value of :code:`rel_num_approvals`, let
+        :math:`s = \\lfoor \\text{rel\\_num\\_approvals} \\times m \\rfloor` be the size of the approval ballots.
+        Then, the probability of generating a given approval ballot of size :math:`k` is 0 if :math:`k \neq s`,
+        and :math:`\\frac{1}{\\binom{m}{s}}` otherwise, where :math:`m` is the number of candidates.
 
     References
     ----------

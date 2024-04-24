@@ -42,6 +42,8 @@ def mallows(
     (2023) <https://proceedings.mlr.press/v202/boehmer23b.html>`_ for more details. Use
     :code:`normalise_phi = True` to do so.
 
+    For an analogous sampler generating approval ballots, see :py:func:`~prefsampling.approval.noise.noise`.
+
     Parameters
     ----------
         num_voters : int

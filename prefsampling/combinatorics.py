@@ -1,5 +1,5 @@
 """
-A collection of functions used to the number of different entities: rankings, profiles, etc...
+A collection of functions used to iterable over all possible rankings, profiles, etc...
 """
 
 from __future__ import annotations
@@ -8,6 +8,39 @@ import math
 from collections.abc import Iterable, Sequence
 from copy import deepcopy
 from itertools import chain, combinations, permutations, combinations_with_replacement
+
+import numpy as np
+
+
+def random_partition(
+    s: Iterable, num_parts: int, non_empty: bool = True, seed: int = None
+) -> list[set]:
+    """
+    Draws a partition uniformly at random.
+
+    Parameters
+    ----------
+        s : Iterable
+            The collection of elements.
+        num_parts : int
+            The size of the partition.
+        non_empty : bool, defaults :code:`True`
+            If true, all parts need to be non-empty.
+        seed : int, defaults :code:`None`
+            Seed for numpy random number generator.
+    """
+    rng = np.random.default_rng(seed)
+    partition = [set() for _ in range(num_parts)]
+    elements_to_place = set(s)
+    if non_empty:
+        # We first put one alternative per central vote, ensuring non-emptiness
+        for k, candidate in enumerate(rng.choice(elements_to_place, size=num_parts)):
+            partition[k].add(candidate)
+            elements_to_place.remove(candidate)
+    # For the leftover candidates, we select uniformly at random a central vote in which to place them.
+    for candidate in elements_to_place:
+        partition[rng.integers(0, high=num_parts)].add(candidate)
+    return partition
 
 
 def comb(n: int, k: int) -> int:

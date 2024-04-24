@@ -22,7 +22,9 @@ class EuclideanSpace(Enum):
     UNBOUNDED_GAUSSIAN = "unbounded_gaussian"
 
 
-def euclidean_space_to_sampler(space: EuclideanSpace, num_dimensions: int) -> (Callable, dict):
+def euclidean_space_to_sampler(
+    space: EuclideanSpace, num_dimensions: int
+) -> (Callable, dict):
     """
     Returns the point sampler together with its arguments corresponding to the EuclideanSpace
     passed as argument.
@@ -37,7 +39,11 @@ def euclidean_space_to_sampler(space: EuclideanSpace, num_dimensions: int) -> (C
         return ball_resampling, {
             "num_dimensions": num_dimensions,
             "inner_sampler": lambda **kwargs: gaussian(**kwargs)[0],
-            "inner_sampler_args": {"num_dimensions": num_dimensions, "num_points": 1},
+            "inner_sampler_args": {
+                "num_dimensions": num_dimensions,
+                "num_points": 1,
+                "sigmas": [0.33] * num_dimensions,
+            },
         }
     if space == EuclideanSpace.GAUSSIAN_CUBE:
         return gaussian, {
@@ -74,16 +80,13 @@ def _sample_points(
             )
             raise Exception(msg) from e
 
-        if num_dimensions == 1:
-            expected_shape = (num_points,)
-        else:
-            expected_shape = (num_points, num_dimensions)
-        if positions.shape != expected_shape:
-            raise ValueError(
-                f"The provided positions do not match the expected shape. Shape is "
-                f"{positions.shape} while {expected_shape} was expected "
-                f"(num_{sampled_object_name}, num_dimensions)."
-            )
+        if positions.shape != (num_points, num_dimensions):
+            if num_dimensions > 1 or positions.shape != (num_points,):
+                raise ValueError(
+                    f"The provided positions do not match the expected shape. Shape is "
+                    f"{positions.shape} while {(num_points, num_dimensions)} was expected "
+                    f"(num_{sampled_object_name}, num_dimensions)."
+                )
         return positions
 
     if not isinstance(positions, Callable):
@@ -101,7 +104,9 @@ def _sample_points(
             )
             raise Exception(msg) from e
 
-        positions, new_positions_args = euclidean_space_to_sampler(space, num_dimensions)
+        positions, new_positions_args = euclidean_space_to_sampler(
+            space, num_dimensions
+        )
         new_positions_args.update(positions_args)
         positions_args = new_positions_args
     positions_args["num_points"] = num_points

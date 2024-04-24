@@ -7,6 +7,7 @@ REM Command file for Sphinx documentation
 REM You can set these variables from the command line, and also
 REM from the environment for the first two.
 SET SPHINXOPTS=
+SET SPHINXBUILD=sphinx-build
 SET SOURCEDIR=source
 SET LOCALBUILDDIR=build
 SET GITHUBBUILDDIR=..\docs

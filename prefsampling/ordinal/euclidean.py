@@ -202,9 +202,17 @@ def euclidean(
         by considering the size of the hyperplanes separating two candidates. We apply this method
         in one dimension to validate the sampler.
 
-        .. image:: ../validation_plots/ordinal/euclidean_UNIFORM_BALL.png
+        .. image:: ../validation_plots/ordinal/euclidean_line_UNIFORM_BALL.png
             :width: 800
-            :alt: Observed versus theoretical frequencies for a ball Euclidean model with n=3
+            :alt: Observed versus theoretical frequencies for a ball Euclidean model with fixed candidates positions
+
+        .. image:: ../validation_plots/ordinal/euclidean_line_UNIFORM_CUBE.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a cub Euclidean model with fixed candidates positions
+
+        .. image:: ../validation_plots/ordinal/euclidean_line_UNBOUNDED_GAUSSIAN.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for a Gaussian Euclidean model with fixed candidates positions
 
         **In General**
 

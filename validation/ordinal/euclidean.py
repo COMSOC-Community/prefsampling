@@ -4,7 +4,6 @@ import scipy
 from prefsampling.combinatorics import all_rankings
 from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.ordinal import euclidean
-from prefsampling.point import ball_uniform
 from validation.validator import Validator
 
 
@@ -48,7 +47,10 @@ class OrdinalEuclideanValidatorLine(Validator):
         spaces = (
             (EuclideanSpace.UNIFORM_BALL, {"widths": 1, "center_point": [0.5]}),
             (EuclideanSpace.UNIFORM_CUBE, {"widths": 1, "center_point": [0.5]}),
-            (EuclideanSpace.UNBOUNDED_GAUSSIAN, {"sigmas": 0.33, "center_point": [0.5]})
+            (
+                EuclideanSpace.UNBOUNDED_GAUSSIAN,
+                {"sigmas": 0.33, "center_point": [0.5]},
+            ),
         )
         for space, space_params in spaces:
             for candidates_positions in [[0.1, 0.3, 0.75, 0.78], [0.1, 0.12, 0.8]]:
@@ -102,7 +104,9 @@ class OrdinalEuclideanValidatorLine(Validator):
         current_pos = -float("inf") if space == EuclideanSpace.UNBOUNDED_GAUSSIAN else 0
         for trans_pos, trans in transition_positions:
             if space == EuclideanSpace.UNBOUNDED_GAUSSIAN:
-                distribution[current_order] = scipy.stats.norm(0.5, 0.33).cdf(trans_pos) - scipy.stats.norm(0.5, 0.33).cdf(current_pos)
+                distribution[current_order] = scipy.stats.norm(0.5, 0.33).cdf(
+                    trans_pos
+                ) - scipy.stats.norm(0.5, 0.33).cdf(current_pos)
             else:
                 distribution[current_order] = trans_pos - current_pos
             new_order = list(current_order)
@@ -111,7 +115,9 @@ class OrdinalEuclideanValidatorLine(Validator):
             current_order = tuple(new_order)
             current_pos = trans_pos
         if space == EuclideanSpace.UNBOUNDED_GAUSSIAN:
-            distribution[current_order] = scipy.stats.norm(0.5, 0.33).cdf(float("inf")) - scipy.stats.norm(0.5, 0.33).cdf(current_pos)
+            distribution[current_order] = scipy.stats.norm(0.5, 0.33).cdf(
+                float("inf")
+            ) - scipy.stats.norm(0.5, 0.33).cdf(current_pos)
         else:
             distribution[current_order] = 1 - current_pos
         return {o: d / sum(distribution.values()) for o, d in distribution.items()}

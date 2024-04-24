@@ -20,7 +20,12 @@ def all_test_samplers_approval_resampling():
     ]
     samplers += [
         TestSampler(
-            disjoint_resampling, {"p": random_p, "phi": random_phi, "g": random_g}
+            disjoint_resampling,
+            {
+                "rel_size_central_vote": random_p,
+                "phi": random_phi,
+                "num_central_votes": random_g,
+            },
         )
         for random_g in int_parameter_test_values(1, 10, 2)
         for random_p in float_parameter_test_values(0, 1, 2)
@@ -63,15 +68,17 @@ class TestApprovalResampling(TestCase):
 
     def test_approval_disjoint_resampling(self):
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, p=0.5, phi=-0.4)
+            disjoint_resampling(4, 5, rel_size_central_vote=0.5, phi=-0.4)
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, p=0.5, phi=4)
+            disjoint_resampling(4, 5, rel_size_central_vote=0.5, phi=4)
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, p=-0.4, phi=0.5)
+            disjoint_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5)
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, p=-0.4, phi=0.5)
+            disjoint_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5)
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, p=0.4, phi=0.5, g=10)
+            disjoint_resampling(
+                4, 5, rel_size_central_vote=0.4, phi=0.5, num_central_votes=10
+            )
 
     def test_impartial_central_vote(self):
         resampling(
