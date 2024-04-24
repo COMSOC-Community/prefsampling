@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="_static/documentation_options.js?v=90459621"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -171,7 +171,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="reference/point/index.html">Point</a></li>
@@ -398,7 +402,7 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.disjoint_resampling">disjoint_resampling() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/resampling.html#prefsampling.approval.resampling.disjoint_resampling">disjoint_resampling() (in module prefsampling.approval.resampling)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -410,16 +414,24 @@ document.write(`
 </li>
       <li><a href="reference/ordinal/euclidean.html#prefsampling.ordinal.euclidean.euclidean">euclidean() (in module prefsampling.ordinal.euclidean)</a>
 </li>
-      <li><a href="reference/approval/index.html#prefsampling.approval.euclidean_constant_size">euclidean_constant_size() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_constant_size">euclidean_constant_size() (in module prefsampling.approval.euclidean)</a>
+</li>
+      <li><a href="reference/core/index.html#prefsampling.core.euclidean.euclidean_space_to_sampler">euclidean_space_to_sampler() (in module prefsampling.core.euclidean)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.euclidean_threshold">euclidean_threshold() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_threshold">euclidean_threshold() (in module prefsampling.approval.euclidean)</a>
 </li>
-      <li><a href="reference/approval/index.html#prefsampling.approval.euclidean_vcr">euclidean_vcr() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_vcr">euclidean_vcr() (in module prefsampling.approval.euclidean)</a>
 </li>
-      <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace">EuclideanSpace (class in prefsampling.core.euclidean)</a>
+      <li><a href="reference/approval/euclidean.html#prefsampling.approval.euclidean.EuclideanSpace">EuclideanSpace (class in prefsampling.approval.euclidean)</a>
+
+      <ul>
+        <li><a href="reference/core/index.html#prefsampling.core.euclidean.EuclideanSpace">(class in prefsampling.core.euclidean)</a>
 </li>
+        <li><a href="reference/ordinal/euclidean.html#prefsampling.ordinal.euclidean.EuclideanSpace">(class in prefsampling.ordinal.euclidean)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -514,11 +526,19 @@ document.write(`
       <ul>
         <li><a href="reference/approval/index.html#module-prefsampling.approval">prefsampling.approval</a>
 </li>
+        <li><a href="reference/approval/euclidean.html#module-prefsampling.approval.euclidean">prefsampling.approval.euclidean</a>
+</li>
         <li><a href="reference/approval/identity.html#module-prefsampling.approval.identity">prefsampling.approval.identity</a>
 </li>
         <li><a href="reference/approval/impartial.html#module-prefsampling.approval.impartial">prefsampling.approval.impartial</a>
 </li>
         <li><a href="reference/approval/noise.html#module-prefsampling.approval.noise">prefsampling.approval.noise</a>
+</li>
+        <li><a href="reference/approval/resampling.html#module-prefsampling.approval.resampling">prefsampling.approval.resampling</a>
+</li>
+        <li><a href="reference/approval/truncatedordinal.html#module-prefsampling.approval.truncated_ordinal">prefsampling.approval.truncated_ordinal</a>
+</li>
+        <li><a href="reference/approval/urn.html#module-prefsampling.approval.urn">prefsampling.approval.urn</a>
 </li>
         <li><a href="reference/combinatorics.html#module-prefsampling.combinatorics">prefsampling.combinatorics</a>
 </li>
@@ -561,7 +581,7 @@ document.write(`
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.moving_resampling">moving_resampling() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/resampling.html#prefsampling.approval.resampling.moving_resampling">moving_resampling() (in module prefsampling.approval.resampling)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -597,6 +617,13 @@ document.write(`
 </li>
       </ul></li>
       <li>
+    prefsampling.approval.euclidean
+
+      <ul>
+        <li><a href="reference/approval/euclidean.html#module-prefsampling.approval.euclidean">module</a>
+</li>
+      </ul></li>
+      <li>
     prefsampling.approval.identity
 
       <ul>
@@ -615,6 +642,27 @@ document.write(`
 
       <ul>
         <li><a href="reference/approval/noise.html#module-prefsampling.approval.noise">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.approval.resampling
+
+      <ul>
+        <li><a href="reference/approval/resampling.html#module-prefsampling.approval.resampling">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.approval.truncated_ordinal
+
+      <ul>
+        <li><a href="reference/approval/truncatedordinal.html#module-prefsampling.approval.truncated_ordinal">module</a>
+</li>
+      </ul></li>
+      <li>
+    prefsampling.approval.urn
+
+      <ul>
+        <li><a href="reference/approval/urn.html#module-prefsampling.approval.urn">module</a>
 </li>
       </ul></li>
       <li>
@@ -652,6 +700,8 @@ document.write(`
         <li><a href="reference/core/index.html#module-prefsampling.core.filters">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prefsampling.inputvalidators
 
@@ -666,8 +716,6 @@ document.write(`
         <li><a href="reference/ordinal/index.html#module-prefsampling.ordinal">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     prefsampling.ordinal.didi
 
@@ -760,13 +808,15 @@ document.write(`
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/combinatorics.html#prefsampling.combinatorics.random_partition">random_partition() (in module prefsampling.combinatorics)</a>
+</li>
       <li><a href="reference/core/index.html#prefsampling.core.filters.rename_candidates">rename_candidates() (in module prefsampling.core.filters)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/core/index.html#prefsampling.core.filters.resample_as_central_vote">resample_as_central_vote() (in module prefsampling.core.filters)</a>
 </li>
-      <li><a href="reference/approval/index.html#prefsampling.approval.resampling">resampling() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/resampling.html#prefsampling.approval.resampling.resampling">resampling() (in module prefsampling.approval.resampling)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -820,7 +870,7 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.truncated_ordinal">truncated_ordinal() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/truncatedordinal.html#prefsampling.approval.truncated_ordinal.truncated_ordinal">truncated_ordinal() (in module prefsampling.approval.truncated_ordinal)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -828,7 +878,7 @@ document.write(`
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.urn">urn() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/urn.html#prefsampling.approval.urn.urn">urn() (in module prefsampling.approval.urn)</a>
 
       <ul>
         <li><a href="reference/ordinal/urn.html#prefsampling.ordinal.urn.urn">(in module prefsampling.ordinal.urn)</a>
@@ -836,9 +886,9 @@ document.write(`
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/approval/index.html#prefsampling.approval.urn_constant_size">urn_constant_size() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/urn.html#prefsampling.approval.urn.urn_constant_size">urn_constant_size() (in module prefsampling.approval.urn)</a>
 </li>
-      <li><a href="reference/approval/index.html#prefsampling.approval.urn_partylist">urn_partylist() (in module prefsampling.approval)</a>
+      <li><a href="reference/approval/urn.html#prefsampling.approval.urn.urn_partylist">urn_partylist() (in module prefsampling.approval.urn)</a>
 </li>
   </ul></td>
 </tr></table>

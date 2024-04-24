@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../../_static/documentation_options.js?v=90459621"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -172,7 +172,11 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Approval</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
@@ -444,6 +448,14 @@ such probability per voter.</p></li>
     <span class="k">pass</span>
 </pre></div>
 </div>
+<p class="rubric">Validation</p>
+<p>We only validate the model with a single voter thus the distinction between individual and
+global does not matter here. Call <img class="math" src="../../_images/math/141bbefb74014fc5e43499901bf78607ae335583.png" alt="p"/> the probability of approving any candidate,
+then the probability of generating a given approval ballot of size <img class="math" src="../../_images/math/9630132210b904754c9ab272b61cb527d12263ca.png" alt="k"/> is
+<img class="math" src="../../_images/math/18a8e5808fe7a97b34df83431198d783205b1fe7.png" alt="p^k \times (1 - p)^{m - k}"/>, where <img class="math" src="../../_images/math/e9bc7da808d33a16a8347f27a519bd067186aa66.png" alt="m"/> is the number of candidates.</p>
+<a class="reference internal image-reference" href="../../_images/impartial_0_3.png"><img alt="Observed versus theoretical frequencies for an impartial culture 0.3" src="../../_images/impartial_0_3.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/impartial_0_5.png"><img alt="Observed versus theoretical frequencies for an impartial culture 0.5" src="../../_images/impartial_0_5.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/impartial_0_7.png"><img alt="Observed versus theoretical frequencies for an impartial culture 0.7" src="../../_images/impartial_0_7.png" style="width: 800px;" /></a>
 <p class="rubric">References</p>
 <p><a class="reference external" href="https://www.ijcai.org/proceedings/2019/16">An Experimental View on Committees Providing Justified Representation</a>,
 <em>Robert Bredereck, Piotr Faliszewski, Andrzej Kaczmarczyk and Rolf Niedermeier</em>,
@@ -537,6 +549,16 @@ such proportion per voter.</p></li>
     <span class="k">pass</span>
 </pre></div>
 </div>
+<p class="rubric">Validation</p>
+<p>We only validate the model with a single voter thus the distinction between individual and
+global does not matter here. For a given value of <code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code>, let
+<img class="math" src="../../_images/math/2317079d318091693169f5cc337c80b5f97de6fd.png" alt="s = \lfloor \text{rel\_num\_approvals} \times m \rfloor"/> be the size of the
+approval ballots. Then, the probability of generating a given approval ballot of size
+<img class="math" src="../../_images/math/9630132210b904754c9ab272b61cb527d12263ca.png" alt="k"/> is 0 if <img class="math" src="../../_images/math/7794dfb5734e57c5656ad85f06c9db8abbce794f.png" alt="k \neq s"/>, and <img class="math" src="../../_images/math/9983353246b2b039eff3767c79c73f214b8ca965.png" alt="\frac{1}{\binom{m}{s}}"/> otherwise,
+where <img class="math" src="../../_images/math/e9bc7da808d33a16a8347f27a519bd067186aa66.png" alt="m"/> is the number of candidates.</p>
+<a class="reference internal image-reference" href="../../_images/impartial_constant_size_0_3.png"><img alt="Observed versus theoretical frequencies for an impartial culture constant 0.3" src="../../_images/impartial_constant_size_0_3.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/impartial_constant_size_0_5.png"><img alt="Observed versus theoretical frequencies for an impartial culture constant 0.5" src="../../_images/impartial_constant_size_0_5.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/impartial_constant_size_0_7.png"><img alt="Observed versus theoretical frequencies for an impartial culture constant 0.7" src="../../_images/impartial_constant_size_0_7.png" style="width: 800px;" /></a>
 <p class="rubric">References</p>
 <p><a class="reference external" href="https://www.ijcai.org/proceedings/2019/58">A Quantitative Analysis of Multi-Winner Rules</a>,
 <em>Martin Lackner and Piotr Skowron</em>,

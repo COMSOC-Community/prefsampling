@@ -115,47 +115,49 @@ Reference: :py:mod:`prefsampling.approval`
    * - Sampler
      - \*\*args
      - \*\*kwargs
-   * - :py:func:`~prefsampling.approval.identity`
+   * - :py:func:`~prefsampling.approval.identity.identity`
      - :code:`rel_num_approvals`
      - ---
-   * - :py:func:`~prefsampling.approval.empty`
+   * - :py:func:`~prefsampling.approval.identity.empty`
      - ---
      - ---
-   * - :py:func:`~prefsampling.approval.full`
+   * - :py:func:`~prefsampling.approval.identity.full`
      - ---
      - ---
-   * - :py:func:`~prefsampling.approval.impartial`
+   * - :py:func:`~prefsampling.approval.impartial.impartial`
      - :code:`p`
      - ---
-   * - :py:func:`~prefsampling.approval.impartial_constant_size`
+   * - :py:func:`~prefsampling.approval.impartial.impartial_constant_size`
      - :code:`rel_num_approvals`
      - ---
-   * - :py:func:`~prefsampling.approval.urn`
+   * - :py:func:`~prefsampling.approval.urn.urn`
      - | :code:`p`
        | :code:`alpha`
      - ---
-   * - :py:func:`~prefsampling.approval.urn_constant_size`
+   * - :py:func:`~prefsampling.approval.urn.urn_constant_size`
      - | :code:`rel_num_approvals`
        | :code:`alpha`
      - ---
-   * - :py:func:`~prefsampling.approval.urn_partylist`
+   * - :py:func:`~prefsampling.approval.urn.urn_partylist`
      - | :code:`alpha`
        | :code:`parties`
      - ---
-   * - :py:func:`~prefsampling.approval.resampling`
-     - | :code:`p`
-       | :code:`phi`
+   * - :py:func:`~prefsampling.approval.resampling.resampling`
+     - | :code:`phi`
+       | :code:`rel_size_central_vote`
      - | :code:`central_vote` (defaults to `{0, 1, 2, ...}`)
        | :code:`impartial_central_vote` (defaults to :code:`False`)
-   * - :py:func:`~prefsampling.approval.disjoint_resampling`
-     - | :code:`p`
-       | :code:`phi`
-     - :code:`g` (defaults to 2)
-   * - :py:func:`~prefsampling.approval.moving_resampling`
+   * - :py:func:`~prefsampling.approval.resampling.disjoint_resampling`
+     - | :code:`phi`
+       | :code:`rel_size_central_vote`
+     - | :code:`num_central_votes` (defaults to :code:`None`)
+       | :code:`central_votes` (see docs for the defaults)
+       | :code:`impartial_central_votes` (defaults to :code:`False`)
+   * - :py:func:`~prefsampling.approval.resampling.moving_resampling`
      - | :code:`p`
        | :code:`phi`
      - :code:`num_legs` (defaults to 1)
-   * - :py:func:`~prefsampling.approval.euclidean_threshold`
+   * - :py:func:`~prefsampling.approval.euclidean.euclidean_threshold`
      - :code:`threshold`
      - | :code:`point_sampler` (defaults to :code:`None`)
        | :code:`point_sampler_args` (defaults to :code:`None`)
@@ -163,7 +165,7 @@ Reference: :py:mod:`prefsampling.approval`
        | :code:`candidate_point_sampler_args` (defaults to :code:`None`)
        | :code:`voters_positions` (defaults to :code:`None`)
        | :code:`candidates_positions` (defaults to :code:`None`)
-   * - :py:func:`~prefsampling.approval.euclidean_vcr`
+   * - :py:func:`~prefsampling.approval.euclidean.euclidean_vcr`
      - | :code:`voters_radius`
        | :code:`candidates_radius`
      - | :code:`point_sampler` (defaults to :code:`None`)
@@ -172,7 +174,7 @@ Reference: :py:mod:`prefsampling.approval`
        | :code:`candidate_point_sampler_args` (defaults to :code:`None`)
        | :code:`voters_positions` (defaults to :code:`None`)
        | :code:`candidates_positions` (defaults to :code:`None`)
-   * - :py:func:`~prefsampling.approval.euclidean_constant_size`
+   * - :py:func:`~prefsampling.approval.euclidean.euclidean_constant_size`
      - :code:`rel_num_approvals`
      - | :code:`point_sampler` (defaults to :code:`None`)
        | :code:`point_sampler_args` (defaults to :code:`None`)
@@ -180,11 +182,11 @@ Reference: :py:mod:`prefsampling.approval`
        | :code:`candidate_point_sampler_args` (defaults to :code:`None`)
        | :code:`voters_positions` (defaults to :code:`None`)
        | :code:`candidates_positions` (defaults to :code:`None`)
-   * - :py:func:`~prefsampling.approval.noise`
+   * - :py:func:`~prefsampling.approval.noise.noise`
      - | :code:`p`
        | :code:`phi`
      - :code:`noise_type` (defaults to :py:const:`~prefsampling.approval.NoiseType.HAMMING`)
-   * - :py:func:`~prefsampling.approval.truncated_ordinal`
+   * - :py:func:`~prefsampling.approval.truncated_ordinal.truncated_ordinal`
      - | :code:`rel_num_approvals`
        | :code:`ordinal_sampler`
        | :code:`ordinal_sampler_parameters`

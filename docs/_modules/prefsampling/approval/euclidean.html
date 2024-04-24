@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../../../_static/documentation_options.js?v=90459621"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -171,7 +171,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
@@ -311,21 +315,17 @@ document.write(`
 
 
 <div class="viewcode-block" id="euclidean_threshold">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.euclidean_threshold">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_threshold">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">euclidean_threshold</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">|</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">|</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+    <span class="n">voters_positions_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">candidates_positions_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -349,35 +349,32 @@ document.write(`
 <span class="sd">            Threshold of approval. Voters approve all candidates that are at distance threshold</span>
 <span class="sd">            times minimum distance between the voter and any candidates. This value should be 1 or</span>
 <span class="sd">            more.</span>
-<span class="sd">        euclidean_space: EuclideanSpace, default: :code:`None`</span>
-<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the voters. If no</span>
-<span class="sd">            `candidate_euclidean_space` is provided, the value of &#39;euclidean_space&#39; is used for the</span>
-<span class="sd">            candidates as well. A number of dimension needs to be provided.</span>
-<span class="sd">        candidate_euclidean_space: EuclideanSpace, default: :code:`None`</span>
-<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the candidates. If no</span>
-<span class="sd">            value is provided, the value of &#39;euclidean_space&#39; is used. A number of dimension needs</span>
-<span class="sd">            to be provided.</span>
-<span class="sd">        num_dimensions: int, default: :code:`None`</span>
+<span class="sd">        num_dimensions: int</span>
 <span class="sd">            The number of dimensions to use. Using this argument is mandatory when passing a space</span>
-<span class="sd">            as argument.</span>
-<span class="sd">        point_sampler : Callable, default: :code:`None`</span>
-<span class="sd">            The sampler used to sample point in the space. It should be a function accepting</span>
-<span class="sd">            arguments &#39;num_points&#39; and &#39;seed&#39;. Used for both voters and candidates unless a</span>
-<span class="sd">            `candidate_space` is provided.</span>
-<span class="sd">        point_sampler_args : dict, default: :code:`None`</span>
-<span class="sd">            The arguments passed to the `point_sampler`. The argument `num_points` is ignored</span>
-<span class="sd">            and replaced by the number of voters or candidates.</span>
-<span class="sd">        candidate_point_sampler : Callable, default: :code:`None`</span>
-<span class="sd">            The sampler used to sample the points of the candidates. It should be a function</span>
-<span class="sd">            accepting  arguments &#39;num_points&#39; and &#39;seed&#39;. If a value is provided, then the</span>
-<span class="sd">            `point_sampler_args` argument is only used for voters.</span>
-<span class="sd">        candidate_point_sampler_args : dict</span>
-<span class="sd">            The arguments passed to the `candidate_point_sampler`. The argument `num_points`</span>
-<span class="sd">            is ignored and replaced by the number of candidates.</span>
-<span class="sd">        voters_positions : Iterable[Iterable[float]]</span>
-<span class="sd">            Position of the voters.</span>
-<span class="sd">        candidates_positions : Iterable[Iterable[float]]</span>
-<span class="sd">            Position of the candidates.</span>
+<span class="sd">            as argument. If you pass samplers as arguments and use the num_dimensions, then, the</span>
+<span class="sd">            value of num_dimensions is passed as a kwarg to the samplers.</span>
+<span class="sd">        voters_positions: :py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]</span>
+<span class="sd">            The positions of the voters, or a way to determine them. If an Iterable is passed,</span>
+<span class="sd">            then it is assumed to be the positions themselves. Otherwise, it is assumed that a</span>
+<span class="sd">            sampler for the positions is passed. It can be either the nickname of a sampler---when</span>
+<span class="sd">            passing a :py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.</span>
+<span class="sd">            A sampler is a function that takes as keywords arguments: &#39;num_points&#39;,</span>
+<span class="sd">            &#39;num_dimensions&#39;, and &#39;seed&#39;. Additional arguments can be provided with by using the</span>
+<span class="sd">            :code:`voters_positions_args` argument.</span>
+<span class="sd">        candidates_positions: :py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]</span>
+<span class="sd">            The positions of the candidates, or a way to determine them. If an Iterable is passed,</span>
+<span class="sd">            then it is assumed to be the positions themselves. Otherwise, it is assumed that a</span>
+<span class="sd">            sampler for the positions is passed. It can be either the nickname of a sampler---when</span>
+<span class="sd">            passing a :py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.</span>
+<span class="sd">            A sampler is a function that takes as keywords arguments: &#39;num_points&#39;,</span>
+<span class="sd">            &#39;num_dimensions&#39;, and &#39;seed&#39;. Additional arguments can be provided with by using the</span>
+<span class="sd">            :code:`candidates_positions_args` argument.</span>
+<span class="sd">        voters_positions_args: dict, default: :code:`dict()`</span>
+<span class="sd">            Additional keyword arguments passed to the :code:`voters_positions` sampler when the</span>
+<span class="sd">            latter is a Callable.</span>
+<span class="sd">        candidates_positions_args: dict, default: :code:`dict()`</span>
+<span class="sd">            Additional keyword arguments passed to the :code:`candidates_positions` sampler when the</span>
+<span class="sd">            latter is a Callable.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator. Also passed to the point samplers if</span>
 <span class="sd">            a value is provided.</span>
@@ -395,15 +392,11 @@ document.write(`
     <span class="n">voters_pos</span><span class="p">,</span> <span class="n">candidates_pos</span> <span class="o">=</span> <span class="n">sample_election_positions</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span>
         <span class="n">num_candidates</span><span class="p">,</span>
-        <span class="n">euclidean_space</span><span class="p">,</span>
-        <span class="n">candidate_euclidean_space</span><span class="p">,</span>
         <span class="n">num_dimensions</span><span class="p">,</span>
-        <span class="n">point_sampler</span><span class="p">,</span>
-        <span class="n">point_sampler_args</span><span class="p">,</span>
-        <span class="n">candidate_point_sampler</span><span class="p">,</span>
-        <span class="n">candidate_point_sampler_args</span><span class="p">,</span>
         <span class="n">voters_positions</span><span class="p">,</span>
         <span class="n">candidates_positions</span><span class="p">,</span>
+        <span class="n">voters_positions_args</span><span class="p">,</span>
+        <span class="n">candidates_positions_args</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -421,22 +414,18 @@ document.write(`
 
 
 <div class="viewcode-block" id="euclidean_vcr">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.euclidean_vcr">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_vcr">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">euclidean_vcr</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">voters_radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="n">candidates_radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
-    <span class="n">euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">|</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">|</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+    <span class="n">voters_positions_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">candidates_positions_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -469,35 +458,32 @@ document.write(`
 <span class="sd">            the position of the voter and the candidate of radius voter_radius and candidate_radius</span>
 <span class="sd">            overlap. If a single value is given, it applies to all voters. Otherwise, it is assumed</span>
 <span class="sd">            that one value per voter is provided.</span>
-<span class="sd">        euclidean_space: EuclideanSpace, default: :code:`None`</span>
-<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the voters. If no</span>
-<span class="sd">            `candidate_euclidean_space` is provided, the value of &#39;euclidean_space&#39; is used for the</span>
-<span class="sd">            candidates as well. A number of dimension needs to be provided.</span>
-<span class="sd">        candidate_euclidean_space: EuclideanSpace, default: :code:`None`</span>
-<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the candidates. If no</span>
-<span class="sd">            value is provided, the value of &#39;euclidean_space&#39; is used. A number of dimension needs</span>
-<span class="sd">            to be provided.</span>
-<span class="sd">        num_dimensions: int, default: :code:`None`</span>
+<span class="sd">        num_dimensions: int</span>
 <span class="sd">            The number of dimensions to use. Using this argument is mandatory when passing a space</span>
-<span class="sd">            as argument.</span>
-<span class="sd">        point_sampler : Callable, default: :code:`None`</span>
-<span class="sd">            The sampler used to sample point in the space. It should be a function accepting</span>
-<span class="sd">            arguments &#39;num_points&#39; and &#39;seed&#39;. Used for both voters and candidates unless a</span>
-<span class="sd">            `candidate_space` is provided.</span>
-<span class="sd">        point_sampler_args : dict, default: :code:`None`</span>
-<span class="sd">            The arguments passed to the `point_sampler`. The argument `num_points` is ignored</span>
-<span class="sd">            and replaced by the number of voters or candidates.</span>
-<span class="sd">        candidate_point_sampler : Callable, default: :code:`None`</span>
-<span class="sd">            The sampler used to sample the points of the candidates. It should be a function</span>
-<span class="sd">            accepting  arguments &#39;num_points&#39; and &#39;seed&#39;. If a value is provided, then the</span>
-<span class="sd">            `point_sampler_args` argument is only used for voters.</span>
-<span class="sd">        candidate_point_sampler_args : dict</span>
-<span class="sd">            The arguments passed to the `candidate_point_sampler`. The argument `num_points`</span>
-<span class="sd">            is ignored and replaced by the number of candidates.</span>
-<span class="sd">        voters_positions : Iterable[Iterable[float]]</span>
-<span class="sd">            Position of the voters.</span>
-<span class="sd">        candidates_positions : Iterable[Iterable[float]]</span>
-<span class="sd">            Position of the candidates.</span>
+<span class="sd">            as argument. If you pass samplers as arguments and use the num_dimensions, then, the</span>
+<span class="sd">            value of num_dimensions is passed as a kwarg to the samplers.</span>
+<span class="sd">        voters_positions: :py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]</span>
+<span class="sd">            The positions of the voters, or a way to determine them. If an Iterable is passed,</span>
+<span class="sd">            then it is assumed to be the positions themselves. Otherwise, it is assumed that a</span>
+<span class="sd">            sampler for the positions is passed. It can be either the nickname of a sampler---when</span>
+<span class="sd">            passing a :py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.</span>
+<span class="sd">            A sampler is a function that takes as keywords arguments: &#39;num_points&#39;,</span>
+<span class="sd">            &#39;num_dimensions&#39;, and &#39;seed&#39;. Additional arguments can be provided with by using the</span>
+<span class="sd">            :code:`voters_positions_args` argument.</span>
+<span class="sd">        candidates_positions: :py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]</span>
+<span class="sd">            The positions of the candidates, or a way to determine them. If an Iterable is passed,</span>
+<span class="sd">            then it is assumed to be the positions themselves. Otherwise, it is assumed that a</span>
+<span class="sd">            sampler for the positions is passed. It can be either the nickname of a sampler---when</span>
+<span class="sd">            passing a :py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.</span>
+<span class="sd">            A sampler is a function that takes as keywords arguments: &#39;num_points&#39;,</span>
+<span class="sd">            &#39;num_dimensions&#39;, and &#39;seed&#39;. Additional arguments can be provided with by using the</span>
+<span class="sd">            :code:`candidates_positions_args` argument.</span>
+<span class="sd">        voters_positions_args: dict, default: :code:`dict()`</span>
+<span class="sd">            Additional keyword arguments passed to the :code:`voters_positions` sampler when the</span>
+<span class="sd">            latter is a Callable.</span>
+<span class="sd">        candidates_positions_args: dict, default: :code:`dict()`</span>
+<span class="sd">            Additional keyword arguments passed to the :code:`candidates_positions` sampler when the</span>
+<span class="sd">            latter is a Callable.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator. Also passed to the point samplers if</span>
 <span class="sd">            a value is provided.</span>
@@ -536,17 +522,14 @@ document.write(`
     <span class="n">voters_pos</span><span class="p">,</span> <span class="n">candidates_pos</span> <span class="o">=</span> <span class="n">sample_election_positions</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span>
         <span class="n">num_candidates</span><span class="p">,</span>
-        <span class="n">euclidean_space</span><span class="p">,</span>
-        <span class="n">candidate_euclidean_space</span><span class="p">,</span>
         <span class="n">num_dimensions</span><span class="p">,</span>
-        <span class="n">point_sampler</span><span class="p">,</span>
-        <span class="n">point_sampler_args</span><span class="p">,</span>
-        <span class="n">candidate_point_sampler</span><span class="p">,</span>
-        <span class="n">candidate_point_sampler_args</span><span class="p">,</span>
         <span class="n">voters_positions</span><span class="p">,</span>
         <span class="n">candidates_positions</span><span class="p">,</span>
+        <span class="n">voters_positions_args</span><span class="p">,</span>
+        <span class="n">candidates_positions_args</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">,</span>
     <span class="p">)</span>
+
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">voter_pos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">voters_pos</span><span class="p">):</span>
         <span class="n">ballot</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -561,21 +544,17 @@ document.write(`
 
 
 <div class="viewcode-block" id="euclidean_constant_size">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.euclidean_constant_size">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_constant_size">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">euclidean_constant_size</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">rel_num_approvals</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_euclidean_space</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_point_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidate_point_sampler_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">voters_positions</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">|</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+    <span class="n">candidates_positions</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">|</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+    <span class="n">voters_positions_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">candidates_positions_args</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -598,35 +577,32 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        rel_num_approvals : float</span>
 <span class="sd">            Proportion of approved candidates in a ballot.</span>
-<span class="sd">        euclidean_space: EuclideanSpace, default: :code:`None`</span>
-<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the voters. If no</span>
-<span class="sd">            `candidate_euclidean_space` is provided, the value of &#39;euclidean_space&#39; is used for the</span>
-<span class="sd">            candidates as well. A number of dimension needs to be provided.</span>
-<span class="sd">        candidate_euclidean_space: EuclideanSpace, default: :code:`None`</span>
-<span class="sd">            Use a pre-defined Euclidean space for sampling the position of the candidates. If no</span>
-<span class="sd">            value is provided, the value of &#39;euclidean_space&#39; is used. A number of dimension needs</span>
-<span class="sd">            to be provided.</span>
-<span class="sd">        num_dimensions: int, default: :code:`None`</span>
+<span class="sd">        num_dimensions: int</span>
 <span class="sd">            The number of dimensions to use. Using this argument is mandatory when passing a space</span>
-<span class="sd">            as argument.</span>
-<span class="sd">        point_sampler : Callable, default: :code:`None`</span>
-<span class="sd">            The sampler used to sample point in the space. It should be a function accepting</span>
-<span class="sd">            arguments &#39;num_points&#39; and &#39;seed&#39;. Used for both voters and candidates unless a</span>
-<span class="sd">            `candidate_space` is provided.</span>
-<span class="sd">        point_sampler_args : dict, default: :code:`None`</span>
-<span class="sd">            The arguments passed to the `point_sampler`. The argument `num_points` is ignored</span>
-<span class="sd">            and replaced by the number of voters or candidates.</span>
-<span class="sd">        candidate_point_sampler : Callable, default: :code:`None`</span>
-<span class="sd">            The sampler used to sample the points of the candidates. It should be a function</span>
-<span class="sd">            accepting  arguments &#39;num_points&#39; and &#39;seed&#39;. If a value is provided, then the</span>
-<span class="sd">            `point_sampler_args` argument is only used for voters.</span>
-<span class="sd">        candidate_point_sampler_args : dict</span>
-<span class="sd">            The arguments passed to the `candidate_point_sampler`. The argument `num_points`</span>
-<span class="sd">            is ignored and replaced by the number of candidates.</span>
-<span class="sd">        voters_positions : Iterable[Iterable[float]]</span>
-<span class="sd">            Position of the voters.</span>
-<span class="sd">        candidates_positions : Iterable[Iterable[float]]</span>
-<span class="sd">            Position of the candidates.</span>
+<span class="sd">            as argument. If you pass samplers as arguments and use the num_dimensions, then, the</span>
+<span class="sd">            value of num_dimensions is passed as a kwarg to the samplers.</span>
+<span class="sd">        voters_positions: :py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]</span>
+<span class="sd">            The positions of the voters, or a way to determine them. If an Iterable is passed,</span>
+<span class="sd">            then it is assumed to be the positions themselves. Otherwise, it is assumed that a</span>
+<span class="sd">            sampler for the positions is passed. It can be either the nickname of a sampler---when</span>
+<span class="sd">            passing a :py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.</span>
+<span class="sd">            A sampler is a function that takes as keywords arguments: &#39;num_points&#39;,</span>
+<span class="sd">            &#39;num_dimensions&#39;, and &#39;seed&#39;. Additional arguments can be provided with by using the</span>
+<span class="sd">            :code:`voters_positions_args` argument.</span>
+<span class="sd">        candidates_positions: :py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]</span>
+<span class="sd">            The positions of the candidates, or a way to determine them. If an Iterable is passed,</span>
+<span class="sd">            then it is assumed to be the positions themselves. Otherwise, it is assumed that a</span>
+<span class="sd">            sampler for the positions is passed. It can be either the nickname of a sampler---when</span>
+<span class="sd">            passing a :py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.</span>
+<span class="sd">            A sampler is a function that takes as keywords arguments: &#39;num_points&#39;,</span>
+<span class="sd">            &#39;num_dimensions&#39;, and &#39;seed&#39;. Additional arguments can be provided with by using the</span>
+<span class="sd">            :code:`candidates_positions_args` argument.</span>
+<span class="sd">        voters_positions_args: dict, default: :code:`dict()`</span>
+<span class="sd">            Additional keyword arguments passed to the :code:`voters_positions` sampler when the</span>
+<span class="sd">            latter is a Callable.</span>
+<span class="sd">        candidates_positions_args: dict, default: :code:`dict()`</span>
+<span class="sd">            Additional keyword arguments passed to the :code:`candidates_positions` sampler when the</span>
+<span class="sd">            latter is a Callable.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator. Also passed to the point samplers if</span>
 <span class="sd">            a value is provided.</span>
@@ -637,18 +613,20 @@ document.write(`
 <span class="sd">            Approval votes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_num_approvals: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;be in [0, 1]&quot;</span>
+        <span class="p">)</span>
+
     <span class="n">voters_pos</span><span class="p">,</span> <span class="n">candidates_pos</span> <span class="o">=</span> <span class="n">sample_election_positions</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span>
         <span class="n">num_candidates</span><span class="p">,</span>
-        <span class="n">euclidean_space</span><span class="p">,</span>
-        <span class="n">candidate_euclidean_space</span><span class="p">,</span>
         <span class="n">num_dimensions</span><span class="p">,</span>
-        <span class="n">point_sampler</span><span class="p">,</span>
-        <span class="n">point_sampler_args</span><span class="p">,</span>
-        <span class="n">candidate_point_sampler</span><span class="p">,</span>
-        <span class="n">candidate_point_sampler_args</span><span class="p">,</span>
         <span class="n">voters_positions</span><span class="p">,</span>
         <span class="n">candidates_positions</span><span class="p">,</span>
+        <span class="n">voters_positions_args</span><span class="p">,</span>
+        <span class="n">candidates_positions_args</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">,</span>
     <span class="p">)</span>
 

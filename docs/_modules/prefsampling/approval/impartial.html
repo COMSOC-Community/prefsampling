@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../../../_static/documentation_options.js?v=90459621"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -171,7 +171,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
@@ -409,6 +413,26 @@ document.write(`
 <span class="sd">            except ValueError:</span>
 <span class="sd">                pass</span>
 
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        We only validate the model with a single voter thus the distinction between individual and</span>
+<span class="sd">        global does not matter here. Call :math:`p` the probability of approving any candidate,</span>
+<span class="sd">        then the probability of generating a given approval ballot of size :math:`k` is</span>
+<span class="sd">        :math:`p^k \\times (1 - p)^{m - k}`, where :math:`m` is the number of candidates.</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/impartial_0_3.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture 0.3</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/impartial_0_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture 0.5</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/impartial_0_7.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture 0.7</span>
+
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
 
@@ -556,6 +580,28 @@ document.write(`
 <span class="sd">                impartial_constant_size(2, 3, [1.6, 0.2])</span>
 <span class="sd">            except ValueError:</span>
 <span class="sd">                pass</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        We only validate the model with a single voter thus the distinction between individual and</span>
+<span class="sd">        global does not matter here. For a given value of :code:`rel_num_approvals`, let</span>
+<span class="sd">        :math:`s = \\lfloor \\text{rel\\_num\\_approvals} \\times m \\rfloor` be the size of the</span>
+<span class="sd">        approval ballots. Then, the probability of generating a given approval ballot of size</span>
+<span class="sd">        :math:`k` is 0 if :math:`k \\neq s`, and :math:`\\frac{1}{\\binom{m}{s}}` otherwise,</span>
+<span class="sd">        where :math:`m` is the number of candidates.</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/impartial_constant_size_0_3.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture constant 0.3</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/impartial_constant_size_0_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture constant 0.5</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/impartial_constant_size_0_7.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for an impartial culture constant 0.7</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>

@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../_static/documentation_options.js?v=90459621"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -171,7 +171,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="point/index.html">Point</a></li>
@@ -362,6 +366,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.combinatorics.kendall_tau_distance"><code class="docutils literal notranslate"><span class="pre">kendall_tau_distance()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.combinatorics.powerset"><code class="docutils literal notranslate"><span class="pre">powerset()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.combinatorics.proper_powerset"><code class="docutils literal notranslate"><span class="pre">proper_powerset()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.combinatorics.random_partition"><code class="docutils literal notranslate"><span class="pre">random_partition()</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -375,7 +380,7 @@ document.write(`
                   
   <section id="module-prefsampling.combinatorics">
 <span id="combinatorics"></span><h1>Combinatorics<a class="headerlink" href="#module-prefsampling.combinatorics" title="Link to this heading">#</a></h1>
-<p>A collection of functions used to the number of different entities: rankings, profiles, etc…</p>
+<p>A collection of functions used to iterable over all possible rankings, profiles, etc…</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="prefsampling.combinatorics.GSNode">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GSNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cand_set</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/prefsampling/combinatorics.html#GSNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.combinatorics.GSNode" title="Link to this definition">#</a></dt>
@@ -705,6 +710,22 @@ the voters are considered.</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.combinatorics.random_partition">
+<span class="sig-name descname"><span class="pre">random_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_parts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">non_empty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/prefsampling/combinatorics.html#random_partition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.combinatorics.random_partition" title="Link to this definition">#</a></dt>
+<dd><p>Draws a partition uniformly at random.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>Iterable</em>) – The collection of elements.</p></li>
+<li><p><strong>num_parts</strong> (<em>int</em>) – The size of the partition.</p></li>
+<li><p><strong>non_empty</strong> (bool, defaults <code class="code docutils literal notranslate"><span class="pre">True</span></code>) – If true, all parts need to be non-empty.</p></li>
+<li><p><strong>seed</strong> (int, defaults <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -760,6 +781,7 @@ the voters are considered.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.combinatorics.kendall_tau_distance"><code class="docutils literal notranslate"><span class="pre">kendall_tau_distance()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.combinatorics.powerset"><code class="docutils literal notranslate"><span class="pre">powerset()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.combinatorics.proper_powerset"><code class="docutils literal notranslate"><span class="pre">proper_powerset()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.combinatorics.random_partition"><code class="docutils literal notranslate"><span class="pre">random_partition()</span></code></a></li>
 </ul>
   </nav></div>
 

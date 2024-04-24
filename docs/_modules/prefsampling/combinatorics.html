@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../../_static/documentation_options.js?v=90459621"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -171,7 +171,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../reference/approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../reference/approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../reference/point/index.html">Point</a></li>
@@ -301,7 +305,7 @@ document.write(`
                   
   <h1>Source code for prefsampling.combinatorics</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">A collection of functions used to the number of different entities: rankings, profiles, etc...</span>
+<span class="sd">A collection of functions used to iterable over all possible rankings, profiles, etc...</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
@@ -310,6 +314,42 @@ document.write(`
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Sequence</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span><span class="p">,</span> <span class="n">combinations</span><span class="p">,</span> <span class="n">permutations</span><span class="p">,</span> <span class="n">combinations_with_replacement</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="random_partition">
+<a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.random_partition">[docs]</a>
+<span class="k">def</span> <span class="nf">random_partition</span><span class="p">(</span>
+    <span class="n">s</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">num_parts</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">non_empty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draws a partition uniformly at random.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        s : Iterable</span>
+<span class="sd">            The collection of elements.</span>
+<span class="sd">        num_parts : int</span>
+<span class="sd">            The size of the partition.</span>
+<span class="sd">        non_empty : bool, defaults :code:`True`</span>
+<span class="sd">            If true, all parts need to be non-empty.</span>
+<span class="sd">        seed : int, defaults :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">partition</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_parts</span><span class="p">)]</span>
+    <span class="n">elements_to_place</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">non_empty</span><span class="p">:</span>
+        <span class="c1"># We first put one alternative per central vote, ensuring non-emptiness</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">elements_to_place</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_parts</span><span class="p">)):</span>
+            <span class="n">partition</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+            <span class="n">elements_to_place</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="c1"># For the leftover candidates, we select uniformly at random a central vote in which to place them.</span>
+    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">elements_to_place</span><span class="p">:</span>
+        <span class="n">partition</span><span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">num_parts</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">partition</span></div>
+
 
 
 <div class="viewcode-block" id="comb">

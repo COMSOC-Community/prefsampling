@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../../../_static/documentation_options.js?v=90459621"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -171,7 +171,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
@@ -300,19 +304,44 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for prefsampling.approval.resampling</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Resampling models generate votes based on resampling procedures on a given central vote.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Collection</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">prefsampling.approval.utils</span> <span class="kn">import</span> <span class="n">validate_or_generate_central_vote</span>
+<span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">powerset</span>
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 
 
+<span class="k">def</span> <span class="nf">_resample_vote</span><span class="p">(</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">rel_size_central_vote</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">central_vote</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">rng</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a single vote following the resampling procedure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">phi</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
+                <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">:</span>
+                <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">vote</span>
+
+
 <div class="viewcode-block" id="resampling">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.resampling">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/resampling.html#prefsampling.approval.resampling.resampling">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">resampling</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -324,7 +353,16 @@ document.write(`
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes from the resampling model.</span>
+<span class="sd">    Generates approval votes from the resampling model. This model is parameterised by a central</span>
+<span class="sd">    vote and two parameters :code:`phi` and :code:`rel_size_central_vote`. When generating an</span>
+<span class="sd">    approval vote, all candidates are considered one after the other. For a given candidate,</span>
+<span class="sd">    with probability :code:`1 - phi` it is (dis)approved as is the case in the central vote;</span>
+<span class="sd">    with probability :code:`phi`, it is resampled: approved with probability</span>
+<span class="sd">    :code:`rel_size_central_vote` and not approved with probability</span>
+<span class="sd">    :code:`1 - rel_size_central_vote`.</span>
+
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -333,14 +371,15 @@ document.write(`
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        phi : float</span>
-<span class="sd">            Resampling model parameter, denoting the noise.</span>
+<span class="sd">            The resampling probability, guiding the dispersion.</span>
 <span class="sd">        rel_size_central_vote : float</span>
-<span class="sd">            Resampling model parameter, denoting the average vote length.</span>
+<span class="sd">            The relative size of the central vote.</span>
 <span class="sd">        central_vote : set</span>
 <span class="sd">            The central vote. Ignored if :code:`impartial_central_vote = True`.</span>
 <span class="sd">        impartial_central_vote: bool, default: :code:`False`</span>
 <span class="sd">            If true, the central vote is sampled from :py:func:`~prefsampling.approval.impartial`</span>
-<span class="sd">            with the same value for the parameter :code:`p` as passed to this sampler.</span>
+<span class="sd">            with the same value for the parameter :code:`rel_size_central_vote` as passed to this</span>
+<span class="sd">            sampler.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -349,11 +388,89 @@ document.write(`
 <span class="sd">        list[set[int]]</span>
 <span class="sd">            Approval votes.</span>
 
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            When `phi` not in [0,1] interval.</span>
-<span class="sd">            When `p` not in [0,1] interval.</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import resampling</span>
+
+<span class="sd">            # Sample a profile from the resampling model with 2 voters and 3 candidates and</span>
+<span class="sd">            # parameters phi = 0.5, rel_size_central_vote = 0.2</span>
+<span class="sd">            resampling(2, 3, 0.5, 0.2)</span>
+
+<span class="sd">            # You can also provide the central vote</span>
+<span class="sd">            resampling(2, 3, 0.5, 0.2, central_vote={0, 1})</span>
+
+<span class="sd">            # Or it can be sampled uniformly at random</span>
+<span class="sd">            resampling(2, 3, 0.5, 0.2, impartial_central_vote=True)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            resampling(2, 3, 0.5, 0.2, seed=1657)</span>
+
+<span class="sd">            # Parameter phi needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                resampling(2, 3, 1.2, 0.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                resampling(2, 3, -0.2, 0.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # Parameter rel_size_central_vote needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                resampling(2, 3, 0.5, 1.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                resampling(2, 3, 0.5, -0.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        For the resampling model, there is a known expression for the probability of generating a</span>
+<span class="sd">        given approval ballot. Indeed, consider a case with :math:`m` candidates, resampling</span>
+<span class="sd">        parameters :math:`\\phi`, and the central vote :math:`b = \\{0, 1, \\ldots, \\lfloor</span>
+<span class="sd">        p \\times m \\rfloor\\}`. Then, when generating</span>
+<span class="sd">        a single ballot, the probability for a candidate :math:`c` to be approved of is:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \\begin{cases}</span>
+<span class="sd">            (1 - \\phi) + \\phi \\times p &amp; \\text{if } c \\in b \\\\</span>
+<span class="sd">            \\phi \\times p &amp; \\text{otherwise}</span>
+<span class="sd">            \\end{cases}</span>
+
+<span class="sd">        From this, since votes are sampled independently, everything is known. We can thus validate</span>
+<span class="sd">        this model.</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/resampling_0_25.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a resampling model with phi=0.25</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/resampling_0_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a resampling model with phi=0.5</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/resampling_0_75.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a resampling model with phi=0.75</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/resampling_1_0.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a resampling model with phi=1</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        `How to Sample Approval Elections?</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2022/71&gt;`_,</span>
+<span class="sd">        *Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,</span>
+<span class="sd">        Krzysztof Sornat and Nimrod Talmon*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2022.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">phi</span><span class="p">:</span>
@@ -374,35 +491,77 @@ document.write(`
         <span class="n">seed</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)]</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
-        <span class="n">vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">phi</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
-                    <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">:</span>
-                    <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-        <span class="n">votes</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">vote</span>
-
+        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">_resample_vote</span><span class="p">(</span>
+                <span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rel_size_central_vote</span><span class="p">,</span> <span class="n">central_vote</span><span class="p">,</span> <span class="n">rng</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
 
+<span class="k">def</span> <span class="nf">resampling_theoretical_distribution</span><span class="p">(</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">rel_size_central_vote</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">central_vote</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">subsets</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">subsets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">subsets</span> <span class="o">=</span> <span class="n">powerset</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))</span>
+    <span class="n">central_vote</span> <span class="o">=</span> <span class="n">validate_or_generate_central_vote</span><span class="p">(</span>
+        <span class="n">num_candidates</span><span class="p">,</span> <span class="n">rel_size_central_vote</span><span class="p">,</span> <span class="n">central_vote</span><span class="p">,</span> <span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">outcome</span> <span class="ow">in</span> <span class="n">subsets</span><span class="p">:</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span> <span class="ow">and</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">outcome</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span><span class="p">)</span> <span class="o">+</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">rel_size_central_vote</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span> <span class="ow">and</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">outcome</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">*=</span> <span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">rel_size_central_vote</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">central_vote</span> <span class="ow">and</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">outcome</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">*=</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">rel_size_central_vote</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span><span class="p">)</span> <span class="o">+</span> <span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">rel_size_central_vote</span><span class="p">)</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span> <span class="o">=</span> <span class="n">prob</span>
+    <span class="k">return</span> <span class="n">distribution</span>
+
+
 <div class="viewcode-block" id="disjoint_resampling">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.disjoint_resampling">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/resampling.html#prefsampling.approval.resampling.disjoint_resampling">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">disjoint_resampling</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">g</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">rel_size_central_vote</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">num_central_votes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">central_votes</span><span class="p">:</span> <span class="n">Collection</span><span class="p">[</span><span class="n">Collection</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">impartial_central_votes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes from disjoint resampling model.</span>
+<span class="sd">    Generates approval votes from disjoint resampling model. In this model, we first generate</span>
+<span class="sd">    :code:`num_central_votes` disjoint central votes (they can also be provided). Then, when</span>
+<span class="sd">    generating a ballot, we select at random one central vote uniformly at random and then use the</span>
+<span class="sd">    resampling procedure with this central vote (see</span>
+<span class="sd">    :py:func:`~prefsampling.approval.resampling.resampling` for the details). This is essentially a</span>
+<span class="sd">    mixture of several resampling samplers with different disjoint central votes.</span>
+
+<span class="sd">    The procedure to generate the central votes is as follows. Each central vote will be of size</span>
+<span class="sd">    `⌊rel_size_central_vote * num_candidates⌋`. We uniformly at random partition the candidates into</span>
+<span class="sd">    :code:`num_central_votes` parts of such size. Note that this implies that some candidates can</span>
+<span class="sd">    appear in no groups. Moreover, if `rel_size_central_vote * num_central_votes &gt; 1`, then the</span>
+<span class="sd">    model is not well-defined. If :code:`impartial_central_votes == False` and</span>
+<span class="sd">    :code:`central_votes is None`, then the central votes are alway:</span>
+<span class="sd">    `{0, 1, ..., s - 1}, {s, s + 1, ..., 2s - 1}, ...` where `s` is equal to</span>
+<span class="sd">    `⌊rel_size_central_vote * num_candidates⌋`.</span>
+
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -412,10 +571,17 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        phi : float</span>
 <span class="sd">            Disjoint resampling model parameter, denoting the noise.</span>
-<span class="sd">        p : float</span>
-<span class="sd">            Disjoint resampling model parameter, denoting the length of central vote.</span>
-<span class="sd">        g : int, default: 2</span>
-<span class="sd">            Disjoint resampling model parameter, denoting the number of groups.</span>
+<span class="sd">        rel_size_central_vote : float | Iterable[float]</span>
+<span class="sd">            The relative size of the central vote. If a single value is given, it is used for all</span>
+<span class="sd">            groups, otherwise, one value per group needs to be provided.</span>
+<span class="sd">        num_central_votes : int, default: 2</span>
+<span class="sd">            The number of central votes.</span>
+<span class="sd">        central_votes : Collection[Collection[int]]</span>
+<span class="sd">            The central votes of the different groups. If this parameter is not used, the central</span>
+<span class="sd">            votes are generated randomly.</span>
+<span class="sd">        impartial_central_votes : bool, default: :code:`False`</span>
+<span class="sd">            If set to :code:`True`, then the central votes are generated at random following a</span>
+<span class="sd">            uniform distribution over all suitable collection of central votes.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -424,63 +590,209 @@ document.write(`
 <span class="sd">        list[set[int]]</span>
 <span class="sd">            Approval votes.</span>
 
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            When `phi` not in [0,1] interval.</span>
-<span class="sd">            When `p` not in [0,1] interval.</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import disjoint_resampling</span>
+
+<span class="sd">            # Sample a profile from the disjoint resampling model with 2 voters and</span>
+<span class="sd">            # 3 candidates and parameters phi = 0.5, rel_size_central_vote = 0.2</span>
+<span class="sd">            # and 2 central votes (here {0} and {1})</span>
+<span class="sd">            disjoint_resampling(2, 3, 0.5, 0.2, num_central_votes=2)</span>
+
+<span class="sd">            # The central votes can be sampled uniformly at random</span>
+<span class="sd">            disjoint_resampling(2, 3, 0.5, 0.2, num_central_votes=2, impartial_central_votes=True)</span>
+
+<span class="sd">            # Or they can be provided.</span>
+<span class="sd">            disjoint_resampling(2, 3, 0.5, 0.2, central_votes=({0, 1}, {2}))</span>
+
+<span class="sd">            # Don&#39;t forget that they have to be disjoint</span>
+<span class="sd">            try:</span>
+<span class="sd">                disjoint_resampling(2, 3, 0.5, 0.2, central_votes=({0, 1}, {1, 2}))</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # You need to use either num_central_votes (with or without impartial_central_votes)</span>
+<span class="sd">            # or central_votes</span>
+<span class="sd">            try:</span>
+<span class="sd">                disjoint_resampling(2, 3, 0.5, 0.2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            disjoint_resampling(2, 3, 0.5, 0.2, num_central_votes=2, seed=1657)</span>
+
+<span class="sd">            # Parameter phi needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                disjoint_resampling(2, 3, 1.5, 0.2, num_central_votes=2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                disjoint_resampling(2, 3, -0.5, 0.2, num_central_votes=2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # Parameter rel_size_central_vote needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                disjoint_resampling(2, 3, 0.5, 1.2, num_central_votes=2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                disjoint_resampling(2, 3, 0.5, -0.2, num_central_votes=2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        For the disjoint resampling model, since it basically consists of a mixture of</span>
+<span class="sd">        resampling models, the probability distribution over the outcome is known: is it a linear</span>
+<span class="sd">        combination of the probability of the mixed resampling models (see</span>
+<span class="sd">        :py:func:`~prefsampling.approval.resampling.resampling` for the details of the latter).</span>
+<span class="sd">        We can thus validate this model.</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/disjoint_resampling_0_25.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a disjoint resampling model phi=0.25</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/disjoint_resampling_0_33.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a disjoint resampling model phi=0.33</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        `How to Sample Approval Elections?</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2022/71&gt;`_,</span>
+<span class="sd">        *Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,</span>
+<span class="sd">        Krzysztof Sornat and Nimrod Talmon*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2022.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">phi</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of phi: </span><span class="si">{</span><span class="n">phi</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">p</span> <span class="o">*</span> <span class="n">g</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Disjoint model is not well defined when p * g &gt; 1&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rel_size_central_vote</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_size_central_vote: </span><span class="si">{</span><span class="n">rel_size_central_vote</span><span class="si">}</span><span class="s2">. Value should be &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;in [0,1]&quot;</span>
+        <span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="n">num_groups</span> <span class="o">=</span> <span class="n">g</span>
-    <span class="n">k</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">central_votes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">num_central_votes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If you do not provide the central votes for the disjoint resampling model, you &quot;</span>
+                <span class="s2">&quot;need to provide the number of groups.&quot;</span>
+            <span class="p">)</span>
 
-    <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)]</span>
+        <span class="n">validate_int</span><span class="p">(</span>
+            <span class="n">num_central_votes</span><span class="p">,</span> <span class="n">value_descr</span><span class="o">=</span><span class="s2">&quot;number of central votes&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
 
-    <span class="n">central_votes</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_groups</span><span class="p">):</span>
-        <span class="n">central_votes</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">g</span> <span class="o">*</span> <span class="n">k</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)})</span>
+        <span class="k">if</span> <span class="n">rel_size_central_vote</span> <span class="o">*</span> <span class="n">num_central_votes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;For the disjoint resampling model we need rel_size_central_vote * &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;num_central_votes &lt;= 1 as otherwise there would not be enough candidates.&quot;</span>
+            <span class="p">)</span>
 
+        <span class="n">central_votes_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_size_central_vote</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">impartial_central_votes</span><span class="p">:</span>
+            <span class="n">central_votes</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+                <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">num_central_votes</span><span class="p">,</span> <span class="n">central_votes_size</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">central_votes</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">{</span><span class="n">g</span> <span class="o">*</span> <span class="n">central_votes_size</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">central_votes_size</span><span class="p">)}</span>
+                <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_central_votes</span><span class="p">)</span>
+            <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">seen_candidates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">central_vote</span> <span class="ow">in</span> <span class="n">central_votes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">alt</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">alt</span> <span class="ow">in</span> <span class="n">seen_candidates</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;In the disjoint resampling model, the central votes need to be disjoint. &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Currently, candidate </span><span class="si">{</span><span class="n">alt</span><span class="si">}</span><span class="s2"> appears in at least 2 central votes.&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">seen_candidates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">alt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seen_candidates</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">num_candidates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;There are more candidates appearing in the central votes than the number of &quot;</span>
+                <span class="s2">&quot;candidates provided as an argument.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">seen_candidates</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">num_candidates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The candidates need to be called 0, 1, ..., num_candidates, this is not the case &quot;</span>
+                <span class="s2">&quot;in the provided central votes.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
         <span class="n">central_vote</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">central_votes</span><span class="p">)</span>
-
-        <span class="n">vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">phi</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">:</span>
-                    <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">:</span>
-                    <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-        <span class="n">votes</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">vote</span>
-
+        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">_resample_vote</span><span class="p">(</span>
+                <span class="n">num_candidates</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rel_size_central_vote</span><span class="p">,</span> <span class="n">central_vote</span><span class="p">,</span> <span class="n">rng</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
 
+<span class="k">def</span> <span class="nf">disjoint_resampling_theoretical_distribution</span><span class="p">(</span>
+    <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">rel_size_central_vote</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">num_central_votes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">central_votes</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">set</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">subsets</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">subsets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">subsets</span> <span class="o">=</span> <span class="n">powerset</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">central_votes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">central_votes_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_size_central_vote</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
+        <span class="n">central_votes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="n">g</span> <span class="o">*</span> <span class="n">central_votes_size</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">central_votes_size</span><span class="p">)}</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_central_votes</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">subsets</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">central_vote</span> <span class="ow">in</span> <span class="n">central_votes</span><span class="p">:</span>
+        <span class="n">local_distr</span> <span class="o">=</span> <span class="n">resampling_theoretical_distribution</span><span class="p">(</span>
+            <span class="n">num_candidates</span><span class="p">,</span>
+            <span class="n">phi</span><span class="p">,</span>
+            <span class="n">rel_size_central_vote</span><span class="p">,</span>
+            <span class="n">central_vote</span><span class="o">=</span><span class="n">central_vote</span><span class="p">,</span>
+            <span class="n">subsets</span><span class="o">=</span><span class="n">subsets</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">local_distr</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">distribution</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">+=</span> <span class="n">d</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">central_votes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">distribution</span>
+
+
 <div class="viewcode-block" id="moving_resampling">
-<a class="viewcode-back" href="../../../reference/approval/index.html#prefsampling.approval.moving_resampling">[docs]</a>
+<a class="viewcode-back" href="../../../reference/approval/resampling.html#prefsampling.approval.resampling.moving_resampling">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">moving_resampling</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">num_legs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">rel_size_central_vote</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">num_legs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">central_vote</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">impartial_central_vote</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes from moving resampling model.</span>
+<span class="sd">    Generates approval votes from moving resampling model. In the moving resampling model, the</span>
+<span class="sd">    ballot of the first voter is always the central vote, other voters are grouped in so-called</span>
+<span class="sd">    legs. Within a leg, votes are generated one after another using the resampling procedure</span>
+<span class="sd">    (see :py:func:`~prefsampling.approval.resampling.resampling` for the details) using as central</span>
+<span class="sd">    vote the ballot of the previous voter (the first voter for the first voter of a leg).</span>
+
+<span class="sd">    Note that for a given number of voters, votes are not sampled independently.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -489,11 +801,17 @@ document.write(`
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        phi : float</span>
-<span class="sd">            Moving resampling model parameter, denoting the noise.</span>
-<span class="sd">        p : float</span>
-<span class="sd">            Moving resampling model parameter, denoting the length of central vote.</span>
-<span class="sd">        num_legs : int, default: 1</span>
-<span class="sd">            Moving resampling model parameter, denoting the number of legs.</span>
+<span class="sd">            The resampling probability, guiding the dispersion.</span>
+<span class="sd">        rel_size_central_vote : float</span>
+<span class="sd">            The relative size of the central vote.</span>
+<span class="sd">        num_legs : int</span>
+<span class="sd">            The number of legs.</span>
+<span class="sd">        central_vote : set</span>
+<span class="sd">            The central vote. Ignored if :code:`impartial_central_vote = True`.</span>
+<span class="sd">        impartial_central_vote: bool, default: :code:`False`</span>
+<span class="sd">            If true, the central vote is sampled from :py:func:`~prefsampling.approval.impartial`</span>
+<span class="sd">            with the same value for the parameter :code:`rel_size_central_vote` as passed to this</span>
+<span class="sd">            sampler.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -502,40 +820,112 @@ document.write(`
 <span class="sd">        list[set[int]]</span>
 <span class="sd">            Approval votes.</span>
 
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">        ValueError</span>
-<span class="sd">            When `phi` not in [0,1] interval.</span>
-<span class="sd">            When `p` not in [0,1] interval.</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import moving_resampling</span>
+
+<span class="sd">            # Sample a profile from the moving resampling model with 4 voters and 3 candidates and</span>
+<span class="sd">            # parameters phi = 0.5, rel_size_central_vote = 0.2 and 2 legs</span>
+<span class="sd">            moving_resampling(4, 3, 0.5, 0.2, 2)</span>
+
+<span class="sd">            # You can also provide the central vote</span>
+<span class="sd">            moving_resampling(4, 3, 0.5, 0.2, 2, central_vote={0, 1})</span>
+
+<span class="sd">            # Or it can be sampled uniformly at random</span>
+<span class="sd">            moving_resampling(4, 3, 0.5, 0.2, 2, impartial_central_vote=True)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            moving_resampling(4, 3, 0.5, 0.2, 2, seed=1657)</span>
+
+<span class="sd">            # Parameter phi needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                moving_resampling(4, 3, 1.5, 0.2, 2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                moving_resampling(4, 3, -0.5, 0.2, 2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # Parameter rel_size_central_vote needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                moving_resampling(4, 3, 0.5, 1.2, 2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                moving_resampling(4, 3, 0.5, -0.2, 2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        There is no known expression for the probability distribution governing moving resampling</span>
+<span class="sd">        models.</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/moving_resampling_0_25.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a moving resampling model phi=0.25</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/moving_resampling_0_5.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a moving resampling model phi=0.5</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/moving_resampling_0_75.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a moving resampling model phi=0.75</span>
+
+<span class="sd">        .. image:: ../validation_plots/approval/moving_resampling_1_0.png</span>
+<span class="sd">            :width: 800</span>
+<span class="sd">            :alt: Observed versus theoretical frequencies for a moving resampling model phi=1</span>
+
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">phi</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of phi: </span><span class="si">{</span><span class="n">phi</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">rel_size_central_vote</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">rel_size_central_vote</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span>
+        <span class="p">)</span>
+
     <span class="n">validate_int</span><span class="p">(</span><span class="n">num_legs</span><span class="p">,</span> <span class="s2">&quot;number of legs&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">num_legs</span> <span class="o">&gt;</span> <span class="n">num_voters</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of legs cannot exceed the number of voters.&quot;</span><span class="p">)</span>
 
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="n">breaks</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">num_voters</span> <span class="o">/</span> <span class="n">num_legs</span><span class="p">)</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_legs</span><span class="p">)]</span>
+    <span class="n">central_vote</span> <span class="o">=</span> <span class="n">validate_or_generate_central_vote</span><span class="p">(</span>
+        <span class="n">num_candidates</span><span class="p">,</span>
+        <span class="n">rel_size_central_vote</span><span class="p">,</span>
+        <span class="n">central_vote</span><span class="p">,</span>
+        <span class="n">impartial_central_vote</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">,</span>
+    <span class="p">)</span>
 
-    <span class="n">k</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
-    <span class="n">central_vote</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)}</span>
-    <span class="n">ccc</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)</span>
+    <span class="n">breaking_points</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">num_voters</span> <span class="o">/</span> <span class="n">num_legs</span><span class="p">)</span> <span class="o">*</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_legs</span><span class="p">)]</span>
 
-    <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">)]</span>
-    <span class="n">votes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">central_vote</span><span class="p">)</span>
-
+    <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span><span class="n">central_vote</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_voters</span><span class="p">):</span>
         <span class="n">vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">phi</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
                     <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">central_vote</span><span class="p">:</span>
                     <span class="n">vote</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-        <span class="n">votes</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">vote</span>
-        <span class="n">central_vote</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">:</span>
-            <span class="n">central_vote</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">ccc</span><span class="p">)</span>
-
+        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
+        <span class="n">central_vote</span> <span class="o">=</span> <span class="n">vote</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">breaking_points</span><span class="p">:</span>
+            <span class="n">central_vote</span> <span class="o">=</span> <span class="n">votes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 </pre></div>

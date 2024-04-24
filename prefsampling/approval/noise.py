@@ -1,6 +1,6 @@
 """
-Noise models are sampling procedures parameterised on a central vote and in which the probability
-of generating a given vote is dependant on its distance to the central vote.
+Noise models are sampling procedures parameterised by a central vote and in which the probability
+of generating a given vote is dependent on its distance to the central vote.
 """
 
 from __future__ import annotations
@@ -47,8 +47,8 @@ class SetDistance(Enum):
 
 class DistanceInfiniteError(ValueError):
     """
-    Exception thrown when the distance between two points is infinite., typically when dividing by 0 for the
-    Bunke-Shearer or the Jaccard distances.
+    Exception thrown when the distance between two points is infinite., typically when dividing by 0
+    for the Bunke-Shearer or the Jaccard distances.
     """
 
     pass
@@ -99,7 +99,8 @@ def noise(
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
 
-    For an analogous sampler generating ordinal ballots, see :py:func:`~prefsampling.ordinal.mallows.mallows`.
+    For an analogous sampler generating ordinal ballots, see
+    :py:func:`~prefsampling.ordinal.mallows.mallows`.
 
     Parameters
     ----------
@@ -180,12 +181,15 @@ def noise(
             :width: 800
             :alt: Observed versus theoretical frequencies for a noise model with phi=0.75
 
-        When :code:`phi` is equal to 1, then we are supposed to obtain a uniform distribution over
-        all approval ballots.
+        When :code:`phi` is equal to 0, then a single approval ballot should receive all the
+        probability mass.
 
         .. image:: ../validation_plots/approval/noise_0_0.png
             :width: 800
             :alt: Observed versus theoretical frequencies for a noise model with phi=0
+
+        When :code:`phi` is equal to 1, then we are supposed to obtain a uniform distribution over
+        all approval ballots.
 
         .. image:: ../validation_plots/approval/noise_1_0.png
             :width: 800

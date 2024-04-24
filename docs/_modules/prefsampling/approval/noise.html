@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../../../_static/documentation_options.js?v=90459621"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -171,7 +171,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/point/index.html">Point</a></li>
@@ -301,8 +305,8 @@ document.write(`
                   
   <h1>Source code for prefsampling.approval.noise</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Noise models are sampling procedures parameterised on a central vote and in which the probability</span>
-<span class="sd">of generating a given vote is dependant on its distance to the central vote.</span>
+<span class="sd">Noise models are sampling procedures parameterised by a central vote and in which the probability</span>
+<span class="sd">of generating a given vote is dependent on its distance to the central vote.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
@@ -351,6 +355,11 @@ document.write(`
 
 
 <span class="k">class</span> <span class="nc">DistanceInfiniteError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Exception thrown when the distance between two points is infinite., typically when dividing by 0</span>
+<span class="sd">    for the Bunke-Shearer or the Jaccard distances.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">pass</span>
 
 
@@ -400,6 +409,9 @@ document.write(`
 
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>
+
+<span class="sd">    For an analogous sampler generating ordinal ballots, see</span>
+<span class="sd">    :py:func:`~prefsampling.ordinal.mallows.mallows`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -480,12 +492,15 @@ document.write(`
 <span class="sd">            :width: 800</span>
 <span class="sd">            :alt: Observed versus theoretical frequencies for a noise model with phi=0.75</span>
 
-<span class="sd">        When :code:`phi` is equal to 1, then we are supposed to obtain a uniform distribution over</span>
-<span class="sd">        all approval ballots.</span>
+<span class="sd">        When :code:`phi` is equal to 0, then a single approval ballot should receive all the</span>
+<span class="sd">        probability mass.</span>
 
 <span class="sd">        .. image:: ../validation_plots/approval/noise_0_0.png</span>
 <span class="sd">            :width: 800</span>
 <span class="sd">            :alt: Observed versus theoretical frequencies for a noise model with phi=0</span>
+
+<span class="sd">        When :code:`phi` is equal to 1, then we are supposed to obtain a uniform distribution over</span>
+<span class="sd">        all approval ballots.</span>
 
 <span class="sd">        .. image:: ../validation_plots/approval/noise_1_0.png</span>
 <span class="sd">            :width: 800</span>

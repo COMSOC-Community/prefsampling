@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="_static/documentation_options.js?v=90459621"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -172,7 +172,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference/approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="reference/point/index.html">Point</a></li>
@@ -507,27 +511,27 @@ Other parameters are specific to the samplers.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/identity.html#module-prefsampling.approval.identity" title="prefsampling.approval.identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">identity()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/identity.html#prefsampling.approval.identity.identity" title="prefsampling.approval.identity.identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">identity()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">empty()</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/identity.html#prefsampling.approval.identity.empty" title="prefsampling.approval.identity.empty"><code class="xref py py-func docutils literal notranslate"><span class="pre">empty()</span></code></a></p></td>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">full()</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/identity.html#prefsampling.approval.identity.full" title="prefsampling.approval.identity.full"><code class="xref py py-func docutils literal notranslate"><span class="pre">full()</span></code></a></p></td>
 <td><p>—</p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/impartial.html#module-prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/impartial.html#prefsampling.approval.impartial.impartial" title="prefsampling.approval.impartial.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">p</span></code></p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/impartial.html#prefsampling.approval.impartial.impartial_constant_size" title="prefsampling.approval.impartial.impartial_constant_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial_constant_size()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></p></td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.urn" title="prefsampling.approval.urn"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/urn.html#prefsampling.approval.urn.urn" title="prefsampling.approval.urn.urn"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn()</span></code></a></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">alpha</span></code></div>
@@ -535,7 +539,7 @@ Other parameters are specific to the samplers.</p>
 </td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.urn_constant_size" title="prefsampling.approval.urn_constant_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn_constant_size()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/urn.html#prefsampling.approval.urn.urn_constant_size" title="prefsampling.approval.urn.urn_constant_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn_constant_size()</span></code></a></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">alpha</span></code></div>
@@ -543,7 +547,7 @@ Other parameters are specific to the samplers.</p>
 </td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.urn_partylist" title="prefsampling.approval.urn_partylist"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn_partylist()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/urn.html#prefsampling.approval.urn.urn_partylist" title="prefsampling.approval.urn.urn_partylist"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn_partylist()</span></code></a></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">alpha</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">parties</span></code></div>
@@ -551,10 +555,10 @@ Other parameters are specific to the samplers.</p>
 </td>
 <td><p>—</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.resampling" title="prefsampling.approval.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/resampling.html#prefsampling.approval.resampling.resampling" title="prefsampling.approval.resampling.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a></p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">rel_size_central_vote</span></code></div>
 </div>
 </td>
 <td><div class="line-block">
@@ -563,15 +567,20 @@ Other parameters are specific to the samplers.</p>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.disjoint_resampling" title="prefsampling.approval.disjoint_resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">disjoint_resampling()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/resampling.html#prefsampling.approval.resampling.disjoint_resampling" title="prefsampling.approval.resampling.disjoint_resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">disjoint_resampling()</span></code></a></p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">rel_size_central_vote</span></code></div>
 </div>
 </td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">g</span></code> (defaults to 2)</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">num_central_votes</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">central_votes</span></code> (see docs for the defaults)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">impartial_central_votes</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">False</span></code>)</div>
+</div>
+</td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.moving_resampling" title="prefsampling.approval.moving_resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/resampling.html#prefsampling.approval.resampling.moving_resampling" title="prefsampling.approval.resampling.moving_resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code></div>
@@ -579,7 +588,7 @@ Other parameters are specific to the samplers.</p>
 </td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">num_legs</span></code> (defaults to 1)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.euclidean_threshold" title="prefsampling.approval.euclidean_threshold"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean_threshold()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_threshold" title="prefsampling.approval.euclidean.euclidean_threshold"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean_threshold()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">threshold</span></code></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
@@ -591,7 +600,7 @@ Other parameters are specific to the samplers.</p>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.euclidean_vcr" title="prefsampling.approval.euclidean_vcr"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean_vcr()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_vcr" title="prefsampling.approval.euclidean.euclidean_vcr"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean_vcr()</span></code></a></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_radius</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_radius</span></code></div>
@@ -607,7 +616,7 @@ Other parameters are specific to the samplers.</p>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.euclidean_constant_size" title="prefsampling.approval.euclidean_constant_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean_constant_size()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_constant_size" title="prefsampling.approval.euclidean.euclidean_constant_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean_constant_size()</span></code></a></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
@@ -619,7 +628,7 @@ Other parameters are specific to the samplers.</p>
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/noise.html#module-prefsampling.approval.noise" title="prefsampling.approval.noise"><code class="xref py py-func docutils literal notranslate"><span class="pre">noise()</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="reference/approval/noise.html#prefsampling.approval.noise.noise" title="prefsampling.approval.noise.noise"><code class="xref py py-func docutils literal notranslate"><span class="pre">noise()</span></code></a></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code></div>
@@ -627,7 +636,7 @@ Other parameters are specific to the samplers.</p>
 </td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">noise_type</span></code> (defaults to <code class="xref py py-const docutils literal notranslate"><span class="pre">HAMMING</span></code>)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/index.html#prefsampling.approval.truncated_ordinal" title="prefsampling.approval.truncated_ordinal"><code class="xref py py-func docutils literal notranslate"><span class="pre">truncated_ordinal()</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/truncatedordinal.html#prefsampling.approval.truncated_ordinal.truncated_ordinal" title="prefsampling.approval.truncated_ordinal.truncated_ordinal"><code class="xref py py-func docutils literal notranslate"><span class="pre">truncated_ordinal()</span></code></a></p></td>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">ordinal_sampler</span></code></div>
@@ -705,7 +714,7 @@ These are the filters we have implemented:</p>
 <td><p>Randomly rename the candidates</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/core/index.html#prefsampling.core.filters.resample_as_central_vote" title="prefsampling.core.filters.resample_as_central_vote"><code class="xref py py-func docutils literal notranslate"><span class="pre">resample_as_central_vote()</span></code></a></p></td>
-<td><p>Resamples the votes using them as central votes of sampler whose definition include a central vote (e.g., <a class="reference internal" href="reference/ordinal/mallows.html#module-prefsampling.ordinal.mallows" title="prefsampling.ordinal.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a> or <a class="reference internal" href="reference/approval/index.html#prefsampling.approval.resampling" title="prefsampling.approval.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a>)</p></td>
+<td><p>Resamples the votes using them as central votes of sampler whose definition include a central vote (e.g., <a class="reference internal" href="reference/ordinal/mallows.html#module-prefsampling.ordinal.mallows" title="prefsampling.ordinal.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a> or <a class="reference internal" href="reference/approval/resampling.html#module-prefsampling.approval.resampling" title="prefsampling.approval.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a>)</p></td>
 </tr>
 </tbody>
 </table>

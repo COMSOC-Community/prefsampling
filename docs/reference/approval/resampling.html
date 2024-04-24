@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Resampling Models &#8212; PrefSampling</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../_static/documentation_options.js?v=90459621"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/approval/resampling';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Truncated Ordinal Models" href="truncatedordinal.html" />
+    <link rel="prev" title="Noise Models" href="noise.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">PrefSampling</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">PrefSampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../validation/ordinal.html">Ordinal Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../validation/approval.html">Approval Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../validation/tree.html">Tree Samplers</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/mallows.html">Mallows’ Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/plackettluce.html">Plackett-Luce Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/didi.html">Dirichlet Distribution Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/singlepeaked.html">Single-Peaked Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/singlecrossing.html">Single-Crossing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ordinal/groupseparable.html">Group-Separable Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Approval</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urn.html">Urn Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="noise.html">Noise Models</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truncatedordinal.html">Truncated Ordinal Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tree/index.html">Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constants.html">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../inputvalidators.html">Input Validators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../combinatorics.html">Combinatorics</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/COMSOC-Community/prefsampling" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/reference/approval/resampling.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Resampling Models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling.resampling"><code class="docutils literal notranslate"><span class="pre">resampling()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling.disjoint_resampling"><code class="docutils literal notranslate"><span class="pre">disjoint_resampling()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling.moving_resampling"><code class="docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-prefsampling.approval.resampling">
+<span id="resampling-models"></span><h1>Resampling Models<a class="headerlink" href="#module-prefsampling.approval.resampling" title="Link to this heading">#</a></h1>
+<p>Resampling models generate votes based on resampling procedures on a given central vote.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.approval.resampling.resampling">
+<span class="sig-name descname"><span class="pre">resampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_size_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impartial_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/resampling.html#resampling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.resampling.resampling" title="Link to this definition">#</a></dt>
+<dd><p>Generates approval votes from the resampling model. This model is parameterised by a central
+vote and two parameters <code class="code docutils literal notranslate"><span class="pre">phi</span></code> and <code class="code docutils literal notranslate"><span class="pre">rel_size_central_vote</span></code>. When generating an
+approval vote, all candidates are considered one after the other. For a given candidate,
+with probability <code class="code docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">phi</span></code> it is (dis)approved as is the case in the central vote;
+with probability <code class="code docutils literal notranslate"><span class="pre">phi</span></code>, it is resampled: approved with probability
+<code class="code docutils literal notranslate"><span class="pre">rel_size_central_vote</span></code> and not approved with probability
+<code class="code docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">rel_size_central_vote</span></code>.</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
+<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – The resampling probability, guiding the dispersion.</p></li>
+<li><p><strong>rel_size_central_vote</strong> (<em>float</em>) – The relative size of the central vote.</p></li>
+<li><p><strong>central_vote</strong> (<em>set</em>) – The central vote. Ignored if <code class="code docutils literal notranslate"><span class="pre">impartial_central_vote</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p></li>
+<li><p><strong>impartial_central_vote</strong> (bool, default: <code class="code docutils literal notranslate"><span class="pre">False</span></code>) – If true, the central vote is sampled from <a class="reference internal" href="impartial.html#module-prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a>
+with the same value for the parameter <code class="code docutils literal notranslate"><span class="pre">rel_size_central_vote</span></code> as passed to this
+sampler.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Approval votes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">resampling</span>
+
+<span class="c1"># Sample a profile from the resampling model with 2 voters and 3 candidates and</span>
+<span class="c1"># parameters phi = 0.5, rel_size_central_vote = 0.2</span>
+<span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># You can also provide the central vote</span>
+<span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">central_vote</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span>
+
+<span class="c1"># Or it can be sampled uniformly at random</span>
+<span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">impartial_central_vote</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># For reproducibility, you can set the seed.</span>
+<span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1657</span><span class="p">)</span>
+
+<span class="c1"># Parameter phi needs to be in [0, 1]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Parameter rel_size_central_vote needs to be in [0, 1]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p class="rubric">Validation</p>
+<p>For the resampling model, there is a known expression for the probability of generating a
+given approval ballot. Indeed, consider a case with <img class="math" src="../../_images/math/e9bc7da808d33a16a8347f27a519bd067186aa66.png" alt="m"/> candidates, resampling
+parameters <img class="math" src="../../_images/math/fffd2357ee88a9c50ba9e831ed64c39c73d54a07.png" alt="\phi"/>, and the central vote <img class="math" src="../../_images/math/4bd142b562a9c6ddfcc3788911c8fa4f0d8d782f.png" alt="b = \{0, 1, \ldots, \lfloor
+p \times m \rfloor\}"/>. Then, when generating
+a single ballot, the probability for a candidate <img class="math" src="../../_images/math/d520a12f1579170834c32ad5f656de081bbb36fe.png" alt="c"/> to be approved of is:</p>
+<div class="math">
+<p><img src="../../_images/math/b8af972244c0ce6c941a20d7c88f9d04fc5d926d.png" alt="\begin{cases}
+(1 - \phi) + \phi \times p &amp; \text{if } c \in b \\
+\phi \times p &amp; \text{otherwise}
+\end{cases}"/></p>
+</div><p>From this, since votes are sampled independently, everything is known. We can thus validate
+this model.</p>
+<a class="reference internal image-reference" href="../../_images/resampling_0_25.png"><img alt="Observed versus theoretical frequencies for a resampling model with phi=0.25" src="../../_images/resampling_0_25.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/resampling_0_5.png"><img alt="Observed versus theoretical frequencies for a resampling model with phi=0.5" src="../../_images/resampling_0_5.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/resampling_0_75.png"><img alt="Observed versus theoretical frequencies for a resampling model with phi=0.75" src="../../_images/resampling_0_75.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/resampling_1_0.png"><img alt="Observed versus theoretical frequencies for a resampling model with phi=1" src="../../_images/resampling_1_0.png" style="width: 800px;" /></a>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.ijcai.org/proceedings/2022/71">How to Sample Approval Elections?</a>,
+<em>Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,
+Krzysztof Sornat and Nimrod Talmon</em>,
+Proceedings of the International Joint Conference on Artificial Intelligence, 2022.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.approval.resampling.disjoint_resampling">
+<span class="sig-name descname"><span class="pre">disjoint_resampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_size_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_central_votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impartial_central_votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/resampling.html#disjoint_resampling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.resampling.disjoint_resampling" title="Link to this definition">#</a></dt>
+<dd><p>Generates approval votes from disjoint resampling model. In this model, we first generate
+<code class="code docutils literal notranslate"><span class="pre">num_central_votes</span></code> disjoint central votes (they can also be provided). Then, when
+generating a ballot, we select at random one central vote uniformly at random and then use the
+resampling procedure with this central vote (see
+<a class="reference internal" href="#prefsampling.approval.resampling.resampling" title="prefsampling.approval.resampling.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a> for the details). This is essentially a
+mixture of several resampling samplers with different disjoint central votes.</p>
+<p>The procedure to generate the central votes is as follows. Each central vote will be of size
+<cite>⌊rel_size_central_vote * num_candidates⌋</cite>. We uniformly at random partition the candidates into
+<code class="code docutils literal notranslate"><span class="pre">num_central_votes</span></code> parts of such size. Note that this implies that some candidates can
+appear in no groups. Moreover, if <cite>rel_size_central_vote * num_central_votes &gt; 1</cite>, then the
+model is not well-defined. If <code class="code docutils literal notranslate"><span class="pre">impartial_central_votes</span> <span class="pre">==</span> <span class="pre">False</span></code> and
+<code class="code docutils literal notranslate"><span class="pre">central_votes</span> <span class="pre">is</span> <span class="pre">None</span></code>, then the central votes are alway:
+<cite>{0, 1, …, s - 1}, {s, s + 1, …, 2s - 1}, …</cite> where <cite>s</cite> is equal to
+<cite>⌊rel_size_central_vote * num_candidates⌋</cite>.</p>
+<p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
+process described above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
+<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – Disjoint resampling model parameter, denoting the noise.</p></li>
+<li><p><strong>rel_size_central_vote</strong> (<em>float</em><em> | </em><em>Iterable</em><em>[</em><em>float</em><em>]</em>) – The relative size of the central vote. If a single value is given, it is used for all
+groups, otherwise, one value per group needs to be provided.</p></li>
+<li><p><strong>num_central_votes</strong> (<em>int</em><em>, </em><em>default: 2</em>) – The number of central votes.</p></li>
+<li><p><strong>central_votes</strong> (<em>Collection</em><em>[</em><em>Collection</em><em>[</em><em>int</em><em>]</em><em>]</em>) – The central votes of the different groups. If this parameter is not used, the central
+votes are generated randomly.</p></li>
+<li><p><strong>impartial_central_votes</strong> (bool, default: <code class="code docutils literal notranslate"><span class="pre">False</span></code>) – If set to <code class="code docutils literal notranslate"><span class="pre">True</span></code>, then the central votes are generated at random following a
+uniform distribution over all suitable collection of central votes.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Approval votes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">disjoint_resampling</span>
+
+<span class="c1"># Sample a profile from the disjoint resampling model with 2 voters and</span>
+<span class="c1"># 3 candidates and parameters phi = 0.5, rel_size_central_vote = 0.2</span>
+<span class="c1"># and 2 central votes (here {0} and {1})</span>
+<span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">num_central_votes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># The central votes can be sampled uniformly at random</span>
+<span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">num_central_votes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">impartial_central_votes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Or they can be provided.</span>
+<span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">central_votes</span><span class="o">=</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">}))</span>
+
+<span class="c1"># Don&#39;t forget that they have to be disjoint</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">central_votes</span><span class="o">=</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># You need to use either num_central_votes (with or without impartial_central_votes)</span>
+<span class="c1"># or central_votes</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># For reproducibility, you can set the seed.</span>
+<span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">num_central_votes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1657</span><span class="p">)</span>
+
+<span class="c1"># Parameter phi needs to be in [0, 1]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">num_central_votes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">num_central_votes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Parameter rel_size_central_vote needs to be in [0, 1]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="n">num_central_votes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">disjoint_resampling</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">num_central_votes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p class="rubric">Validation</p>
+<p>For the disjoint resampling model, since it basically consists of a mixture of
+resampling models, the probability distribution over the outcome is known: is it a linear
+combination of the probability of the mixed resampling models (see
+<a class="reference internal" href="#prefsampling.approval.resampling.resampling" title="prefsampling.approval.resampling.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a> for the details of the latter).
+We can thus validate this model.</p>
+<a class="reference internal image-reference" href="../../_images/disjoint_resampling_0_25.png"><img alt="Observed versus theoretical frequencies for a disjoint resampling model phi=0.25" src="../../_images/disjoint_resampling_0_25.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/disjoint_resampling_0_33.png"><img alt="Observed versus theoretical frequencies for a disjoint resampling model phi=0.33" src="../../_images/disjoint_resampling_0_33.png" style="width: 800px;" /></a>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.ijcai.org/proceedings/2022/71">How to Sample Approval Elections?</a>,
+<em>Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,
+Krzysztof Sornat and Nimrod Talmon</em>,
+Proceedings of the International Joint Conference on Artificial Intelligence, 2022.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.approval.resampling.moving_resampling">
+<span class="sig-name descname"><span class="pre">moving_resampling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_size_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_legs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impartial_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/resampling.html#moving_resampling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.resampling.moving_resampling" title="Link to this definition">#</a></dt>
+<dd><p>Generates approval votes from moving resampling model. In the moving resampling model, the
+ballot of the first voter is always the central vote, other voters are grouped in so-called
+legs. Within a leg, votes are generated one after another using the resampling procedure
+(see <a class="reference internal" href="#prefsampling.approval.resampling.resampling" title="prefsampling.approval.resampling.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a> for the details) using as central
+vote the ballot of the previous voter (the first voter for the first voter of a leg).</p>
+<p>Note that for a given number of voters, votes are not sampled independently.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
+<li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – The resampling probability, guiding the dispersion.</p></li>
+<li><p><strong>rel_size_central_vote</strong> (<em>float</em>) – The relative size of the central vote.</p></li>
+<li><p><strong>num_legs</strong> (<em>int</em>) – The number of legs.</p></li>
+<li><p><strong>central_vote</strong> (<em>set</em>) – The central vote. Ignored if <code class="code docutils literal notranslate"><span class="pre">impartial_central_vote</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p></li>
+<li><p><strong>impartial_central_vote</strong> (bool, default: <code class="code docutils literal notranslate"><span class="pre">False</span></code>) – If true, the central vote is sampled from <a class="reference internal" href="impartial.html#module-prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a>
+with the same value for the parameter <code class="code docutils literal notranslate"><span class="pre">rel_size_central_vote</span></code> as passed to this
+sampler.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Approval votes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">moving_resampling</span>
+
+<span class="c1"># Sample a profile from the moving resampling model with 4 voters and 3 candidates and</span>
+<span class="c1"># parameters phi = 0.5, rel_size_central_vote = 0.2 and 2 legs</span>
+<span class="n">moving_resampling</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># You can also provide the central vote</span>
+<span class="n">moving_resampling</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">central_vote</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">})</span>
+
+<span class="c1"># Or it can be sampled uniformly at random</span>
+<span class="n">moving_resampling</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">impartial_central_vote</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># For reproducibility, you can set the seed.</span>
+<span class="n">moving_resampling</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1657</span><span class="p">)</span>
+
+<span class="c1"># Parameter phi needs to be in [0, 1]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">moving_resampling</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">moving_resampling</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Parameter rel_size_central_vote needs to be in [0, 1]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">moving_resampling</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">moving_resampling</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p class="rubric">Validation</p>
+<p>There is no known expression for the probability distribution governing moving resampling
+models.</p>
+<a class="reference internal image-reference" href="../../_images/moving_resampling_0_25.png"><img alt="Observed versus theoretical frequencies for a moving resampling model phi=0.25" src="../../_images/moving_resampling_0_25.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/moving_resampling_0_5.png"><img alt="Observed versus theoretical frequencies for a moving resampling model phi=0.5" src="../../_images/moving_resampling_0_5.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/moving_resampling_0_75.png"><img alt="Observed versus theoretical frequencies for a moving resampling model phi=0.75" src="../../_images/moving_resampling_0_75.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="../../_images/moving_resampling_1_0.png"><img alt="Observed versus theoretical frequencies for a moving resampling model phi=1" src="../../_images/moving_resampling_1_0.png" style="width: 800px;" /></a>
+<p class="rubric">References</p>
+<p>None.</p>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="noise.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Noise Models</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="truncatedordinal.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Truncated Ordinal Models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling.resampling"><code class="docutils literal notranslate"><span class="pre">resampling()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling.disjoint_resampling"><code class="docutils literal notranslate"><span class="pre">disjoint_resampling()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.approval.resampling.moving_resampling"><code class="docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Simon Rey and Stanisław Szufa
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, Simon Rey and Stanisław Szufa.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

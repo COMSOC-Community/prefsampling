@@ -36,15 +36,15 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../../_static/documentation_options.js?v=90459621"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'reference/approval/noise';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Point" href="../point/index.html" />
-    <link rel="prev" title="Unanimous Models" href="identity.html" />
+    <link rel="next" title="Resampling Models" href="resampling.html" />
+    <link rel="prev" title="Urn Models" href="urn.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -172,7 +172,11 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Approval</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urn.html">Urn Models</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../point/index.html">Point</a></li>
@@ -367,8 +371,8 @@ document.write(`
                   
   <section id="module-prefsampling.approval.noise">
 <span id="noise-models"></span><h1>Noise Models<a class="headerlink" href="#module-prefsampling.approval.noise" title="Link to this heading">#</a></h1>
-<p>Noise models are sampling procedures parameterised on a central vote and in which the probability
-of generating a given vote is dependant on its distance to the central vote.</p>
+<p>Noise models are sampling procedures parameterised by a central vote and in which the probability
+of generating a given vote is dependent on its distance to the central vote.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.noise.noise">
 <span class="sig-name descname"><span class="pre">noise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rel_size_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#prefsampling.approval.noise.SetDistance" title="prefsampling.approval.noise.SetDistance"><span class="pre">SetDistance</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SetDistance.HAMMING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impartial_central_vote</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/noise.html#noise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.noise.noise" title="Link to this definition">#</a></dt>
@@ -378,6 +382,8 @@ Specifically, a vote is generated with probability <code class="code docutils li
 the vote and the central vote.</p>
 <p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
 process described above.</p>
+<p>For an analogous sampler generating ordinal ballots, see
+<a class="reference internal" href="../ordinal/mallows.html#prefsampling.ordinal.mallows.mallows" title="prefsampling.ordinal.mallows.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -439,9 +445,11 @@ with the same value for the parameter <code class="code docutils literal notrans
 <a class="reference internal image-reference" href="../../_images/noise_0_25.png"><img alt="Observed versus theoretical frequencies for a noise model with phi=0.25" src="../../_images/noise_0_25.png" style="width: 800px;" /></a>
 <a class="reference internal image-reference" href="../../_images/noise_0_5.png"><img alt="Observed versus theoretical frequencies for a noise model with phi=0.5" src="../../_images/noise_0_5.png" style="width: 800px;" /></a>
 <a class="reference internal image-reference" href="../../_images/noise_0_75.png"><img alt="Observed versus theoretical frequencies for a noise model with phi=0.75" src="../../_images/noise_0_75.png" style="width: 800px;" /></a>
+<p>When <code class="code docutils literal notranslate"><span class="pre">phi</span></code> is equal to 0, then a single approval ballot should receive all the
+probability mass.</p>
+<a class="reference internal image-reference" href="../../_images/noise_0_0.png"><img alt="Observed versus theoretical frequencies for a noise model with phi=0" src="../../_images/noise_0_0.png" style="width: 800px;" /></a>
 <p>When <code class="code docutils literal notranslate"><span class="pre">phi</span></code> is equal to 1, then we are supposed to obtain a uniform distribution over
 all approval ballots.</p>
-<a class="reference internal image-reference" href="../../_images/noise_0_0.png"><img alt="Observed versus theoretical frequencies for a noise model with phi=0" src="../../_images/noise_0_0.png" style="width: 800px;" /></a>
 <a class="reference internal image-reference" href="../../_images/noise_1_0.png"><img alt="Observed versus theoretical frequencies for a noise model with phi=1" src="../../_images/noise_1_0.png" style="width: 800px;" /></a>
 <p class="rubric">References</p>
 <p><a class="reference external" href="https://www.ijcai.org/proceedings/2020/11">Evaluating Approval-Based Multiwinner Voting in Terms of Robustness to Noise</a>,
@@ -501,20 +509,20 @@ size of the intersection.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="identity.html"
+       href="urn.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Unanimous Models</p>
+        <p class="prev-next-title">Urn Models</p>
       </div>
     </a>
     <a class="right-next"
-       href="../point/index.html"
+       href="resampling.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Point</p>
+        <p class="prev-next-title">Resampling Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

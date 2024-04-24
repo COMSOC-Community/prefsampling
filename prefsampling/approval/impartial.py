@@ -108,14 +108,22 @@ def impartial(
     Validation
     ----------
 
-        We only validate the model with a single voter thus the distinction between individual and global does not
-        matter here. Call :math:`p` the probability of approving any candidate, then the probability of generating a
-        given approval ballot of size :math:`k` is:
+        We only validate the model with a single voter thus the distinction between individual and
+        global does not matter here. Call :math:`p` the probability of approving any candidate,
+        then the probability of generating a given approval ballot of size :math:`k` is
+        :math:`p^k \\times (1 - p)^{m - k}`, where :math:`m` is the number of candidates.
 
-        .. math::
-            p^k \\times (1 - p)^{m - k},
+        .. image:: ../validation_plots/approval/impartial_0_3.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an impartial culture 0.3
 
-        where :math:`m` is the number of candidates.
+        .. image:: ../validation_plots/approval/impartial_0_5.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an impartial culture 0.5
+
+        .. image:: ../validation_plots/approval/impartial_0_7.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an impartial culture 0.7
 
     References
     ----------
@@ -265,11 +273,24 @@ def impartial_constant_size(
     Validation
     ----------
 
-        We only validate the model with a single voter thus the distinction between individual and global does not
-        matter here. For a given value of :code:`rel_num_approvals`, let
-        :math:`s = \\lfoor \\text{rel\\_num\\_approvals} \\times m \\rfloor` be the size of the approval ballots.
-        Then, the probability of generating a given approval ballot of size :math:`k` is 0 if :math:`k \neq s`,
-        and :math:`\\frac{1}{\\binom{m}{s}}` otherwise, where :math:`m` is the number of candidates.
+        We only validate the model with a single voter thus the distinction between individual and
+        global does not matter here. For a given value of :code:`rel_num_approvals`, let
+        :math:`s = \\lfloor \\text{rel\\_num\\_approvals} \\times m \\rfloor` be the size of the
+        approval ballots. Then, the probability of generating a given approval ballot of size
+        :math:`k` is 0 if :math:`k \\neq s`, and :math:`\\frac{1}{\\binom{m}{s}}` otherwise,
+        where :math:`m` is the number of candidates.
+
+        .. image:: ../validation_plots/approval/impartial_constant_size_0_3.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an impartial culture constant 0.3
+
+        .. image:: ../validation_plots/approval/impartial_constant_size_0_5.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an impartial culture constant 0.5
+
+        .. image:: ../validation_plots/approval/impartial_constant_size_0_7.png
+            :width: 800
+            :alt: Observed versus theoretical frequencies for an impartial culture constant 0.7
 
     References
     ----------

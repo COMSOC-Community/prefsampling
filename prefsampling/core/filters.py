@@ -155,11 +155,14 @@ def resample_as_central_vote(
     ----------
         votes : list[set[int]] or np.ndarray
             Approval or ordinal votes.
-        sampler: Callable
+        sampler : Callable
             The sampler used to resample the votes.
-        sampler_parameters: dict
+        sampler_parameters : dict
             Dictionary passed as keyword parameters of the sampler. Number of voters or central vote
              of this dictionary are not taken into account.
+        num_candidates : int, defaults: :code:`None`
+            The number of candidates, useful for incomplete ballots in which this information cannot
+            be retrieved from the votes.
 
     Returns
     -------

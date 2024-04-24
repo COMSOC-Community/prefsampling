@@ -48,19 +48,19 @@ def euclidean(
             The number of dimensions to use. Using this argument is mandatory when passing a space
             as argument. If you pass samplers as arguments and use the num_dimensions, then, the
             value of num_dimensions is passed as a kwarg to the samplers.
-        voters_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+        voters_positions: :py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
             The positions of the voters, or a way to determine them. If an Iterable is passed,
             then it is assumed to be the positions themselves. Otherwise, it is assumed that a
             sampler for the positions is passed. It can be either the nickname of a sampler---when
-            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            passing a :py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
             A sampler is a function that takes as keywords arguments: 'num_points',
             'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
             :code:`voters_positions_args` argument.
-        candidates_positions: py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
+        candidates_positions: :py:class:`~prefsampling.core.euclidean.EuclideanSpace` | Callable | Iterable[Iterable[float]]
             The positions of the candidates, or a way to determine them. If an Iterable is passed,
             then it is assumed to be the positions themselves. Otherwise, it is assumed that a
             sampler for the positions is passed. It can be either the nickname of a sampler---when
-            passing a py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
+            passing a :py:class:`~prefsampling.core.euclidean.EuclideanSpace`; or a sampler.
             A sampler is a function that takes as keywords arguments: 'num_points',
             'num_dimensions', and 'seed'. Additional arguments can be provided with by using the
             :code:`candidates_positions_args` argument.

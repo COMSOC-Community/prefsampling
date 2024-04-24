@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/documentation_options.js?v=537bb3bf"></script>
+    <script src="../_static/documentation_options.js?v=90459621"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -172,7 +172,11 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/urn.html">Urn Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="approval/noise.html">Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="point/index.html">Point</a></li>
@@ -368,17 +372,11 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="approval/index.html">Approval</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/identity.html">Unanimous Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="approval/euclidean.html">Euclidean Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="approval/urn.html">Urn Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="approval/noise.html">Noise Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.urn"><code class="docutils literal notranslate"><span class="pre">urn()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.urn_constant_size"><code class="docutils literal notranslate"><span class="pre">urn_constant_size()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.urn_partylist"><code class="docutils literal notranslate"><span class="pre">urn_partylist()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.resampling"><code class="docutils literal notranslate"><span class="pre">resampling()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.disjoint_resampling"><code class="docutils literal notranslate"><span class="pre">disjoint_resampling()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.moving_resampling"><code class="docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.euclidean_threshold"><code class="docutils literal notranslate"><span class="pre">euclidean_threshold()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.euclidean_vcr"><code class="docutils literal notranslate"><span class="pre">euclidean_vcr()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.euclidean_constant_size"><code class="docutils literal notranslate"><span class="pre">euclidean_constant_size()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="approval/index.html#prefsampling.approval.truncated_ordinal"><code class="docutils literal notranslate"><span class="pre">truncated_ordinal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="approval/resampling.html">Resampling Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="approval/truncatedordinal.html">Truncated Ordinal Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="point/index.html">Point</a><ul>
@@ -430,6 +428,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.kendall_tau_distance"><code class="docutils literal notranslate"><span class="pre">kendall_tau_distance()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.powerset"><code class="docutils literal notranslate"><span class="pre">powerset()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.proper_powerset"><code class="docutils literal notranslate"><span class="pre">proper_powerset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="combinatorics.html#prefsampling.combinatorics.random_partition"><code class="docutils literal notranslate"><span class="pre">random_partition()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -8,7 +8,7 @@ from validation.approval.impartial import (
 from validation.approval.noise import ApprovalNoiseValidator
 from validation.approval.resampling import (
     ApprovalResamplingValidator,
-    ApprovalDisjointResamplingValidator,
+    ApprovalDisjointResamplingValidator, ApprovalMovingResamplingValidator,
 )
 
 from prefsampling.ordinal import TreeSampler
@@ -55,7 +55,8 @@ ALL_APPROVAL_VALIDATORS = [
     # ApprovalImpartialConstantSizeValidator(),
     # ApprovalNoiseValidator(),
     # ApprovalResamplingValidator(),
-    ApprovalDisjointResamplingValidator(),
+    # ApprovalDisjointResamplingValidator(),
+    ApprovalMovingResamplingValidator()
 ]
 
 ALL_ORDINAL_VALIDATORS = [

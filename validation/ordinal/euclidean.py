@@ -70,7 +70,7 @@ class OrdinalEuclideanValidatorLine(Validator):
             "euclidean_line",
             True,
             sampler_func=euclidean,
-            constant_parameters=("num_voters"),
+            constant_parameters="num_voters",
             faceted_parameters=("voters_positions", "candidates_positions"),
         )
 
