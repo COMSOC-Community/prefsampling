@@ -30,8 +30,10 @@ def urn_scheme(
             The dispersion coefficient (`alpha * m!` copies of a vote are put back in the urn after
             a draw). Must be non-negative.
         base_case_sampler: Callable
-            A function that returns a sample to add in the urn in the base case
-        rng
+            A function that returns a sample to add in the urn in the base case. It should be a
+            function that takes a random number generator as its one and only argument.
+        rng : np.random.Generator
+            The random number generator used
 
     Returns
     -------

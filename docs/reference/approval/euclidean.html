@@ -149,14 +149,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../validation/ordinal.html">Ordinal Samplers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../validation/approval.html">Approval Samplers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../validation/tree.html">Tree Samplers</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../validation.html">Validation</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/mallows.html">Mallows’ Models</a></li>
@@ -169,7 +164,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Approval</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Approval</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="identity.html">Unanimous Models</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Euclidean Models</a></li>
@@ -375,6 +370,9 @@ document.write(`
                   
   <section id="module-prefsampling.approval.euclidean">
 <span id="euclidean-models"></span><h1>Euclidean Models<a class="headerlink" href="#module-prefsampling.approval.euclidean" title="Link to this heading">#</a></h1>
+<p>In Euclidean models, the voters and the candidates are assigned random positions in a given space.
+The preferences of a voter are then defined based on the distance between the voter and the
+candidates.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.approval.euclidean.euclidean_threshold">
 <span class="sig-name descname"><span class="pre">euclidean_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_dimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voters_positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><span class="pre">EuclideanSpace</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates_positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><span class="pre">EuclideanSpace</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voters_positions_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates_positions_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/approval/euclidean.html#euclidean_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.approval.euclidean.euclidean_threshold" title="Link to this definition">#</a></dt>
@@ -425,6 +423,98 @@ a value is provided.</p></li>
 <dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p><strong>Using</strong> <a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a></p>
+<p>The easiest is to use one of the Euclidean spaces defined in
+<a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_threshold</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">EuclideanSpace</span>
+
+<span class="c1"># Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates</span>
+<span class="c1"># with threshold 2.5</span>
+<span class="n">euclidean_threshold</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>  <span class="c1"># Number of voters</span>
+    <span class="mi">3</span><span class="p">,</span>  <span class="c1"># Number of candidates</span>
+    <span class="mf">2.5</span><span class="p">,</span>  <span class="c1"># Threshold value</span>
+    <span class="mi">5</span><span class="p">,</span>  <span class="c1"># Number of dimensions</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_BALL</span><span class="p">,</span>  <span class="c1"># For the voters</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_BALL</span>  <span class="c1"># For the candidates</span>
+<span class="p">)</span>
+
+<span class="c1"># You can use different spaces for the voters and the candidates</span>
+<span class="n">euclidean_threshold</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_SPHERE</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_CUBE</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Using</strong> <a class="reference internal" href="../point/index.html#module-prefsampling.point" title="prefsampling.point"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.point</span></code></a></p>
+<p>If you need more flexibility, you can also pass the point samplers directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_threshold</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">ball_uniform</span>
+
+<span class="c1"># Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates</span>
+<span class="c1"># with threshold value 2.5</span>
+<span class="n">euclidean_threshold</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="n">ball_uniform</span><span class="p">)</span>
+
+<span class="c1"># You can specify additional arguments to the point sampler</span>
+<span class="n">euclidean_threshold</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">voters_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widths&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
+<span class="p">)</span>
+
+<span class="c1"># You can also specify different point samplers for voters and candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">cube</span>
+
+<span class="n">euclidean_threshold</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">voters_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widths&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;only_envelope&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="n">candidates_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;center_point&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Using already known-positions</strong></p>
+<p>If you already have positions for the voters or the candidates, you can also pass them to
+the sampler.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_threshold</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">gaussian</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">EuclideanSpace</span>
+
+<span class="c1"># First sampler positions of the 3 candidates in 2 dimensions</span>
+<span class="n">candidates_positions</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">widths</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Then sample preferences for 2 voters based on the candidates positions</span>
+<span class="n">euclidean_threshold</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_BALL</span><span class="p">,</span>
+    <span class="n">candidates_positions</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://ojs.aaai.org/index.php/AAAI/article/view/16686">An Analysis of Approval-Based Committee Rules for 2D-Euclidean Elections</a>,
+<em>Michał T. Godziszewski, Paweł Batko, Piotr Skowron and Piotr Faliszewski</em>,
+Proceedings of the AAAI Conference on Artificial Intelligence, 2021.</p>
+<p><a class="reference external" href="https://ojs.aaai.org/index.php/AAAI/article/view/5594">Price of Fairness in Budget Division and Probabilistic Social Choice</a>,
+<em>Marcin Michorzewski, Dominik Peters and Piotr Skowron</em>,
+Proceedings of the AAAI Conference on Artificial Intelligence, 2020.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -485,6 +575,115 @@ a value is provided.</p></li>
 <dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p><strong>Using</strong> <a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a></p>
+<p>The easiest is to use one of the Euclidean spaces defined in
+<a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_vcr</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">EuclideanSpace</span>
+
+<span class="c1"># Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates</span>
+<span class="c1"># with radius 2.5 for the voters and 5.3 for the candidates</span>
+<span class="n">euclidean_vcr</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>  <span class="c1"># Number of voters</span>
+    <span class="mi">3</span><span class="p">,</span>  <span class="c1"># Number of candidates</span>
+    <span class="mf">2.5</span><span class="p">,</span>  <span class="c1"># Voters radius</span>
+    <span class="mf">5.3</span><span class="p">,</span>  <span class="c1"># Candidates radius</span>
+    <span class="mi">5</span><span class="p">,</span>  <span class="c1"># Number of dimensions</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_BALL</span><span class="p">,</span>  <span class="c1"># For the voters</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_BALL</span>  <span class="c1"># For the candidates</span>
+<span class="p">)</span>
+
+<span class="c1"># You can use different spaces for the voters and the candidates</span>
+<span class="n">euclidean_vcr</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mf">5.3</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_SPHERE</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_CUBE</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="c1"># You can provide individual radius</span>
+<span class="n">euclidean_vcr</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">5.3</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">,</span> <span class="mf">5.9</span><span class="p">),</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_SPHERE</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_CUBE</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Using</strong> <a class="reference internal" href="../point/index.html#module-prefsampling.point" title="prefsampling.point"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.point</span></code></a></p>
+<p>If you need more flexibility, you can also pass the point samplers directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_vcr</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">ball_uniform</span>
+
+<span class="c1"># Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates</span>
+<span class="c1"># with radius 2.5 for the voters and 5.3 for the candidates</span>
+<span class="n">euclidean_vcr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">5.3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="n">ball_uniform</span><span class="p">)</span>
+
+<span class="c1"># You can specify additional arguments to the point sampler</span>
+<span class="n">euclidean_vcr</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mf">5.3</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">voters_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widths&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
+<span class="p">)</span>
+
+<span class="c1"># You can also specify different point samplers for voters and candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">cube</span>
+
+<span class="n">euclidean_vcr</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mf">5.3</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">voters_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widths&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;only_envelope&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="n">candidates_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;center_point&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Using already known-positions</strong></p>
+<p>If you already have positions for the voters or the candidates, you can also pass them to
+the sampler.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_vcr</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">gaussian</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">EuclideanSpace</span>
+
+<span class="c1"># First sampler positions of the 3 candidates in 2 dimensions</span>
+<span class="n">candidates_positions</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">widths</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Then sample preferences for 2 voters based on the candidates positions</span>
+<span class="n">euclidean_vcr</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">2.5</span><span class="p">,</span>
+    <span class="mf">5.3</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_BALL</span><span class="p">,</span>
+    <span class="n">candidates_positions</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://www.ijcai.org/proceedings/2019/16">An Experimental View on Committees Providing Justified Representation</a>,
+<em>Robert Bredereck, Piotr Faliszewski, Andrzej Kaczmarczyk and Rolf Niedermeier</em>,
+Proceedings of the International Joint Conference on Artificial Intelligence, 2019.</p>
+<p><a class="reference external" href="https://www.ijcai.org/proceedings/2022/71">How to Sample Approval Elections?</a>,
+<em>Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,
+Krzysztof Sornat and Nimrod Talmon</em>,
+Proceedings of the International Joint Conference on Artificial Intelligence, 2022.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -536,6 +735,119 @@ a value is provided.</p></li>
 <dd class="field-odd"><p><em>list</em>[<em>set</em>[<em>int</em>]]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p><strong>Using</strong> <a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a></p>
+<p>The easiest is to use one of the Euclidean spaces defined in
+<a class="reference internal" href="../core/index.html#prefsampling.core.euclidean.EuclideanSpace" title="prefsampling.core.euclidean.EuclideanSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">EuclideanSpace</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_constant_size</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">EuclideanSpace</span>
+
+<span class="c1"># Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates</span>
+<span class="c1"># with relative size of the approval ballots 0.5</span>
+<span class="n">euclidean_constant_size</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>  <span class="c1"># Number of voters</span>
+    <span class="mi">3</span><span class="p">,</span>  <span class="c1"># Number of candidates</span>
+    <span class="mf">0.5</span><span class="p">,</span>  <span class="c1"># Relative size of the approval ballots</span>
+    <span class="mi">5</span><span class="p">,</span>  <span class="c1"># Number of dimensions</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_BALL</span><span class="p">,</span>  <span class="c1"># For the voters</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_BALL</span>  <span class="c1"># For the candidates</span>
+<span class="p">)</span>
+
+<span class="c1"># You can use different spaces for the voters and the candidates</span>
+<span class="n">euclidean_constant_size</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_SPHERE</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_CUBE</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># The relative size of the approval ballots need to be in [0, 1]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">euclidean_constant_size</span><span class="p">(</span>
+        <span class="mi">2</span><span class="p">,</span>
+        <span class="mi">3</span><span class="p">,</span>
+        <span class="mf">1.5</span><span class="p">,</span>
+        <span class="mi">5</span><span class="p">,</span>
+        <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_SPHERE</span><span class="p">,</span>
+        <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_CUBE</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">euclidean_constant_size</span><span class="p">(</span>
+        <span class="mi">2</span><span class="p">,</span>
+        <span class="mi">3</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="mi">5</span><span class="p">,</span>
+        <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_SPHERE</span><span class="p">,</span>
+        <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_CUBE</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p><strong>Using</strong> <a class="reference internal" href="../point/index.html#module-prefsampling.point" title="prefsampling.point"><code class="xref py py-mod docutils literal notranslate"><span class="pre">prefsampling.point</span></code></a></p>
+<p>If you need more flexibility, you can also pass the point samplers directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_constant_size</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">ball_uniform</span>
+
+<span class="c1"># Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates</span>
+<span class="c1"># with relative size of the approval ballots 2.5</span>
+<span class="n">euclidean_constant_size</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="n">ball_uniform</span><span class="p">)</span>
+
+<span class="c1"># You can specify additional arguments to the point sampler</span>
+<span class="n">euclidean_constant_size</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">voters_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widths&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
+<span class="p">)</span>
+
+<span class="c1"># You can also specify different point samplers for voters and candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">cube</span>
+
+<span class="n">euclidean_constant_size</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">ball_uniform</span><span class="p">,</span>
+    <span class="n">voters_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;widths&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;only_envelope&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="n">candidates_positions_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;center_point&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Using already known-positions</strong></p>
+<p>If you already have positions for the voters or the candidates, you can also pass them to
+the sampler.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.approval</span> <span class="kn">import</span> <span class="n">euclidean_threshold</span>
+<span class="kn">from</span> <span class="nn">prefsampling.point</span> <span class="kn">import</span> <span class="n">gaussian</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core.euclidean</span> <span class="kn">import</span> <span class="n">EuclideanSpace</span>
+
+<span class="c1"># First sampler positions of the 3 candidates in 2 dimensions</span>
+<span class="n">candidates_positions</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sigmas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">widths</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Then sample preferences for 2 voters based on the candidates positions</span>
+<span class="n">euclidean_constant_size</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_BALL</span><span class="p">,</span>
+    <span class="n">candidates_positions</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://ojs.aaai.org/index.php/AAAI/article/view/5584">Perpetual Voting: Fairness in Long-Term Decision Making</a>,
+<em>Martin Lackner</em>,
+Proceedings  of the AAAI Conference on Artificial Intelligence, 2020.</p>
 </dd></dl>
 
 <dl class="py class">

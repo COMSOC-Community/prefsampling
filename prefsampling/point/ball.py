@@ -45,6 +45,12 @@ def ball_uniform(
         np.ndarray
             The coordinates of the :code:`num_points` points that have been sampled.
 
+    Validation
+    ----------
+
+        .. image:: ../validation_plots/point/ball-uniform.png
+            :width: 800
+            :alt: Observed frequencies for a uniform ball model
     """
     validate_int(num_points, "num_points", 0)
     validate_int(num_dimensions, "num_dimensions", 1)
@@ -96,6 +102,12 @@ def sphere_uniform(
         np.ndarray
             The coordinates of the :code:`num_points` points that have been sampled.
 
+    Validation
+    ----------
+
+        .. image:: ../validation_plots/point/sphere-uniform.png
+            :width: 800
+            :alt: Observed frequencies for a uniform sphere model
     """
     return ball_uniform(
         num_points, num_dimensions, center_point, widths, only_envelope=True, seed=seed
@@ -142,6 +154,12 @@ def ball_resampling(
         np.ndarray
             The coordinates of the :code:`num_points` points that have been sampled.
 
+    Validation
+    ----------
+
+        .. image:: ../validation_plots/point/ball-resampling.png
+            :width: 800
+            :alt: Observed frequencies for a uniform ball model
     """
     validate_int(num_points, "num_points", 0)
     validate_int(num_dimensions, "num_dimensions", 1)

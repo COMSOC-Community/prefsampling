@@ -8,7 +8,8 @@ from validation.approval.impartial import (
 from validation.approval.noise import ApprovalNoiseValidator
 from validation.approval.resampling import (
     ApprovalResamplingValidator,
-    ApprovalDisjointResamplingValidator, ApprovalMovingResamplingValidator,
+    ApprovalDisjointResamplingValidator,
+    ApprovalMovingResamplingValidator,
 )
 
 from prefsampling.ordinal import TreeSampler
@@ -43,7 +44,11 @@ from validation.ordinal.singlepeaked import (
     SPCircleValidator,
 )
 from validation.ordinal.urn import OrdinalUrnValidator
-from validation.point.ball import plot_ball_uniform, plot_ball_resampling
+from validation.point.ball_uniform import plot_ball_uniform
+from validation.point.ball_resampling import plot_ball_resampling
+from validation.point.cube_uniform import plot_cube_uniform
+from validation.point.gaussian import plot_gaussian
+from validation.point.sphere_uniform import plot_sphere_uniform
 from validation.tree.schroeder import (
     SchroederValidator,
     SchroederLescanneValidator,
@@ -56,7 +61,7 @@ ALL_APPROVAL_VALIDATORS = [
     # ApprovalNoiseValidator(),
     # ApprovalResamplingValidator(),
     # ApprovalDisjointResamplingValidator(),
-    ApprovalMovingResamplingValidator()
+    # ApprovalMovingResamplingValidator()
 ]
 
 ALL_ORDINAL_VALIDATORS = [
@@ -100,14 +105,17 @@ if __name__ == "__main__":
         plot_dir_root = os.path.join("plots", nickname)
         os.makedirs(plot_dir_root, exist_ok=True)
 
-        for validator in validator_list:
-            validator.write_csv(num_observations, csv_dir_root)
-        for validator in validator_list:
-            validator.plot_frequencies(
-                csv_dir_root, plot_dir_root, ordering="theoretical-observed"
-            )
+        # for validator in validator_list:
+        #     validator.write_csv(num_observations, csv_dir_root)
+        # for validator in validator_list:
+        #     validator.plot_frequencies(
+        #         csv_dir_root, plot_dir_root, ordering="theoretical-observed"
+        #     )
 
     plot_dir_root = os.path.join("plots", "point")
     os.makedirs(plot_dir_root, exist_ok=True)
-    # plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
-    # plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))
+    plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
+    plot_sphere_uniform(os.path.join(plot_dir_root, "sphere-uniform"))
+    plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))
+    plot_cube_uniform(os.path.join(plot_dir_root, "cube"))
+    plot_gaussian(os.path.join(plot_dir_root, "gaussian"))

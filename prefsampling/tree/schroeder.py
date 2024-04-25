@@ -10,6 +10,10 @@ from prefsampling.combinatorics import comb
 
 
 def validate_num_leaves_nodes(num_leaves: int, num_internal_nodes: int | None):
+    """
+    Validates the number of leaves of a Schröder tree based on the number of internal nodes.
+    Raises ValueError if something goes wrong.
+    """
     validate_int(num_leaves, "number of leaves", lower_bound=1)
     if num_internal_nodes is not None:
         validate_int(num_internal_nodes, "number of internal nodes", lower_bound=0)
@@ -41,7 +45,6 @@ def _random_num_internal_nodes(num_leaves: int, rng: np.random.Generator) -> int
     -------
         int
             The number of internal nodes
-
     """
     distribution = np.zeros(num_leaves - 1)
     for i in range(num_leaves - 1):
@@ -85,6 +88,27 @@ def schroeder_tree(
         Node
             The root of the tree
 
+    Validation
+    ----------
+
+        This sampler is supposed to yield a uniform distribution, but does not in practice.
+
+        .. image:: ../validation_plots/tree/schroeder.png
+          :width: 800
+          :alt: Observed versus theoretical frequencies for the Schröder tree sampler
+
+    References
+    ----------
+
+        `Uniform generation of a Schröder tree
+        <https://www.sciencedirect.com/science/article/pii/S0020019097001749>`_,
+        *L. Alonso, J.L. Rémy and R. Schott*,
+        Information Processing Letters, Volume 64, Issue 6, 1997.
+
+        `A linear-time algorithm for the generation of trees
+        <https://link.springer.com/article/10.1007/BF02522824>`_,
+        *L. Alonso, J.L. Rémy and R. Schott*,
+        Algorithmica 17, 162–182, 1997
     """
     validate_num_leaves_nodes(num_leaves, num_internal_nodes)
 
@@ -191,6 +215,23 @@ def schroeder_tree_lescanne(
     -------
         Node
             The root of the tree
+
+    Validation
+    ----------
+
+        This sampler has unknown probability distribution but is efficient for large numbers of leaves.
+
+        .. image:: ../validation_plots/tree/schroeder_lescanne.png
+          :width: 800
+          :alt: Observed versus theoretical frequencies for the Schröder tree sampler by Lescanne
+
+    References
+    ----------
+
+        `Holonomic equations and efficient random generation of binary trees
+        <https://dmtcs.episciences.org/12920>`_,
+        *Pierre Lesscanne*,
+        Discrete Mathematics & Theoretical Computer Science, vol. 25:2, 2024.
     """
 
     def build_tree(
@@ -304,6 +345,15 @@ def schroeder_tree_brute_force(
     -------
         Node
             The root of the tree
+
+    Validation
+    ----------
+
+        This sampler yields a uniform probability distribution but enumerates all trees (and is thus slow).
+
+        .. image:: ../validation_plots/tree/schroeder_brute_force.png
+          :width: 800
+          :alt: Observed versus theoretical frequencies for the Schröder tree sampler by brute force
 
     """
     all_trees = all_schroeder_tree(num_leaves, num_internal_nodes=num_internal_nodes)

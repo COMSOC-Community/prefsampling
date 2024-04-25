@@ -148,14 +148,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../validation/ordinal.html">Ordinal Samplers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../validation/approval.html">Approval Samplers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../validation/tree.html">Tree Samplers</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
@@ -168,7 +163,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/euclidean.html">Euclidean Models</a></li>
@@ -306,7 +301,7 @@ document.write(`
   <h1>Source code for prefsampling.approval.truncated_ordinal</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
 
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 
@@ -317,7 +312,7 @@ document.write(`
 <span class="k">def</span> <span class="nf">truncated_ordinal</span><span class="p">(</span>
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">rel_num_approvals</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">rel_num_approvals</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="n">ordinal_sampler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
     <span class="n">ordinal_sampler_parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -335,8 +330,9 @@ document.write(`
 <span class="sd">            Number of voters</span>
 <span class="sd">        num_candidates: int</span>
 <span class="sd">            Number of candidates</span>
-<span class="sd">        rel_num_approvals: float,</span>
-<span class="sd">            Ratio of approved candidates.</span>
+<span class="sd">        rel_num_approvals: float | Iterable[float],</span>
+<span class="sd">            Ratio of approved candidates. If an iterable is provided, then there must one such value</span>
+<span class="sd">            per voter.</span>
 <span class="sd">        ordinal_sampler: Callable</span>
 <span class="sd">            The ordinal sampler to be used.</span>
 <span class="sd">        ordinal_sampler_parameters: dict</span>
@@ -349,20 +345,89 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        list[set[int]]</span>
 <span class="sd">            Approval votes</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import truncated_ordinal</span>
+<span class="sd">            from prefsampling.ordinal import mallows</span>
+
+<span class="sd">            # Sample votes from Mallows&#39; model and convert them to approval ballots, there are</span>
+<span class="sd">            # 4 voters and 5 candidates, rel_num_approvals is 0.5</span>
+<span class="sd">            truncated_ordinal(4, 5, 0.5, mallows, {&quot;phi&quot;: 0.4})</span>
+
+<span class="sd">            # You can also specify one rel_num_approvals per voter</span>
+<span class="sd">            truncated_ordinal(4, 5, [0.3, 0.2, 0.4, 0.7], mallows, {&quot;phi&quot;: 0.4})</span>
+
+<span class="sd">            # For reproducibility, you can set the seed which is then passed to the ordinal sampler.</span>
+<span class="sd">            truncated_ordinal(4, 5, 0.5, mallows, {&quot;phi&quot;: 0.4}, seed=756)</span>
+
+<span class="sd">            # If you pass num_voters, num_candidates or seed to the ordinal sampler,</span>
+<span class="sd">            # they are erased</span>
+<span class="sd">            votes = truncated_ordinal(</span>
+<span class="sd">                4,</span>
+<span class="sd">                5,</span>
+<span class="sd">                1,  # All candidates will be approved</span>
+<span class="sd">                mallows,</span>
+<span class="sd">                {&quot;num_voters&quot;: 10, &quot;num_candidates&quot;: 15, &quot;phi&quot;: 0.4}</span>
+<span class="sd">            )</span>
+<span class="sd">            assert len(votes) == 4  # And not 10</span>
+<span class="sd">            assert len(votes[0]) == 5  # And not 15</span>
+
+<span class="sd">            # Parameter rel_num_approvals needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                truncated_ordinal(4, 5, 1.5, mallows, {&quot;phi&quot;: 0.4})</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                truncated_ordinal(4, 5, -0.5, mallows, {&quot;phi&quot;: 0.4})</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">        `How to Sample Approval Elections?</span>
+<span class="sd">        &lt;https://www.ijcai.org/proceedings/2022/71&gt;`_,</span>
+<span class="sd">        *Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,</span>
+<span class="sd">        Krzysztof Sornat and Nimrod Talmon*,</span>
+<span class="sd">        Proceedings of the International Joint Conference on Artificial Intelligence, 2022.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_num_approvals: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot; be in [0, 1]&quot;</span>
-        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rel_num_approvals</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="n">unique_vote_length</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">min</span><span class="p">(</span><span class="n">rel_num_approvals</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">max</span><span class="p">(</span><span class="n">rel_num_approvals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Incorrect value of rel_num_approvals. All values should be in [0, 1]&quot;</span>
+            <span class="p">)</span>
+        <span class="n">vote_length</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rel_num_approvals</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vote_length</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_voters</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If you provide an iterable as rel_num_approvals, there they should &quot;</span>
+                <span class="s2">&quot;be exactly one value per voter, no more, no less.&quot;</span>
+            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">unique_vote_length</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_num_approvals: </span><span class="si">{</span><span class="n">rel_num_approvals</span><span class="si">}</span><span class="s2">. Value should&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; be in [0, 1]&quot;</span>
+            <span class="p">)</span>
+        <span class="n">vote_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_num_approvals</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
 
     <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_voters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_voters</span>
     <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;num_candidates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_candidates</span>
     <span class="n">ordinal_sampler_parameters</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
     <span class="n">ordinal_votes</span> <span class="o">=</span> <span class="n">ordinal_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">ordinal_sampler_parameters</span><span class="p">)</span>
 
-    <span class="n">vote_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_num_approvals</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">[{</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">vote_length</span><span class="p">]}</span> <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">ordinal_votes</span><span class="p">]</span></div>
+    <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vote</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ordinal_votes</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">unique_vote_length</span><span class="p">:</span>
+            <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">vote_length</span><span class="p">]})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="n">vote_length</span><span class="p">[</span><span class="n">i</span><span class="p">]]})</span>
+    <span class="k">return</span> <span class="n">votes</span></div>
 
 </pre></div>
 

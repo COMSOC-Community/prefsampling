@@ -14,7 +14,14 @@ from tests.utils import (
 
 def all_test_samplers_approval_resampling():
     samplers = [
-        TestSampler(resampling, {"rel_size_central_vote": random_p, "phi": random_phi, "impartial_central_vote": imp_central})
+        TestSampler(
+            resampling,
+            {
+                "rel_size_central_vote": random_p,
+                "phi": random_phi,
+                "impartial_central_vote": imp_central,
+            },
+        )
         for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)
         for imp_central in [True, False]
@@ -26,7 +33,7 @@ def all_test_samplers_approval_resampling():
                 "rel_size_central_vote": random_p,
                 "phi": random_phi,
                 "num_central_votes": random_g,
-                "impartial_central_votes": imp_central
+                "impartial_central_votes": imp_central,
             },
         )
         for random_g in int_parameter_test_values(1, 10, 2)
@@ -38,8 +45,12 @@ def all_test_samplers_approval_resampling():
     samplers += [
         TestSampler(
             moving_resampling,
-            {"rel_size_central_vote": random_p, "phi": random_phi, "num_legs": random_num_legs,
-                "impartial_central_vote": imp_central},
+            {
+                "rel_size_central_vote": random_p,
+                "phi": random_phi,
+                "num_legs": random_num_legs,
+                "impartial_central_vote": imp_central,
+            },
         )
         for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)

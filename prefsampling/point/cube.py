@@ -39,6 +39,12 @@ def cube(
         np.ndarray
             The coordinates of the :code:`num_points` points that have been sampled.
 
+    Validation
+    ----------
+
+        .. image:: ../validation_plots/point/cube.png
+            :width: 800
+            :alt: Observed frequencies for a uniform cube model
     """
     validate_int(num_points, "num_points", 0)
     validate_int(num_dimensions, "num_dimensions", 1)

@@ -245,7 +245,7 @@ def disjoint_resampling(
     :code:`num_central_votes` parts of such size. Note that this implies that some candidates can
     appear in no groups. Moreover, if `rel_size_central_vote * num_central_votes > 1`, then the
     model is not well-defined. If :code:`impartial_central_votes == False` and
-    :code:`central_votes is None`, then the central votes are alway:
+    :code:`central_votes is None`, then the central votes are always:
     `{0, 1, ..., s - 1}, {s, s + 1, ..., 2s - 1}, ...` where `s` is equal to
     `⌊rel_size_central_vote * num_candidates⌋`.
 
@@ -401,13 +401,13 @@ def disjoint_resampling(
     else:
         seen_candidates = set()
         for central_vote in central_votes:
-            for alt in central_vote:
-                if alt in seen_candidates:
+            for cand in central_vote:
+                if cand in seen_candidates:
                     raise ValueError(
-                        "In the disjoint resampling model, the central votes need to be disjoint. "
-                        f"Currently, candidate {alt} appears in at least 2 central votes."
+                        "In the disjoint resampling model the central votes need to be disjoint. "
+                        f"Currently, candidate {cand} appears in at least 2 central votes."
                     )
-                seen_candidates.add(alt)
+                seen_candidates.add(cand)
         if len(seen_candidates) > num_candidates:
             raise ValueError(
                 "There are more candidates appearing in the central votes than the number of "

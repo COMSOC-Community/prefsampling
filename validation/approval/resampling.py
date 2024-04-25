@@ -1,6 +1,9 @@
 from prefsampling.approval import resampling, disjoint_resampling
-from prefsampling.approval.resampling import resampling_theoretical_distribution, \
-    moving_resampling, disjoint_resampling_theoretical_distribution
+from prefsampling.approval.resampling import (
+    resampling_theoretical_distribution,
+    moving_resampling,
+    disjoint_resampling_theoretical_distribution,
+)
 from prefsampling.combinatorics import powerset
 from validation.validator import Validator
 
@@ -106,7 +109,11 @@ class ApprovalMovingResamplingValidator(Validator):
             "moving_resampling",
             False,
             sampler_func=moving_resampling,
-            constant_parameters=("num_voters", "num_candidates", "rel_size_central_vote"),
+            constant_parameters=(
+                "num_voters",
+                "num_candidates",
+                "rel_size_central_vote",
+            ),
             faceted_parameters=("phi", "num_legs"),
         )
 

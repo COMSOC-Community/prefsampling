@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import numpy as np
 
-from prefsampling.approval import resampling
+from prefsampling.approval import resampling, noise, moving_resampling
 from tests.test_samplers.approval.test_approval_euclidean import (
     all_test_samplers_approval_euclidean,
 )
@@ -50,17 +50,25 @@ def all_test_samplers_approval():
         TestSampler(sample_then_rename, {"main_test_sampler": test_sampler})
         for test_sampler in np.random.choice(test_samplers, size=20)
     ]
-    resample_as_central_vote_test_samplers = [
-        TestSampler(
-            sample_then_resample_as_central_vote,
-            {
-                "main_test_sampler": test_sampler,
-                "resampler": resampling,
-                "resampler_params": {"phi": 0.9684, "rel_size_central_vote": 0.1345},
-            },
-        )
-        for test_sampler in np.random.choice(test_samplers, size=20)
-    ]
+    resample_as_central_vote_test_samplers = []
+    for resampler, params in [
+        (resampling, {}),
+        (noise, {}),
+        (moving_resampling, {"num_legs": 1}),
+    ]:
+        for test_sampler in np.random.choice(test_samplers, size=20):
+            resampler_params = {"phi": 0.9684, "rel_size_central_vote": 0.1345}
+            resampler_params.update(params)
+            resample_as_central_vote_test_samplers.append(
+                TestSampler(
+                    sample_then_resample_as_central_vote,
+                    {
+                        "main_test_sampler": test_sampler,
+                        "resampler": resampler,
+                        "resampler_params": resampler_params,
+                    },
+                )
+            )
     mixture_test_samplers = [
         TestSampler(
             sample_mixture,

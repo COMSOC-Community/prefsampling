@@ -1,3 +1,9 @@
+"""
+In Euclidean models, the voters and the candidates are assigned random positions in a given space.
+The preferences of a voter are then defined based on the distance between the voter and the
+candidates.
+"""
+
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
@@ -75,6 +81,116 @@ def euclidean_threshold(
     -------
         list[set[int]]
             Approval votes.
+
+    Examples
+    --------
+
+        **Using** :py:class:`~prefsampling.core.euclidean.EuclideanSpace`
+
+        The easiest is to use one of the Euclidean spaces defined in
+        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_threshold
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            # Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates
+            # with threshold 2.5
+            euclidean_threshold(
+                2,  # Number of voters
+                3,  # Number of candidates
+                2.5,  # Threshold value
+                5,  # Number of dimensions
+                EuclideanSpace.UNIFORM_BALL,  # For the voters
+                EuclideanSpace.UNIFORM_BALL  # For the candidates
+            )
+
+            # You can use different spaces for the voters and the candidates
+            euclidean_threshold(
+                2,
+                3,
+                2.5,
+                5,
+                EuclideanSpace.UNIFORM_SPHERE,
+                EuclideanSpace.GAUSSIAN_CUBE,
+                )
+
+        **Using** :py:mod:`prefsampling.point`
+
+        If you need more flexibility, you can also pass the point samplers directly.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_threshold
+            from prefsampling.point import ball_uniform
+
+            # Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates
+            # with threshold value 2.5
+            euclidean_threshold(2, 3, 2.5, 5, ball_uniform, ball_uniform)
+
+            # You can specify additional arguments to the point sampler
+            euclidean_threshold(
+                2,
+                3,
+                2.5,
+                5,
+                ball_uniform,
+                ball_uniform,
+                voters_positions_args = {'widths': (1, 3, 2, 4, 2)}
+            )
+
+            # You can also specify different point samplers for voters and candidates
+            from prefsampling.point import cube
+
+            euclidean_threshold(
+                2,
+                3,
+                2.5,
+                5,
+                ball_uniform,
+                ball_uniform,
+                voters_positions_args = {'widths': (4, 7, 3, 3, 1), 'only_envelope': True},
+                candidates_positions_args = {'center_point': (0.5, 1, 0, 0, 0)}
+            )
+
+        **Using already known-positions**
+
+        If you already have positions for the voters or the candidates, you can also pass them to
+        the sampler.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_threshold
+            from prefsampling.point import gaussian
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            # First sampler positions of the 3 candidates in 2 dimensions
+            candidates_positions = gaussian(3, 2, sigmas=(0.4, 0.8), widths=(5, 1))
+
+            # Then sample preferences for 2 voters based on the candidates positions
+            euclidean_threshold(
+                2,
+                3,
+                2.5,
+                2,
+                EuclideanSpace.GAUSSIAN_BALL,
+                candidates_positions
+            )
+
+    References
+    ----------
+
+        `An Analysis of Approval-Based Committee Rules for 2D-Euclidean Elections
+        <https://ojs.aaai.org/index.php/AAAI/article/view/16686>`_,
+        *Michał T. Godziszewski, Paweł Batko, Piotr Skowron and Piotr Faliszewski*,
+        Proceedings of the AAAI Conference on Artificial Intelligence, 2021.
+
+        `Price of Fairness in Budget Division and Probabilistic Social Choice
+        <https://ojs.aaai.org/index.php/AAAI/article/view/5594>`_,
+        *Marcin Michorzewski, Dominik Peters and Piotr Skowron*,
+        Proceedings of the AAAI Conference on Artificial Intelligence, 2020.
+
     """
     if threshold < 1:
         raise ValueError(
@@ -181,6 +297,133 @@ def euclidean_vcr(
     -------
         list[set[int]]
             Approval votes.
+
+    Examples
+    --------
+
+        **Using** :py:class:`~prefsampling.core.euclidean.EuclideanSpace`
+
+        The easiest is to use one of the Euclidean spaces defined in
+        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_vcr
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            # Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates
+            # with radius 2.5 for the voters and 5.3 for the candidates
+            euclidean_vcr(
+                2,  # Number of voters
+                3,  # Number of candidates
+                2.5,  # Voters radius
+                5.3,  # Candidates radius
+                5,  # Number of dimensions
+                EuclideanSpace.UNIFORM_BALL,  # For the voters
+                EuclideanSpace.UNIFORM_BALL  # For the candidates
+            )
+
+            # You can use different spaces for the voters and the candidates
+            euclidean_vcr(
+                2,
+                3,
+                2.5,
+                5.3,
+                5,
+                EuclideanSpace.UNIFORM_SPHERE,
+                EuclideanSpace.GAUSSIAN_CUBE,
+                )
+
+            # You can provide individual radius
+            euclidean_vcr(
+                2,
+                3,
+                (2.5, 2.8),
+                (5.3, 5.1, 5.9),
+                5,
+                EuclideanSpace.UNIFORM_SPHERE,
+                EuclideanSpace.UNIFORM_CUBE,
+                )
+
+        **Using** :py:mod:`prefsampling.point`
+
+        If you need more flexibility, you can also pass the point samplers directly.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_vcr
+            from prefsampling.point import ball_uniform
+
+            # Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates
+            # with radius 2.5 for the voters and 5.3 for the candidates
+            euclidean_vcr(2, 3, 2.5, 5.3, 5, ball_uniform, ball_uniform)
+
+            # You can specify additional arguments to the point sampler
+            euclidean_vcr(
+                2,
+                3,
+                2.5,
+                5.3,
+                5,
+                ball_uniform,
+                ball_uniform,
+                voters_positions_args = {'widths': (1, 3, 2, 4, 2)}
+            )
+
+            # You can also specify different point samplers for voters and candidates
+            from prefsampling.point import cube
+
+            euclidean_vcr(
+                2,
+                3,
+                2.5,
+                5.3,
+                5,
+                ball_uniform,
+                ball_uniform,
+                voters_positions_args = {'widths': (4, 7, 3, 3, 1), 'only_envelope': True},
+                candidates_positions_args = {'center_point': (0.5, 1, 0, 0, 0)}
+            )
+
+        **Using already known-positions**
+
+        If you already have positions for the voters or the candidates, you can also pass them to
+        the sampler.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_vcr
+            from prefsampling.point import gaussian
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            # First sampler positions of the 3 candidates in 2 dimensions
+            candidates_positions = gaussian(3, 2, sigmas=(0.4, 0.8), widths=(5, 1))
+
+            # Then sample preferences for 2 voters based on the candidates positions
+            euclidean_vcr(
+                2,
+                3,
+                2.5,
+                5.3,
+                2,
+                EuclideanSpace.GAUSSIAN_BALL,
+                candidates_positions
+            )
+
+    References
+    ----------
+
+        `An Experimental View on Committees Providing Justified Representation
+        <https://www.ijcai.org/proceedings/2019/16>`_,
+        *Robert Bredereck, Piotr Faliszewski, Andrzej Kaczmarczyk and Rolf Niedermeier*,
+        Proceedings of the International Joint Conference on Artificial Intelligence, 2019.
+
+        `How to Sample Approval Elections?
+        <https://www.ijcai.org/proceedings/2022/71>`_,
+        *Stanisław Szufa, Piotr Faliszewski, Łukasz Janeczko, Martin Lackner, Arkadii Slinko,
+        Krzysztof Sornat and Nimrod Talmon*,
+        Proceedings of the International Joint Conference on Artificial Intelligence, 2022.
+
     """
 
     if isinstance(voters_radius, Iterable):
@@ -297,6 +540,135 @@ def euclidean_constant_size(
     -------
         list[set[int]]
             Approval votes.
+
+    Examples
+    --------
+
+        **Using** :py:class:`~prefsampling.core.euclidean.EuclideanSpace`
+
+        The easiest is to use one of the Euclidean spaces defined in
+        :py:class:`~prefsampling.core.euclidean.EuclideanSpace`.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_constant_size
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            # Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates
+            # with relative size of the approval ballots 0.5
+            euclidean_constant_size(
+                2,  # Number of voters
+                3,  # Number of candidates
+                0.5,  # Relative size of the approval ballots
+                5,  # Number of dimensions
+                EuclideanSpace.UNIFORM_BALL,  # For the voters
+                EuclideanSpace.UNIFORM_BALL  # For the candidates
+            )
+
+            # You can use different spaces for the voters and the candidates
+            euclidean_constant_size(
+                2,
+                3,
+                0.5,
+                5,
+                EuclideanSpace.UNIFORM_SPHERE,
+                EuclideanSpace.GAUSSIAN_CUBE,
+            )
+
+            # The relative size of the approval ballots need to be in [0, 1]
+            try:
+                euclidean_constant_size(
+                    2,
+                    3,
+                    1.5,
+                    5,
+                    EuclideanSpace.UNIFORM_SPHERE,
+                    EuclideanSpace.GAUSSIAN_CUBE,
+                )
+            except ValueError:
+                pass
+            try:
+                euclidean_constant_size(
+                    2,
+                    3,
+                    -0.5,
+                    5,
+                    EuclideanSpace.UNIFORM_SPHERE,
+                    EuclideanSpace.GAUSSIAN_CUBE,
+                )
+            except ValueError:
+                pass
+
+        **Using** :py:mod:`prefsampling.point`
+
+        If you need more flexibility, you can also pass the point samplers directly.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_constant_size
+            from prefsampling.point import ball_uniform
+
+            # Here for 2 voters and 3 candidates with 5D uniform ball for both voters and candidates
+            # with relative size of the approval ballots 2.5
+            euclidean_constant_size(2, 3, 0.5, 5, ball_uniform, ball_uniform)
+
+            # You can specify additional arguments to the point sampler
+            euclidean_constant_size(
+                2,
+                3,
+                0.5,
+                5,
+                ball_uniform,
+                ball_uniform,
+                voters_positions_args = {'widths': (1, 3, 2, 4, 2)}
+            )
+
+            # You can also specify different point samplers for voters and candidates
+            from prefsampling.point import cube
+
+            euclidean_constant_size(
+                2,
+                3,
+                0.5,
+                5,
+                ball_uniform,
+                ball_uniform,
+                voters_positions_args = {'widths': (4, 7, 3, 3, 1), 'only_envelope': True},
+                candidates_positions_args = {'center_point': (0.5, 1, 0, 0, 0)}
+            )
+
+        **Using already known-positions**
+
+        If you already have positions for the voters or the candidates, you can also pass them to
+        the sampler.
+
+        .. testcode::
+
+            from prefsampling.approval import euclidean_threshold
+            from prefsampling.point import gaussian
+            from prefsampling.core.euclidean import EuclideanSpace
+
+            # First sampler positions of the 3 candidates in 2 dimensions
+            candidates_positions = gaussian(3, 2, sigmas=(0.4, 0.8), widths=(5, 1))
+
+            # Then sample preferences for 2 voters based on the candidates positions
+            euclidean_constant_size(
+                2,
+                3,
+                0.5,
+                2,
+                EuclideanSpace.GAUSSIAN_BALL,
+                candidates_positions
+            )
+
+    References
+    ----------
+
+        `Perpetual Voting: Fairness in Long-Term Decision Making
+        <https://ojs.aaai.org/index.php/AAAI/article/view/5584>`_,
+        *Martin Lackner*,
+        Proceedings  of the AAAI Conference on Artificial Intelligence, 2020.
+
     """
 
     if rel_num_approvals < 0 or 1 < rel_num_approvals:

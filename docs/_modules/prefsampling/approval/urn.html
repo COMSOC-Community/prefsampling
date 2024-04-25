@@ -148,14 +148,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../index.html">PrefSampling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../validation/index.html">Validation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../validation/ordinal.html">Ordinal Samplers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../validation/approval.html">Approval Samplers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../validation/tree.html">Tree Samplers</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/mallows.html">Mallows’ Models</a></li>
@@ -168,7 +163,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/groupseparable.html">Group-Separable Models</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/approval/index.html">Approval</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/identity.html">Unanimous Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/approval/euclidean.html">Euclidean Models</a></li>
@@ -306,10 +301,12 @@ document.write(`
   <h1>Source code for prefsampling.approval.urn</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">prefsampling.core.urn</span> <span class="kn">import</span> <span class="n">urn_scheme</span>
-<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
 
 
 <div class="viewcode-block" id="urn">
@@ -349,6 +346,40 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        list[set]</span>
 <span class="sd">            The votes</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import urn</span>
+
+<span class="sd">            # Sample from an urn model with 2 voters and 3 candidates, alpha parameter is 0.5,</span>
+<span class="sd">            # parameter p is 0.7</span>
+<span class="sd">            urn(2, 3, 0.7, 0.5)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            urn(2, 3, 0.7, 0.5, seed=1002)</span>
+
+<span class="sd">            # Passing a negative alpha will fail</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn(2, 3, 0.7, -0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # Parameter p needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn(2, 3, 1.7, 0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn(2, 3, -0.7, 0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
@@ -404,6 +435,40 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        list[set]</span>
 <span class="sd">            The votes</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import urn_constant_size</span>
+
+<span class="sd">            # Sample from an urn model with 2 voters and 3 candidates, alpha parameter is 0.5,</span>
+<span class="sd">            # parameter rel_num_approvals is 0.7</span>
+<span class="sd">            urn_constant_size(2, 3, 0.7, 0.5)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            urn_constant_size(2, 3, 0.7, 0.5, seed=1002)</span>
+
+<span class="sd">            # Passing a negative alpha will fail</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn_constant_size(2, 3, 0.7, -0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # Parameter rel_num_approvals needs to be in [0, 1]</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn_constant_size(2, 3, 1.7, 0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn_constant_size(2, 3, -0.7, 0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">rel_num_approvals</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_num_approvals</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -430,11 +495,25 @@ document.write(`
     <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">parties</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">parties</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">party_votes</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates approval votes partylist model.</span>
+<span class="sd">    Generates approval votes partylist model. In this model, the candidates are partitioned into</span>
+<span class="sd">    parties. Voters are assigned a party using an urn model with parameter :code:`alpha` where the</span>
+<span class="sd">    balls represent the parties. A voter then approves of all the candidates belonging to their</span>
+<span class="sd">    party.</span>
+
+<span class="sd">    If the votes of the parties are not provided (argument :code:`party_votes`), they are determined</span>
+<span class="sd">    by the relative size of the parties relative size (argument :code:`parties`). The vote of the</span>
+<span class="sd">    first party (of size s1) will always be `{0, 1, ..., s1 - 1}`, the vote of the second party</span>
+<span class="sd">    (of size s2) will always be `{s1, s1 + 1, ..., s2}`, etc... In particular, it can be that some</span>
+<span class="sd">    candidates are not assigned any party and will thus never be approved (depending on the relative</span>
+<span class="sd">    size of the parties). If only the number of parties is given (when :code:`parties` is a</span>
+<span class="sd">    integer), then they are assumed to be of equal size.</span>
+
+<span class="sd">    Note that for a given number of voters, votes are not sampled independently.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -444,8 +523,12 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        alpha: float</span>
 <span class="sd">            Parameter for Urn model.</span>
-<span class="sd">        parties : int | list[float]</span>
-<span class="sd">            Fractional sizes of the parties.</span>
+<span class="sd">        parties : int | Iterable[float], defaults: :code:`None`</span>
+<span class="sd">            Fractional sizes of the parties. If an integer is given, then it is assumed that it</span>
+<span class="sd">            represents the number of parties that have equal size.  Needed if the argument</span>
+<span class="sd">            :code:`party_votes` is not provided.</span>
+<span class="sd">        party_votes : Iterable[set[int]], defaults: :code:`None`</span>
+<span class="sd">            The votes of the parties. Needed if the argument :code:`parties` is not provided.</span>
 <span class="sd">        seed : int</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -453,42 +536,105 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">        list[set[int]]</span>
 <span class="sd">            Approval votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.approval import urn_partylist</span>
+
+<span class="sd">            # Sample from an urn party-list model with 2 voters and 3 candidates,</span>
+<span class="sd">            # alpha parameter is 0.5, and there are 2 equal-sized parties</span>
+<span class="sd">            urn_partylist(2, 3, 0.5, parties=2)</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            urn_partylist(2, 3, 0.5, parties=2, seed=1002)</span>
+
+<span class="sd">            # You can use parties of different sizes (sizes are normalised)</span>
+<span class="sd">            urn_partylist(2, 5, 0.5, parties=[1, 5, 0.8])</span>
+
+<span class="sd">            # You can also just provide the votes of the parties</span>
+<span class="sd">            urn_partylist(2, 5, 0.5, party_votes=[{0, 2}, {1, 3, 4}])</span>
+
+<span class="sd">            # The votes of the parties have to be disjoint</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn_partylist(2, 5, 0.5, party_votes=[{0, 2}, {0, 3, 4}])</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # You need to pass a value to either &#39;parties&#39; or &#39;party_votes&#39;</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn_partylist(2, 3, 0.5)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">            # Passing a negative alpha will fail</span>
+<span class="sd">            try:</span>
+<span class="sd">                urn_partylist(2, 3, -0.5, parties=2)</span>
+<span class="sd">            except ValueError:</span>
+<span class="sd">                pass</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">parties</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="c1"># If not specified, parties are of equal size</span>
-        <span class="n">parties</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="n">parties</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">parties</span><span class="p">)]</span>
+    <span class="c1"># Votes of the parties</span>
+    <span class="k">if</span> <span class="n">party_votes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">parties</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If you do not provide the votes of the parties, then you need to &quot;</span>
+                <span class="s2">&quot;provide their number or their relative size.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parties</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="n">validate_int</span><span class="p">(</span><span class="n">parties</span><span class="p">,</span> <span class="s2">&quot;number of parties&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">parties</span> <span class="o">&gt;</span> <span class="n">num_candidates</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;In the urn party-list model, the number of parties cannot exceed &quot;</span>
+                    <span class="s2">&quot;the number of candidates.&quot;</span>
+                <span class="p">)</span>
+            <span class="c1"># If not specified, parties are of equal size</span>
+            <span class="n">parties</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="n">parties</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">parties</span><span class="p">)]</span>
 
-    <span class="n">num_parties</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parties</span><span class="p">)</span>
+        <span class="n">party_votes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">cum_size</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">party_id</span><span class="p">,</span> <span class="n">party_rel_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parties</span><span class="p">):</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">party_rel_size</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">)</span>
+            <span class="n">party_votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">cum_size</span><span class="p">,</span> <span class="n">cum_size</span> <span class="o">+</span> <span class="n">size</span><span class="p">)))</span>
+            <span class="n">cum_size</span> <span class="o">+=</span> <span class="n">size</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">seen_candidates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">party_votes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cand</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">cand</span> <span class="ow">in</span> <span class="n">seen_candidates</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;In the urn partylist model the votes of the parties need to be disjoint. &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Currently, candidate </span><span class="si">{</span><span class="n">cand</span><span class="si">}</span><span class="s2"> appears in at least 2 parties.&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">seen_candidates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cand</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seen_candidates</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">num_candidates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;There are more candidates appearing in the party votes than the number of &quot;</span>
+                <span class="s2">&quot;candidates provided as an argument.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">seen_candidates</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">num_candidates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The candidates need to be called 0, 1, ..., num_candidates, this is not the case &quot;</span>
+                <span class="s2">&quot;in the provided party votes.&quot;</span>
+            <span class="p">)</span>
 
-    <span class="c1"># Generate votes for parties</span>
-    <span class="n">party_votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_voters</span><span class="p">])</span>
+    <span class="n">num_parties</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">party_votes</span><span class="p">)</span>
+    <span class="c1"># Map voters to parties</span>
+    <span class="n">voters_to_party</span> <span class="o">=</span> <span class="n">urn_scheme</span><span class="p">(</span>
+        <span class="n">num_voters</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_parties</span><span class="p">),</span> <span class="n">rng</span>
+    <span class="p">)</span>
 
-    <span class="n">urn_size</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
-        <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">urn_size</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">rho</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
-            <span class="c1"># party_votes[j] = rng.randint(0, num_parties)</span>
-            <span class="n">party_votes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_parties</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">party_votes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">party_votes</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
-        <span class="n">urn_size</span> <span class="o">+=</span> <span class="n">alpha</span>
-
-    <span class="c1"># Convert parties to candidates</span>
+    <span class="c1"># Find the votes</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">cumv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">parties</span><span class="p">)</span>
-    <span class="n">cumv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">cumv</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
-        <span class="n">party_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">party_votes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">shift</span> <span class="o">=</span> <span class="n">cumv</span><span class="p">[</span><span class="n">party_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_candidates</span>
-        <span class="n">vote</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
-            <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="n">shift</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">parties</span><span class="p">[</span><span class="n">party_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_candidates</span><span class="p">))]</span>
-        <span class="p">)</span>
-
-        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
-
+    <span class="k">for</span> <span class="n">party_id</span> <span class="ow">in</span> <span class="n">voters_to_party</span><span class="p">:</span>
+        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">party_votes</span><span class="p">[</span><span class="n">party_id</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 </pre></div>

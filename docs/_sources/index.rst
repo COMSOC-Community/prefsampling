@@ -25,5 +25,5 @@ If you are using it, we kindly ask you to cite the following reference to credit
     PrefSampling <self>
     installation
     quickstart
-    validation/index
+    validation
     reference/index
