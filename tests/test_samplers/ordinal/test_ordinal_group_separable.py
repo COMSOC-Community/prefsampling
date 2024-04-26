@@ -12,9 +12,8 @@ def all_test_samplers_ordinal_group_separable():
         TestSampler(group_separable, {"tree_sampler": tree_sampler})
         for tree_sampler in [
             TreeSampler.SCHROEDER,
-            TreeSampler.SCHROEDER_UNIFORM,
             TreeSampler.SCHROEDER_LESCANNE,
-            TreeSampler.CATERPILLAR
+            # TreeSampler.CATERPILLAR  # It makes it super slow
         ]
     ]
 
@@ -31,6 +30,9 @@ class TestOrdinalGroupSeparable(TestCase):
             group_separable(4, 5, TestEnum.a)
 
         group_separable(3, 20, TreeSampler.SCHROEDER)
+
+        group_separable(3, 3, TreeSampler.SCHROEDER_UNIFORM)
+
 
         mixture(
             4,

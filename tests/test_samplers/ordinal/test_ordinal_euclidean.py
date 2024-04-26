@@ -13,7 +13,7 @@ def all_test_samplers_euclidean():
 
     def test_ball_resampling_2d(num_points, num_dimensions=2, seed=None):
         return ball_resampling(
-            num_points, 2, gaussian_one_point, {'num_dimensions': num_dimensions, 'seed': seed}, seed=seed
+            num_points, 2, gaussian_one_point, {'num_dimensions': num_dimensions, 'seed': seed}, max_numer_resampling=20, seed=seed
         )
 
     def test_cube_3d(num_points, num_dimensions=3, seed=None):

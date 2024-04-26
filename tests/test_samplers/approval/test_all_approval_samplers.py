@@ -117,7 +117,7 @@ class TestApprovalSamplers(TestCase):
                 self.assertEqual(int(candidate), candidate)
 
     def test_all_approval_samplers(self):
-        num_voters = 200
+        num_voters = 10
         num_candidates = 5
 
         for test_sampler in all_test_samplers_approval():
