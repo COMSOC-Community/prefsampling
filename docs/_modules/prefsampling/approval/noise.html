@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=90459621"></script>
+    <script src="../../../_static/documentation_options.js?v=1ea437f0"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -420,7 +420,7 @@ document.write(`
 <span class="sd">            The relative size of the central vote, if no central vote is provided, the central</span>
 <span class="sd">            vote is selected uniformly at random among all subsets of candidates of size</span>
 <span class="sd">            `⌊rel_size_central_vote * num_candidates⌋`.</span>
-<span class="sd">        distance : SetDistance, default: :py:const:`~prefsampling.approval.SetDistance.HAMMING`</span>
+<span class="sd">        distance : :py:class:`~prefsampling.approval.noise.SetDistance`, default: :py:const:`~prefsampling.approval.noise.SetDistance.HAMMING`</span>
 <span class="sd">           Distance used to compare a given vote to the central vote.</span>
 <span class="sd">        central_vote : set</span>
 <span class="sd">            The central vote. Ignored if :code:`impartial_central_vote = True`.</span>

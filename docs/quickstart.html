@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=90459621"></script>
+    <script src="_static/documentation_options.js?v=1ea437f0"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -440,14 +440,15 @@ Other parameters are specific to the samplers.</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/ordinal/euclidean.html#prefsampling.ordinal.euclidean.euclidean" title="prefsampling.ordinal.euclidean.euclidean"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean()</span></code></a></p></td>
-<td><p>—</p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidate_point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidate_point_sampler_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">num_dimensions</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions</span></code></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
 </div>
 </td>
 </tr>
@@ -485,7 +486,7 @@ Other parameters are specific to the samplers.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/ordinal/groupseparable.html#prefsampling.ordinal.groupseparable.group_separable" title="prefsampling.ordinal.groupseparable.group_separable"><code class="xref py py-func docutils literal notranslate"><span class="pre">group_separable()</span></code></a></p></td>
 <td><p>—</p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">tree_sampler</span></code> (defaults to <code class="xref py py-const docutils literal notranslate"><span class="pre">SCHROEDER</span></code>)</p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">tree_sampler</span></code> (defaults to <a class="reference internal" href="reference/ordinal/groupseparable.html#prefsampling.ordinal.groupseparable.TreeSampler.SCHROEDER" title="prefsampling.ordinal.groupseparable.TreeSampler.SCHROEDER"><code class="xref py py-const docutils literal notranslate"><span class="pre">SCHROEDER</span></code></a>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -543,12 +544,12 @@ Other parameters are specific to the samplers.</p>
 <td><p>—</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/urn.html#prefsampling.approval.urn.urn_partylist" title="prefsampling.approval.urn.urn_partylist"><code class="xref py py-func docutils literal notranslate"><span class="pre">urn_partylist()</span></code></a></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">alpha</span></code></p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">alpha</span></code></div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">parties</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">parties</span></code> (required if <code class="code docutils literal notranslate"><span class="pre">party_votes</span> <span class="pre">is</span> <span class="pre">None</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">party_votes</span></code> (required if <code class="code docutils literal notranslate"><span class="pre">parties</span> <span class="pre">is</span> <span class="pre">None</span></code>)</div>
 </div>
 </td>
-<td><p>—</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/approval/resampling.html#prefsampling.approval.resampling.resampling" title="prefsampling.approval.resampling.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a></p></td>
 <td><div class="line-block">
@@ -577,21 +578,28 @@ Other parameters are specific to the samplers.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/approval/resampling.html#prefsampling.approval.resampling.moving_resampling" title="prefsampling.approval.resampling.moving_resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">moving_resampling()</span></code></a></p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">rel_size_central_vote</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">num_legs</span></code></div>
 </div>
 </td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">num_legs</span></code> (defaults to 1)</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">central_votes</span></code> (see docs for the defaults)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">impartial_central_votes</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">False</span></code>)</div>
+</div>
+</td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_threshold" title="prefsampling.approval.euclidean.euclidean_threshold"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean_threshold()</span></code></a></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">threshold</span></code></p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidate_point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidate_point_sampler_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">threshold</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">num_dimensions</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions</span></code></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
 </div>
 </td>
 </tr>
@@ -599,37 +607,43 @@ Other parameters are specific to the samplers.</p>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_radius</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_radius</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">num_dimensions</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions</span></code></div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidate_point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidate_point_sampler_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/euclidean.html#prefsampling.approval.euclidean.euclidean_constant_size" title="prefsampling.approval.euclidean.euclidean_constant_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">euclidean_constant_size()</span></code></a></p></td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">point_sampler_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidate_point_sampler</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidate_point_sampler_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">rel_num_approvals</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">num_dimensions</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions</span></code></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/approval/noise.html#prefsampling.approval.noise.noise" title="prefsampling.approval.noise.noise"><code class="xref py py-func docutils literal notranslate"><span class="pre">noise()</span></code></a></p></td>
 <td><div class="line-block">
-<div class="line"><code class="code docutils literal notranslate"><span class="pre">p</span></code></div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">phi</span></code></div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">rel_size_central_vote</span></code></div>
 </div>
 </td>
-<td><p><code class="code docutils literal notranslate"><span class="pre">noise_type</span></code> (defaults to <code class="xref py py-const docutils literal notranslate"><span class="pre">HAMMING</span></code>)</p></td>
+<td><div class="line-block">
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">distance</span></code> (defaults to <a class="reference internal" href="reference/approval/noise.html#prefsampling.approval.noise.SetDistance.HAMMING" title="prefsampling.approval.noise.SetDistance.HAMMING"><code class="xref py py-const docutils literal notranslate"><span class="pre">HAMMING</span></code></a>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">central_votes</span></code> (see docs for the defaults)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">impartial_central_votes</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">False</span></code>)</div>
+</div>
+</td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="reference/approval/truncatedordinal.html#prefsampling.approval.truncated_ordinal.truncated_ordinal" title="prefsampling.approval.truncated_ordinal.truncated_ordinal"><code class="xref py py-func docutils literal notranslate"><span class="pre">truncated_ordinal()</span></code></a></p></td>
 <td><div class="line-block">

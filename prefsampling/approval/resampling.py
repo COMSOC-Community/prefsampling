@@ -263,9 +263,9 @@ def disjoint_resampling(
         rel_size_central_vote : float | Iterable[float]
             The relative size of the central vote. If a single value is given, it is used for all
             groups, otherwise, one value per group needs to be provided.
-        num_central_votes : int, default: 2
+        num_central_votes : int, default: :code:`None`
             The number of central votes.
-        central_votes : Collection[Collection[int]]
+        central_votes : Collection[Collection[int]], default: :code:`None`
             The central votes of the different groups. If this parameter is not used, the central
             votes are generated randomly.
         impartial_central_votes : bool, default: :code:`False`

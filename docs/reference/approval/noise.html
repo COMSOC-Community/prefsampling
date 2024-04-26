@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=90459621"></script>
+    <script src="../../_static/documentation_options.js?v=1ea437f0"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -388,7 +388,7 @@ process described above.</p>
 <li><p><strong>rel_size_central_vote</strong> (<em>float</em>) – The relative size of the central vote, if no central vote is provided, the central
 vote is selected uniformly at random among all subsets of candidates of size
 <cite>⌊rel_size_central_vote * num_candidates⌋</cite>.</p></li>
-<li><p><strong>distance</strong> (SetDistance, default: <code class="xref py py-const docutils literal notranslate"><span class="pre">HAMMING</span></code>) – Distance used to compare a given vote to the central vote.</p></li>
+<li><p><strong>distance</strong> (<a class="reference internal" href="#prefsampling.approval.noise.SetDistance" title="prefsampling.approval.noise.SetDistance"><code class="xref py py-class docutils literal notranslate"><span class="pre">SetDistance</span></code></a>, default: <a class="reference internal" href="#prefsampling.approval.noise.SetDistance.HAMMING" title="prefsampling.approval.noise.SetDistance.HAMMING"><code class="xref py py-const docutils literal notranslate"><span class="pre">HAMMING</span></code></a>) – Distance used to compare a given vote to the central vote.</p></li>
 <li><p><strong>central_vote</strong> (<em>set</em>) – The central vote. Ignored if <code class="code docutils literal notranslate"><span class="pre">impartial_central_vote</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p></li>
 <li><p><strong>impartial_central_vote</strong> (bool, default: <code class="code docutils literal notranslate"><span class="pre">False</span></code>) – If true, the central vote is sampled from <a class="reference internal" href="impartial.html#module-prefsampling.approval.impartial" title="prefsampling.approval.impartial"><code class="xref py py-func docutils literal notranslate"><span class="pre">impartial()</span></code></a>
 with the same value for the parameter <code class="code docutils literal notranslate"><span class="pre">p</span></code> as passed to this sampler.</p></li>
