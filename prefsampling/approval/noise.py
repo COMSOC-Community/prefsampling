@@ -114,7 +114,7 @@ def noise(
             The relative size of the central vote, if no central vote is provided, the central
             vote is selected uniformly at random among all subsets of candidates of size
             `⌊rel_size_central_vote * num_candidates⌋`.
-        distance : SetDistance, default: :py:const:`~prefsampling.approval.SetDistance.HAMMING`
+        distance : :py:class:`~prefsampling.approval.noise.SetDistance`, default: :py:const:`~prefsampling.approval.noise.SetDistance.HAMMING`
            Distance used to compare a given vote to the central vote.
         central_vote : set
             The central vote. Ignored if :code:`impartial_central_vote = True`.

@@ -102,7 +102,7 @@ def _sample_points(
                 "When trying to cast the provided positions to a numpy array, the above "
                 "exception occurred..."
             )
-            raise Exception(msg) from e
+            raise ValueError(msg) from e
 
         if positions.shape != (num_points, num_dimensions):
             if num_dimensions > 1 or positions.shape != (num_points,):
@@ -126,7 +126,7 @@ def _sample_points(
                 f"EuclideanSpace element. Casting the input to EuclideanSpace failed with the "
                 f"above exception."
             )
-            raise Exception(msg) from e
+            raise ValueError(msg) from e
 
         positions, new_positions_args = euclidean_space_to_sampler(
             space, num_dimensions
