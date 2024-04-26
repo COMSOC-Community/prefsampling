@@ -1,20 +1,33 @@
 from unittest import TestCase
 
+import numpy as np
+
 from prefsampling.approval.impartial import impartial, impartial_constant_size
 from tests.utils import float_parameter_test_values, TestSampler
 
 
 def all_test_samplers_approval_impartial():
-    samplers = [
-        TestSampler(impartial, {"p": random_p})
-        for random_p in float_parameter_test_values(0, 1, 2)
-    ]
-    samplers += [
-        TestSampler(
-            impartial_constant_size, {"rel_num_approvals": random_rel_num_approvals}
-        )
-        for random_rel_num_approvals in float_parameter_test_values(0, 1, 2)
-    ]
+    def impartial_several_p(num_voters, num_candidates, seed=None):
+        rng = np.random.default_rng(seed)
+        return impartial(num_voters, num_candidates, rng.random(size=num_voters), seed=seed)
+
+    samplers = [TestSampler(impartial_several_p, {}) for _ in range(3)]
+
+    for random_p in float_parameter_test_values(0, 1, 2):
+        samplers.append(TestSampler(impartial, {"p": random_p}))
+
+    def impartial_cst_size_several_p(num_voters, num_candidates, seed=None):
+        rng = np.random.default_rng(seed)
+        return impartial_constant_size(num_voters, num_candidates, rng.random(size=num_voters), seed=seed)
+
+    for random_p in float_parameter_test_values(0, 1, 2):
+        samplers.append(TestSampler(impartial, {"p": random_p}))
+
+    for random_rel_num_approvals in float_parameter_test_values(0, 1, 2):
+        samplers.append(
+            TestSampler(
+                impartial_constant_size, {"rel_num_approvals": random_rel_num_approvals}
+            ))
     return samplers
 
 

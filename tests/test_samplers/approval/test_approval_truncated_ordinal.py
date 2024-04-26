@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+import numpy as np
 
 from prefsampling.approval.truncated_ordinal import truncated_ordinal
 from prefsampling.ordinal import mallows, urn
@@ -7,7 +8,7 @@ from tests.utils import float_parameter_test_values, TestSampler
 
 
 def all_test_samplers_approval_truncated_ordinal():
-    return [
+    samplers = [
         TestSampler(
             truncated_ordinal,
             {
@@ -19,6 +20,14 @@ def all_test_samplers_approval_truncated_ordinal():
         for random_rel_num_approvals in float_parameter_test_values(0, 1, 2)
         for random_alpha in float_parameter_test_values(0, 10, 2)
     ]
+
+    def truncated_ordinal_several_p(num_voters, num_candidates, seed=None):
+        rng = np.random.default_rng(seed)
+        return truncated_ordinal(num_voters, num_candidates, rng.random(size=num_voters),
+                                 ordinal_sampler=urn, ordinal_sampler_parameters={"alpha": 6}, seed=seed)
+
+    samplers += [TestSampler(truncated_ordinal_several_p, {}) for _ in range(3)]
+    return samplers
 
 
 class TestApprovalTruncatedOrdinal(TestCase):

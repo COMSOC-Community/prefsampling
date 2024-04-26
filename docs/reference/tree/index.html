@@ -386,7 +386,8 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.tree.caterpillar_tree">
 <span class="sig-name descname"><span class="pre">caterpillar_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Node</span></span></span><a class="reference internal" href="../../_modules/prefsampling/tree/caterpillar.html#caterpillar_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.tree.caterpillar_tree" title="Link to this definition">#</a></dt>
-<dd><p>Generates a caterpillar tree.</p>
+<dd><p>Generates a caterpillar tree. In the special case of <code class="code docutils literal notranslate"><span class="pre">num_leaves</span> <span class="pre">==</span> <span class="pre">1</span></code> then we output a
+single node even if it is strictly speaking not a caterpillar tree.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The root of the tree</p>

@@ -5,7 +5,7 @@ generated.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Sequence, Iterable
 
 import numpy as np
 
@@ -14,7 +14,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 @validate_num_voters_candidates
 def impartial(
-    num_voters: int, num_candidates: int, p: float | Sequence[float], seed: int = None
+    num_voters: int, num_candidates: int, p: float | Iterable[float], seed: int = None
 ) -> list[set]:
     """
     Generates approval votes from impartial culture.
@@ -35,7 +35,7 @@ def impartial(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        p : float | Sequence[float]
+        p : float | Iterable[float]
             Probability of approving of any given candidates. If a sequence is passed, there is one
             such probability per voter.
         seed : int
@@ -145,7 +145,7 @@ def impartial(
         Proceedings of the AAAI Conference on Artificial Intelligence, 2020.
     """
     unique_p = True
-    if isinstance(p, Sequence):
+    if isinstance(p, Iterable):
         unique_p = False
         if len(p) != num_voters:
             raise ValueError(
@@ -179,7 +179,7 @@ def impartial(
 def impartial_constant_size(
     num_voters: int,
     num_candidates: int,
-    rel_num_approvals: float | Sequence[float],
+    rel_num_approvals: float | Iterable[float],
     seed: int = None,
 ) -> list[set]:
     """
@@ -200,7 +200,7 @@ def impartial_constant_size(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        rel_num_approvals : float | Sequence[float]
+        rel_num_approvals : float | Iterable[float]
             Proportion of approved candidates in a ballot. If a sequence is passed, there is one
             such proportion per voter.
         seed : int
@@ -303,7 +303,7 @@ def impartial_constant_size(
     """
 
     unique_rel_num_approvals = True
-    if isinstance(rel_num_approvals, Sequence):
+    if isinstance(rel_num_approvals, Iterable):
         unique_rel_num_approvals = False
         if len(rel_num_approvals) != num_voters:
             raise ValueError(

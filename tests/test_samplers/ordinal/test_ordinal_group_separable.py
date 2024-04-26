@@ -13,7 +13,6 @@ def all_test_samplers_ordinal_group_separable():
         for tree_sampler in [
             TreeSampler.SCHROEDER,
             TreeSampler.SCHROEDER_LESCANNE,
-            # TreeSampler.CATERPILLAR  # It makes it super slow
         ]
     ]
 

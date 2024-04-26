@@ -38,15 +38,15 @@ class TreeSampler(Enum):
     Random Schröder trees sampled following Lescanne (2022)
     """
 
-    CATERPILLAR = "Caterpillar Tree"
-    """
-    Caterpillar trees
-    """
-
-    BALANCED = "Balanced Tree"
-    """
-    Balanced trees
-    """
+    # CATERPILLAR = "Caterpillar Tree"
+    # """
+    # Caterpillar trees
+    # """
+    #
+    # BALANCED = "Balanced Tree"
+    # """
+    # Balanced trees
+    # """
 
 
 @validate_num_voters_candidates
@@ -163,10 +163,10 @@ def group_separable(
             )
         else:
             raise ValueError("There is something weird with the tree_sampler value...")
-    elif tree_sampler == TreeSampler.CATERPILLAR:
-        tree_root = caterpillar_tree(num_candidates)
-    elif tree_sampler == TreeSampler.BALANCED:
-        tree_root = balanced_tree(num_candidates)
+    # elif tree_sampler == TreeSampler.CATERPILLAR:
+    #     tree_root = caterpillar_tree(num_candidates)
+    # elif tree_sampler == TreeSampler.BALANCED:
+    #     tree_root = balanced_tree(num_candidates)
     else:
         raise ValueError(
             "The `tree` argument needs to be one of the constant defined in the "

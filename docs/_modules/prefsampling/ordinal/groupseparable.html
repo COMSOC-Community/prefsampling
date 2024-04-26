@@ -339,18 +339,18 @@ document.write(`
     <span class="n">SCHROEDER_LESCANNE</span> <span class="o">=</span> <span class="s2">&quot;Scröder Tree by Lescanne&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Random Schröder trees sampled following Lescanne (2022)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">CATERPILLAR</span> <span class="o">=</span> <span class="s2">&quot;Caterpillar Tree&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Caterpillar trees</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">BALANCED</span> <span class="o">=</span> <span class="s2">&quot;Balanced Tree&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Balanced trees</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
+
+    <span class="c1"># CATERPILLAR = &quot;Caterpillar Tree&quot;</span>
+    <span class="c1"># &quot;&quot;&quot;</span>
+    <span class="c1"># Caterpillar trees</span>
+    <span class="c1"># &quot;&quot;&quot;</span>
+    <span class="c1">#</span>
+    <span class="c1"># BALANCED = &quot;Balanced Tree&quot;</span>
+    <span class="c1"># &quot;&quot;&quot;</span>
+    <span class="c1"># Balanced trees</span>
+    <span class="c1"># &quot;&quot;&quot;</span>
 
 
 <div class="viewcode-block" id="group_separable">
@@ -469,10 +469,10 @@ document.write(`
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;There is something weird with the tree_sampler value...&quot;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">tree_sampler</span> <span class="o">==</span> <span class="n">TreeSampler</span><span class="o">.</span><span class="n">CATERPILLAR</span><span class="p">:</span>
-        <span class="n">tree_root</span> <span class="o">=</span> <span class="n">caterpillar_tree</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">tree_sampler</span> <span class="o">==</span> <span class="n">TreeSampler</span><span class="o">.</span><span class="n">BALANCED</span><span class="p">:</span>
-        <span class="n">tree_root</span> <span class="o">=</span> <span class="n">balanced_tree</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="c1"># elif tree_sampler == TreeSampler.CATERPILLAR:</span>
+    <span class="c1">#     tree_root = caterpillar_tree(num_candidates)</span>
+    <span class="c1"># elif tree_sampler == TreeSampler.BALANCED:</span>
+    <span class="c1">#     tree_root = balanced_tree(num_candidates)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;The `tree` argument needs to be one of the constant defined in the &quot;</span>

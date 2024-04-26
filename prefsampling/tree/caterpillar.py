@@ -6,7 +6,8 @@ from prefsampling.tree.node import Node
 
 def caterpillar_tree(num_leaves: int, seed: int = None) -> Node:
     """
-    Generates a caterpillar tree.
+    Generates a caterpillar tree. In the special case of :code:`num_leaves == 1` then we output a
+    single node even if it is strictly speaking not a caterpillar tree.
 
     Returns
     -------
@@ -15,9 +16,12 @@ def caterpillar_tree(num_leaves: int, seed: int = None) -> Node:
     """
     validate_int(num_leaves, "number of leaves", lower_bound=1)
     num_leaves = int(num_leaves)
-    root = Node("root")
+    root = Node(0)
+    if num_leaves == 1:
+        return root
+
     tmp_root = root
-    ctr = 0
+    ctr = 1
 
     while num_leaves > 2:
         leaf = Node(ctr)
