@@ -249,7 +249,6 @@ def euclidean(
         *Enelow, James M., and Melvin J. Hinich*,
         Cambridge University Press, 1984.
     """
-
     voters_pos, candidates_pos = sample_election_positions(
         num_voters,
         num_candidates,
@@ -258,7 +257,7 @@ def euclidean(
         candidates_positions,
         voters_positions_args,
         candidates_positions_args,
-        seed,
+        seed=seed,
     )
 
     dimension = len(voters_pos[0])

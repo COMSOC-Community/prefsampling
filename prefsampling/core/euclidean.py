@@ -47,18 +47,18 @@ class EuclideanSpace(Enum):
 
 
 def euclidean_space_to_sampler(
-    space: EuclideanSpace, num_dimensions: int
+    space: EuclideanSpace, num_dimensions: int, seed: int = None
 ) -> (Callable, dict):
     """
     Returns the point sampler together with its arguments corresponding to the EuclideanSpace
     passed as argument.
     """
     if space == EuclideanSpace.UNIFORM_BALL:
-        return ball_uniform, {"num_dimensions": num_dimensions}
+        return ball_uniform, {"num_dimensions": num_dimensions, "seed": seed}
     if space == EuclideanSpace.UNIFORM_SPHERE:
-        return ball_uniform, {"num_dimensions": num_dimensions, "only_envelope": True}
+        return ball_uniform, {"num_dimensions": num_dimensions, "only_envelope": True, "seed": seed}
     if space == EuclideanSpace.UNIFORM_CUBE:
-        return cube, {"num_dimensions": num_dimensions}
+        return cube, {"num_dimensions": num_dimensions, "seed": seed}
     if space == EuclideanSpace.GAUSSIAN_BALL:
         return ball_resampling, {
             "num_dimensions": num_dimensions,
@@ -67,20 +67,22 @@ def euclidean_space_to_sampler(
                 "num_dimensions": num_dimensions,
                 "num_points": 1,
                 "sigmas": [0.33] * num_dimensions,
+                "seed": seed
             },
+            "seed": seed
         }
     if space == EuclideanSpace.GAUSSIAN_CUBE:
         return gaussian, {
             "num_dimensions": num_dimensions,
             "widths": np.array([1 for _ in range(num_dimensions)]),
+            "seed": seed
         }
     if space == EuclideanSpace.UNBOUNDED_GAUSSIAN:
-        return gaussian, {"num_dimensions": num_dimensions}
+        return gaussian, {"num_dimensions": num_dimensions, "seed": seed}
     raise ValueError(
         "The 'euclidean_space' and/or the 'candidate_euclidean_space' arguments need to be one of "
         "the constant defined in the core.euclidean.EuclideanSpace enumeration. Choices are: "
-        + ", ".join(str(s) for s in EuclideanSpace)
-        + "."
+        + ", ".join(str(s) for s in EuclideanSpace) + "."
     )
 
 
@@ -90,6 +92,7 @@ def _sample_points(
     positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
     positions_args: dict,
     sampled_object_name: str,
+    seed=None
 ) -> np.ndarray:
     """
     Samples the points (if necessary) based on the input of the Euclidean function.
@@ -129,10 +132,11 @@ def _sample_points(
             raise ValueError(msg) from e
 
         positions, new_positions_args = euclidean_space_to_sampler(
-            space, num_dimensions
+            space, num_dimensions, seed=seed
         )
         new_positions_args.update(positions_args)
         positions_args = new_positions_args
+    positions_args["seed"] = seed
     positions_args["num_points"] = num_points
     positions = np.array(positions(**positions_args))
 
@@ -206,15 +210,12 @@ def sample_election_positions(
         voters_positions_args = dict()
     if candidates_positions_args is None:
         candidates_positions_args = dict()
-    if seed is not None:
-        voters_positions_args["seed"] = seed
-        candidates_positions_args["seed"] = seed
 
     voters_positions_args["num_dimensions"] = num_dimensions
     candidates_positions_args["num_dimensions"] = num_dimensions
 
     voters_pos = _sample_points(
-        num_voters, num_dimensions, voters_positions, voters_positions_args, "voters"
+        num_voters, num_dimensions, voters_positions, voters_positions_args, "voters", seed=seed
     )
     cand_pos = _sample_points(
         num_candidates,
@@ -222,5 +223,6 @@ def sample_election_positions(
         candidates_positions,
         candidates_positions_args,
         "candidates",
+        seed=seed
     )
     return voters_pos, cand_pos

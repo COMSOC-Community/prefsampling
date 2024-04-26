@@ -8,9 +8,12 @@ def all_test_samplers_euclidean():
     def test_ball_uniform_1d(num_points, num_dimensions=1, seed=None):
         return ball_uniform(num_points, 1, seed=seed)
 
+    def gaussian_one_point(num_dimensions, seed=None):
+        return gaussian(1, num_dimensions, seed=seed)[0]
+
     def test_ball_resampling_2d(num_points, num_dimensions=2, seed=None):
         return ball_resampling(
-            num_points, 2, lambda seed=None: gaussian(1, 2, seed=seed)[0], {}, seed=seed
+            num_points, 2, gaussian_one_point, {'num_dimensions': num_dimensions, 'seed': seed}, seed=seed
         )
 
     def test_cube_3d(num_points, num_dimensions=3, seed=None):
@@ -42,12 +45,12 @@ def all_test_samplers_euclidean():
         )
 
     samplers = []
-    for point_sampler, num_dimensions in all_point_samplers:
+    for point_sampler, num_dim in all_point_samplers:
         samplers.append(
             TestSampler(
                 euclidean,
                 {
-                    "num_dimensions": num_dimensions,
+                    "num_dimensions": num_dim,
                     "voters_positions": point_sampler,
                     "voters_positions_args": {},
                     "candidates_positions": point_sampler,
@@ -58,7 +61,7 @@ def all_test_samplers_euclidean():
         samplers.append(
             TestSampler(
                 euclidean_positions,
-                {"pos_sampler": point_sampler, "num_dimensions": num_dimensions},
+                {"pos_sampler": point_sampler, "num_dimensions": num_dim},
             )
         )
     for space in EuclideanSpace:

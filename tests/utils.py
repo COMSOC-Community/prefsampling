@@ -1,3 +1,5 @@
+from collections.abc import Iterable, Sequence
+
 import numpy as np
 
 from prefsampling.core import (
@@ -40,6 +42,15 @@ class TestSampler:
                 "The 'sample_method' parameter needs to be one of: 'positional', "
                 "'kwargs' or 'seed'."
             )
+
+    def sample_frozen(self, num_voters, num_candidates, seed=None):
+        o = self.test_sample_positional(num_voters, num_candidates, seed)
+        # Ordinal ballots
+        if isinstance(o, np.ndarray) and isinstance(o[0], Iterable):
+            return tuple(sorted(tuple(b) for b in o))
+        # Approval ballots
+        if isinstance(o, list) and isinstance(o[0], set):
+            return tuple(sorted(tuple(sorted(b)) for b in o))
 
     def __str__(self):
         return self.name
@@ -96,7 +107,8 @@ def sample_mixture(
             test_sampler_3.test_sample_positional,
         ],
         [0.5, 0.2, 0.3],
-        [{}, {}, {}],
+        [{"seed": seed}, {"seed": seed}, {"seed": seed}],
+        seed=seed
     )
 
 

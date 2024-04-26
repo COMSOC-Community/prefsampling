@@ -300,7 +300,7 @@ def stratification(
 
 
 def stratification_theoretical_distribution(
-    num_candidates: int, weight: float, rankings
+    num_candidates: int, weight: float, rankings: Iterable[tuple[int]] = None
 ) -> dict:
     validate_int(num_candidates, lower_bound=0)
     if rankings is None:

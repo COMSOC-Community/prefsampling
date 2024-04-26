@@ -353,18 +353,18 @@ document.write(`
 <div class="viewcode-block" id="euclidean_space_to_sampler">
 <a class="viewcode-back" href="../../../reference/core/index.html#prefsampling.approval.euclidean.euclidean_space_to_sampler">[docs]</a>
 <span class="k">def</span> <span class="nf">euclidean_space_to_sampler</span><span class="p">(</span>
-    <span class="n">space</span><span class="p">:</span> <span class="n">EuclideanSpace</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">space</span><span class="p">:</span> <span class="n">EuclideanSpace</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Callable</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the point sampler together with its arguments corresponding to the EuclideanSpace</span>
 <span class="sd">    passed as argument.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_BALL</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_SPHERE</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;only_envelope&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">ball_uniform</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;only_envelope&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNIFORM_CUBE</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">cube</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">cube</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_BALL</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">ball_resampling</span><span class="p">,</span> <span class="p">{</span>
             <span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span>
@@ -373,20 +373,22 @@ document.write(`
                 <span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span>
                 <span class="s2">&quot;num_points&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
                 <span class="s2">&quot;sigmas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.33</span><span class="p">]</span> <span class="o">*</span> <span class="n">num_dimensions</span><span class="p">,</span>
+                <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span>
             <span class="p">},</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span>
         <span class="p">}</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">GAUSSIAN_CUBE</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">gaussian</span><span class="p">,</span> <span class="p">{</span>
             <span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span>
             <span class="s2">&quot;widths&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">)]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span>
         <span class="p">}</span>
     <span class="k">if</span> <span class="n">space</span> <span class="o">==</span> <span class="n">EuclideanSpace</span><span class="o">.</span><span class="n">UNBOUNDED_GAUSSIAN</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">gaussian</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">gaussian</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">:</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">}</span>
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
         <span class="s2">&quot;The &#39;euclidean_space&#39; and/or the &#39;candidate_euclidean_space&#39; arguments need to be one of &quot;</span>
         <span class="s2">&quot;the constant defined in the core.euclidean.EuclideanSpace enumeration. Choices are: &quot;</span>
-        <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">EuclideanSpace</span><span class="p">)</span>
-        <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">EuclideanSpace</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
     <span class="p">)</span></div>
 
 
@@ -397,6 +399,7 @@ document.write(`
     <span class="n">positions</span><span class="p">:</span> <span class="n">EuclideanSpace</span> <span class="o">|</span> <span class="n">Callable</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
     <span class="n">positions_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">sampled_object_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">seed</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Samples the points (if necessary) based on the input of the Euclidean function.</span>
@@ -436,10 +439,11 @@ document.write(`
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
         <span class="n">positions</span><span class="p">,</span> <span class="n">new_positions_args</span> <span class="o">=</span> <span class="n">euclidean_space_to_sampler</span><span class="p">(</span>
-            <span class="n">space</span><span class="p">,</span> <span class="n">num_dimensions</span>
+            <span class="n">space</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
         <span class="p">)</span>
         <span class="n">new_positions_args</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">positions_args</span><span class="p">)</span>
         <span class="n">positions_args</span> <span class="o">=</span> <span class="n">new_positions_args</span>
+    <span class="n">positions_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
     <span class="n">positions_args</span><span class="p">[</span><span class="s2">&quot;num_points&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_points</span>
     <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">(</span><span class="o">**</span><span class="n">positions_args</span><span class="p">))</span>
 
@@ -515,15 +519,12 @@ document.write(`
         <span class="n">voters_positions_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">candidates_positions_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">candidates_positions_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">voters_positions_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
-        <span class="n">candidates_positions_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
 
     <span class="n">voters_positions_args</span><span class="p">[</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_dimensions</span>
     <span class="n">candidates_positions_args</span><span class="p">[</span><span class="s2">&quot;num_dimensions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">num_dimensions</span>
 
     <span class="n">voters_pos</span> <span class="o">=</span> <span class="n">_sample_points</span><span class="p">(</span>
-        <span class="n">num_voters</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="n">voters_positions</span><span class="p">,</span> <span class="n">voters_positions_args</span><span class="p">,</span> <span class="s2">&quot;voters&quot;</span>
+        <span class="n">num_voters</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">,</span> <span class="n">voters_positions</span><span class="p">,</span> <span class="n">voters_positions_args</span><span class="p">,</span> <span class="s2">&quot;voters&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
     <span class="p">)</span>
     <span class="n">cand_pos</span> <span class="o">=</span> <span class="n">_sample_points</span><span class="p">(</span>
         <span class="n">num_candidates</span><span class="p">,</span>
@@ -531,6 +532,7 @@ document.write(`
         <span class="n">candidates_positions</span><span class="p">,</span>
         <span class="n">candidates_positions_args</span><span class="p">,</span>
         <span class="s2">&quot;candidates&quot;</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">voters_pos</span><span class="p">,</span> <span class="n">cand_pos</span></div>
 

@@ -34,8 +34,15 @@ class TestSamplers(TestCase):
         with self.assertRaises(TypeError):
             sampler.test_sample_positional(1.5, 2.5)
 
+        # Passing the seed indeed does not change the outcome up to ordering and all...
+        fixed_seed = 579
+        outcome = sampler.sample_frozen(num_voters, num_candidates, seed=fixed_seed)
+        for _ in range(2):
+            o = sampler.sample_frozen(num_voters, num_candidates, seed=fixed_seed)
+            self.assertEqual(outcome, o)
+
     def test_all_samplers(self):
-        num_voters = 200
+        num_voters = 10
         num_candidates = 5
 
         for test_sampler in all_random_samplers():

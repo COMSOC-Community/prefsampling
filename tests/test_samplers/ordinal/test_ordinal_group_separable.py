@@ -14,6 +14,7 @@ def all_test_samplers_ordinal_group_separable():
             TreeSampler.SCHROEDER,
             TreeSampler.SCHROEDER_UNIFORM,
             TreeSampler.SCHROEDER_LESCANNE,
+            TreeSampler.CATERPILLAR
         ]
     ]
 
@@ -21,7 +22,7 @@ def all_test_samplers_ordinal_group_separable():
 class TestOrdinalGroupSeparable(TestCase):
     def test_ordinal_group_separable(self):
         with self.assertRaises(ValueError):
-            group_separable(4, 5, "caterpillar")
+            group_separable(4, 5, "cat")
         with self.assertRaises(ValueError):
 
             class TestEnum(Enum):

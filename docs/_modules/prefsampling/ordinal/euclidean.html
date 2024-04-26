@@ -552,7 +552,6 @@ document.write(`
 <span class="sd">        *Enelow, James M., and Melvin J. Hinich*,</span>
 <span class="sd">        Cambridge University Press, 1984.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="n">voters_pos</span><span class="p">,</span> <span class="n">candidates_pos</span> <span class="o">=</span> <span class="n">sample_election_positions</span><span class="p">(</span>
         <span class="n">num_voters</span><span class="p">,</span>
         <span class="n">num_candidates</span><span class="p">,</span>
@@ -561,7 +560,7 @@ document.write(`
         <span class="n">candidates_positions</span><span class="p">,</span>
         <span class="n">voters_positions_args</span><span class="p">,</span>
         <span class="n">candidates_positions_args</span><span class="p">,</span>
-        <span class="n">seed</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">dimension</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">voters_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>

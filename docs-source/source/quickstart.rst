@@ -280,7 +280,8 @@ Constants
 ---------
 
 The constants used in the package are defined with respect to their corresponding samplers, see for
-instance :py:class:`~prefsampling.core.euclidean.EuclideanSpace` or :py:class:`~prefsampling.approval.NoiseType`.
+instance :py:class:`~prefsampling.core.euclidean.EuclideanSpace` or
+:py:class:`~prefsampling.approval.noise.SetDistance`.
 They are also all gathered in the :code:`prefsampling.CONSTANTS` enumeration.
 
 .. code-block:: python

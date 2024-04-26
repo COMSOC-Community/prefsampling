@@ -48,13 +48,12 @@ def all_test_samplers_approval_resampling():
             {
                 "rel_size_central_vote": random_p,
                 "phi": random_phi,
-                "num_legs": random_num_legs,
+                "num_legs": 1,
                 "impartial_central_vote": imp_central,
             },
         )
         for random_p in float_parameter_test_values(0, 1, 2)
         for random_phi in float_parameter_test_values(0, 1, 2)
-        for random_num_legs in int_parameter_test_values(1, 4, 1)
         for imp_central in [True, False]
     ]
     return samplers

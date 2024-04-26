@@ -301,6 +301,7 @@ document.write(`
   <h1>Source code for prefsampling.point.ball</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -430,6 +431,7 @@ document.write(`
     <span class="n">inner_sampler_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">center_point</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">max_numer_resampling</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -455,6 +457,8 @@ document.write(`
 <span class="sd">        width: float, default: :code:`1`</span>
 <span class="sd">            The width of the ball. Can only be a single value (as opposed to</span>
 <span class="sd">            :py:func:`~prefsampling.point.ball.ball_uniform`).</span>
+<span class="sd">        max_numer_resampling : int, default: :code:`1000`</span>
+<span class="sd">            The maximum number of resampling. If exceeded, the center point is used.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator (not used in this function).</span>
 
@@ -486,8 +490,18 @@ document.write(`
                 <span class="sa">f</span><span class="s2">&quot;The inner sampler did not return a point with the suitable number &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;of dimensions (</span><span class="si">{</span><span class="n">num_dimensions</span><span class="si">}</span><span class="s2"> needed but </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">point</span><span class="p">)</span><span class="si">}</span><span class="s2"> returned).&quot;</span>
             <span class="p">)</span>
+        <span class="n">num_resampling</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">point</span> <span class="o">-</span> <span class="n">center_point</span><span class="p">)</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">):</span>
             <span class="n">point</span> <span class="o">=</span> <span class="n">inner_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">inner_sampler_args</span><span class="p">)</span>
+            <span class="n">num_resampling</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">num_resampling</span> <span class="o">==</span> <span class="n">max_numer_resampling</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s2">&quot;Too many resampling attempt for the resampling_ball. We used the center point &quot;</span>
+                    <span class="s2">&quot;instead.&quot;</span><span class="p">,</span>
+                    <span class="ne">RuntimeWarning</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">center_point</span>
+                <span class="k">break</span>
         <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
 

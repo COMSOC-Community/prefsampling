@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import warnings
 from collections.abc import Iterable, Callable
 
 import numpy as np
@@ -121,6 +122,7 @@ def ball_resampling(
     inner_sampler_args: dict,
     center_point: Iterable[float] = None,
     width: float = 1,
+    max_numer_resampling: int = 1000,
     seed: int = None,
 ) -> np.ndarray:
     """
@@ -146,6 +148,8 @@ def ball_resampling(
         width: float, default: :code:`1`
             The width of the ball. Can only be a single value (as opposed to
             :py:func:`~prefsampling.point.ball.ball_uniform`).
+        max_numer_resampling : int, default: :code:`1000`
+            The maximum number of resampling. If exceeded, the center point is used.
         seed : int, default: :code:`None`
             Seed for numpy random number generator (not used in this function).
 
@@ -177,7 +181,17 @@ def ball_resampling(
                 f"The inner sampler did not return a point with the suitable number "
                 f"of dimensions ({num_dimensions} needed but {len(point)} returned)."
             )
+        num_resampling = 0
         while np.linalg.norm(point - center_point) > (width / 2):
             point = inner_sampler(**inner_sampler_args)
+            num_resampling += 1
+            if num_resampling == max_numer_resampling:
+                warnings.warn(
+                    "Too many resampling attempt for the resampling_ball. We used the center point "
+                    "instead.",
+                    RuntimeWarning,
+                )
+                point = center_point
+                break
         points.append(point)
     return np.array(points, dtype=float)
