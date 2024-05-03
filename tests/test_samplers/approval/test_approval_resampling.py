@@ -44,7 +44,12 @@ def all_test_samplers_approval_resampling():
     ]
 
     def disjoint_resampling_central_votes(num_voters, num_candidates, seed=None):
-        central_votes = (tuple(range(num_candidates)), tuple(range(num_candidates)))
+        central_votes = [set(), set()]
+        for k in range(num_candidates):
+            if k % 2 == 0:
+                central_votes[0].add(k)
+            else:
+                central_votes[1].add(k)
         return disjoint_resampling(num_voters, num_candidates, 0.5, 0.7, central_votes=central_votes, seed=seed)
 
     samplers.append(TestSampler(disjoint_resampling_central_votes, {}))
