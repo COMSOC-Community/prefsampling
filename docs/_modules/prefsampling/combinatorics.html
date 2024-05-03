@@ -312,39 +312,7 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-
-<div class="viewcode-block" id="random_partition">
-<a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.random_partition">[docs]</a>
-<span class="k">def</span> <span class="nf">random_partition</span><span class="p">(</span>
-    <span class="n">s</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">num_parts</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">non_empty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Draws a partition uniformly at random.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">        s : Iterable</span>
-<span class="sd">            The collection of elements.</span>
-<span class="sd">        num_parts : int</span>
-<span class="sd">            The size of the partition.</span>
-<span class="sd">        non_empty : bool, defaults :code:`True`</span>
-<span class="sd">            If true, all parts need to be non-empty.</span>
-<span class="sd">        seed : int, defaults :code:`None`</span>
-<span class="sd">            Seed for numpy random number generator.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">partition</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_parts</span><span class="p">)]</span>
-    <span class="n">elements_to_place</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">non_empty</span><span class="p">:</span>
-        <span class="c1"># We first put one alternative per central vote, ensuring non-emptiness</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">elements_to_place</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_parts</span><span class="p">)):</span>
-            <span class="n">partition</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
-            <span class="n">elements_to_place</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
-    <span class="c1"># For the leftover candidates, we select uniformly at random a central vote in which to place them.</span>
-    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">elements_to_place</span><span class="p">:</span>
-        <span class="n">partition</span><span class="p">[</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">num_parts</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">partition</span></div>
-
+<span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_int</span>
 
 
 <div class="viewcode-block" id="comb">
@@ -396,9 +364,11 @@ document.write(`
 
 <div class="viewcode-block" id="generalised_ascending_factorial">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.generalised_ascending_factorial">[docs]</a>
-<span class="k">def</span> <span class="nf">generalised_ascending_factorial</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">increment</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">generalised_ascending_factorial</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">increment</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Computes the ascending factorial. The ascending factorial is equal to: value (value + increment) ... (value + (length - 1) * increment).</span>
+<span class="sd">    Computes the ascending factorial. The ascending factorial is equal to:</span>
+<span class="sd">    :math:`\\text{value} \\times (\\text{value} + \\text{increment}) \\times \\ldots \\times</span>
+<span class="sd">    (\\text{value} + (\\text{length} - 1) \\times \\text{increment})`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -411,8 +381,12 @@ document.write(`
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The value of the (generalised) ascending factorial.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">increment</span><span class="p">)</span> <span class="o">*</span> <span class="n">generalised_ascending_factorial</span><span class="p">(</span>
@@ -423,7 +397,7 @@ document.write(`
 
 <div class="viewcode-block" id="powerset">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.powerset">[docs]</a>
-<span class="k">def</span> <span class="nf">powerset</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">min_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">powerset</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">min_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the powerset of the iterable.</span>
 
@@ -438,7 +412,7 @@ document.write(`
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        Iterable</span>
+<span class="sd">        tuple[tuple]</span>
 <span class="sd">            The powerset of the input iterable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
@@ -455,7 +429,7 @@ document.write(`
 
 <div class="viewcode-block" id="proper_powerset">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.proper_powerset">[docs]</a>
-<span class="k">def</span> <span class="nf">proper_powerset</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">min_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">proper_powerset</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">min_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the set of all proper subsets of the iterable.</span>
 
@@ -468,7 +442,7 @@ document.write(`
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        Iterable</span>
+<span class="sd">        tuple[tuple]</span>
 <span class="sd">            The set of all subsets of the input iterable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
@@ -505,7 +479,7 @@ document.write(`
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a list of all the anonymous profiles for a given number of voters and candidates. An</span>
-<span class="sd">    anonymous profile is a sorted tuple of  rankings, each ranking being represented by a tuple of</span>
+<span class="sd">    anonymous profile is a sorted tuple of rankings, each ranking being represented by a tuple of</span>
 <span class="sd">    int. It is anonymous in the sense that the position of the voters does not matter. We implement</span>
 <span class="sd">    this by sorting the rankings in the profile in lexicographic order.</span>
 
@@ -682,7 +656,7 @@ document.write(`
 <span class="sd">            True if the profile is single-crossing and false otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">cand1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-        <span class="k">for</span> <span class="n">cand2</span> <span class="ow">in</span> <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]:</span>
+        <span class="k">for</span> <span class="n">cand2</span> <span class="ow">in</span> <span class="n">profile</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
             <span class="n">cand1_over_cand2</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">profile</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">vote</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cand1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">vote</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cand2</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">cand1_over_cand2</span><span class="p">:</span>
@@ -976,7 +950,7 @@ document.write(`
 
 <div class="viewcode-block" id="kendall_tau_distance">
 <a class="viewcode-back" href="../../reference/combinatorics.html#prefsampling.combinatorics.kendall_tau_distance">[docs]</a>
-<span class="k">def</span> <span class="nf">kendall_tau_distance</span><span class="p">(</span><span class="n">ranking_1</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">ranking_2</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">kendall_tau_distance</span><span class="p">(</span><span class="n">ranking_1</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">ranking_2</span><span class="p">:</span> <span class="n">Sequence</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the Kendall-Tau distance between two rankings.</span>
 
@@ -984,7 +958,7 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">        ranking_1: Iterable</span>
 <span class="sd">            The first ranking</span>
-<span class="sd">        ranking_2: Sequence</span>
+<span class="sd">        ranking_2: Sequence | np.ndarray</span>
 <span class="sd">            The second ranking</span>
 
 <span class="sd">    Returns</span>
@@ -994,7 +968,7 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">alt1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ranking_1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">alt2</span> <span class="ow">in</span> <span class="n">ranking_1</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]:</span>
+        <span class="k">for</span> <span class="n">alt2</span> <span class="ow">in</span> <span class="n">ranking_1</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
             <span class="k">if</span> <span class="n">ranking_2</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">alt2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ranking_2</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">alt1</span><span class="p">):</span>
                 <span class="n">distance</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">distance</span></div>

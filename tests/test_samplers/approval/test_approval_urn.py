@@ -33,7 +33,10 @@ def all_test_samplers_approval_urn():
                 party_votes[0].add(k)
             else:
                 party_votes[1].add(k)
-        return urn_partylist(num_voters, num_candidates, 0.5, party_votes=party_votes, seed=seed)
+        return urn_partylist(
+            num_voters, num_candidates, 0.5, party_votes=party_votes, seed=seed
+        )
+
     samplers.append(TestSampler(urn_partylist_party_votes, {}))
 
     return samplers
@@ -67,4 +70,3 @@ class TestApprovalUrn(TestCase):
             urn_partylist(4, 5, alpha=5, party_votes=[{0, 3, 4, 5}, {2}])
         with self.assertRaises(ValueError):
             urn_partylist(4, 5, alpha=5, party_votes=[{0, 1, 2}, {2, 3, 4}])
-

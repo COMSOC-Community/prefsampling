@@ -6,14 +6,11 @@ from itertools import chain
 
 import numpy as np
 
-from prefsampling.tree.node import Node
 from prefsampling.tree.schroeder import (
     schroeder_tree,
     schroeder_tree_brute_force,
     schroeder_tree_lescanne,
 )
-from prefsampling.tree.caterpillar import caterpillar_tree
-from prefsampling.tree.balanced import balanced_tree
 from prefsampling.inputvalidators import validate_num_voters_candidates
 from prefsampling.combinatorics import comb
 
@@ -55,7 +52,6 @@ def group_separable(
     num_voters: int,
     num_candidates: int,
     tree_sampler: TreeSampler = TreeSampler.SCHROEDER,
-    tree_root: Node = None,
     seed: int = None,
 ):
     """
@@ -87,9 +83,6 @@ def group_separable(
             Number of Candidates.
         tree_sampler : TreeSampler, default: :py:class:`~prefsampling.ordinal.groupseparable.TreeSampler.SCHROEDER`
             Sampler used to sample the tree. Should be one of the constants defined in the
-            :py:class:`~prefsampling.ordinal.groupseparable.TreeSampler` enumeration.
-        tree_root : Node, default: :code:`None`
-            The root of a tree. If provided, no tree is sampled.
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
@@ -112,7 +105,6 @@ def group_separable(
             # For reproducibility, you can set the seed.
             group_separable(2, 3, tree_sampler=TreeSampler.SCHROEDER_UNIFORM, seed=1002)
 
-
     Validation
     ----------
 
@@ -129,57 +121,54 @@ def group_separable(
     """
     rng = np.random.default_rng(seed)
 
-    if tree_root is None:
-        if isinstance(tree_sampler, Enum):
-            tree_sampler = TreeSampler(tree_sampler.value)
-        else:
-            tree_sampler = TreeSampler(tree_sampler)
-        if tree_sampler in (
-            TreeSampler.SCHROEDER,
-            TreeSampler.SCHROEDER_UNIFORM,
-            TreeSampler.SCHROEDER_LESCANNE,
-        ):
-            buckets = np.zeros(num_candidates - 1)
-            for r in range(1, num_candidates):
-                buckets[r - 1] = _number_group_separable_profiles(
-                    num_candidates, r, num_voters
-                )
-
-            if not (buckets >= 0).all():
-                warnings.warn(
-                    "Something went wrong when computing the distribution of the number of "
-                    "group-separable profiles, probably due to way too high numbers. We are "
-                    "defaulting to a uniform choice over the number of internal nodes.",
-                    RuntimeWarning,
-                )
-                buckets = np.ones(num_candidates - 1)
-            buckets /= buckets.sum()
-            num_internal_nodes = rng.choice(len(buckets), p=buckets) + 1
-
-            if tree_sampler == TreeSampler.SCHROEDER:
-                tree_root = schroeder_tree(num_candidates, num_internal_nodes, seed)
-            elif tree_sampler == TreeSampler.SCHROEDER_UNIFORM:
-                tree_root = schroeder_tree_brute_force(
-                    num_candidates, num_internal_nodes, seed
-                )
-            elif tree_sampler == TreeSampler.SCHROEDER_LESCANNE:
-                tree_root = schroeder_tree_lescanne(
-                    num_candidates, num_internal_nodes, seed
-                )
-            else:
-                raise ValueError("There is something weird with the tree_sampler value...")
-        # elif tree_sampler == TreeSampler.CATERPILLAR:
-        #     tree_root = caterpillar_tree(num_candidates)
-        # elif tree_sampler == TreeSampler.BALANCED:
-        #     tree_root = balanced_tree(num_candidates)
-        else:
-            raise ValueError(
-                "The `tree` argument needs to be one of the constant defined in the "
-                "ordinal.TreeSampler enumeration. Choices are: "
-                + ", ".join(str(s) for s in TreeSampler)
+    if isinstance(tree_sampler, Enum):
+        tree_sampler = TreeSampler(tree_sampler.value)
+    else:
+        tree_sampler = TreeSampler(tree_sampler)
+    if tree_sampler in (
+        TreeSampler.SCHROEDER,
+        TreeSampler.SCHROEDER_UNIFORM,
+        TreeSampler.SCHROEDER_LESCANNE,
+    ):
+        buckets = np.zeros(num_candidates - 1)
+        for r in range(1, num_candidates):
+            buckets[r - 1] = _number_group_separable_profiles(
+                num_candidates, r, num_voters
             )
 
-    print(tree_root.anonymous_tree_representation())
+        if not (buckets >= 0).all():
+            warnings.warn(
+                "Something went wrong when computing the distribution of the number of "
+                "group-separable profiles, probably due to way too high numbers. We are "
+                "defaulting to a uniform choice over the number of internal nodes.",
+                RuntimeWarning,
+            )
+            buckets = np.ones(num_candidates - 1)
+        buckets /= buckets.sum()
+        num_internal_nodes = rng.choice(len(buckets), p=buckets) + 1
+
+        if tree_sampler == TreeSampler.SCHROEDER:
+            tree_root = schroeder_tree(num_candidates, num_internal_nodes, seed)
+        elif tree_sampler == TreeSampler.SCHROEDER_UNIFORM:
+            tree_root = schroeder_tree_brute_force(
+                num_candidates, num_internal_nodes, seed
+            )
+        elif tree_sampler == TreeSampler.SCHROEDER_LESCANNE:
+            tree_root = schroeder_tree_lescanne(
+                num_candidates, num_internal_nodes, seed
+            )
+        else:
+            raise ValueError("There is something weird with the tree_sampler value...")
+    # elif tree_sampler == TreeSampler.CATERPILLAR:
+    #     tree_root = caterpillar_tree(num_candidates)
+    # elif tree_sampler == TreeSampler.BALANCED:
+    #     tree_root = balanced_tree(num_candidates)
+    else:
+        raise ValueError(
+            "The `tree` argument needs to be one of the constant defined in the "
+            "ordinal.TreeSampler enumeration. Choices are: "
+            + ", ".join(str(s) for s in TreeSampler)
+        )
 
     all_inner_nodes = tree_root.internal_nodes()
     num_internal_nodes = len(all_inner_nodes)

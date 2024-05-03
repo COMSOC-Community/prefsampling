@@ -9,7 +9,9 @@ from tests.utils import float_parameter_test_values, TestSampler
 def all_test_samplers_approval_impartial():
     def impartial_several_p(num_voters, num_candidates, seed=None):
         rng = np.random.default_rng(seed)
-        return impartial(num_voters, num_candidates, rng.random(size=num_voters), seed=seed)
+        return impartial(
+            num_voters, num_candidates, rng.random(size=num_voters), seed=seed
+        )
 
     samplers = [TestSampler(impartial_several_p, {}) for _ in range(3)]
 
@@ -18,7 +20,9 @@ def all_test_samplers_approval_impartial():
 
     def impartial_cst_size_several_p(num_voters, num_candidates, seed=None):
         rng = np.random.default_rng(seed)
-        return impartial_constant_size(num_voters, num_candidates, rng.random(size=num_voters), seed=seed)
+        return impartial_constant_size(
+            num_voters, num_candidates, rng.random(size=num_voters), seed=seed
+        )
 
     samplers = [TestSampler(impartial_cst_size_several_p, {}) for _ in range(3)]
 
@@ -29,7 +33,8 @@ def all_test_samplers_approval_impartial():
         samplers.append(
             TestSampler(
                 impartial_constant_size, {"rel_num_approvals": random_rel_num_approvals}
-            ))
+            )
+        )
     return samplers
 
 
@@ -58,5 +63,3 @@ class TestApprovalImpartial(TestCase):
             votes = impartial_constant_size(50, 50, rel_num_approvals=0.5)
             for vote in votes:
                 assert len(vote) == 25
-
-

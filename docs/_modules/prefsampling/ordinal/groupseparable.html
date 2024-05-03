@@ -312,8 +312,6 @@ document.write(`
     <span class="n">schroeder_tree_brute_force</span><span class="p">,</span>
     <span class="n">schroeder_tree_lescanne</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">prefsampling.tree.caterpillar</span> <span class="kn">import</span> <span class="n">caterpillar_tree</span>
-<span class="kn">from</span> <span class="nn">prefsampling.tree.balanced</span> <span class="kn">import</span> <span class="n">balanced_tree</span>
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span>
 <span class="kn">from</span> <span class="nn">prefsampling.combinatorics</span> <span class="kn">import</span> <span class="n">comb</span>
 
@@ -391,7 +389,6 @@ document.write(`
 <span class="sd">            Number of Candidates.</span>
 <span class="sd">        tree_sampler : TreeSampler, default: :py:class:`~prefsampling.ordinal.groupseparable.TreeSampler.SCHROEDER`</span>
 <span class="sd">            Sampler used to sample the tree. Should be one of the constants defined in the</span>
-<span class="sd">            :py:class:`~prefsampling.ordinal.groupseparable.TreeSampler` enumeration.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -413,7 +410,6 @@ document.write(`
 
 <span class="sd">            # For reproducibility, you can set the seed.</span>
 <span class="sd">            group_separable(2, 3, tree_sampler=TreeSampler.SCHROEDER_UNIFORM, seed=1002)</span>
-
 
 <span class="sd">    Validation</span>
 <span class="sd">    ----------</span>
@@ -509,6 +505,7 @@ document.write(`
 
     <span class="c1"># if tuple(first_vote) == (0, 2, 1) and tree_root.anonymous_tree_representation() == &quot;2(2(_, _), _)&quot;:</span>
     <span class="c1">#     print(f&quot;t: {tree_root.anonymous_tree_representation()}\nf = {frontier}\nv = {first_vote}\nmap = {vote_map}\nsig:{signatures}\nvotes:\n{votes}\n&quot;)</span>
+
     <span class="k">return</span> <span class="n">votes</span></div>
 
 

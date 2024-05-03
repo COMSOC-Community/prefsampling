@@ -32,7 +32,6 @@ class TestOrdinalGroupSeparable(TestCase):
 
         group_separable(3, 3, TreeSampler.SCHROEDER_UNIFORM)
 
-
         mixture(
             4,
             20,

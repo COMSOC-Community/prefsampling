@@ -1,11 +1,25 @@
 import math
 from unittest import TestCase
 
-from prefsampling.combinatorics import comb, _comb, generalised_ascending_factorial, powerset, \
-    proper_powerset, all_rankings, all_anonymous_profiles, all_profiles, \
-    all_non_isomorphic_profiles, all_single_peaked_rankings, all_single_peaked_circle_rankings, \
-    is_single_crossing, all_single_crossing_profiles, all_group_separable_profiles, \
-    all_gs_structure, kendall_tau_distance, gs_structure
+from prefsampling.combinatorics import (
+    comb,
+    _comb,
+    generalised_ascending_factorial,
+    powerset,
+    proper_powerset,
+    all_rankings,
+    all_anonymous_profiles,
+    all_profiles,
+    all_non_isomorphic_profiles,
+    all_single_peaked_rankings,
+    all_single_peaked_circle_rankings,
+    is_single_crossing,
+    all_single_crossing_profiles,
+    all_group_separable_profiles,
+    all_gs_structure,
+    kendall_tau_distance,
+    gs_structure,
+)
 
 
 class TestCombinatorics(TestCase):
@@ -43,8 +57,13 @@ class TestCombinatorics(TestCase):
             self.assertEqual(generalised_ascending_factorial(x, 0, 1), 1)
             self.assertEqual(generalised_ascending_factorial(x, 1, 1), x)
             self.assertEqual(generalised_ascending_factorial(x, 2, 1), x**2 + x)
-            self.assertEqual(generalised_ascending_factorial(x, 3, 1), x**3 + 3 * x**2 + 2 * x)
-            self.assertEqual(generalised_ascending_factorial(x, 4, 1), x**4 + 6 * x**3 + 11 * x**2 + 6 * x)
+            self.assertEqual(
+                generalised_ascending_factorial(x, 3, 1), x**3 + 3 * x**2 + 2 * x
+            )
+            self.assertEqual(
+                generalised_ascending_factorial(x, 4, 1),
+                x**4 + 6 * x**3 + 11 * x**2 + 6 * x,
+            )
 
     def test_powerset(self):
         for x in range(1, 8):
@@ -80,6 +99,3 @@ class TestCombinatorics(TestCase):
         gs_structure(((0, 1, 2, 3), (3, 2, 1, 0)), verbose=True)
         with self.assertRaises(ValueError):
             gs_structure(((0, 1, 2), (2, 0, 1), (1, 2, 0)), verbose=True)
-
-
-

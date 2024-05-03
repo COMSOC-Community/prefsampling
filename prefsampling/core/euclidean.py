@@ -56,7 +56,11 @@ def euclidean_space_to_sampler(
     if space == EuclideanSpace.UNIFORM_BALL:
         return ball_uniform, {"num_dimensions": num_dimensions, "seed": seed}
     if space == EuclideanSpace.UNIFORM_SPHERE:
-        return ball_uniform, {"num_dimensions": num_dimensions, "only_envelope": True, "seed": seed}
+        return ball_uniform, {
+            "num_dimensions": num_dimensions,
+            "only_envelope": True,
+            "seed": seed,
+        }
     if space == EuclideanSpace.UNIFORM_CUBE:
         return cube, {"num_dimensions": num_dimensions, "seed": seed}
     if space == EuclideanSpace.GAUSSIAN_BALL:
@@ -67,22 +71,23 @@ def euclidean_space_to_sampler(
                 "num_dimensions": num_dimensions,
                 "num_points": 1,
                 "sigmas": [0.33] * num_dimensions,
-                "seed": seed
+                "seed": seed,
             },
-            "seed": seed
+            "seed": seed,
         }
     if space == EuclideanSpace.GAUSSIAN_CUBE:
         return gaussian, {
             "num_dimensions": num_dimensions,
             "widths": np.array([1 for _ in range(num_dimensions)]),
-            "seed": seed
+            "seed": seed,
         }
     if space == EuclideanSpace.UNBOUNDED_GAUSSIAN:
         return gaussian, {"num_dimensions": num_dimensions, "seed": seed}
     raise ValueError(
         "The 'euclidean_space' and/or the 'candidate_euclidean_space' arguments need to be one of "
         "the constant defined in the core.euclidean.EuclideanSpace enumeration. Choices are: "
-        + ", ".join(str(s) for s in EuclideanSpace) + "."
+        + ", ".join(str(s) for s in EuclideanSpace)
+        + "."
     )
 
 
@@ -92,7 +97,7 @@ def _sample_points(
     positions: EuclideanSpace | Callable | Iterable[Iterable[float]],
     positions_args: dict,
     sampled_object_name: str,
-    seed=None
+    seed=None,
 ) -> np.ndarray:
     """
     Samples the points (if necessary) based on the input of the Euclidean function.
@@ -215,7 +220,12 @@ def sample_election_positions(
     candidates_positions_args["num_dimensions"] = num_dimensions
 
     voters_pos = _sample_points(
-        num_voters, num_dimensions, voters_positions, voters_positions_args, "voters", seed=seed
+        num_voters,
+        num_dimensions,
+        voters_positions,
+        voters_positions_args,
+        "voters",
+        seed=seed,
     )
     cand_pos = _sample_points(
         num_candidates,
@@ -223,6 +233,6 @@ def sample_election_positions(
         candidates_positions,
         candidates_positions_args,
         "candidates",
-        seed=seed
+        seed=seed,
     )
     return voters_pos, cand_pos

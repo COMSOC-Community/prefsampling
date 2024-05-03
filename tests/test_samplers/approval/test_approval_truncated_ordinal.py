@@ -23,8 +23,14 @@ def all_test_samplers_approval_truncated_ordinal():
 
     def truncated_ordinal_several_p(num_voters, num_candidates, seed=None):
         rng = np.random.default_rng(seed)
-        return truncated_ordinal(num_voters, num_candidates, rng.random(size=num_voters),
-                                 ordinal_sampler=urn, ordinal_sampler_parameters={"alpha": 6}, seed=seed)
+        return truncated_ordinal(
+            num_voters,
+            num_candidates,
+            rng.random(size=num_voters),
+            ordinal_sampler=urn,
+            ordinal_sampler_parameters={"alpha": 6},
+            seed=seed,
+        )
 
     samplers += [TestSampler(truncated_ordinal_several_p, {}) for _ in range(3)]
     return samplers

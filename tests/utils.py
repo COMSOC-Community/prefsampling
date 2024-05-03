@@ -108,7 +108,7 @@ def sample_mixture(
         ],
         [0.5, 0.2, 0.3],
         [{"seed": seed}, {"seed": seed}, {"seed": seed}],
-        seed=seed
+        seed=seed,
     )
 
 

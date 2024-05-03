@@ -18,9 +18,7 @@ def plot_sphere_uniform(path):
     for num_dimensions in [1, 2, 3]:
         for i, params in enumerate(all_params):
             points = sphere_uniform(
-                num_points,
-                num_dimensions,
-                widths=params["widths"][num_dimensions - 1]
+                num_points, num_dimensions, widths=params["widths"][num_dimensions - 1]
             )
             ax = fig.add_subplot(
                 3,

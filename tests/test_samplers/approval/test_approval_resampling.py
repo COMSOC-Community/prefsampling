@@ -50,7 +50,9 @@ def all_test_samplers_approval_resampling():
                 central_votes[0].add(k)
             else:
                 central_votes[1].add(k)
-        return disjoint_resampling(num_voters, num_candidates, 0.5, 0.7, central_votes=central_votes, seed=seed)
+        return disjoint_resampling(
+            num_voters, num_candidates, 0.5, 0.7, central_votes=central_votes, seed=seed
+        )
 
     samplers.append(TestSampler(disjoint_resampling_central_votes, {}))
 
@@ -99,13 +101,21 @@ class TestApprovalResampling(TestCase):
 
     def test_approval_disjoint_resampling(self):
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=0.5, phi=-0.4, num_central_votes=1)
+            disjoint_resampling(
+                4, 5, rel_size_central_vote=0.5, phi=-0.4, num_central_votes=1
+            )
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=0.5, phi=4, num_central_votes=1)
+            disjoint_resampling(
+                4, 5, rel_size_central_vote=0.5, phi=4, num_central_votes=1
+            )
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5, num_central_votes=1)
+            disjoint_resampling(
+                4, 5, rel_size_central_vote=-0.4, phi=0.5, num_central_votes=1
+            )
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5, num_central_votes=1)
+            disjoint_resampling(
+                4, 5, rel_size_central_vote=-0.4, phi=0.5, num_central_votes=1
+            )
         with self.assertRaises(ValueError):
             disjoint_resampling(
                 4, 5, rel_size_central_vote=0.4, phi=0.5, num_central_votes=10
@@ -113,11 +123,29 @@ class TestApprovalResampling(TestCase):
         with self.assertRaises(ValueError):
             disjoint_resampling(4, 5, rel_size_central_vote=0.4, phi=0.5)
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=0.4, phi=0.5, central_votes=[{0, 1, 2}, {2, 3, 4}])
+            disjoint_resampling(
+                4,
+                5,
+                rel_size_central_vote=0.4,
+                phi=0.5,
+                central_votes=[{0, 1, 2}, {2, 3, 4}],
+            )
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=0.4, phi=0.5, central_votes=[{0, 1, 2}, {2, 3, 4, 5, 6}])
+            disjoint_resampling(
+                4,
+                5,
+                rel_size_central_vote=0.4,
+                phi=0.5,
+                central_votes=[{0, 1, 2}, {2, 3, 4, 5, 6}],
+            )
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=0.4, phi=0.5, central_votes=[{0, 1, 2}, {4, 5, 6}])
+            disjoint_resampling(
+                4,
+                5,
+                rel_size_central_vote=0.4,
+                phi=0.5,
+                central_votes=[{0, 1, 2}, {4, 5, 6}],
+            )
 
     def test_approval_moving_resampling(self):
         with self.assertRaises(ValueError):

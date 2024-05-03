@@ -88,7 +88,9 @@ def generalised_ascending_factorial(value: int, length: int, increment: float) -
     )
 
 
-def powerset(iterable: Iterable, min_size: int = 1, max_size: int = None) -> tuple[tuple]:
+def powerset(
+    iterable: Iterable, min_size: int = 1, max_size: int = None
+) -> tuple[tuple]:
     """
     Returns the powerset of the iterable.
 
@@ -323,7 +325,7 @@ def is_single_crossing(profile: Sequence[Sequence[int]]) -> bool:
             True if the profile is single-crossing and false otherwise.
     """
     for j, cand1 in enumerate(profile[0]):
-        for cand2 in profile[0][j + 1:]:
+        for cand2 in profile[0][j + 1 :]:
             cand1_over_cand2 = True
             for vote in profile:
                 if vote.index(cand1) < vote.index(cand2) and not cand1_over_cand2:
@@ -617,7 +619,7 @@ def kendall_tau_distance(ranking_1: Iterable, ranking_2: Sequence | np.ndarray) 
     """
     distance = 0
     for k, alt1 in enumerate(ranking_1):
-        for alt2 in ranking_1[k + 1:]:
+        for alt2 in ranking_1[k + 1 :]:
             if ranking_2.index(alt2) < ranking_2.index(alt1):
                 distance += 1
     return distance

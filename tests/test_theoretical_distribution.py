@@ -3,20 +3,30 @@ from unittest import TestCase
 from prefsampling.ordinal.impartial import (
     impartial_theoretical_distribution as ord_impartial_distrib,
     stratification_theoretical_distribution as ord_strat_distrib,
-    impartial_anonymous_theoretical_distribution as ord_impartial_anon_ditrib
+    impartial_anonymous_theoretical_distribution as ord_impartial_anon_ditrib,
 )
-from prefsampling.ordinal.plackettluce import theoretical_distribution as ord_plackett_distrib
+from prefsampling.ordinal.plackettluce import (
+    theoretical_distribution as ord_plackett_distrib,
+)
 from prefsampling.ordinal.singlepeaked import (
     conitzer_theoretical_distribution as ord_sp_con_distrib,
     walsh_theoretical_distribution as ord_sp_wal_distrib,
     circle_theoretical_distribution as ord_sp_circ_distrib,
 )
-from prefsampling.ordinal.singlecrossing import impartial_theoretical_distribution as ord_sc_impartial_distrib
+from prefsampling.ordinal.singlecrossing import (
+    impartial_theoretical_distribution as ord_sc_impartial_distrib,
+)
 from prefsampling.ordinal.urn import theoretical_distribution as ord_urn_distrib
 from prefsampling.ordinal.mallows import theoretical_distribution as ord_mallows_distrib
 
-from prefsampling.approval.resampling import resampling_theoretical_distribution, disjoint_resampling_theoretical_distribution
-from prefsampling.approval.noise import theoretical_distribution as app_noise_distrib, SetDistance
+from prefsampling.approval.resampling import (
+    resampling_theoretical_distribution,
+    disjoint_resampling_theoretical_distribution,
+)
+from prefsampling.approval.noise import (
+    theoretical_distribution as app_noise_distrib,
+    SetDistance,
+)
 
 
 class TestInputValidators(TestCase):

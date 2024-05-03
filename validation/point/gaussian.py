@@ -13,7 +13,10 @@ def plot_gaussian(path):
         {"widths": (None, None, None), "sigmas": (1, (1, 1), (1, 1, 1))},
         {"widths": (None, None, None), "sigmas": (0.5, (0.5, 1.5), (0.5, 1.5, 3))},
         {"widths": ((4,), (1, 4), (1, 2, 4)), "sigmas": (1, (1, 1), (1, 1, 1))},
-        {"widths": ((4,), (1, 4), (1, 2, 4)), "sigmas": (0.2, (0.2, 0.5), (0.2, 0.5, 1))},
+        {
+            "widths": ((4,), (1, 4), (1, 2, 4)),
+            "sigmas": (0.2, (0.2, 0.5), (0.2, 0.5, 1)),
+        },
     )
     ax_limits = (-4.5, 4.5)
     num_points = 2000
@@ -36,7 +39,7 @@ def plot_gaussian(path):
                 ax,
                 [ax_limits] * num_dimensions,
                 title=f"Sigmas: {params['sigmas'][num_dimensions - 1]},"
-                      f" Widths: {params['widths'][num_dimensions - 1]}, "
+                f" Widths: {params['widths'][num_dimensions - 1]}, ",
             )
 
     plt.savefig(path, dpi=300, bbox_inches="tight")

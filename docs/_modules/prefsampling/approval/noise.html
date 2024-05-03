@@ -361,16 +361,16 @@ document.write(`
 <span class="k">def</span> <span class="nf">_compute_distance</span><span class="p">(</span>
     <span class="n">distance</span><span class="p">:</span> <span class="n">SetDistance</span><span class="p">,</span> <span class="n">size_1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">size_2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">size_intersection</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">):</span>
-    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">distance</span><span class="o">.</span><span class="n">HAMMING</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">SetDistance</span><span class="o">.</span><span class="n">HAMMING</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">size_1</span> <span class="o">+</span> <span class="n">size_2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">size_intersection</span>
-    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">distance</span><span class="o">.</span><span class="n">JACCARD</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">SetDistance</span><span class="o">.</span><span class="n">JACCARD</span><span class="p">:</span>
         <span class="n">size_union</span> <span class="o">=</span> <span class="n">size_1</span> <span class="o">+</span> <span class="n">size_2</span> <span class="o">-</span> <span class="n">size_intersection</span>
         <span class="k">if</span> <span class="n">size_union</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DistanceInfiniteError</span>
         <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">size_intersection</span> <span class="o">/</span> <span class="n">size_union</span>
-    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">distance</span><span class="o">.</span><span class="n">ZELINKA</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">SetDistance</span><span class="o">.</span><span class="n">ZELINKA</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">size_1</span><span class="p">,</span> <span class="n">size_2</span><span class="p">)</span> <span class="o">-</span> <span class="n">size_intersection</span>
-    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">distance</span><span class="o">.</span><span class="n">BUNKE_SHEARER</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">SetDistance</span><span class="o">.</span><span class="n">BUNKE_SHEARER</span><span class="p">:</span>
         <span class="n">largest_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">size_1</span><span class="p">,</span> <span class="n">size_2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">largest_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DistanceInfiniteError</span>

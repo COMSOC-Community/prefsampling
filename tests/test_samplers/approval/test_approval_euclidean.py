@@ -19,7 +19,12 @@ def all_test_samplers_approval_euclidean():
 
     def test_ball_resampling_2d(num_points, num_dimensions=2, seed=None):
         return ball_resampling(
-            num_points, 2, gaussian_one_point, {'num_dimensions': num_dimensions, 'seed': seed}, max_numer_resampling=20, seed=seed
+            num_points,
+            2,
+            gaussian_one_point,
+            {"num_dimensions": num_dimensions, "seed": seed},
+            max_numer_resampling=20,
+            seed=seed,
         )
 
     def test_cube_3d(num_points, num_dimensions=3, seed=None):
@@ -136,4 +141,6 @@ class TestApprovalEuclidean(TestCase):
         with self.assertRaises(ValueError):
             euclidean_constant_size(4, 5, 0.7, 2, "aad", ball_uniform)
         with self.assertRaises(ValueError):
-            euclidean_constant_size(4, 5, 0.7, 2, [[1, 2, 3], [1, 2], [1, 2, 3], [1, 3, 2]], ball_uniform)
+            euclidean_constant_size(
+                4, 5, 0.7, 2, [[1, 2, 3], [1, 2], [1, 2, 3], [1, 3, 2]], ball_uniform
+            )
