@@ -11,36 +11,7 @@ from itertools import chain, combinations, permutations, combinations_with_repla
 
 import numpy as np
 
-
-def random_partition(
-    s: Iterable, num_parts: int, non_empty: bool = True, seed: int = None
-) -> list[set]:
-    """
-    Draws a partition uniformly at random.
-
-    Parameters
-    ----------
-        s : Iterable
-            The collection of elements.
-        num_parts : int
-            The size of the partition.
-        non_empty : bool, defaults :code:`True`
-            If true, all parts need to be non-empty.
-        seed : int, defaults :code:`None`
-            Seed for numpy random number generator.
-    """
-    rng = np.random.default_rng(seed)
-    partition = [set() for _ in range(num_parts)]
-    elements_to_place = set(s)
-    if non_empty:
-        # We first put one alternative per central vote, ensuring non-emptiness
-        for k, candidate in enumerate(rng.choice(elements_to_place, size=num_parts)):
-            partition[k].add(candidate)
-            elements_to_place.remove(candidate)
-    # For the leftover candidates, we select uniformly at random a central vote in which to place them.
-    for candidate in elements_to_place:
-        partition[rng.integers(0, high=num_parts)].add(candidate)
-    return partition
+from prefsampling.inputvalidators import validate_int
 
 
 def comb(n: int, k: int) -> int:
@@ -87,9 +58,11 @@ def _comb(n: int, k: int) -> int:
         return 0
 
 
-def generalised_ascending_factorial(value, length, increment):
+def generalised_ascending_factorial(value: int, length: int, increment: float) -> float:
     """
-    Computes the ascending factorial. The ascending factorial is equal to: value (value + increment) ... (value + (length - 1) * increment).
+    Computes the ascending factorial. The ascending factorial is equal to:
+    :math:`\\text{value} \\times (\\text{value} + \\text{increment}) \\times \\ldots \\times
+    (\\text{value} + (\\text{length} - 1) \\times \\text{increment})`.
 
     Parameters
     ----------
@@ -102,8 +75,12 @@ def generalised_ascending_factorial(value, length, increment):
 
     Returns
     -------
+        float
+            The value of the (generalised) ascending factorial.
 
     """
+    validate_int(value, "value", lower_bound=0)
+    validate_int(value, "length", lower_bound=0)
     if length == 0:
         return 1
     return (value + (length - 1) * increment) * generalised_ascending_factorial(
@@ -111,7 +88,7 @@ def generalised_ascending_factorial(value, length, increment):
     )
 
 
-def powerset(iterable: Iterable, min_size: int = 1, max_size: int = None) -> Iterable:
+def powerset(iterable: Iterable, min_size: int = 1, max_size: int = None) -> tuple[tuple]:
     """
     Returns the powerset of the iterable.
 
@@ -126,7 +103,7 @@ def powerset(iterable: Iterable, min_size: int = 1, max_size: int = None) -> Ite
 
     Returns
     -------
-        Iterable
+        tuple[tuple]
             The powerset of the input iterable.
     """
     s = list(iterable)
@@ -140,7 +117,7 @@ def powerset(iterable: Iterable, min_size: int = 1, max_size: int = None) -> Ite
     )
 
 
-def proper_powerset(iterable, min_size: int = 1):
+def proper_powerset(iterable: Iterable, min_size: int = 1) -> tuple[tuple]:
     """
     Returns the set of all proper subsets of the iterable.
 
@@ -153,7 +130,7 @@ def proper_powerset(iterable, min_size: int = 1):
 
     Returns
     -------
-        Iterable
+        tuple[tuple]
             The set of all subsets of the input iterable.
     """
     s = list(iterable)
@@ -184,7 +161,7 @@ def all_anonymous_profiles(
 ) -> list[tuple[tuple[int]]]:
     """
     Returns a list of all the anonymous profiles for a given number of voters and candidates. An
-    anonymous profile is a sorted tuple of  rankings, each ranking being represented by a tuple of
+    anonymous profile is a sorted tuple of rankings, each ranking being represented by a tuple of
     int. It is anonymous in the sense that the position of the voters does not matter. We implement
     this by sorting the rankings in the profile in lexicographic order.
 
@@ -346,7 +323,7 @@ def is_single_crossing(profile: Sequence[Sequence[int]]) -> bool:
             True if the profile is single-crossing and false otherwise.
     """
     for j, cand1 in enumerate(profile[0]):
-        for cand2 in profile[0][j + 1 :]:
+        for cand2 in profile[0][j + 1:]:
             cand1_over_cand2 = True
             for vote in profile:
                 if vote.index(cand1) < vote.index(cand2) and not cand1_over_cand2:
@@ -622,7 +599,7 @@ def all_gs_structure(
     return list(set(gs_structure(p) for p in gs_profiles))
 
 
-def kendall_tau_distance(ranking_1: Iterable, ranking_2: Sequence) -> int:
+def kendall_tau_distance(ranking_1: Iterable, ranking_2: Sequence | np.ndarray) -> int:
     """
     Computes the Kendall-Tau distance between two rankings.
 
@@ -630,7 +607,7 @@ def kendall_tau_distance(ranking_1: Iterable, ranking_2: Sequence) -> int:
     ----------
         ranking_1: Iterable
             The first ranking
-        ranking_2: Sequence
+        ranking_2: Sequence | np.ndarray
             The second ranking
 
     Returns
@@ -640,7 +617,7 @@ def kendall_tau_distance(ranking_1: Iterable, ranking_2: Sequence) -> int:
     """
     distance = 0
     for k, alt1 in enumerate(ranking_1):
-        for alt2 in ranking_1[k + 1 :]:
+        for alt2 in ranking_1[k + 1:]:
             if ranking_2.index(alt2) < ranking_2.index(alt1):
                 distance += 1
     return distance

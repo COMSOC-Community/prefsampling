@@ -56,7 +56,6 @@ def permute_voters(
     """
     rng = np.random.default_rng(seed)
     rng.shuffle(votes)
-
     return votes
 
 
