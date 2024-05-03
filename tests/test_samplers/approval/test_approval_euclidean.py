@@ -128,3 +128,12 @@ class TestApprovalEuclidean(TestCase):
 
     def test_euclidean_constant_size(self):
         euclidean_constant_size(4, 5, 0.7, 2, ball_uniform, ball_uniform)
+        with self.assertRaises(ValueError):
+            euclidean_constant_size(4, 5, 1.7, 2, ball_uniform, ball_uniform)
+        with self.assertRaises(ValueError):
+            euclidean_constant_size(4, 5, -0.7, 2, ball_uniform, ball_uniform)
+
+        with self.assertRaises(ValueError):
+            euclidean_constant_size(4, 5, 0.7, 2, "aad", ball_uniform)
+        with self.assertRaises(ValueError):
+            euclidean_constant_size(4, 5, 0.7, 2, [[1, 2, 3], [1, 2], [1, 2, 3], [1, 3, 2]], ball_uniform)

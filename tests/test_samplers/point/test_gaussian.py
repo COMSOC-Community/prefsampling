@@ -1,3 +1,5 @@
+from unittest import TestCase
+
 import numpy as np
 
 from prefsampling.point import gaussian
@@ -19,3 +21,12 @@ def random_gaussian_samplers(num_dim):
                     )
                 )
     return samplers
+
+
+class TestPointGaussian(TestCase):
+
+    def test_gaussian(self):
+        with self.assertRaises(TypeError):
+            gaussian(3, 2, widths=1)
+        with self.assertRaises(ValueError):
+            gaussian(3, 2, widths=[1, 4, 2])

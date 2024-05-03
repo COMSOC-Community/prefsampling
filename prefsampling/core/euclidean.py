@@ -97,7 +97,7 @@ def _sample_points(
     """
     Samples the points (if necessary) based on the input of the Euclidean function.
     """
-    if isinstance(positions, Iterable):
+    if isinstance(positions, Iterable) and not isinstance(positions, str):
         try:
             positions = np.array(positions, dtype=float)
         except Exception as e:

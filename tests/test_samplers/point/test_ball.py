@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import numpy as np
 
-from prefsampling.point import ball_uniform, ball_resampling
+from prefsampling.point import ball_uniform, ball_resampling, sphere_uniform
 
 
 def random_ball_samplers(num_dim):
@@ -20,6 +20,15 @@ def random_ball_samplers(num_dim):
                         seed=seed,
                     )
                 )
+            samplers.append(
+                lambda num_points, num_dimensions, seed=None: sphere_uniform(
+                    num_points,
+                    num_dimensions,
+                    center_point=center_point,
+                    widths=widths,
+                    seed=seed,
+                )
+            )
     return samplers
 
 
@@ -50,3 +59,7 @@ class TestPointBall(TestCase):
             ball_uniform(5, 5, [3, 4, 2, 3], 10)
         with self.assertRaises(ValueError):
             ball_uniform(5, 5, ["a", "b", "c", "d", "e"], 10)
+
+    def test_ball_resampling(self):
+        with self.assertRaises(ValueError):
+            ball_resampling(3, 2, lambda: 1, {})

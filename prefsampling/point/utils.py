@@ -59,7 +59,7 @@ def validate_width(
         np.ndarray[float]
             The widths to be used by the point samplers, one per dimension.
     """
-    if isinstance(widths, Iterable):
+    if isinstance(widths, Iterable) and not isinstance(widths, str):
         widths = np.array(widths, dtype=float)
         if len(widths) != num_dimensions:
             raise ValueError(
@@ -69,7 +69,7 @@ def validate_width(
     else:
         try:
             widths = float(widths)
-        except TypeError:
+        except ValueError:
             raise TypeError("If the width is not an iterable, it needs to be a float.")
         widths = np.array([widths for _ in range(num_dimensions)], dtype=float)
     return widths

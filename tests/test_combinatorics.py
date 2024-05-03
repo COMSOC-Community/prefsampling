@@ -5,7 +5,7 @@ from prefsampling.combinatorics import comb, _comb, generalised_ascending_factor
     proper_powerset, all_rankings, all_anonymous_profiles, all_profiles, \
     all_non_isomorphic_profiles, all_single_peaked_rankings, all_single_peaked_circle_rankings, \
     is_single_crossing, all_single_crossing_profiles, all_group_separable_profiles, \
-    all_gs_structure, kendall_tau_distance
+    all_gs_structure, kendall_tau_distance, gs_structure
 
 
 class TestCombinatorics(TestCase):
@@ -74,6 +74,12 @@ class TestCombinatorics(TestCase):
         all_single_crossing_profiles(3, 4, fix_order=False)
         all_group_separable_profiles(3, 4)
         all_gs_structure(3, 4)
+        with self.assertRaises(ValueError):
+            all_gs_structure()
+        gs_structure(((0, 1, 2, 3), (3, 2, 1, 0)))
+        gs_structure(((0, 1, 2, 3), (3, 2, 1, 0)), verbose=True)
+        with self.assertRaises(ValueError):
+            gs_structure(((0, 1, 2), (2, 0, 1), (1, 2, 0)), verbose=True)
 
 
 

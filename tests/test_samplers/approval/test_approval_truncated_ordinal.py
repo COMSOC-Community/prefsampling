@@ -36,3 +36,9 @@ class TestApprovalTruncatedOrdinal(TestCase):
             truncated_ordinal(4, 5, -0.5, mallows, {"phi": 0.4})
         with self.assertRaises(ValueError):
             truncated_ordinal(4, 5, 1.5, mallows, {"phi": 0.4})
+        with self.assertRaises(ValueError):
+            truncated_ordinal(4, 5, [0.5, 0.7, 0.8], mallows, {"phi": 0.4})
+        with self.assertRaises(ValueError):
+            truncated_ordinal(4, 5, [0.5, 0.7, 0.8, 2], mallows, {"phi": 0.4})
+        with self.assertRaises(ValueError):
+            truncated_ordinal(4, 5, [0.5, 0.7, 0.8, -0.5], mallows, {"phi": 0.4})

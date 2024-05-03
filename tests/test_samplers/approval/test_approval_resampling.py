@@ -42,6 +42,13 @@ def all_test_samplers_approval_resampling():
         if random_g * random_p <= 1
         for imp_central in [True, False]
     ]
+
+    def disjoint_resampling_central_votes(num_voters, num_candidates, seed=None):
+        central_votes = (tuple(range(num_candidates)), tuple(range(num_candidates)))
+        return disjoint_resampling(num_voters, num_candidates, 0.5, 0.7, central_votes=central_votes, seed=seed)
+
+    samplers.append(TestSampler(disjoint_resampling_central_votes, {}))
+
     samplers += [
         TestSampler(
             moving_resampling,
@@ -87,14 +94,24 @@ class TestApprovalResampling(TestCase):
 
     def test_approval_disjoint_resampling(self):
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=0.5, phi=-0.4)
+            disjoint_resampling(4, 5, rel_size_central_vote=0.5, phi=-0.4, num_central_votes=1)
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=0.5, phi=4)
+            disjoint_resampling(4, 5, rel_size_central_vote=0.5, phi=4, num_central_votes=1)
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5)
+            disjoint_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5, num_central_votes=1)
         with self.assertRaises(ValueError):
-            disjoint_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5)
+            disjoint_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5, num_central_votes=1)
         with self.assertRaises(ValueError):
             disjoint_resampling(
                 4, 5, rel_size_central_vote=0.4, phi=0.5, num_central_votes=10
             )
+        with self.assertRaises(ValueError):
+            disjoint_resampling(4, 5, rel_size_central_vote=0.4, phi=0.5)
+
+    def test_approval_moving_resampling(self):
+        with self.assertRaises(ValueError):
+            moving_resampling(4, 5, rel_size_central_vote=0.5, phi=-0.4, num_legs=2)
+        with self.assertRaises(ValueError):
+            moving_resampling(4, 5, rel_size_central_vote=0.5, phi=4, num_legs=3)
+        with self.assertRaises(ValueError):
+            moving_resampling(4, 5, rel_size_central_vote=-0.4, phi=0.5, num_legs=10)

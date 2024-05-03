@@ -146,7 +146,7 @@ def impartial(
     """
     unique_p = True
     if isinstance(p, Iterable):
-        unique_p = False
+        p = tuple(p)
         if len(p) != num_voters:
             raise ValueError(
                 "In the impartial model, if parameter p is a sequence, it needs to"
@@ -158,6 +158,7 @@ def impartial(
                     f"Incorrect value of p: {prob}. All value of the sequence "
                     f"should be in [0, 1]"
                 )
+        unique_p = False
     if unique_p and (p < 0 or 1 < p):
         raise ValueError(f"Incorrect value of p: {p}. Value should be in [0, 1]")
 
@@ -304,20 +305,21 @@ def impartial_constant_size(
 
     unique_rel_num_approvals = True
     if isinstance(rel_num_approvals, Iterable):
-        unique_rel_num_approvals = False
-        if len(rel_num_approvals) != num_voters:
-            raise ValueError(
-                "In the impartial model with constant size, if parameter "
-                "rel_num_approvals is a sequence, it needs to have as many elements "
-                "as there are voters."
-            )
+        num_approvals = []
         for prop in rel_num_approvals:
+            num_approvals.append(int(prop * num_candidates))
             if prop < 0 or 1 < prop:
                 raise ValueError(
                     f"Incorrect value of rel_num_approvals: {prop}. All value of the "
                     "sequence should be in [0, 1]"
                 )
-        num_approvals = tuple(int(prop * num_candidates) for prop in rel_num_approvals)
+        if len(num_approvals) != num_voters:
+            raise ValueError(
+                "In the impartial model with constant size, if parameter "
+                "rel_num_approvals is an iterable, it needs to have as many elements "
+                "as there are voters."
+            )
+        unique_rel_num_approvals = False
     else:
         if rel_num_approvals < 0 or 1 < rel_num_approvals:
             raise ValueError(

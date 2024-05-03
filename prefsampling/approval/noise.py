@@ -57,16 +57,16 @@ class DistanceInfiniteError(ValueError):
 def _compute_distance(
     distance: SetDistance, size_1: int, size_2: int, size_intersection: int
 ):
-    if distance == distance.HAMMING:
+    if distance == SetDistance.HAMMING:
         return size_1 + size_2 - 2 * size_intersection
-    if distance == distance.JACCARD:
+    if distance == SetDistance.JACCARD:
         size_union = size_1 + size_2 - size_intersection
         if size_union == 0:
             raise DistanceInfiniteError
         return 1 - size_intersection / size_union
-    if distance == distance.ZELINKA:
+    if distance == SetDistance.ZELINKA:
         return max(size_1, size_2) - size_intersection
-    if distance == distance.BUNKE_SHEARER:
+    if distance == SetDistance.BUNKE_SHEARER:
         largest_size = max(size_1, size_2)
         if largest_size == 0:
             raise DistanceInfiniteError
