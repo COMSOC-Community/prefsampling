@@ -20,6 +20,8 @@ def all_test_samplers_approval_impartial():
         rng = np.random.default_rng(seed)
         return impartial_constant_size(num_voters, num_candidates, rng.random(size=num_voters), seed=seed)
 
+    samplers = [TestSampler(impartial_cst_size_several_p, {}) for _ in range(3)]
+
     for random_p in float_parameter_test_values(0, 1, 2):
         samplers.append(TestSampler(impartial, {"p": random_p}))
 
