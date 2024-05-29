@@ -11,7 +11,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 
 
 @validate_num_voters_candidates
-def identity(num_voters: int, num_candidates: int, seed: int = None) -> np.ndarray:
+def identity(num_voters: int, num_candidates: int, seed: int = None) -> list[list[int]]:
     """
     Generates unanimous ordinal votes, all votes being `0, 1, 2, ...`.
 
@@ -26,7 +26,7 @@ def identity(num_voters: int, num_candidates: int, seed: int = None) -> np.ndarr
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
 
@@ -48,4 +48,4 @@ def identity(num_voters: int, num_candidates: int, seed: int = None) -> np.ndarr
         Validation is trivial here, we thus omit it.
     """
 
-    return np.array([np.arange(num_candidates) for _ in range(num_voters)], dtype=int)
+    return [list(range(num_candidates)) for _ in range(num_voters)]

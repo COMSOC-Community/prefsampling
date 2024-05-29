@@ -53,7 +53,7 @@ def group_separable(
     num_candidates: int,
     tree_sampler: TreeSampler = TreeSampler.SCHROEDER,
     seed: int = None,
-):
+) -> list[list[int]]:
     """
     Samplers for group separable votes. For the definition of group-seprable preferences, see
     `Elkind, Lackner, Peters (2022) <https://arxiv.org/abs/2205.09092>`_.
@@ -88,7 +88,7 @@ def group_separable(
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -173,11 +173,11 @@ def group_separable(
     all_inner_nodes = tree_root.internal_nodes()
     num_internal_nodes = len(all_inner_nodes)
 
-    votes = np.zeros((num_voters, num_candidates), dtype=int)
+    votes = []
     frontier = _sample_a_vote(tree_root)
     first_vote = rng.permutation(range(num_candidates))
     vote_map = {j: first_vote[i] for i, j in enumerate(frontier)}
-    votes[0] = first_vote
+    votes.append(list(first_vote))
 
     # We sample the signatures, ensuring that there is always at least one "True" per position
     signatures = np.zeros((num_voters - 1, num_internal_nodes), dtype=bool)
@@ -195,7 +195,7 @@ def group_separable(
             node.reverse = signature[j]
 
         raw_vote = _sample_a_vote(tree_root)
-        votes[i] = tuple(vote_map[candidate] for candidate in raw_vote)
+        votes.append([vote_map[candidate] for candidate in raw_vote])
 
     # if tuple(first_vote) == (0, 2, 1) and tree_root.anonymous_tree_representation() == "2(2(_, _), _)":
     #     print(f"t: {tree_root.anonymous_tree_representation()}\nf = {frontier}\nv = {first_vote}\nmap = {vote_map}\nsig:{signatures}\nvotes:\n{votes}\n")

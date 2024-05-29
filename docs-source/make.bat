@@ -25,22 +25,39 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
-REM Put it first so that "make" without argument is like "make help".
+if "%1" == "" goto help
+if "%1" == "help" goto help
+if "%1" == "github" goto github
+if "%1" == "githubclean" goto githubclean
+if "%1" == "html" goto html
+goto all
+
 :help
     %SPHINXBUILD% -M help "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
+    goto end
 
-:githubc
+:github
+    %SPHINXBUILD% -M doctest "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
     echo. > "%GITHUBBUILDDIR%\.nojekyll"
     %SPHINXBUILD% -b html "%SOURCEDIR%" "%GITHUBBUILDDIR%" %SPHINXOPTS% %O%
+    goto end
+
 :githubclean
     %SPHINXBUILD% -M clean "%SOURCEDIR%" "%GITHUBBUILDDIR%" %SPHINXOPTS% %O%
+    goto end
 
 :html
-    make doctest
+    %SPHINXBUILD% -M doctest "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
     %SPHINXBUILD% -b html "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
+    goto end
 
 REM Catch-all target: route all unknown targets to Sphinx using the new
 REM "make mode" option.  %O% is meant as a shortcut for %SPHINXOPTS%.
 :all
     %SPHINXBUILD% -M %1 "%SOURCEDIR%" "%LOCALBUILDDIR%" %SPHINXOPTS% %O%
+    goto end
+
+:end
+
+popd
 

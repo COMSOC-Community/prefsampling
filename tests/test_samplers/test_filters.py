@@ -16,7 +16,7 @@ class TestFilters(TestCase):
         votes = single_crossing(10, 10)
         copied_votes = deepcopy(votes)
         rename_candidates(copied_votes)
-        assert (votes == copied_votes).all()
+        assert votes == copied_votes
 
         votes = impartial(10, 10, 0.4)
         copied_votes = deepcopy(votes)

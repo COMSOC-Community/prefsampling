@@ -24,7 +24,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates, validat
 @validate_num_voters_candidates
 def single_crossing(
     num_voters: int, num_candidates: int, seed: int = None
-) -> np.ndarray:
+) -> list[list[int]]:
     """
     Generates ordinal votes that are single-crossing. See `Elkind, Lackner, Peters (2022)
     <https://arxiv.org/abs/2205.09092>`_ for the definition.
@@ -74,7 +74,7 @@ def single_crossing(
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -120,8 +120,7 @@ def single_crossing(
     rng = np.random.default_rng(seed)
 
     domain_size = int(num_candidates * (num_candidates - 1) / 2 + 1)
-    domain = [np.arange(num_candidates)]
-
+    domain = [list(range(num_candidates))]
     for line in range(1, domain_size):
         all_swap_indices = [
             (j, j + 1)
@@ -135,17 +134,14 @@ def single_crossing(
         new_line[swap_indices[1]] = domain[line - 1][swap_indices[0]]
         domain.append(new_line)
 
-    votes = np.zeros((num_voters, num_candidates), dtype=int)
+    votes = []
     last_sampled_index = 0
-    votes[0, :] = domain[0]
+    votes.append(domain[0])
     for i in range(1, num_voters):
         index = rng.integers(last_sampled_index, domain_size)
-        votes[i, :] = domain[index]
+        votes.append(domain[index])
         last_sampled_index = index
 
-    vote_indices = np.sort(rng.choice(np.arange(domain_size), size=num_voters))
-    for i, index in enumerate(vote_indices):
-        votes[i, :] = domain[index]
     return votes
 
 
@@ -219,7 +215,7 @@ class SingleCrossingNode:
 
 
 @validate_num_voters_candidates
-def single_crossing_impartial(num_voters, num_candidates, seed=None):
+def single_crossing_impartial(num_voters, num_candidates, seed=None) -> list[list[int]]:
     """
     Generates ordinal votes that satisfy the single-crossing property. See `Elkind, Lackner,
     Peters (2022) <https://arxiv.org/abs/2205.09092>`_ for the definition. This sampler ensures
@@ -255,7 +251,7 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -297,12 +293,12 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
         *Kevin W.S. Roberts*,
         Journal of Public Economics, 8(3):329–340, 1977.
     """
-    top_vote = np.arange(num_candidates)
+    top_vote = list(range(num_candidates))
     top_node = SingleCrossingNode(top_vote, seed=seed)
     vote_node_map = {top_node.vote_as_tuple: top_node}
 
     def graph_builder(node):
-        vote = np.array(node.vote, dtype=int)
+        vote = list(node.vote)
         for j in range(num_candidates - 1):
             if vote[j] < vote[j + 1]:
                 new_vote = vote.copy()
@@ -321,7 +317,7 @@ def single_crossing_impartial(num_voters, num_candidates, seed=None):
     top_node.count_elections(num_voters)
 
     votes = top_node.sample_votes(num_voters)
-    return np.array(votes, dtype=int)
+    return votes
 
 
 def impartial_theoretical_distribution(

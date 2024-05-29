@@ -15,9 +15,10 @@ If you are using it, we kindly ask you to cite the following reference to credit
 
 .. code-block::
 
-    Boehmer N., Faliszewski P., Janeczko Ł., Kaczmarczyk A., Lisowski G., Pierczyński G., Rey S., Stolicki D., Szufa S., Wąs T. (2024).
+    Boehmer N., Faliszewski P., Janeczko Ł., Kaczmarczyk A., Lisowski G., Pierczyński G., Rey S.,
+    Stolicki D., Szufa S., Wąs T. (2024).
     Guide to Numerical Experiments on Elections in Computational Social Choice.
-    arXiv preprint arXiv:2402.11765.
+    33rd International Joint Conference on Artificial Intelligence: Survey Track.
 
 .. toctree::
     :hidden:
@@ -27,3 +28,4 @@ If you are using it, we kindly ask you to cite the following reference to credit
     quickstart
     validation
     reference/index
+    citation

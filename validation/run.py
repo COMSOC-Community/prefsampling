@@ -72,7 +72,6 @@ ALL_ORDINAL_VALIDATORS = [
     # OrdinalMallowsValidator(),
     # PlackettLuceValidator(),
     # DidiValidator(),
-    # OrdinalUrnValidator(),
     # OrdinalEuclideanValidator(),
     # OrdinalEuclideanValidatorUniform(),
     # OrdinalEuclideanValidatorLine(),
@@ -81,7 +80,8 @@ ALL_ORDINAL_VALIDATORS = [
     # SPCircleValidator(),
     # SingleCrossingValidator(),
     # SingleCrossingImpartialValidator(),
-    # GroupSeparableValidator()
+    # GroupSeparableValidator(),
+    # OrdinalUrnValidator(),
 ]
 
 ALL_TREE_VALIDATORS = [
@@ -107,15 +107,15 @@ if __name__ == "__main__":
 
         # for validator in validator_list:
         #     validator.write_csv(num_observations, csv_dir_root)
-        # for validator in validator_list:
-        #     validator.plot_frequencies(
-        #         csv_dir_root, plot_dir_root, ordering="theoretical-observed"
-        #     )
+        for validator in validator_list:
+            validator.plot_frequencies(
+                csv_dir_root, plot_dir_root, ordering="theoretical-observed"
+            )
 
-    plot_dir_root = os.path.join("plots", "point")
-    os.makedirs(plot_dir_root, exist_ok=True)
-    plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
-    plot_sphere_uniform(os.path.join(plot_dir_root, "sphere-uniform"))
-    plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))
-    plot_cube_uniform(os.path.join(plot_dir_root, "cube"))
-    plot_gaussian(os.path.join(plot_dir_root, "gaussian"))
+    # plot_dir_root = os.path.join("plots", "point")
+    # os.makedirs(plot_dir_root, exist_ok=True)
+    # plot_ball_uniform(os.path.join(plot_dir_root, "ball-uniform"))
+    # plot_sphere_uniform(os.path.join(plot_dir_root, "sphere-uniform"))
+    # plot_ball_resampling(os.path.join(plot_dir_root, "ball-resampling"))
+    # plot_cube_uniform(os.path.join(plot_dir_root, "cube"))
+    # plot_gaussian(os.path.join(plot_dir_root, "gaussian"))

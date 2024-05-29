@@ -1,5 +1,5 @@
-Reference
-=========
+Code Reference
+==============
 
 
 .. toctree::

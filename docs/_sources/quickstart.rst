@@ -17,8 +17,10 @@ Sample Types
 
 To make it easy to embed the package in all kinds of tools, we use basic Python types:
 
-* Ordinal samplers return collections of :code:`np.ndarray`, that is, `Numpy <https://numpy.org/>`_ arrays where the most preferred candidate is at position 0, the next one at position 1 and so forth;
-* Approval samplers return collections of :code:`set`, where each set contains the approved candidates.
+* A collection of votes represented as a :code:`list`, each element representing a voters;
+* Ordinal samplers return lists of :code:`list` where the most preferred candidate is at position 0, the next one at position 1 and so forth;
+* Weak ordinal samplers return lists of :code:`list` of :code:`list`, that is, indifference classes are represented as (sorted) lists, the rest follows the representation of strit ordinal votes;
+* Approval samplers return lists of :code:`set`, where each set contains the approved candidates.
 
 In all cases, the candidates are named `0, 1, 2, ...`.
 
@@ -36,6 +38,10 @@ the parameter :code:`num_candidates` the number of candidates to consider.
 The :code:`seed` parameter can be used to pass the seed used to defined the numpy
 random number generator to give you more control if needed (for replication for instance).
 Other parameters are specific to the samplers.
+
+In the code reference of each sampler we provide examples of how to use the samplers in
+your code. We refer the reader to these examples and do not provide a general "how to"
+section here.
 
 Ordinal Samplers
 ----------------

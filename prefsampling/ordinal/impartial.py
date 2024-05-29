@@ -16,7 +16,9 @@ from prefsampling.ordinal.urn import urn
 
 
 @validate_num_voters_candidates
-def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndarray:
+def impartial(
+    num_voters: int, num_candidates: int, seed: int = None
+) -> list[list[int]]:
     """
     Generates ordinal votes from impartial culture.
 
@@ -37,7 +39,7 @@ def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndar
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -78,9 +80,9 @@ def impartial(num_voters: int, num_candidates: int, seed: int = None) -> np.ndar
         Economie Appliquée, 5:501–584, 1952.
     """
     rng = np.random.default_rng(seed)
-    votes = np.zeros([num_voters, num_candidates], dtype=int)
+    votes = []
     for i in range(num_voters):
-        votes[i] = rng.permutation(num_candidates)
+        votes.append(list(rng.permutation(num_candidates)))
     return votes
 
 
@@ -101,7 +103,7 @@ def impartial_theoretical_distribution(
 @validate_num_voters_candidates
 def impartial_anonymous(
     num_voters: int, num_candidates: int, seed: int = None
-) -> np.ndarray:
+) -> list[list[int]]:
     """
     Generates ordinal votes from impartial anonymous culture.
 
@@ -125,7 +127,7 @@ def impartial_anonymous(
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -197,7 +199,7 @@ def impartial_anonymous_theoretical_distribution(
 @validate_num_voters_candidates
 def stratification(
     num_voters: int, num_candidates: int, weight: float, seed: int = None
-) -> np.ndarray:
+) -> list[list[int]]:
     """
     Generates ordinal votes from stratification model. In the stratification model, candidates are
     split into two classes. Every voters ranks the candidates of the first class above the
@@ -221,7 +223,7 @@ def stratification(
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -290,12 +292,13 @@ def stratification(
             f"Incorrect value of weight: {weight}. Value should be in [0, 1]"
         )
     rng = np.random.default_rng(seed)
-    votes = np.zeros((num_voters, num_candidates), dtype=int)
+    votes = []
     upper_class_size = int(weight * num_candidates)
     upper_class_candidates = range(upper_class_size, num_candidates)
     for i in range(num_voters):
-        votes[i][:upper_class_size] = rng.permutation(upper_class_size)
-        votes[i][upper_class_size:] = rng.permutation(upper_class_candidates)
+        vote = list(rng.permutation(upper_class_size))
+        vote += list(rng.permutation(upper_class_candidates))
+        votes.append(vote)
     return votes
 
 

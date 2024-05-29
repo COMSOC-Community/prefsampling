@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=1ea437f0"></script>
+    <script src="../../_static/documentation_options.js?v=e9612945"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -150,7 +150,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../validation.html">Validation</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Code Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Ordinal</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="identity.html">Unanimous Models</a></li>
@@ -182,6 +182,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../citation.html">Citation Policy</a></li>
 </ul>
 
     </div>
@@ -366,7 +367,7 @@ can be placed in such a way that the preferences of the voters are decreasing al
 the axis from their most preferred candidate.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.singlepeaked.single_peaked_conitzer">
-<span class="sig-name descname"><span class="pre">single_peaked_conitzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_conitzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_conitzer" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">single_peaked_conitzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_conitzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_conitzer" title="Link to this definition">#</a></dt>
 <dd><p>Generates ordinal votes that are single-peaked following the distribution defined by
 <a class="reference external" href="https://arxiv.org/abs/1401.3449">Conitzer (2009)</a>. The preferences generated are
 single-peaked with respect to the axis <cite>0, 1, 2, …</cite>. Votes are generated uniformly at random
@@ -393,7 +394,7 @@ process described above.</p>
 <dd class="field-even"><p>Ordinal votes.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p><em>list</em>[<em>list</em>[<em>int</em>]]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -424,7 +425,7 @@ Journal of Artificial Intelligence Research, 35:161–191, 2009.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.singlepeaked.single_peaked_walsh">
-<span class="sig-name descname"><span class="pre">single_peaked_walsh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_walsh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_walsh" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">single_peaked_walsh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_walsh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_walsh" title="Link to this definition">#</a></dt>
 <dd><p>Generates ordinal votes that are single-peaked following the process described by
 <a class="reference external" href="https://arxiv.org/abs/1503.02766">Walsh (2015)</a>. The votes are generated from least preferred
 to most preferred candidates. A given position in the ordering is filled by selecting, with
@@ -444,7 +445,7 @@ process described above.</p>
 <dd class="field-even"><p>Ordinal votes.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p><em>list</em>[<em>list</em>[<em>int</em>]]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -471,7 +472,7 @@ ArXiV preprint, 2015.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.singlepeaked.single_peaked_circle">
-<span class="sig-name descname"><span class="pre">single_peaked_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_circle" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">single_peaked_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_circle" title="Link to this definition">#</a></dt>
 <dd><p>Generates ordinal votes that are single-peaked on a circle following a distribution inspired
 from the one by Conitzer (2009) for single-peakedness on a line (see
 <code class="xref py py-func docutils literal notranslate"><span class="pre">single_peaked_conitzer()</span></code>). This method starts by
@@ -493,7 +494,7 @@ process described above.</p>
 <dd class="field-even"><p>Ordinal votes.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p><em>list</em>[<em>list</em>[<em>int</em>]]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>

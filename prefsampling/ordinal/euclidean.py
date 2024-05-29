@@ -25,7 +25,7 @@ def euclidean(
     voters_positions_args: dict = None,
     candidates_positions_args: dict = None,
     seed: int = None,
-) -> np.ndarray:
+) -> list[list[int]]:
     """
     Generates approval votes according to the Euclidean model.
 
@@ -76,7 +76,7 @@ def euclidean(
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -261,13 +261,13 @@ def euclidean(
     )
 
     dimension = len(voters_pos[0])
-    votes = np.zeros([num_voters, num_candidates], dtype=int)
+    votes = []
     distances = np.zeros([num_voters, num_candidates], dtype=float)
     for i in range(num_voters):
         for j in range(num_candidates):
             distances[i][j] = np.linalg.norm(
                 voters_pos[i] - candidates_pos[j], ord=dimension
             )
-        votes[i] = np.argsort(distances[i])
+        votes.append(list(np.argsort(distances[i])))
 
     return votes

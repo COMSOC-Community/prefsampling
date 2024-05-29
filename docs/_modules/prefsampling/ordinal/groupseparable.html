@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=1ea437f0"></script>
+    <script src="../../../_static/documentation_options.js?v=e9612945"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -149,7 +149,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Code Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
@@ -181,6 +181,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citation.html">Citation Policy</a></li>
 </ul>
 
     </div>
@@ -359,7 +360,7 @@ document.write(`
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">tree_sampler</span><span class="p">:</span> <span class="n">TreeSampler</span> <span class="o">=</span> <span class="n">TreeSampler</span><span class="o">.</span><span class="n">SCHROEDER</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Samplers for group separable votes. For the definition of group-seprable preferences, see</span>
 <span class="sd">    `Elkind, Lackner, Peters (2022) &lt;https://arxiv.org/abs/2205.09092&gt;`_.</span>
@@ -394,7 +395,7 @@ document.write(`
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        np.ndarray</span>
+<span class="sd">        list[list[int]]</span>
 <span class="sd">            Ordinal votes.</span>
 
 <span class="sd">    Examples</span>
@@ -479,11 +480,11 @@ document.write(`
     <span class="n">all_inner_nodes</span> <span class="o">=</span> <span class="n">tree_root</span><span class="o">.</span><span class="n">internal_nodes</span><span class="p">()</span>
     <span class="n">num_internal_nodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_inner_nodes</span><span class="p">)</span>
 
-    <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">frontier</span> <span class="o">=</span> <span class="n">_sample_a_vote</span><span class="p">(</span><span class="n">tree_root</span><span class="p">)</span>
     <span class="n">first_vote</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">))</span>
     <span class="n">vote_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="n">first_vote</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frontier</span><span class="p">)}</span>
-    <span class="n">votes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">first_vote</span>
+    <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">first_vote</span><span class="p">))</span>
 
     <span class="c1"># We sample the signatures, ensuring that there is always at least one &quot;True&quot; per position</span>
     <span class="n">signatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_internal_nodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
@@ -501,7 +502,7 @@ document.write(`
             <span class="n">node</span><span class="o">.</span><span class="n">reverse</span> <span class="o">=</span> <span class="n">signature</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
 
         <span class="n">raw_vote</span> <span class="o">=</span> <span class="n">_sample_a_vote</span><span class="p">(</span><span class="n">tree_root</span><span class="p">)</span>
-        <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">vote_map</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">raw_vote</span><span class="p">)</span>
+        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">vote_map</span><span class="p">[</span><span class="n">candidate</span><span class="p">]</span> <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="n">raw_vote</span><span class="p">])</span>
 
     <span class="c1"># if tuple(first_vote) == (0, 2, 1) and tree_root.anonymous_tree_representation() == &quot;2(2(_, _), _)&quot;:</span>
     <span class="c1">#     print(f&quot;t: {tree_root.anonymous_tree_representation()}\nf = {frontier}\nv = {first_vote}\nmap = {vote_map}\nsig:{signatures}\nvotes:\n{votes}\n&quot;)</span>

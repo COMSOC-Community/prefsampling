@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=1ea437f0"></script>
+    <script src="../../../_static/documentation_options.js?v=e9612945"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -149,7 +149,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../validation.html">Validation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../reference/index.html">Code Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../reference/ordinal/index.html">Ordinal</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/impartial.html">Impartial Cultures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../reference/ordinal/identity.html">Unanimous Models</a></li>
@@ -181,6 +181,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../reference/combinatorics.html">Combinatorics</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citation.html">Citation Policy</a></li>
 </ul>
 
     </div>
@@ -300,8 +301,9 @@ document.write(`
                   
   <h1>Source code for prefsampling.ordinal.mallows</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Mallows&#39;s model is a sampling model parameterised by a central ranking. The probability of generating</span>
-<span class="sd">a given ranking is then exponential in the distance between the ranking and the central ranking.</span>
+<span class="sd">Mallows&#39;s model is a sampling model parameterised by a central ranking. The probability of</span>
+<span class="sd">generating a given ranking is then exponential in the distance between the ranking and the central</span>
+<span class="sd">ranking.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
@@ -326,7 +328,7 @@ document.write(`
     <span class="n">central_vote</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">impartial_central_vote</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates votes according to Mallows&#39; model (`Mallows, 1957</span>
 <span class="sd">    &lt;https://www.jstor.org/stable/2333244&gt;`_). This model is parameterised by a central vote. The</span>
@@ -345,7 +347,8 @@ document.write(`
 <span class="sd">    (2023) &lt;https://proceedings.mlr.press/v202/boehmer23b.html&gt;`_ for more details. Use</span>
 <span class="sd">    :code:`normalise_phi = True` to do so.</span>
 
-<span class="sd">    For an analogous sampler generating approval ballots, see :py:func:`~prefsampling.approval.noise.noise`.</span>
+<span class="sd">    For an analogous sampler generating approval ballots, see</span>
+<span class="sd">    :py:func:`~prefsampling.approval.noise.noise`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -367,7 +370,7 @@ document.write(`
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        np.ndarray</span>
+<span class="sd">        list[list[int]]</span>
 <span class="sd">            Ordinal votes.</span>
 
 <span class="sd">    Examples</span>
@@ -459,12 +462,12 @@ document.write(`
     <span class="n">insert_distributions</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">_insert_prob_distr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
     <span class="p">]</span>
-    <span class="n">votes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_voters</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
         <span class="n">vote</span> <span class="o">=</span> <span class="n">_mallows_vote</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">insert_distributions</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">central_vote</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">vote</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">central_vote</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">)</span>
-        <span class="n">votes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">vote</span>
+            <span class="n">vote</span> <span class="o">=</span> <span class="p">[</span><span class="n">central_vote</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">]</span>
+        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
 
@@ -479,7 +482,7 @@ document.write(`
     <span class="n">central_vote</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">impartial_central_vote</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Shortcut for the function :py:func:`~prefsampling.ordinal.mallows` with</span>
 <span class="sd">    :code:`normalise_phi = True`.</span>
@@ -529,7 +532,7 @@ document.write(`
     <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">insert_distributions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
     <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Samples a vote according to Mallows&#39; model.</span>
 
@@ -548,11 +551,11 @@ document.write(`
 <span class="sd">        The vote.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">vote</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">vote</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">):</span>
         <span class="n">insert_distribution</span> <span class="o">=</span> <span class="n">insert_distributions</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">index</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">insert_distribution</span><span class="p">)),</span> <span class="n">p</span><span class="o">=</span><span class="n">insert_distribution</span><span class="p">)</span>
-        <span class="n">vote</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">vote</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+        <span class="n">vote</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">vote</span>
 
 

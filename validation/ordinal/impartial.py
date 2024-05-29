@@ -87,8 +87,8 @@ class OrdinalStratificationValidator(Validator):
 
     def theoretical_distribution(self, sampler_parameters, all_outcomes) -> dict:
         return stratification_theoretical_distribution(
-            sampler_parameters["weight"],
             sampler_parameters["num_candidates"],
+            sampler_parameters["weight"],
             rankings=all_outcomes,
         )
 

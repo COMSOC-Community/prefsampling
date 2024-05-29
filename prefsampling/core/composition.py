@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 
 import numpy as np
 
@@ -12,7 +12,7 @@ def mixture(
     weights: list[float],
     sampler_parameters: list[dict],
     seed: int = None,
-):
+) -> list:
     """
     Generates a mixture of samplers. The process works as follows: for each vote, we sample which
     sample will be used to generate it based on the weight distribution of the samplers,
@@ -44,6 +44,11 @@ def mixture(
             Note that this is only the seed for this function.
             If you want to use particular seed for the functions generating votes,
             you should pass it as parameter within the :code:`sampler_parameters` list.
+
+    Returns
+    -------
+        list
+            The votes sampled from the mixture.
 
     Examples
     --------
@@ -119,7 +124,7 @@ def concatenation(
     num_candidates: int,
     samplers: list[Callable],
     sampler_parameters: list[dict],
-) -> np.ndarray:
+) -> list:
     """
     Generate votes from different samplers and concatenate them together to form the final set of
     votes.
@@ -141,6 +146,11 @@ def concatenation(
         sampler_parameters: list,
             List of dictionaries passed as keyword parameters of the samplers. Number of voters and
             number of candidates of these dictionaries are not taken into account.
+
+    Returns
+    -------
+        list
+            The concatenated votes.
 
     Examples
     --------
@@ -180,23 +190,16 @@ def concatenation(
         params["num_voters"] = num_voters_per_sampler[i]
         params["num_candidates"] = num_candidates
 
-    all_votes = None
+    all_votes = []
     for num_voters, sampler, params in zip(
         num_voters_per_sampler, samplers, sampler_parameters
     ):
         if num_voters > 0:
-            votes = sampler(**params)
-            if all_votes is None:
-                all_votes = votes
-            elif isinstance(all_votes, np.ndarray):
-                all_votes = np.concatenate((all_votes, votes), axis=0)
-            elif isinstance(all_votes, list):
-                all_votes.extend(votes)
-            else:
+            new_votes = sampler(**params)
+            if not isinstance(new_votes, Iterable):
                 raise ValueError(
-                    f"The type of the votes returned by the sampler "
-                    f"{sampler.__name__} do not match known types and thus cannot "
-                    f"be used for concatenation of samplers. Did you mix-up ordinal "
-                    f"and approval samplers?"
+                    f"The sampler {samplers} did not return an iterable, we cannot "
+                    f"concatenate."
                 )
+            all_votes.extend(new_votes)
     return all_votes

@@ -16,7 +16,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates, validat
 @validate_num_voters_candidates
 def plackett_luce(
     num_voters: int, num_candidates: int, alphas: list[float], seed: int = None
-) -> np.ndarray:
+) -> list[list[int]]:
     """
     Generates ordinal votes according to Plackett-Luce model.
 
@@ -44,7 +44,7 @@ def plackett_luce(
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -136,20 +136,21 @@ def plackett_luce(
 
     alphas = np.array(alphas, dtype=float)
 
-    votes = np.zeros((num_voters, num_candidates), dtype=int)
+    votes = []
 
     for i in range(num_voters):
         items = list(range(num_candidates))
         tmp_alphas = alphas.copy()
 
+        vote = []
         for j in range(num_candidates):
             probabilities = tmp_alphas / sum(tmp_alphas)
             chosen = rng.choice(items, p=probabilities)
-            votes[i, j] = chosen
+            vote.append(chosen)
 
             tmp_alphas = np.delete(tmp_alphas, items.index(chosen))
             items.remove(chosen)
-
+        votes.append(vote)
     return votes
 
 

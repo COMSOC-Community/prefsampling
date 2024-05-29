@@ -219,7 +219,8 @@ def schroeder_tree_lescanne(
     Validation
     ----------
 
-        This sampler has unknown probability distribution but is efficient for large numbers of leaves.
+        This sampler has unknown probability distribution but is efficient for large numbers of
+        leaves.
 
         .. image:: ../validation_plots/tree/schroeder_lescanne.png
           :width: 800
@@ -349,7 +350,8 @@ def schroeder_tree_brute_force(
     Validation
     ----------
 
-        This sampler yields a uniform probability distribution but enumerates all trees (and is thus slow).
+        This sampler yields a uniform probability distribution but enumerates all trees (and
+        is thus slow).
 
         .. image:: ../validation_plots/tree/schroeder_brute_force.png
           :width: 800
@@ -358,7 +360,7 @@ def schroeder_tree_brute_force(
     """
     all_trees = all_schroeder_tree(num_leaves, num_internal_nodes=num_internal_nodes)
     rng = np.random.default_rng(seed)
-    res = rng.choice(all_trees)
+    res = rng.choice(all_trees)  # type: Node
     res.rename_frontier()
     return res
 

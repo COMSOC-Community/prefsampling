@@ -91,7 +91,7 @@ class Node:
             res += c.num_leaves()
         return res
 
-    def internal_nodes(self, current_list=None):
+    def internal_nodes(self, current_list=None) -> list[Node]:
         if current_list is None:
             current_list = []
         if not self.leaf:
@@ -114,7 +114,7 @@ class Node:
             return 0
         return 1 + sum(c.num_internal_nodes() for c in self.children)
 
-    def merge_with_parent(self, identifier):
+    def merge_with_parent(self, identifier) -> None:
         if self.identifier == identifier:
             self.parent.children.remove(self)
             for c in self.children:
@@ -124,7 +124,7 @@ class Node:
             for c in self.children:
                 c.merge_with_parent(identifier)
 
-    def is_schroeder(self):
+    def is_schroeder(self) -> bool:
         if self.leaf:
             return True
         if len(self.children) == 1:
@@ -146,7 +146,7 @@ class Node:
         res.reverse = self.reverse
         return res
 
-    def copy_tree(self, tree: dict = None):
+    def copy_tree(self, tree: dict = None) -> Node:
         """
         Copies the tree rooted in the node. All nodes are copied and the children are attached
         where they should be.
@@ -171,7 +171,7 @@ class Node:
             node_copy.add_child(child_copy)
         return node_copy
 
-    def rename_frontier(self, new_names: list = None):
+    def rename_frontier(self, new_names: list = None) -> None:
         """
         Renames the frontier of the tree rooted in the node. Leaves are renamed from the left-most
         leaf to the right-most one. If :code:`new_names == None`, leaves are renamed `0, 1, 2...`.

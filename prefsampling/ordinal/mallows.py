@@ -1,6 +1,7 @@
 """
-Mallows's model is a sampling model parameterised by a central ranking. The probability of generating
-a given ranking is then exponential in the distance between the ranking and the central ranking.
+Mallows's model is a sampling model parameterised by a central ranking. The probability of
+generating a given ranking is then exponential in the distance between the ranking and the central
+ranking.
 """
 
 from __future__ import annotations
@@ -23,7 +24,7 @@ def mallows(
     central_vote: np.ndarray = None,
     impartial_central_vote: bool = False,
     seed: int = None,
-) -> np.ndarray:
+) -> list[list[int]]:
     """
     Generates votes according to Mallows' model (`Mallows, 1957
     <https://www.jstor.org/stable/2333244>`_). This model is parameterised by a central vote. The
@@ -42,7 +43,8 @@ def mallows(
     (2023) <https://proceedings.mlr.press/v202/boehmer23b.html>`_ for more details. Use
     :code:`normalise_phi = True` to do so.
 
-    For an analogous sampler generating approval ballots, see :py:func:`~prefsampling.approval.noise.noise`.
+    For an analogous sampler generating approval ballots, see
+    :py:func:`~prefsampling.approval.noise.noise`.
 
     Parameters
     ----------
@@ -64,7 +66,7 @@ def mallows(
 
     Returns
     -------
-        np.ndarray
+        list[list[int]]
             Ordinal votes.
 
     Examples
@@ -156,12 +158,12 @@ def mallows(
     insert_distributions = [
         _insert_prob_distr(i, phi) for i in range(1, num_candidates)
     ]
-    votes = np.zeros((num_voters, num_candidates), dtype=int)
+    votes = []
     for i in range(num_voters):
         vote = _mallows_vote(num_candidates, insert_distributions, rng=rng)
         if central_vote is not None:
-            vote = tuple(central_vote[i] for i in vote)
-        votes[i, :] = vote
+            vote = [central_vote[i] for i in vote]
+        votes.append(vote)
     return votes
 
 
@@ -173,7 +175,7 @@ def norm_mallows(
     central_vote: np.ndarray = None,
     impartial_central_vote: bool = False,
     seed: int = None,
-) -> np.ndarray:
+) -> list[list[int]]:
     """
     Shortcut for the function :py:func:`~prefsampling.ordinal.mallows` with
     :code:`normalise_phi = True`.
@@ -222,7 +224,7 @@ def _mallows_vote(
     num_candidates: int,
     insert_distributions: list[np.ndarray],
     rng: np.random.Generator,
-) -> np.ndarray:
+) -> list[int]:
     """
     Samples a vote according to Mallows' model.
 
@@ -241,11 +243,11 @@ def _mallows_vote(
         The vote.
 
     """
-    vote = np.zeros(1, dtype=int)
+    vote = [0]
     for j in range(1, num_candidates):
         insert_distribution = insert_distributions[j - 1]
         index = rng.choice(range(len(insert_distribution)), p=insert_distribution)
-        vote = np.insert(vote, index, j)
+        vote.insert(index, j)
     return vote
 
 

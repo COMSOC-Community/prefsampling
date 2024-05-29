@@ -20,7 +20,7 @@ from prefsampling.core.urn import urn_scheme
 @validate_num_voters_candidates
 def urn(
     num_voters: int, num_candidates: int, alpha: float, seed: int = None
-) -> np.ndarray:
+) -> list[list[int]]:
     """
     Generates votes following the Pólya-Eggenberger urn culture. The process is as follows. The urn
     is initially empty and votes are generated one after the other, in turns. When generating a
@@ -126,8 +126,10 @@ def urn(
     """
     rng = np.random.default_rng(seed)
 
-    votes = urn_scheme(num_voters, alpha, lambda x: x.permutation(num_candidates), rng)
-    return np.array(votes, dtype=int)
+    votes = urn_scheme(
+        num_voters, alpha, lambda x: list(x.permutation(num_candidates)), rng
+    )
+    return votes
 
 
 def theoretical_distribution(num_voters, num_candidates, alpha, profiles=None) -> dict:

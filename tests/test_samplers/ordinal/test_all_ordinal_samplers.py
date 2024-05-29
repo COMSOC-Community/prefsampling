@@ -102,11 +102,13 @@ class TestOrdinalSamplers(TestCase):
             test_sampler_method, num_voters, num_candidates
         )
 
-        # Test if the function returns a numpy array
-        self.assertIsInstance(result, np.ndarray)
+        # Test if the function returns a list
+        self.assertIsInstance(result, list)
 
         # Test if the shape of the returned array is correct
-        self.assertEqual(result.shape, (num_voters, num_candidates))
+        self.assertEqual(len(result), num_voters)
+        if num_voters > 0:
+            self.assertEqual(len(result[0]), num_candidates)
 
         # Test if the values are within the range of candidates
         for vote in result:

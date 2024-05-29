@@ -4,29 +4,27 @@ Filters are functions that operate on collections of votes and apply some random
 
 from __future__ import annotations
 
-from collections.abc import MutableSequence, Callable
+from collections.abc import Callable
 from copy import deepcopy
 
 import numpy as np
 
 
-def permute_voters(
-    votes: np.ndarray | MutableSequence, seed: int = None
-) -> np.ndarray | MutableSequence:
+def permute_voters(votes: list, seed: int = None) -> list:
     """
     Randomly permutes the voters in an ordered collection of votes.
 
     Parameters
     ----------
-        votes : np.ndarray | MutableSequence
+        votes : list
             The votes.
         seed : int
             Seed for numpy random number generator.
 
     Returns
     -------
-        np.ndarray
-            Ordinal votes.
+        list
+            The votes permuted.
 
     Examples
     --------
@@ -63,7 +61,7 @@ def rename_candidates(
     votes: list[set[int]] | np.ndarray,
     num_candidates: int = None,
     seed: int = None,
-):
+) -> list:
     """
     Renames the candidates in approval or ordinal votes.
 
@@ -82,7 +80,7 @@ def rename_candidates(
 
     Returns
     -------
-        list[set[int]] or np.ndarray
+        list
             Votes with renamed candidates.
 
     Examples
@@ -121,8 +119,8 @@ def rename_candidates(
 
     if isinstance(votes, list) and isinstance(votes[0], set):
         renamed_votes = [{renaming[c] for c in vote} for vote in votes]
-    elif isinstance(votes, np.ndarray):
-        renamed_votes = renaming[votes]
+    elif isinstance(votes, list) and isinstance(votes[0], list):
+        renamed_votes = [[renaming[c] for c in vote] for vote in votes]
     else:
         raise ValueError(
             "Unsupported input type for renaming. Are you using an unknown ballot format?"
@@ -136,7 +134,7 @@ def resample_as_central_vote(
     sampler: Callable,
     sampler_parameters: dict,
     num_candidates: int = None,
-) -> np.ndarray | list[set[int]]:
+) -> list:
     """
     Resamples the votes by using them as the central vote of a given sampler. The outcome is
     obtained as follows: for each input vote, we pass it to the sampler as central vote; a single
@@ -165,7 +163,7 @@ def resample_as_central_vote(
 
     Returns
     -------
-        list[set[int]] or np.ndarray
+        list
             Votes resampled.
 
     Examples
