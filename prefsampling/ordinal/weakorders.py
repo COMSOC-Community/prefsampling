@@ -2,6 +2,7 @@
 Weak-orders represent preferences with ties: some alternatives can be declared to be equally good
 (or bad).
 """
+from __future__ import annotations
 
 import numpy as np
 
