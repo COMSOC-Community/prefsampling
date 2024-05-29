@@ -1,6 +1,6 @@
 __author__ = "Simon Rey and Stanisław Szufa"
 __email__ = "reysimon@orange.fr"
-__version__ = "0.1.19"
+__version__ = "0.1.20"
 
 from enum import Enum
 from itertools import chain
