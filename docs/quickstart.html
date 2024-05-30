@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="_static/documentation_options.js?v=e9612945"></script>
+    <script src="_static/documentation_options.js?v=da3c5b3a"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -455,6 +455,7 @@ section here.</p>
 <td><div class="line-block">
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">voters_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
 <div class="line"><code class="code docutils literal notranslate"><span class="pre">candidates_positions_args</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">dict()</span></code>)</div>
+<div class="line"><code class="code docutils literal notranslate"><span class="pre">tie_radius</span></code> (defaults to <code class="code docutils literal notranslate"><span class="pre">None</span></code>)</div>
 </div>
 </td>
 </tr>
@@ -730,6 +731,9 @@ These are the filters we have implemented:</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="reference/core/index.html#prefsampling.core.filters.resample_as_central_vote" title="prefsampling.core.filters.resample_as_central_vote"><code class="xref py py-func docutils literal notranslate"><span class="pre">resample_as_central_vote()</span></code></a></p></td>
 <td><p>Resamples the votes using them as central votes of sampler whose definition include a central vote (e.g., <a class="reference internal" href="reference/ordinal/mallows.html#module-prefsampling.ordinal.mallows" title="prefsampling.ordinal.mallows"><code class="xref py py-func docutils literal notranslate"><span class="pre">mallows()</span></code></a> or <a class="reference internal" href="reference/approval/resampling.html#module-prefsampling.approval.resampling" title="prefsampling.approval.resampling"><code class="xref py py-func docutils literal notranslate"><span class="pre">resampling()</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference/core/index.html#prefsampling.core.filters.coin_flip_ties" title="prefsampling.core.filters.coin_flip_ties"><code class="xref py py-func docutils literal notranslate"><span class="pre">coin_flip_ties()</span></code></a></p></td>
+<td><p>Introduce random ties in a strict ordinal ballot</p></td>
 </tr>
 </tbody>
 </table>

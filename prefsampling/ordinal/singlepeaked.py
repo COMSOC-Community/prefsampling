@@ -45,7 +45,7 @@ def single_peaked_conitzer(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns
@@ -163,7 +163,7 @@ def single_peaked_circle(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns
@@ -264,7 +264,7 @@ def single_peaked_walsh(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns

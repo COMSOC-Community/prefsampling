@@ -121,7 +121,7 @@ def noise(
         impartial_central_vote: bool, default: :code:`False`
             If true, the central vote is sampled from :py:func:`~prefsampling.approval.impartial`
             with the same value for the parameter :code:`p` as passed to this sampler.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns

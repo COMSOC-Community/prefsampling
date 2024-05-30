@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=e9612945"></script>
+    <script src="../../../_static/documentation_options.js?v=da3c5b3a"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -322,7 +322,7 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">        votes : list</span>
 <span class="sd">            The votes.</span>
-<span class="sd">        seed : int</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
@@ -382,7 +382,7 @@ document.write(`
 <span class="sd">            Approval or ordinal votes.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates. Needed for incomplete (e.g., approval) votes.</span>
-<span class="sd">        seed : int</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
 <span class="sd">    Returns</span>
@@ -520,6 +520,77 @@ document.write(`
         <span class="n">sampler_parameters</span><span class="p">[</span><span class="s2">&quot;central_vote&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vote</span>
         <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="o">**</span><span class="n">sampler_parameters</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">res</span></div>
+
+
+
+<div class="viewcode-block" id="coin_flip_ties">
+<a class="viewcode-back" href="../../../reference/core/index.html#prefsampling.core.filters.coin_flip_ties">[docs]</a>
+<span class="k">def</span> <span class="nf">coin_flip_ties</span><span class="p">(</span>
+    <span class="n">ordinal_votes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In the coin-flip models, a complete ordered is turned into a weak order by adding ties between</span>
+<span class="sd">    the candidates as follows: for each pair of consecutively ranked candidates, we add a tie</span>
+<span class="sd">    between them with probability :code:`p`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        ordinal_votes : list[list[int]]</span>
+<span class="sd">            The (strict) ordinal votes.</span>
+<span class="sd">        p : float</span>
+<span class="sd">            The probability of forming a tie.</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        list[list[list[int]]]</span>
+<span class="sd">            The weak orders.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import urn</span>
+<span class="sd">            from prefsampling.core import coin_flip_ties</span>
+
+<span class="sd">            # Get some votes</span>
+<span class="sd">            strict_ordinal_votes = urn(2, 3, 0.2)</span>
+
+<span class="sd">            # We randomly introduce ties</span>
+<span class="sd">            weak_ordinal_votes = coin_flip_ties(strict_ordinal_votes, 0.34)</span>
+
+<span class="sd">            # You can set the seed to ensure reproducibility</span>
+<span class="sd">            weak_ordinal_votes = coin_flip_ties(strict_ordinal_votes, 0.34, seed=265)</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        `Generalizing Instant Runoff Voting to Allow Indifferences</span>
+<span class="sd">        &lt;https://arxiv.org/abs/2404.11407&gt;`_,</span>
+<span class="sd">        *Théo Delemazure and Dominik Peters*,</span>
+<span class="sd">        arXiv:2404.11407, 2024.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">. Value should be in [0, 1]&quot;</span><span class="p">)</span>
+
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="n">weak_orders</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">ordinal_votes</span><span class="p">:</span>
+        <span class="n">weak_order</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">indif_class</span> <span class="o">=</span> <span class="p">[</span><span class="n">vote</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">cand</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">p</span><span class="p">:</span>
+                <span class="n">weak_order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">indif_class</span><span class="p">))</span>
+                <span class="n">indif_class</span> <span class="o">=</span> <span class="p">[</span><span class="n">cand</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">indif_class</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cand</span><span class="p">)</span>
+        <span class="n">weak_order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">indif_class</span><span class="p">))</span>
+        <span class="n">weak_orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weak_order</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">weak_orders</span></div>
 
 </pre></div>
 

@@ -28,7 +28,6 @@ from prefsampling.ordinal.groupseparable import group_separable, TreeSampler
 from prefsampling.ordinal.identity import identity
 from prefsampling.ordinal.didi import didi
 from prefsampling.ordinal.identity import identity
-from prefsampling.ordinal.weakorders import coin_flip_ties
 
 __all__ = [
     "urn",
@@ -49,5 +48,4 @@ __all__ = [
     "TreeSampler",
     "identity",
     "didi",
-    "coin_flip_ties",
 ]

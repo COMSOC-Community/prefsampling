@@ -39,7 +39,7 @@ def didi(
             Number of Candidates.
         alphas : list[float]
             List of model params, one value per candidate.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns

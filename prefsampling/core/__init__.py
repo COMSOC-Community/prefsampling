@@ -7,6 +7,7 @@ from prefsampling.core.filters import (
     permute_voters,
     rename_candidates,
     resample_as_central_vote,
+    coin_flip_ties,
 )
 
 
@@ -16,4 +17,5 @@ __all__ = [
     "resample_as_central_vote",
     "mixture",
     "concatenation",
+    "coin_flip_ties",
 ]

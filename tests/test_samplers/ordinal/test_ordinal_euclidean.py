@@ -1,3 +1,5 @@
+from unittest import TestCase
+
 from prefsampling.core.euclidean import EuclideanSpace
 from prefsampling.ordinal.euclidean import euclidean
 from prefsampling.point import ball_uniform, ball_resampling, cube, gaussian
@@ -81,3 +83,18 @@ def all_test_samplers_euclidean():
             )
         )
     return samplers
+
+
+class TestOrdinalEuclidean(TestCase):
+    def test_weak_orders(self):
+        num_candidates = 5
+        weak_votes = euclidean(
+            10,
+            num_candidates,
+            2,
+            EuclideanSpace.UNIFORM_BALL,
+            EuclideanSpace.UNIFORM_CUBE,
+            tie_radius=0.4,
+        )
+
+        assert all([sum(len(c) for c in v) == num_candidates] for v in weak_votes)

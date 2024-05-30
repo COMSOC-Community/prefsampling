@@ -78,6 +78,7 @@ Reference: :py:mod:`prefsampling.ordinal`
        | :code:`candidates_positions`
      - | :code:`voters_positions_args` (defaults to :code:`dict()`)
        | :code:`candidates_positions_args` (defaults to :code:`dict()`)
+       | :code:`tie_radius` (defaults to :code:`None`)
    * - :py:func:`~prefsampling.ordinal.plackettluce.plackett_luce`
      - :code:`alphas`
      - ---
@@ -264,6 +265,8 @@ These are the filters we have implemented:
      - Randomly rename the candidates
    * - :py:func:`~prefsampling.core.filters.resample_as_central_vote`
      - Resamples the votes using them as central votes of sampler whose definition include a central vote (e.g., :py:func:`~prefsampling.ordinal.mallows` or :py:func:`~prefsampling.approval.resampling`)
+   * - :py:func:`~prefsampling.core.filters.coin_flip_ties`
+     - Introduce random ties in a strict ordinal ballot
 
 Below is an example of how to use the :py:func:`~prefsampling.core.filters.resample_as_central_vote`
 filter.

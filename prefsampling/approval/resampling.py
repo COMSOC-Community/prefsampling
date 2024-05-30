@@ -72,7 +72,7 @@ def resampling(
             If true, the central vote is sampled from :py:func:`~prefsampling.approval.impartial`
             with the same value for the parameter :code:`rel_size_central_vote` as passed to this
             sampler.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns
@@ -271,7 +271,7 @@ def disjoint_resampling(
         impartial_central_votes : bool, default: :code:`False`
             If set to :code:`True`, then the central votes are generated at random following a
             uniform distribution over all suitable collection of central votes.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns
@@ -498,7 +498,7 @@ def moving_resampling(
             If true, the central vote is sampled from :py:func:`~prefsampling.approval.impartial`
             with the same value for the parameter :code:`rel_size_central_vote` as passed to this
             sampler.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns

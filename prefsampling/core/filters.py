@@ -18,7 +18,7 @@ def permute_voters(votes: list, seed: int = None) -> list:
     ----------
         votes : list
             The votes.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns
@@ -75,7 +75,7 @@ def rename_candidates(
             Approval or ordinal votes.
         num_candidates : int
             Number of Candidates. Needed for incomplete (e.g., approval) votes.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns
@@ -210,3 +210,71 @@ def resample_as_central_vote(
         sampler_parameters["central_vote"] = vote
         res[i] = sampler(**sampler_parameters)[0]
     return res
+
+
+def coin_flip_ties(
+    ordinal_votes: list[list[int]], p: float, seed: int = None
+) -> list[list[list[int]]]:
+    """
+    In the coin-flip models, a complete ordered is turned into a weak order by adding ties between
+    the candidates as follows: for each pair of consecutively ranked candidates, we add a tie
+    between them with probability :code:`p`.
+
+    Parameters
+    ----------
+        ordinal_votes : list[list[int]]
+            The (strict) ordinal votes.
+        p : float
+            The probability of forming a tie.
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator.
+
+    Returns
+    -------
+        list[list[list[int]]]
+            The weak orders.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import urn
+            from prefsampling.core import coin_flip_ties
+
+            # Get some votes
+            strict_ordinal_votes = urn(2, 3, 0.2)
+
+            # We randomly introduce ties
+            weak_ordinal_votes = coin_flip_ties(strict_ordinal_votes, 0.34)
+
+            # You can set the seed to ensure reproducibility
+            weak_ordinal_votes = coin_flip_ties(strict_ordinal_votes, 0.34, seed=265)
+
+    References
+    ----------
+        `Generalizing Instant Runoff Voting to Allow Indifferences
+        <https://arxiv.org/abs/2404.11407>`_,
+        *Théo Delemazure and Dominik Peters*,
+        arXiv:2404.11407, 2024.
+
+    """
+    if p < 0 or 1 < p:
+        raise ValueError(f"Incorrect value of p: {p}. Value should be in [0, 1]")
+
+    rng = np.random.default_rng(seed)
+
+    weak_orders = []
+    for vote in ordinal_votes:
+        weak_order = []
+        indif_class = [vote[0]]
+        for cand in vote[1:]:
+            if rng.random() > p:
+                weak_order.append(sorted(indif_class))
+                indif_class = [cand]
+            else:
+                indif_class.append(cand)
+        weak_order.append(sorted(indif_class))
+        weak_orders.append(weak_order)
+
+    return weak_orders

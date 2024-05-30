@@ -38,7 +38,7 @@ def impartial(
         p : float | Iterable[float]
             Probability of approving of any given candidates. If a sequence is passed, there is one
             such probability per voter.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns
@@ -204,7 +204,7 @@ def impartial_constant_size(
         rel_num_approvals : float | Iterable[float]
             Proportion of approved candidates in a ballot. If a sequence is passed, there is one
             such proportion per voter.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns

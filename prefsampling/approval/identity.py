@@ -25,7 +25,7 @@ def identity(
             Number of Candidates.
         rel_num_approvals : float
             Proportion of approved candidates in a ballot.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns
@@ -84,7 +84,7 @@ def full(num_voters: int, num_candidates: int, seed: int = None) -> list[set[int
         Number of Voters.
     num_candidates : int
         Number of Candidates.
-    seed : int
+    seed : int, default: :code:`None`
         Seed for numpy random number generator.
 
     Returns
@@ -123,7 +123,7 @@ def empty(num_voters: int, num_candidates: int, seed: int = None) -> list[set[in
         Number of Voters.
     num_candidates : int
         Number of Candidates.
-    seed : int
+    seed : int, default: :code:`None`
         Seed for numpy random number generator.
 
     Returns

@@ -39,7 +39,7 @@ def mixture(
         sampler_parameters: list[dict]
             List of dictionaries passed as keyword parameters of the samplers. Number of voters and
             number of candidates of these dictionaries are not taken into account.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
             Note that this is only the seed for this function.
             If you want to use particular seed for the functions generating votes,

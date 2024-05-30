@@ -220,7 +220,7 @@ def urn_partylist(
             :code:`party_votes` is not provided.
         party_votes : Iterable[set[int]], defaults: :code:`None`
             The votes of the parties. Needed if the argument :code:`parties` is not provided.
-        seed : int
+        seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
     Returns

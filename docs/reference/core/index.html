@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=e9612945"></script>
+    <script src="../../_static/documentation_options.js?v=da3c5b3a"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -352,6 +352,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.filters">Filters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.coin_flip_ties"><code class="docutils literal notranslate"><span class="pre">coin_flip_ties()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.permute_voters"><code class="docutils literal notranslate"><span class="pre">permute_voters()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.rename_candidates"><code class="docutils literal notranslate"><span class="pre">rename_candidates()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.resample_as_central_vote"><code class="docutils literal notranslate"><span class="pre">resample_as_central_vote()</span></code></a></li>
@@ -455,7 +456,7 @@ or only approval for instance). If you don’t, the code will probably fail.</p>
 <code class="code docutils literal notranslate"><span class="pre">weights[k]</span></code>.</p></li>
 <li><p><strong>sampler_parameters</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List of dictionaries passed as keyword parameters of the samplers. Number of voters and
 number of candidates of these dictionaries are not taken into account.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.
 Note that this is only the seed for this function.
 If you want to use particular seed for the functions generating votes,
 you should pass it as parameter within the <code class="code docutils literal notranslate"><span class="pre">sampler_parameters</span></code> list.</p></li>
@@ -511,6 +512,47 @@ you should pass it as parameter within the <code class="code docutils literal no
 <span id="filters"></span><h2>Filters<a class="headerlink" href="#module-prefsampling.core.filters" title="Link to this heading">#</a></h2>
 <p>Filters are functions that operate on collections of votes and apply some random operation to them.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="prefsampling.core.filters.coin_flip_ties">
+<span class="sig-name descname"><span class="pre">coin_flip_ties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ordinal_votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/core/filters.html#coin_flip_ties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.filters.coin_flip_ties" title="Link to this definition">#</a></dt>
+<dd><p>In the coin-flip models, a complete ordered is turned into a weak order by adding ties between
+the candidates as follows: for each pair of consecutively ranked candidates, we add a tie
+between them with probability <code class="code docutils literal notranslate"><span class="pre">p</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ordinal_votes</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em>) – The (strict) ordinal votes.</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – The probability of forming a tie.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The weak orders.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>list</em>[<em>list</em>[<em>list</em>[<em>int</em>]]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">urn</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">coin_flip_ties</span>
+
+<span class="c1"># Get some votes</span>
+<span class="n">strict_ordinal_votes</span> <span class="o">=</span> <span class="n">urn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># We randomly introduce ties</span>
+<span class="n">weak_ordinal_votes</span> <span class="o">=</span> <span class="n">coin_flip_ties</span><span class="p">(</span><span class="n">strict_ordinal_votes</span><span class="p">,</span> <span class="mf">0.34</span><span class="p">)</span>
+
+<span class="c1"># You can set the seed to ensure reproducibility</span>
+<span class="n">weak_ordinal_votes</span> <span class="o">=</span> <span class="n">coin_flip_ties</span><span class="p">(</span><span class="n">strict_ordinal_votes</span><span class="p">,</span> <span class="mf">0.34</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">265</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://arxiv.org/abs/2404.11407">Generalizing Instant Runoff Voting to Allow Indifferences</a>,
+<em>Théo Delemazure and Dominik Peters</em>,
+arXiv:2404.11407, 2024.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.core.filters.permute_voters">
 <span class="sig-name descname"><span class="pre">permute_voters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">votes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../../_modules/prefsampling/core/filters.html#permute_voters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.core.filters.permute_voters" title="Link to this definition">#</a></dt>
 <dd><p>Randomly permutes the voters in an ordered collection of votes.</p>
@@ -518,7 +560,7 @@ you should pass it as parameter within the <code class="code docutils literal no
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>votes</strong> (<em>list</em>) – The votes.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -564,7 +606,7 @@ largest integer appearing in the ballots (candidates are represented as int).</p
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>votes</strong> (<em>list</em><em>[</em><em>set</em><em>[</em><em>int</em><em>]</em><em>] or </em><em>np.ndarray</em>) – Approval or ordinal votes.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates. Needed for incomplete (e.g., approval) votes.</p></li>
-<li><p><strong>seed</strong> (<em>int</em>) – Seed for numpy random number generator.</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -817,6 +859,7 @@ a value is provided.</p></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-prefsampling.core.filters">Filters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.coin_flip_ties"><code class="docutils literal notranslate"><span class="pre">coin_flip_ties()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.permute_voters"><code class="docutils literal notranslate"><span class="pre">permute_voters()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.rename_candidates"><code class="docutils literal notranslate"><span class="pre">rename_candidates()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prefsampling.core.filters.resample_as_central_vote"><code class="docutils literal notranslate"><span class="pre">resample_as_central_vote()</span></code></a></li>
