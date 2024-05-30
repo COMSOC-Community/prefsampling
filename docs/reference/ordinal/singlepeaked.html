@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=da3c5b3a"></script>
+    <script src="../../_static/documentation_options.js?v=2df9458f"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -367,7 +367,7 @@ can be placed in such a way that the preferences of the voters are decreasing al
 the axis from their most preferred candidate.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.singlepeaked.single_peaked_conitzer">
-<span class="sig-name descname"><span class="pre">single_peaked_conitzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_conitzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_conitzer" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">single_peaked_conitzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_conitzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_conitzer" title="Link to this definition">#</a></dt>
 <dd><p>Generates ordinal votes that are single-peaked following the distribution defined by
 <a class="reference external" href="https://arxiv.org/abs/1401.3449">Conitzer (2009)</a>. The preferences generated are
 single-peaked with respect to the axis <cite>0, 1, 2, …</cite>. Votes are generated uniformly at random
@@ -387,6 +387,7 @@ process described above.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>axis</strong> (list[int], default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The societal axis</p></li>
 <li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
@@ -402,6 +403,9 @@ process described above.</p>
 
 <span class="c1"># Sample a single-peaked profile via Conitzer&#39;s method with 2 voters and 3 candidates.</span>
 <span class="n">single_peaked_conitzer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># You can set the societal axis</span>
+<span class="n">single_peaked_conitzer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 
 <span class="c1"># For reproducibility, you can set the seed.</span>
 <span class="n">single_peaked_conitzer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1002</span><span class="p">)</span>
@@ -425,7 +429,7 @@ Journal of Artificial Intelligence Research, 35:161–191, 2009.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.singlepeaked.single_peaked_walsh">
-<span class="sig-name descname"><span class="pre">single_peaked_walsh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_walsh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_walsh" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">single_peaked_walsh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_walsh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_walsh" title="Link to this definition">#</a></dt>
 <dd><p>Generates ordinal votes that are single-peaked following the process described by
 <a class="reference external" href="https://arxiv.org/abs/1503.02766">Walsh (2015)</a>. The votes are generated from least preferred
 to most preferred candidates. A given position in the ordering is filled by selecting, with
@@ -438,6 +442,7 @@ process described above.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>axis</strong> (list[int], default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The societal axis</p></li>
 <li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
@@ -453,6 +458,9 @@ process described above.</p>
 
 <span class="c1"># Sample a single-peaked profile via Walsh&#39;s method with 2 voters and 3 candidates.</span>
 <span class="n">single_peaked_walsh</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># You can set the societal axis</span>
+<span class="n">single_peaked_walsh</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 
 <span class="c1"># For reproducibility, you can set the seed.</span>
 <span class="n">single_peaked_walsh</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1002</span><span class="p">)</span>
@@ -472,14 +480,15 @@ ArXiV preprint, 2015.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="prefsampling.ordinal.singlepeaked.single_peaked_circle">
-<span class="sig-name descname"><span class="pre">single_peaked_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_circle" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">single_peaked_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_voters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_candidates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/prefsampling/ordinal/singlepeaked.html#single_peaked_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#prefsampling.ordinal.singlepeaked.single_peaked_circle" title="Link to this definition">#</a></dt>
 <dd><p>Generates ordinal votes that are single-peaked on a circle following a distribution inspired
 from the one by Conitzer (2009) for single-peakedness on a line (see
 <code class="xref py py-func docutils literal notranslate"><span class="pre">single_peaked_conitzer()</span></code>). This method starts by
 determining the most preferred candidate (the peak). This is done with uniform probability
 over the candidates. Then, subsequent positions in the ordering are filled by taking either the
 next available candidate on the left or on the right, both cases occuring with probability 0.5.
-Left and right are defined here in terms of the circular axis: <cite>0, 1, …, m, 1</cite>.</p>
+Left and right are defined here in terms of the circular axis: <cite>0, 1, …, m, 1</cite> (can be
+changed by using the <code class="code docutils literal notranslate"><span class="pre">axis</span></code> parameter).</p>
 <p>A collection of <cite>num_voters</cite> vote is generated independently and identically following the
 process described above.</p>
 <dl class="field-list simple">
@@ -487,6 +496,7 @@ process described above.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_voters</strong> (<em>int</em>) – Number of Voters.</p></li>
 <li><p><strong>num_candidates</strong> (<em>int</em>) – Number of Candidates.</p></li>
+<li><p><strong>axis</strong> (list[int], default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – The societal axis</p></li>
 <li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator.</p></li>
 </ul>
 </dd>
@@ -502,6 +512,9 @@ process described above.</p>
 
 <span class="c1"># Sample a single-peaked on a circle profile with 2 voters and 3 candidates.</span>
 <span class="n">single_peaked_circle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># You can set the societal axis</span>
+<span class="n">single_peaked_circle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 
 <span class="c1"># For reproducibility, you can set the seed.</span>
 <span class="n">single_peaked_circle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1002</span><span class="p">)</span>

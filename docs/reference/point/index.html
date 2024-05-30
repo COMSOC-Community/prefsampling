@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../_static/documentation_options.js?v=da3c5b3a"></script>
+    <script src="../../_static/documentation_options.js?v=2df9458f"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -438,14 +438,17 @@ instance).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_points</strong> (<em>int</em>) – The number of points to sample.</p></li>
 <li><p><strong>num_dimensions</strong> (<em>int</em>) – The number of dimensions for the ball.</p></li>
-<li><p><strong>inner_sampler</strong> (<em>Callable</em>) – The function used to sample points before resampling.</p></li>
+<li><p><strong>inner_sampler</strong> (<em>Callable</em>) – The function used to sample points before resampling. This function should accept an
+optional <code class="code docutils literal notranslate"><span class="pre">seed</span></code> parameter. Other parameters should be passed by name via the
+<code class="code docutils literal notranslate"><span class="pre">inner_sampler_args</span></code> argument.</p></li>
 <li><p><strong>inner_sampler_args</strong> (<em>dict</em>) – The arguments passed to the <cite>inner_sampler</cite>.</p></li>
 <li><p><strong>center_point</strong> (<em>Iterable</em><em>[</em><em>float</em><em>]</em>) – The coordinates of the center point of the ball. It needs to have one coordinate per
 dimension.</p></li>
 <li><p><strong>width</strong> (float, default: <code class="code docutils literal notranslate"><span class="pre">1</span></code>) – The width of the ball. Can only be a single value (as opposed to
 <code class="xref py py-func docutils literal notranslate"><span class="pre">ball_uniform()</span></code>).</p></li>
 <li><p><strong>max_numer_resampling</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">1000</span></code>) – The maximum number of resampling. If exceeded, the center point is used.</p></li>
-<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator (not used in this function).</p></li>
+<li><p><strong>seed</strong> (int, default: <code class="code docutils literal notranslate"><span class="pre">None</span></code>) – Seed for numpy random number generator. We increase the seed by one each time we
+resample (to avoid always resampling the same point).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=da3c5b3a"></script>
+    <script src="../../../_static/documentation_options.js?v=2df9458f"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -449,7 +449,9 @@ document.write(`
 <span class="sd">        num_dimensions: int</span>
 <span class="sd">            The number of dimensions for the ball.</span>
 <span class="sd">        inner_sampler: Callable</span>
-<span class="sd">            The function used to sample points before resampling.</span>
+<span class="sd">            The function used to sample points before resampling. This function should accept an</span>
+<span class="sd">            optional :code:`seed` parameter. Other parameters should be passed by name via the</span>
+<span class="sd">            :code:`inner_sampler_args` argument.</span>
 <span class="sd">        inner_sampler_args: dict</span>
 <span class="sd">            The arguments passed to the `inner_sampler`.</span>
 <span class="sd">        center_point: Iterable[float]</span>
@@ -461,7 +463,8 @@ document.write(`
 <span class="sd">        max_numer_resampling : int, default: :code:`1000`</span>
 <span class="sd">            The maximum number of resampling. If exceeded, the center point is used.</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
-<span class="sd">            Seed for numpy random number generator (not used in this function).</span>
+<span class="sd">            Seed for numpy random number generator. We increase the seed by one each time we</span>
+<span class="sd">            resample (to avoid always resampling the same point).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -479,6 +482,9 @@ document.write(`
     <span class="n">validate_int</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">,</span> <span class="s2">&quot;num_dimensions&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">center_point</span> <span class="o">=</span> <span class="n">validate_center_point</span><span class="p">(</span><span class="n">center_point</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">inner_sampler_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+
     <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="p">):</span>
         <span class="n">point</span> <span class="o">=</span> <span class="n">inner_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">inner_sampler_args</span><span class="p">)</span>
@@ -493,6 +499,9 @@ document.write(`
             <span class="p">)</span>
         <span class="n">num_resampling</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">point</span> <span class="o">-</span> <span class="n">center_point</span><span class="p">)</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">seed</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">inner_sampler_args</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
             <span class="n">point</span> <span class="o">=</span> <span class="n">inner_sampler</span><span class="p">(</span><span class="o">**</span><span class="n">inner_sampler_args</span><span class="p">)</span>
             <span class="n">num_resampling</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">num_resampling</span> <span class="o">==</span> <span class="n">max_numer_resampling</span><span class="p">:</span>

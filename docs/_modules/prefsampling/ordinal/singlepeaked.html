@@ -35,7 +35,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../_static/documentation_options.js?v=da3c5b3a"></script>
+    <script src="../../../_static/documentation_options.js?v=2df9458f"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
@@ -323,7 +323,7 @@ document.write(`
 <a class="viewcode-back" href="../../../reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_conitzer">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_peaked_conitzer</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates ordinal votes that are single-peaked following the distribution defined by</span>
@@ -349,6 +349,8 @@ document.write(`
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
+<span class="sd">        axis : list[int], default: :code:`None`</span>
+<span class="sd">            The societal axis</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -366,6 +368,9 @@ document.write(`
 
 <span class="sd">            # Sample a single-peaked profile via Conitzer&#39;s method with 2 voters and 3 candidates.</span>
 <span class="sd">            single_peaked_conitzer(2, 3)</span>
+
+<span class="sd">            # You can set the societal axis</span>
+<span class="sd">            single_peaked_conitzer(2, 3, axis=[0, 2, 1])</span>
 
 <span class="sd">            # For reproducibility, you can set the seed.</span>
 <span class="sd">            single_peaked_conitzer(2, 3, seed=1002)</span>
@@ -402,6 +407,11 @@ document.write(`
 <span class="sd">        *Vincent Conitzer*,</span>
 <span class="sd">        Journal of Artificial Intelligence Research, 35:161–191, 2009.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_candidates</span> <span class="ow">or</span> <span class="nb">min</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">max</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">num_candidates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The axis should have exactly the same length as the number of &quot;</span>
+                             <span class="s2">&quot;candidates, they should be named for 0 to num_candidates -  1.&quot;</span><span class="p">)</span>
+
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
@@ -423,6 +433,8 @@ document.write(`
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">vote</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
                 <span class="n">left</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vote</span> <span class="o">=</span> <span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">]</span>
         <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">votes</span></div>
@@ -450,7 +462,7 @@ document.write(`
 <a class="viewcode-back" href="../../../reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_circle">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_peaked_circle</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates ordinal votes that are single-peaked on a circle following a distribution inspired</span>
@@ -459,7 +471,8 @@ document.write(`
 <span class="sd">    determining the most preferred candidate (the peak). This is done with uniform probability</span>
 <span class="sd">    over the candidates. Then, subsequent positions in the ordering are filled by taking either the</span>
 <span class="sd">    next available candidate on the left or on the right, both cases occuring with probability 0.5.</span>
-<span class="sd">    Left and right are defined here in terms of the circular axis: `0, 1, ..., m, 1`.</span>
+<span class="sd">    Left and right are defined here in terms of the circular axis: `0, 1, ..., m, 1` (can be</span>
+<span class="sd">    changed by using the :code:`axis` parameter).</span>
 
 <span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
 <span class="sd">    process described above.</span>
@@ -470,6 +483,8 @@ document.write(`
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
+<span class="sd">        axis : list[int], default: :code:`None`</span>
+<span class="sd">            The societal axis</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -487,6 +502,9 @@ document.write(`
 
 <span class="sd">            # Sample a single-peaked on a circle profile with 2 voters and 3 candidates.</span>
 <span class="sd">            single_peaked_circle(2, 3)</span>
+
+<span class="sd">            # You can set the societal axis</span>
+<span class="sd">            single_peaked_circle(2, 3, axis=[0, 2, 1])</span>
 
 <span class="sd">            # For reproducibility, you can set the seed.</span>
 <span class="sd">            single_peaked_circle(2, 3, seed=1002)</span>
@@ -516,6 +534,11 @@ document.write(`
 <span class="sd">        *Dominik Peters and Martin Lackner*,</span>
 <span class="sd">        Journal of Artificial Intelligence Research, 68:463–502, 2020.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_candidates</span> <span class="ow">or</span> <span class="nb">min</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">max</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">num_candidates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The axis should have exactly the same length as the number of &quot;</span>
+                             <span class="s2">&quot;candidates, they should be named for 0 to num_candidates -  1.&quot;</span><span class="p">)</span>
+
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_voters</span><span class="p">):</span>
@@ -533,6 +556,8 @@ document.write(`
                 <span class="n">vote</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
                 <span class="n">right</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="n">right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vote</span> <span class="o">=</span> <span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">]</span>
         <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">votes</span></div>
 
@@ -556,7 +581,7 @@ document.write(`
 <a class="viewcode-back" href="../../../reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.single_peaked_walsh">[docs]</a>
 <span class="nd">@validate_num_voters_candidates</span>
 <span class="k">def</span> <span class="nf">single_peaked_walsh</span><span class="p">(</span>
-    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates ordinal votes that are single-peaked following the process described by</span>
@@ -574,6 +599,8 @@ document.write(`
 <span class="sd">            Number of Voters.</span>
 <span class="sd">        num_candidates : int</span>
 <span class="sd">            Number of Candidates.</span>
+<span class="sd">        axis : list[int], default: :code:`None`</span>
+<span class="sd">            The societal axis</span>
 <span class="sd">        seed : int, default: :code:`None`</span>
 <span class="sd">            Seed for numpy random number generator.</span>
 
@@ -591,6 +618,9 @@ document.write(`
 
 <span class="sd">            # Sample a single-peaked profile via Walsh&#39;s method with 2 voters and 3 candidates.</span>
 <span class="sd">            single_peaked_walsh(2, 3)</span>
+
+<span class="sd">            # You can set the societal axis</span>
+<span class="sd">            single_peaked_walsh(2, 3, axis=[0, 2, 1])</span>
 
 <span class="sd">            # For reproducibility, you can set the seed.</span>
 <span class="sd">            single_peaked_walsh(2, 3, seed=1002)</span>
@@ -621,6 +651,11 @@ document.write(`
 <span class="sd">        ArXiV preprint, 2015.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">!=</span> <span class="n">num_candidates</span> <span class="ow">or</span> <span class="nb">min</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">max</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">num_candidates</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The axis should have exactly the same length as the number of &quot;</span>
+                             <span class="s2">&quot;candidates, they should be named for 0 to num_candidates -  1.&quot;</span><span class="p">)</span>
+
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -635,6 +670,8 @@ document.write(`
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">vote</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right_most</span><span class="p">)</span>
                 <span class="n">right_most</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vote</span> <span class="o">=</span> <span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vote</span><span class="p">]</span>
         <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">vote</span><span class="p">)))</span>
 
     <span class="k">return</span> <span class="n">votes</span></div>
