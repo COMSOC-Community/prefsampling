@@ -157,6 +157,10 @@ class TestApprovalResampling(TestCase):
 
     def test_approval_moving_resampling(self):
         with self.assertRaises(ValueError):
+            moving_resampling(4, 5, rel_size_central_vote=-0.5, phi=0.3, num_legs=2)
+        with self.assertRaises(ValueError):
+            moving_resampling(4, 5, rel_size_central_vote=1.5, phi=0.3, num_legs=3)
+        with self.assertRaises(ValueError):
             moving_resampling(4, 5, rel_size_central_vote=0.5, phi=-0.4, num_legs=2)
         with self.assertRaises(ValueError):
             moving_resampling(4, 5, rel_size_central_vote=0.5, phi=4, num_legs=3)

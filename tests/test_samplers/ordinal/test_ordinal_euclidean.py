@@ -119,6 +119,7 @@ class TestOrdinalEuclidean(TestCase):
                 tie_radius=-0.4,
             )
 
+    def test_bad_positions(self):
         with self.assertRaises(ValueError):
             euclidean(
                 10,
@@ -126,6 +127,15 @@ class TestOrdinalEuclidean(TestCase):
                 2,
                 EuclideanSpace.UNIFORM_CUBE,
                 lambda num_points, num_dimensions, seed=None: 1,
+            )
+
+        with self.assertRaises(ValueError):
+            euclidean(
+                1,
+                2,
+                2,
+                EuclideanSpace.UNIFORM_CUBE,
+                [[0.4, 0.2, 0.1], [0.1, 0.3, 0.8]],
             )
 
     def test_euclidean_space_to_sampler(self):

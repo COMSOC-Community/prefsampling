@@ -101,6 +101,7 @@ class TestCombinatorics(TestCase):
         with self.assertRaises(ValueError):
             gs_structure(((0, 1, 2), (2, 0, 1), (1, 2, 0)), verbose=True)
         node = GSNode({0, 1, 2})
+        node.children = [GSNode({3}), GSNode({4, 5})]
         node.__repr__()
         node.print_tree()
         node.tree_representation()
