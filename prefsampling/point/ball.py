@@ -139,7 +139,9 @@ def ball_resampling(
         num_dimensions: int
             The number of dimensions for the ball.
         inner_sampler: Callable
-            The function used to sample points before resampling.
+            The function used to sample points before resampling. This function should accept an
+            optional :code:`seed` parameter. Other parameters should be passed by name via the
+            :code:`inner_sampler_args` argument.
         inner_sampler_args: dict
             The arguments passed to the `inner_sampler`.
         center_point: Iterable[float]
@@ -151,7 +153,8 @@ def ball_resampling(
         max_numer_resampling : int, default: :code:`1000`
             The maximum number of resampling. If exceeded, the center point is used.
         seed : int, default: :code:`None`
-            Seed for numpy random number generator (not used in this function).
+            Seed for numpy random number generator. We increase the seed by one each time we
+            resample (to avoid always resampling the same point).
 
     Returns
     -------
@@ -169,6 +172,9 @@ def ball_resampling(
     validate_int(num_dimensions, "num_dimensions", 1)
     center_point = validate_center_point(center_point, num_dimensions)
 
+    if seed is not None:
+        inner_sampler_args["seed"] = seed
+
     points = []
     for _ in range(num_points):
         point = inner_sampler(**inner_sampler_args)
@@ -183,6 +189,9 @@ def ball_resampling(
             )
         num_resampling = 0
         while np.linalg.norm(point - center_point) > (width / 2):
+            if seed is not None:
+                seed += 1
+                inner_sampler_args["seed"] = seed
             point = inner_sampler(**inner_sampler_args)
             num_resampling += 1
             if num_resampling == max_numer_resampling:

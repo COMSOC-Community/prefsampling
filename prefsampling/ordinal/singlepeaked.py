@@ -19,7 +19,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates, validat
 
 @validate_num_voters_candidates
 def single_peaked_conitzer(
-    num_voters: int, num_candidates: int, seed: int = None
+    num_voters: int, num_candidates: int, axis: list[int] = None, seed: int = None
 ) -> list[list[int]]:
     """
     Generates ordinal votes that are single-peaked following the distribution defined by
@@ -45,6 +45,8 @@ def single_peaked_conitzer(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
+        axis : list[int], default: :code:`None`
+            The societal axis
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
@@ -62,6 +64,9 @@ def single_peaked_conitzer(
 
             # Sample a single-peaked profile via Conitzer's method with 2 voters and 3 candidates.
             single_peaked_conitzer(2, 3)
+
+            # You can set the societal axis
+            single_peaked_conitzer(2, 3, axis=[0, 2, 1])
 
             # For reproducibility, you can set the seed.
             single_peaked_conitzer(2, 3, seed=1002)
@@ -98,6 +103,11 @@ def single_peaked_conitzer(
         *Vincent Conitzer*,
         Journal of Artificial Intelligence Research, 35:161–191, 2009.
     """
+    if axis is not None:
+        if len(axis) != num_candidates or min(axis) < 0 or max(axis) >= num_candidates:
+            raise ValueError("The axis should have exactly the same length as the number of "
+                             "candidates, they should be named for 0 to num_candidates -  1.")
+
     rng = np.random.default_rng(seed)
     votes = []
     for _ in range(num_voters):
@@ -119,6 +129,8 @@ def single_peaked_conitzer(
             else:
                 vote.append(left)
                 left -= 1
+        if axis is not None:
+            vote = [axis[c] for c in vote]
         votes.append(vote)
 
     return votes
@@ -143,7 +155,7 @@ def conitzer_theoretical_distribution(
 
 @validate_num_voters_candidates
 def single_peaked_circle(
-    num_voters: int, num_candidates: int, seed: int = None
+    num_voters: int, num_candidates: int, axis: list[int] = None, seed: int = None
 ) -> list[list[int]]:
     """
     Generates ordinal votes that are single-peaked on a circle following a distribution inspired
@@ -152,7 +164,8 @@ def single_peaked_circle(
     determining the most preferred candidate (the peak). This is done with uniform probability
     over the candidates. Then, subsequent positions in the ordering are filled by taking either the
     next available candidate on the left or on the right, both cases occuring with probability 0.5.
-    Left and right are defined here in terms of the circular axis: `0, 1, ..., m, 1`.
+    Left and right are defined here in terms of the circular axis: `0, 1, ..., m, 1` (can be
+    changed by using the :code:`axis` parameter).
 
     A collection of `num_voters` vote is generated independently and identically following the
     process described above.
@@ -163,6 +176,8 @@ def single_peaked_circle(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
+        axis : list[int], default: :code:`None`
+            The societal axis
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
@@ -180,6 +195,9 @@ def single_peaked_circle(
 
             # Sample a single-peaked on a circle profile with 2 voters and 3 candidates.
             single_peaked_circle(2, 3)
+
+            # You can set the societal axis
+            single_peaked_circle(2, 3, axis=[0, 2, 1])
 
             # For reproducibility, you can set the seed.
             single_peaked_circle(2, 3, seed=1002)
@@ -209,6 +227,11 @@ def single_peaked_circle(
         *Dominik Peters and Martin Lackner*,
         Journal of Artificial Intelligence Research, 68:463–502, 2020.
     """
+    if axis is not None:
+        if len(axis) != num_candidates or min(axis) < 0 or max(axis) >= num_candidates:
+            raise ValueError("The axis should have exactly the same length as the number of "
+                             "candidates, they should be named for 0 to num_candidates -  1.")
+
     rng = np.random.default_rng(seed)
     votes = []
     for _ in range(num_voters):
@@ -226,6 +249,8 @@ def single_peaked_circle(
                 vote.append(right)
                 right += 1
                 right = np.mod(right, num_candidates)
+        if axis is not None:
+            vote = [axis[c] for c in vote]
         votes.append(vote)
     return votes
 
@@ -246,7 +271,7 @@ def circle_theoretical_distribution(
 
 @validate_num_voters_candidates
 def single_peaked_walsh(
-    num_voters: int, num_candidates: int, seed: int = None
+    num_voters: int, num_candidates: int, axis: list[int] = None, seed: int = None
 ) -> list[list[int]]:
     """
     Generates ordinal votes that are single-peaked following the process described by
@@ -264,6 +289,8 @@ def single_peaked_walsh(
             Number of Voters.
         num_candidates : int
             Number of Candidates.
+        axis : list[int], default: :code:`None`
+            The societal axis
         seed : int, default: :code:`None`
             Seed for numpy random number generator.
 
@@ -281,6 +308,9 @@ def single_peaked_walsh(
 
             # Sample a single-peaked profile via Walsh's method with 2 voters and 3 candidates.
             single_peaked_walsh(2, 3)
+
+            # You can set the societal axis
+            single_peaked_walsh(2, 3, axis=[0, 2, 1])
 
             # For reproducibility, you can set the seed.
             single_peaked_walsh(2, 3, seed=1002)
@@ -311,6 +341,11 @@ def single_peaked_walsh(
         ArXiV preprint, 2015.
 
     """
+    if axis is not None:
+        if len(axis) != num_candidates or min(axis) < 0 or max(axis) >= num_candidates:
+            raise ValueError("The axis should have exactly the same length as the number of "
+                             "candidates, they should be named for 0 to num_candidates -  1.")
+
     rng = np.random.default_rng(seed)
     votes = []
 
@@ -325,6 +360,8 @@ def single_peaked_walsh(
             else:
                 vote.append(right_most)
                 right_most -= 1
+        if axis is not None:
+            vote = [axis[c] for c in vote]
         votes.append(list(reversed(vote)))
 
     return votes

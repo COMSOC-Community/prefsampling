@@ -30,3 +30,8 @@ class TestFilters(TestCase):
         weak_votes = coin_flip_ties(ordinal_votes, 0.4)
 
         assert all([sum(len(c) for c in v) == num_candidates] for v in weak_votes)
+
+        with self.assertRaises(ValueError):
+            coin_flip_ties(ordinal_votes, -0.4)
+        with self.assertRaises(ValueError):
+            coin_flip_ties(ordinal_votes, 1.4)

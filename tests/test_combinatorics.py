@@ -19,6 +19,7 @@ from prefsampling.combinatorics import (
     all_gs_structure,
     kendall_tau_distance,
     gs_structure,
+    GSNode,
 )
 
 
@@ -82,7 +83,7 @@ class TestCombinatorics(TestCase):
         self.assertEqual(kendall_tau_distance((0, 1, 2, 3), (0, 1, 2, 3)), 0)
         self.assertEqual(kendall_tau_distance((0, 1, 2, 3), (3, 2, 1, 0)), 6)
 
-    def test_rest(self):
+    def test_all_the_rest(self):
         all_anonymous_profiles(3, 4)
         all_profiles(3, 4)
         all_non_isomorphic_profiles(3, 4)
@@ -99,3 +100,7 @@ class TestCombinatorics(TestCase):
         gs_structure(((0, 1, 2, 3), (3, 2, 1, 0)), verbose=True)
         with self.assertRaises(ValueError):
             gs_structure(((0, 1, 2), (2, 0, 1), (1, 2, 0)), verbose=True)
+        node = GSNode({0, 1, 2})
+        node.__repr__()
+        node.print_tree()
+        node.tree_representation()

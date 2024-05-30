@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from prefsampling.core.euclidean import EuclideanSpace
+from prefsampling.core.euclidean import EuclideanSpace, euclidean_space_to_sampler
 from prefsampling.ordinal.euclidean import euclidean
 from prefsampling.point import ball_uniform, ball_resampling, cube, gaussian
 from tests.utils import TestSampler
@@ -98,3 +98,36 @@ class TestOrdinalEuclidean(TestCase):
         )
 
         assert all([sum(len(c) for c in v) == num_candidates] for v in weak_votes)
+
+        with self.assertRaises(ValueError):
+            euclidean(
+                10,
+                num_candidates,
+                2,
+                EuclideanSpace.UNIFORM_BALL,
+                EuclideanSpace.UNIFORM_CUBE,
+                tie_radius=0,
+            )
+
+        with self.assertRaises(ValueError):
+            euclidean(
+                10,
+                num_candidates,
+                2,
+                EuclideanSpace.UNIFORM_BALL,
+                EuclideanSpace.UNIFORM_CUBE,
+                tie_radius=-0.4,
+            )
+
+        with self.assertRaises(ValueError):
+            euclidean(
+                10,
+                2,
+                2,
+                EuclideanSpace.UNIFORM_CUBE,
+                lambda num_points, num_dimensions, seed=None: 1,
+            )
+
+    def test_euclidean_space_to_sampler(self):
+        with self.assertRaises(ValueError):
+            euclidean_space_to_sampler("Bonjour", 2)
