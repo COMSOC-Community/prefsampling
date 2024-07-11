@@ -6,7 +6,9 @@ the axis from their most preferred candidate.
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+import math
+import warnings
+from collections.abc import Iterable, Callable
 
 import numpy as np
 
@@ -14,7 +16,9 @@ from prefsampling.combinatorics import (
     all_single_peaked_rankings,
     all_single_peaked_circle_rankings,
 )
+from prefsampling.core import mixture
 from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
+from prefsampling.ordinal import impartial
 
 
 @validate_num_voters_candidates
@@ -379,3 +383,128 @@ def walsh_theoretical_distribution(
         validate_int(num_candidates, lower_bound=1)
         sp_rankings = all_single_peaked_rankings(num_candidates)
     return {r: 1 / len(sp_rankings) for r in sp_rankings}
+
+
+@validate_num_voters_candidates
+def k_axes_single_peaked(
+        num_voters: int,
+        num_candidates: int,
+        k: int,
+        axes_weights: float | Iterable[float],
+        inner_sp_sampler: Callable = None,
+        seed: int = None
+) -> list[list[int]]:
+    """
+    Generates ordinal votes that are single-peaked on k axes, i.e., a set of votes for which
+    there exists k axes such that each vote is single-peaked on one of the k axes.
+
+    The sampler works as follows: k distinct axes are sampled uniformly at random. We ensure here
+    that no axis or reversed axis is sampled more than one. Then, to sample a given vote, an axis
+    is selected uniformly at random based on the weight distribution over the axes, and a
+    single-peaked vote on this axis is sampled.
+
+    A collection of `num_voters` vote is generated independently and identically following the
+    process described above.
+
+    Note that the resulting collection of votes can be single-peaked on less than k axes, and not
+    exactly k, since a given vote may be single on several axes. It is also not certain that
+    at least one vote will be sampled according to each axis.
+
+    Parameters
+    ----------
+        num_voters : int
+            Number of Voters.
+        num_candidates : int
+            Number of Candidates.
+        k : int
+            Number of axes
+        axes_weights: float | Iterable[float]
+            Weight of each axis. If a single value is given, all axes have the same weight,
+            otherwise one weight needs to be provided per axis.
+        inner_sp_sampler : Callable, default: :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_walsh`
+            Sampler used to generate single-peaked votes. This function needs to accept a name
+            argument "axis".
+        seed : int, default: :code:`None`
+            Seed for numpy random number generator.
+
+    Returns
+    -------
+        list[list[int]]
+            Ordinal votes.
+
+    Examples
+    --------
+
+        .. testcode::
+
+            from prefsampling.ordinal import k_axes_single_peaked
+
+            # Sample a 2-axes single-peaked profile with 2 voters and 3 candidates,
+            # each axis with equal weight.
+            k_axes_single_peaked(2, 3, 2, 0.5)
+
+            # You can change the inner sampler
+            from prefsampling.ordinal import single_peaked_conitzer
+            k_axes_single_peaked(2, 3, 2, 0.5, inner_sp_sampler=single_peaked_conitzer)
+
+            # You can given different weights
+            k_axes_single_peaked(2, 3, 2, [0.2, 0.4])
+
+            # For reproducibility, you can set the seed.
+            k_axes_single_peaked(2, 3, 2, 0.5, seed=1002)
+
+    Validation
+    ----------
+        None
+
+    References
+    ----------
+        None
+    """
+    if num_voters < k:
+        raise ValueError("For the k-axes single-peaked sampler, the number of axes cannot be more "
+                         "than the number of voters.")
+    validate_int(k, "number of axes", lower_bound=1)
+
+    try:
+        num_axes = math.factorial(num_candidates)
+    except ValueError:
+        # This happens for instance for too large values of the factorial
+        warnings.warn("We could not compute the number of axes because of a high number of "
+                      "candidates. In case you passed a value k > m!/2, the function will "
+                      "not terminate.")
+        num_axes = None
+    if num_axes and num_axes / 2 < k:
+        raise ValueError("For the k-axes single-peaked sampler, the number of axes cannot be more "
+                         "than half of the factorial of the number of candidates (the number of "
+                         "potential axes up to reversal).")
+
+    if isinstance(axes_weights, Iterable):
+        axes_weights = list(axes_weights)
+        if len(axes_weights) != k:
+            raise ValueError("For the k-axes single-peaked sampler, if the 'axes_weights' "
+                             "parameter is and iterable, then one value per axis needs to be "
+                             "provided.")
+    else:
+        axes_weights = [axes_weights for _ in range(k)]
+
+    if inner_sp_sampler is None:
+        inner_sp_sampler = single_peaked_walsh
+
+    all_axes = set()
+    for _ in range(k):
+        axis = tuple(impartial(1, num_candidates, seed=seed)[0])
+        reversed_axis = tuple(axis[i] for i in range(len(axis) - 1, -1, -1))
+        while axis in all_axes or reversed_axis in all_axes:
+            axis = tuple(impartial(1, num_candidates)[0])
+            reversed_axis = tuple(axis[i] for i in range(len(axis) - 1, -1, -1))
+        all_axes.add(axis)
+
+    return mixture(
+        num_voters,
+        num_candidates,
+        [inner_sp_sampler for _ in range(k)],
+        axes_weights,
+        sampler_parameters=[{"axis": a} for a in all_axes],
+        seed=seed
+    )

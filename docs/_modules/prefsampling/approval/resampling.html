@@ -670,6 +670,10 @@ document.write(`
     <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">phi</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect value of phi: </span><span class="si">{</span><span class="n">phi</span><span class="si">}</span><span class="s2">. Value should be in [0,1]&quot;</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rel_size_central_vote</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Sorry this has not been implemented... If you need it, reach out&quot;</span>
+                                  <span class="s2">&quot;to increase the pressure on us.&quot;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">rel_size_central_vote</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">rel_size_central_vote</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Incorrect value of rel_size_central_vote: </span><span class="si">{</span><span class="n">rel_size_central_vote</span><span class="si">}</span><span class="s2">. Value should be &quot;</span>

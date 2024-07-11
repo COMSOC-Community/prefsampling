@@ -100,6 +100,10 @@ Reference: :py:mod:`prefsampling.ordinal`
    * - :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_circle`
      - ---
      - ---
+   * - :py:func:`~prefsampling.ordinal.singlepeaked.k_axes_single_peaked`
+     - | :code:`k`
+       | :code:`axes_weights`
+     - :code:`inner_sp_sampler`
    * - :py:func:`~prefsampling.ordinal.singlecrossing.single_crossing`
      - ---
      - ---

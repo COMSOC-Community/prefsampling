@@ -363,6 +363,10 @@ def disjoint_resampling(
     if phi < 0 or 1 < phi:
         raise ValueError(f"Incorrect value of phi: {phi}. Value should be in [0,1]")
 
+    if isinstance(rel_size_central_vote, Iterable):
+        raise NotImplementedError("Sorry this has not been implemented... If you need it, reach out"
+                                  "to increase the pressure on us.")
+
     if rel_size_central_vote < 0 or 1 < rel_size_central_vote:
         raise ValueError(
             f"Incorrect value of rel_size_central_vote: {rel_size_central_vote}. Value should be "

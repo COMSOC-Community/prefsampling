@@ -308,7 +308,9 @@ document.write(`
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -316,7 +318,9 @@ document.write(`
     <span class="n">all_single_peaked_rankings</span><span class="p">,</span>
     <span class="n">all_single_peaked_circle_rankings</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">prefsampling.core</span> <span class="kn">import</span> <span class="n">mixture</span>
 <span class="kn">from</span> <span class="nn">prefsampling.inputvalidators</span> <span class="kn">import</span> <span class="n">validate_num_voters_candidates</span><span class="p">,</span> <span class="n">validate_int</span>
+<span class="kn">from</span> <span class="nn">prefsampling.ordinal</span> <span class="kn">import</span> <span class="n">impartial</span>
 
 
 <div class="viewcode-block" id="single_peaked_conitzer">
@@ -690,6 +694,134 @@ document.write(`
         <span class="n">validate_int</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">sp_rankings</span> <span class="o">=</span> <span class="n">all_single_peaked_rankings</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span><span class="n">r</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">sp_rankings</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">sp_rankings</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="k_axes_single_peaked">
+<a class="viewcode-back" href="../../../reference/ordinal/singlepeaked.html#prefsampling.ordinal.singlepeaked.k_axes_single_peaked">[docs]</a>
+<span class="nd">@validate_num_voters_candidates</span>
+<span class="k">def</span> <span class="nf">k_axes_single_peaked</span><span class="p">(</span>
+        <span class="n">num_voters</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">num_candidates</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">axes_weights</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+        <span class="n">inner_sp_sampler</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates ordinal votes that are single-peaked on k axes, i.e., a set of votes for which</span>
+<span class="sd">    there exists k axes such that each vote is single-peaked on one of the k axes.</span>
+
+<span class="sd">    The sampler works as follows: k distinct axes are sampled uniformly at random. We ensure here</span>
+<span class="sd">    that no axis or reversed axis is sampled more than one. Then, to sample a given vote, an axis</span>
+<span class="sd">    is selected uniformly at random based on the weight distribution over the axes, and a</span>
+<span class="sd">    single-peaked vote on this axis is sampled.</span>
+
+<span class="sd">    A collection of `num_voters` vote is generated independently and identically following the</span>
+<span class="sd">    process described above.</span>
+
+<span class="sd">    Note that the resulting collection of votes can be single-peaked on less than k axes, and not</span>
+<span class="sd">    exactly k, since a given vote may be single on several axes. It is also not certain that</span>
+<span class="sd">    at least one vote will be sampled according to each axis.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        num_voters : int</span>
+<span class="sd">            Number of Voters.</span>
+<span class="sd">        num_candidates : int</span>
+<span class="sd">            Number of Candidates.</span>
+<span class="sd">        k : int</span>
+<span class="sd">            Number of axes</span>
+<span class="sd">        axes_weights: float | Iterable[float]</span>
+<span class="sd">            Weight of each axis. If a single value is given, all axes have the same weight,</span>
+<span class="sd">            otherwise one weight needs to be provided per axis.</span>
+<span class="sd">        inner_sp_sampler : Callable, default: :py:func:`~prefsampling.ordinal.singlepeaked.single_peaked_walsh`</span>
+<span class="sd">            Sampler used to generate single-peaked votes. This function needs to accept a name</span>
+<span class="sd">            argument &quot;axis&quot;.</span>
+<span class="sd">        seed : int, default: :code:`None`</span>
+<span class="sd">            Seed for numpy random number generator.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        list[list[int]]</span>
+<span class="sd">            Ordinal votes.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from prefsampling.ordinal import k_axes_single_peaked</span>
+
+<span class="sd">            # Sample a 2-axes single-peaked profile with 2 voters and 3 candidates,</span>
+<span class="sd">            # each axis with equal weight.</span>
+<span class="sd">            k_axes_single_peaked(2, 3, 2, 0.5)</span>
+
+<span class="sd">            # You can change the inner sampler</span>
+<span class="sd">            from prefsampling.ordinal import single_peaked_conitzer</span>
+<span class="sd">            k_axes_single_peaked(2, 3, 2, 0.5, inner_sp_sampler=single_peaked_conitzer)</span>
+
+<span class="sd">            # You can given different weights</span>
+<span class="sd">            k_axes_single_peaked(2, 3, 2, [0.2, 0.4])</span>
+
+<span class="sd">            # For reproducibility, you can set the seed.</span>
+<span class="sd">            k_axes_single_peaked(2, 3, 2, 0.5, seed=1002)</span>
+
+<span class="sd">    Validation</span>
+<span class="sd">    ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">num_voters</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;For the k-axes single-peaked sampler, the number of axes cannot be more &quot;</span>
+                         <span class="s2">&quot;than the number of voters.&quot;</span><span class="p">)</span>
+    <span class="n">validate_int</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s2">&quot;number of axes&quot;</span><span class="p">,</span> <span class="n">lower_bound</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">num_axes</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">num_candidates</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="c1"># This happens for instance for too large values of the factorial</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;We could not compute the number of axes because of a high number of &quot;</span>
+                      <span class="s2">&quot;candidates. In case you passed a value k &gt; m!/2, the function will &quot;</span>
+                      <span class="s2">&quot;not terminate.&quot;</span><span class="p">)</span>
+        <span class="n">num_axes</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">num_axes</span> <span class="ow">and</span> <span class="n">num_axes</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;For the k-axes single-peaked sampler, the number of axes cannot be more &quot;</span>
+                         <span class="s2">&quot;than half of the factorial of the number of candidates (the number of &quot;</span>
+                         <span class="s2">&quot;potential axes up to reversal).&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axes_weights</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="n">axes_weights</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">axes_weights</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes_weights</span><span class="p">)</span> <span class="o">!=</span> <span class="n">k</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;For the k-axes single-peaked sampler, if the &#39;axes_weights&#39; &quot;</span>
+                             <span class="s2">&quot;parameter is and iterable, then one value per axis needs to be &quot;</span>
+                             <span class="s2">&quot;provided.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">axes_weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes_weights</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="n">inner_sp_sampler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">inner_sp_sampler</span> <span class="o">=</span> <span class="n">single_peaked_walsh</span>
+
+    <span class="n">all_axes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">impartial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">reversed_axis</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">while</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">all_axes</span> <span class="ow">or</span> <span class="n">reversed_axis</span> <span class="ow">in</span> <span class="n">all_axes</span><span class="p">:</span>
+            <span class="n">axis</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">impartial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_candidates</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">reversed_axis</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">all_axes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">mixture</span><span class="p">(</span>
+        <span class="n">num_voters</span><span class="p">,</span>
+        <span class="n">num_candidates</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">inner_sp_sampler</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)],</span>
+        <span class="n">axes_weights</span><span class="p">,</span>
+        <span class="n">sampler_parameters</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;axis&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">}</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">all_axes</span><span class="p">],</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
+    <span class="p">)</span></div>
+
 </pre></div>
 
                 </article>

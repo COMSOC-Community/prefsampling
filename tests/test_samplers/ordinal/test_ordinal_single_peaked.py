@@ -6,7 +6,7 @@ from prefsampling.inputvalidators import validate_num_voters_candidates
 from prefsampling.ordinal.singlepeaked import (
     single_peaked_walsh,
     single_peaked_conitzer,
-    single_peaked_circle,
+    single_peaked_circle, k_axes_single_peaked,
 )
 from tests.utils import TestSampler
 
@@ -39,6 +39,27 @@ def all_test_samplers_ordinal_single_peaked():
             seed=seed,
         )
 
+    @validate_num_voters_candidates
+    def k_axes_single_peaked_random(num_voters, num_candidates, seed=None):
+        return k_axes_single_peaked(
+            num_voters,
+            num_candidates,
+            k=max(int(num_voters / 2), 1),
+            axes_weights=0.5,
+            seed=seed,
+        )
+
+    @validate_num_voters_candidates
+    def k_axes_single_peaked_conitzer_random(num_voters, num_candidates, seed=None):
+        return k_axes_single_peaked(
+            num_voters,
+            num_candidates,
+            k=max(int(num_voters / 2), 1),
+            inner_sp_sampler=single_peaked_conitzer,
+            axes_weights=0.5,
+            seed=seed,
+        )
+
     return [
         TestSampler(single_peaked_conitzer, {}),
         TestSampler(single_peaked_conitzer_axis, {}),
@@ -49,6 +70,8 @@ def all_test_samplers_ordinal_single_peaked():
         TestSampler(single_peaked_walsh, {}),
         TestSampler(single_peaked_walsh_axis, {}),
         TestSampler(single_peaked_walsh_axis, {}),
+        TestSampler(k_axes_single_peaked_random, {}),
+        TestSampler(k_axes_single_peaked_conitzer_random, {})
     ]
 
 

@@ -13,6 +13,7 @@ from prefsampling.ordinal.singlepeaked import (
     single_peaked_conitzer,
     single_peaked_circle,
     single_peaked_walsh,
+    k_axes_single_peaked,
 )
 from prefsampling.ordinal.singlecrossing import (
     single_crossing,
@@ -37,6 +38,7 @@ __all__ = [
     "single_peaked_walsh",
     "single_peaked_conitzer",
     "single_peaked_circle",
+    "k_axes_single_peaked",
     "single_crossing",
     "single_crossing_impartial",
     "mallows",
