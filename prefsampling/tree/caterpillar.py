@@ -25,15 +25,17 @@ def caterpillar_tree(num_leaves: int, seed: int = None) -> Node:
 
     while num_leaves > 2:
         leaf = Node(ctr)
+        ctr += 1
         inner_node = Node(ctr)
+        ctr += 1
         tmp_root.add_child(leaf)
         tmp_root.add_child(inner_node)
         tmp_root = inner_node
         num_leaves -= 1
-        ctr += 1
 
     leaf_1 = Node(ctr)
-    leaf_2 = Node(ctr + 1)
+    ctr += 1
+    leaf_2 = Node(ctr)
     tmp_root.add_child(leaf_1)
     tmp_root.add_child(leaf_2)
 
