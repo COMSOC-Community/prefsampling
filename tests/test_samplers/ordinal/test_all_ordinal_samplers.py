@@ -41,16 +41,16 @@ from tests.utils import (
 
 
 def all_test_samplers_ordinal():
-    # test_samplers = all_test_samplers_ordinal_didi()
-    # test_samplers += all_test_samplers_euclidean()
-    test_samplers = all_test_samplers_ordinal_group_separable()
-    # test_samplers += all_test_samplers_ordinal_impartial()
-    # test_samplers += all_test_samplers_ordinal_mallows()
-    # test_samplers += all_test_samplers_ordinal_plackett_luce()
-    # test_samplers += all_test_samplers_ordinal_single_crossing()
-    # test_samplers += all_test_samplers_ordinal_single_peaked()
-    # test_samplers += all_test_samplers_ordinal_urn()
-    # test_samplers += all_test_samplers_ordinal_identity()
+    test_samplers = all_test_samplers_ordinal_didi()
+    test_samplers += all_test_samplers_euclidean()
+    test_samplers += all_test_samplers_ordinal_group_separable()
+    test_samplers += all_test_samplers_ordinal_impartial()
+    test_samplers += all_test_samplers_ordinal_mallows()
+    test_samplers += all_test_samplers_ordinal_plackett_luce()
+    test_samplers += all_test_samplers_ordinal_single_crossing()
+    test_samplers += all_test_samplers_ordinal_single_peaked()
+    test_samplers += all_test_samplers_ordinal_urn()
+    test_samplers += all_test_samplers_ordinal_identity()
 
     permute_test_samplers = [
         TestSampler(sample_then_permute, {"main_test_sampler": test_sampler})
