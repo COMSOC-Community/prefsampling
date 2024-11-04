@@ -185,7 +185,7 @@ def group_separable(
     signatures = np.zeros((num_voters - 1, num_internal_nodes), dtype=bool)
     for r in range(num_internal_nodes):
         values_at_pos = rng.choice((True, False), size=num_voters - 1)
-        while r > 0 and not any(values_at_pos):
+        while r > 0 and not any(values_at_pos) and num_voters - 1 > 0:
             values_at_pos = rng.choice((True, False), size=num_voters - 1)
         for i in range(num_voters - 1):
             signatures[i][r] = values_at_pos[i]
