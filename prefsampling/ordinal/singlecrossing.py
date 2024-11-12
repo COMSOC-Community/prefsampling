@@ -134,13 +134,9 @@ def single_crossing(
         new_line[swap_indices[1]] = domain[line - 1][swap_indices[0]]
         domain.append(new_line)
 
-    votes = []
-    last_sampled_index = 0
-    votes.append(domain[0])
-    for i in range(1, num_voters):
-        index = rng.integers(last_sampled_index, domain_size)
-        votes.append(domain[index])
-        last_sampled_index = index
+    indeces = rng.integers(0, domain_size, num_voters)
+    indeces.sort()
+    votes = [domain[index] for index in indeces]
 
     return votes
 
