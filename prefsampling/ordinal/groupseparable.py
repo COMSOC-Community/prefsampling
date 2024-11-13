@@ -11,6 +11,8 @@ from prefsampling.tree.schroeder import (
     schroeder_tree_brute_force,
     schroeder_tree_lescanne,
 )
+from prefsampling.tree.balanced import balanced_tree
+from prefsampling.tree.caterpillar import caterpillar_tree
 from prefsampling.inputvalidators import validate_num_voters_candidates
 from prefsampling.combinatorics import comb
 
@@ -36,15 +38,15 @@ class TreeSampler(Enum):
     Random Schröder trees sampled following Lescanne (2022)
     """
 
-    # CATERPILLAR = "Caterpillar Tree"
-    # """
-    # Caterpillar trees
-    # """
-    #
-    # BALANCED = "Balanced Tree"
-    # """
-    # Balanced trees
-    # """
+    CATERPILLAR = "Caterpillar Tree"
+    """
+    Caterpillar trees
+    """
+
+    BALANCED = "Balanced Tree"
+    """
+    Balanced trees
+    """
 
 
 @validate_num_voters_candidates
@@ -159,10 +161,10 @@ def group_separable(
             )
         else:
             raise ValueError("There is something weird with the tree_sampler value...")
-    # elif tree_sampler == TreeSampler.CATERPILLAR:
-    #     tree_root = caterpillar_tree(num_candidates)
-    # elif tree_sampler == TreeSampler.BALANCED:
-    #     tree_root = balanced_tree(num_candidates)
+    elif tree_sampler == TreeSampler.CATERPILLAR:
+        tree_root = caterpillar_tree(num_candidates)
+    elif tree_sampler == TreeSampler.BALANCED:
+        tree_root = balanced_tree(num_candidates)
     else:
         raise ValueError(
             "The `tree` argument needs to be one of the constant defined in the "
@@ -183,7 +185,7 @@ def group_separable(
     signatures = np.zeros((num_voters - 1, num_internal_nodes), dtype=bool)
     for r in range(num_internal_nodes):
         values_at_pos = rng.choice((True, False), size=num_voters - 1)
-        while r > 0 and not any(values_at_pos):
+        while r > 0 and not any(values_at_pos) and num_voters - 1 > 0:
             values_at_pos = rng.choice((True, False), size=num_voters - 1)
         for i in range(num_voters - 1):
             signatures[i][r] = values_at_pos[i]

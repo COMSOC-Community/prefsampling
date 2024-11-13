@@ -14,5 +14,5 @@ __all__ = [
     "schroeder_tree_brute_force",
     "all_schroeder_tree",
     "caterpillar_tree",
-    "caterpillar_tree",
+    "balanced_tree",
 ]
