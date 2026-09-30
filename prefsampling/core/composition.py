@@ -186,15 +186,14 @@ def concatenation(
             " per sampler, no more, no less."
         )
 
-    for i, params in enumerate(sampler_parameters):
-        params["num_voters"] = num_voters_per_sampler[i]
-        params["num_candidates"] = num_candidates
-
     all_votes = []
     for num_voters, sampler, params in zip(
         num_voters_per_sampler, samplers, sampler_parameters
     ):
         if num_voters > 0:
+            params = dict(params)
+            params["num_voters"] = num_voters
+            params["num_candidates"] = num_candidates
             new_votes = sampler(**params)
             if not isinstance(new_votes, Iterable):
                 raise ValueError(

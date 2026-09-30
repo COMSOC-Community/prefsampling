@@ -153,8 +153,10 @@ def ball_resampling(
         max_numer_resampling : int, default: :code:`1000`
             The maximum number of resampling. If exceeded, the center point is used.
         seed : int, default: :code:`None`
-            Seed for numpy random number generator. We increase the seed by one each time we
-            resample (to avoid always resampling the same point).
+            Root seed for a new integer seed on every proposal, including retries. If None,
+            an inner sampler seed is used as the root when provided; otherwise the inner
+            sampler's unseeded behavior is preserved. Seeded coordinates differ from
+            versions that advanced the seed only on rejection.
 
     Returns
     -------
@@ -172,27 +174,32 @@ def ball_resampling(
     validate_int(num_dimensions, "num_dimensions", 1)
     center_point = validate_center_point(center_point, num_dimensions)
 
-    if seed is not None:
-        inner_sampler_args["seed"] = seed
+    inner_sampler_args = dict(inner_sampler_args)
+    root_seed = seed if seed is not None else inner_sampler_args.get("seed")
+    seed_sequence = np.random.SeedSequence(root_seed) if root_seed is not None else None
 
-    points = []
-    for _ in range(num_points):
+    def sample_point():
+        if seed_sequence is not None:
+            child = seed_sequence.spawn(1)[0]
+            inner_sampler_args["seed"] = int(child.generate_state(1, dtype=np.uint64)[0])
         point = inner_sampler(**inner_sampler_args)
         if isinstance(point, Iterable):
             point = np.array(point, dtype=float)
         else:
             point = np.array([point], dtype=float)
-        if len(point) != num_dimensions:
+        if point.shape != (num_dimensions,):
             raise ValueError(
-                f"The inner sampler did not return a point with the suitable number "
-                f"of dimensions ({num_dimensions} needed but {len(point)} returned)."
+                f"The inner sampler did not return a point with the suitable shape "
+                f"({(num_dimensions,)} needed but {point.shape} returned)."
             )
+        return point
+
+    points = []
+    for _ in range(num_points):
+        point = sample_point()
         num_resampling = 0
         while np.linalg.norm(point - center_point) > (width / 2):
-            if seed is not None:
-                seed += 1
-                inner_sampler_args["seed"] = seed
-            point = inner_sampler(**inner_sampler_args)
+            point = sample_point()
             num_resampling += 1
             if num_resampling == max_numer_resampling:
                 warnings.warn(

@@ -24,6 +24,15 @@ def random_gaussian_samplers(num_dim):
 
 
 class TestPointGaussian(TestCase):
+    def test_invalid_truncation_widths(self):
+        for widths in [[0, 1], [-1, 1], [np.nan, 1], [np.inf, 1], [[1], [1]]]:
+            with self.subTest(widths=widths), self.assertRaises(ValueError):
+                gaussian(3, 2, widths=widths, seed=42)
+
+    def test_invalid_sigmas(self):
+        for sigmas in [[-1, 1], [np.nan, 1], [np.inf, 1], [[1], [1]]]:
+            with self.subTest(sigmas=sigmas), self.assertRaises(ValueError):
+                gaussian(3, 2, sigmas=sigmas, seed=42)
 
     def test_gaussian(self):
         with self.assertRaises(TypeError):

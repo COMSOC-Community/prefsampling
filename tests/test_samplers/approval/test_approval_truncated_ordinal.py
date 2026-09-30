@@ -3,7 +3,7 @@ from unittest import TestCase
 import numpy as np
 
 from prefsampling.approval.truncated_ordinal import truncated_ordinal
-from prefsampling.ordinal import mallows, urn
+from prefsampling.ordinal import identity, mallows, urn
 from tests.utils import float_parameter_test_values, TestSampler
 
 
@@ -37,6 +37,18 @@ def all_test_samplers_approval_truncated_ordinal():
 
 
 class TestApprovalTruncatedOrdinal(TestCase):
+    def test_arguments_are_preserved(self):
+        parameters = {"num_voters": 99, "num_candidates": 99, "seed": 17}
+        votes = truncated_ordinal(2, 3, 0.5, identity, parameters, seed=42)
+        self.assertEqual(votes, [{0}, {0}])
+        self.assertEqual(parameters, {"num_voters": 99, "num_candidates": 99, "seed": 17})
+
+    def test_generator_approval_sizes(self):
+        votes = truncated_ordinal(2, 3, iter([0.5, 1]), identity, {})
+        self.assertEqual(votes, [{0}, {0, 1, 2}])
+        with self.assertRaises(ValueError):
+            truncated_ordinal(2, 3, iter([]), identity, {})
+
     def test_approval_truncated_ordinal(self):
         with self.assertRaises(ValueError):
             truncated_ordinal(4, 5, -0.5, mallows, {"phi": 0.4})

@@ -29,7 +29,7 @@ def euclidean(
     seed: int = None,
 ) -> list[list[int]] | list[list[list[int]]]:
     """
-    Generates approval votes according to the Euclidean model.
+    Generates ordinal votes according to the Euclidean model.
 
     In this model voters and candidates are assigned random positions in a Euclidean space
     (positions can also be provided as argument to the function).
@@ -296,13 +296,12 @@ def euclidean(
         seed=seed,
     )
 
-    dimension = len(voters_pos[0])
     votes = []
     distances = np.zeros([num_voters, num_candidates], dtype=float)
     for i in range(num_voters):
         for j in range(num_candidates):
             distances[i][j] = np.linalg.norm(
-                voters_pos[i] - candidates_pos[j], ord=dimension
+                voters_pos[i] - candidates_pos[j]
             )
         if tie_radius is None:
             votes.append(list(np.argsort(distances[i])))

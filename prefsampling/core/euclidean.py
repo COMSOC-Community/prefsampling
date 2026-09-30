@@ -119,7 +119,7 @@ def _sample_points(
                     f"{positions.shape} while {(num_points, num_dimensions)} was expected "
                     f"(num_{sampled_object_name}, num_dimensions)."
                 )
-        return positions
+        return positions.reshape(num_points, num_dimensions)
 
     if not isinstance(positions, Callable):
         try:
@@ -201,8 +201,10 @@ def sample_election_positions(
             Additional keyword arguments passed to the :code:`candidates_positions` sampler when the
             latter is a Callable.
         seed : int, default: :code:`None`
-            Seed for numpy random number generator. Also passed to the point samplers if
-            a value is provided.
+            Root seed for independent voter and candidate streams. Point samplers receive
+            derived integer seeds, or None when no seed is provided. Repeated calls with the
+            same root seed reproduce the same positions. Seeded coordinates differ from
+            versions that reused the same seed for both populations.
 
     Returns
     -------
@@ -211,10 +213,18 @@ def sample_election_positions(
 
     """
     validate_int(num_dimensions, lower_bound=0, value_descr="number of dimensions")
-    if voters_positions_args is None:
-        voters_positions_args = dict()
-    if candidates_positions_args is None:
-        candidates_positions_args = dict()
+    voters_positions_args = (
+        dict(voters_positions_args) if voters_positions_args is not None else dict()
+    )
+    candidates_positions_args = (
+        dict(candidates_positions_args) if candidates_positions_args is not None else dict()
+    )
+
+    voters_seed, candidates_seed = None, None
+    if seed is not None:
+        voters_stream, candidates_stream = np.random.SeedSequence(seed).spawn(2)
+        voters_seed = int(voters_stream.generate_state(1, dtype=np.uint64)[0])
+        candidates_seed = int(candidates_stream.generate_state(1, dtype=np.uint64)[0])
 
     voters_positions_args["num_dimensions"] = num_dimensions
     candidates_positions_args["num_dimensions"] = num_dimensions
@@ -225,7 +235,7 @@ def sample_election_positions(
         voters_positions,
         voters_positions_args,
         "voters",
-        seed=seed,
+        seed=voters_seed,
     )
     cand_pos = _sample_points(
         num_candidates,
@@ -233,6 +243,6 @@ def sample_election_positions(
         candidates_positions,
         candidates_positions_args,
         "candidates",
-        seed=seed,
+        seed=candidates_seed,
     )
     return voters_pos, cand_pos

@@ -93,17 +93,18 @@ def truncated_ordinal(
         Proceedings of the International Joint Conference on Artificial Intelligence, 2022.
     """
     if isinstance(rel_num_approvals, Iterable):
+        rel_num_approvals = list(rel_num_approvals)
         unique_vote_length = False
+        if len(rel_num_approvals) != num_voters:
+            raise ValueError(
+                "If you provide an iterable as rel_num_approvals, there should "
+                "be exactly one value per voter, no more, no less."
+            )
         if min(rel_num_approvals) < 0 or max(rel_num_approvals) > 1:
             raise ValueError(
                 "Incorrect value of rel_num_approvals. All values should be in [0, 1]"
             )
         vote_length = [int(r * num_candidates) for r in rel_num_approvals]
-        if len(vote_length) != num_voters:
-            raise ValueError(
-                "If you provide an iterable as rel_num_approvals, there they should "
-                "be exactly one value per voter, no more, no less."
-            )
     else:
         unique_vote_length = True
         if rel_num_approvals < 0 or 1 < rel_num_approvals:
@@ -113,6 +114,7 @@ def truncated_ordinal(
             )
         vote_length = int(rel_num_approvals * num_candidates)
 
+    ordinal_sampler_parameters = dict(ordinal_sampler_parameters)
     ordinal_sampler_parameters["num_voters"] = num_voters
     ordinal_sampler_parameters["num_candidates"] = num_candidates
     ordinal_sampler_parameters["seed"] = seed

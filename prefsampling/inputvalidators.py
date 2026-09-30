@@ -16,18 +16,8 @@ def validate_num_voters_candidates(func):
 
     @wraps(func)
     def wrapper(num_voters, num_candidates, *args, **kwargs):
-        try:
-            assert int(num_voters) == num_voters
-        except (ValueError, AssertionError):
-            raise TypeError("The number of voters needs to be an integer.")
-        if num_voters < 1:
-            raise ValueError("The number of voters needs to be at least 1.")
-        try:
-            assert int(num_candidates) == num_candidates
-        except (ValueError, AssertionError):
-            raise TypeError("The number of candidates needs to be an integer.")
-        if num_candidates < 1:
-            raise ValueError("The number of candidates needs to be at least 1.")
+        validate_int(num_voters, "number of voters", lower_bound=1)
+        validate_int(num_candidates, "number of candidates", lower_bound=1)
         return func(num_voters, num_candidates, *args, **kwargs)
 
     return wrapper
@@ -62,7 +52,7 @@ def validate_int(
     """
     try:
         int(value)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, OverflowError):
         raise TypeError(f"The {value_descr} needs to be an integer.")
     if int(value) != value:
         raise TypeError(f"The {value_descr} needs to be an integer.")

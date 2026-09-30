@@ -1,9 +1,27 @@
+import subprocess
+import sys
 from unittest import TestCase
 
 from prefsampling.inputvalidators import validate_num_voters_candidates, validate_int
 
 
 class TestInputValidators(TestCase):
+    def test_validation_with_optimized_python(self):
+        script = """
+from prefsampling.inputvalidators import validate_num_voters_candidates
+function = validate_num_voters_candidates(lambda x, y: x + y)
+for args in [(1.5, 2), (2, 1.5), (None, 2), (2, float('inf'))]:
+    try:
+        function(*args)
+    except TypeError:
+        continue
+    raise SystemExit('Invalid voter/candidate count accepted: ' + str(args))
+"""
+        result = subprocess.run(
+            [sys.executable, "-O", "-c", script], capture_output=True, text=True
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_num_voters_candidates_validator(self):
         decorated_function = validate_num_voters_candidates(lambda x, y: x + y)
         with self.assertRaises(ValueError):

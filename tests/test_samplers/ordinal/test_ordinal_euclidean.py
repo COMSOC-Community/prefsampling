@@ -86,6 +86,17 @@ def all_test_samplers_euclidean():
 
 
 class TestOrdinalEuclidean(TestCase):
+    def test_three_dimensional_euclidean_distance(self):
+        positions = [[1, 1, 1], [1.5, 0, 0]]
+        self.assertEqual(euclidean(1, 2, 3, [[0, 0, 0]], positions), [[1, 0]])
+        self.assertEqual(
+            euclidean(1, 2, 3, [[0, 0, 0]], positions, tie_radius=0.5),
+            [[[1], [0]]],
+        )
+
+    def test_flat_one_dimensional_positions(self):
+        self.assertEqual(euclidean(2, 3, 1, [0, 3], [0.5, 2, 4]), [[0, 1, 2], [1, 2, 0]])
+
     def test_weak_orders(self):
         num_candidates = 5
         weak_votes = euclidean(
